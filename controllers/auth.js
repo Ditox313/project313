@@ -24,7 +24,7 @@ module.exports.login = async function(req, res) {
                     email: candidate.email,
                     userId: candidate._id
                 },
-                keys.jwt, { expiresIn: 60 * 60 }
+                keys.jwt, { expiresIn: (60 * 60) * 24 }
             );
 
 
