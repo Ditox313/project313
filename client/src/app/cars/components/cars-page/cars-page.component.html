@@ -1,0 +1,65 @@
+<div class="xs_cars">
+    <div class="xs_cars__top">
+        <h1>
+            <span class="material-icons">garage</span>
+            <span> Автопарк</span>
+        </h1>
+
+        <div class="xs_add__car">
+            <a [routerLink]="['/add-car']">
+                <span class="material-icons">library_add</span> Добавить автомобиль
+            </a>
+        </div>
+    </div>
+
+
+
+    <div class="xs_cars__content">
+        <app-loader *ngIf="loading"></app-loader>
+        <table class="striped" *ngIf="!loading">
+            <thead>
+                <tr>
+                    <th>Изображение</th>
+                    <th>Марка</th>
+                    <th>Номер</th>
+                    <th>Категория</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+
+            </thead>
+
+            <tbody *ngIf="xscars.length !== 0; else empty">
+                <tr *ngFor="let car of xscars" class="xs_cars_td">
+                    <td>
+                        <a [routerLink]="['/show-car','edit',car._id]">
+                            <img src="{{car.previewSrc}} " alt="Обложка авто " class="xs_car_list_img ">
+                        </a>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/show-car','edit',car._id]">
+                            {{car.marka}} {{car.model}}
+                        </a>
+                    </td>
+                    <td>{{car.number}}</td>
+                    <td>{{car.category}}</td>
+                    <td>{{car.status}}</td>
+                    <td class="xs_actions ">
+                        <a [routerLink]="['/show-car','edit',car._id]"><span class="material-icons ">mode_edit</span></a>
+                        <a (click)="onDeleteCar($event, car)"><span class="material-icons ">delete</span></a>
+                    </td>
+                </tr>
+            </tbody>
+
+            <ng-template #empty>
+                <div style="font-size: 20px; " class="xs_empty ">
+                    Нет автомобилей в автопарке...
+                </div>
+            </ng-template>
+        </table>
+
+        <div class="xs_cars__more" *ngIf="!noMoreCars">
+            <span (click)="loadmore()">Загрузить еще...</span>
+        </div>
+    </div>
+</div>

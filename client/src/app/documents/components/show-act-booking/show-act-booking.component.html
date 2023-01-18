@@ -1,0 +1,35 @@
+<form class="xs_generate_docs" *ngIf="xs_actual_act">
+    <div class="xs_generate_docs___top">
+
+        <div class="xs_generate_docs__top____actions">
+
+            <a *ngIf="xs_actual_act" (click)="isGoBack()"
+                class="xs_generate_docs_back">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a> 
+
+
+            <button type="submit" (click)="generatePDF()" class="xs_download">
+                <span class="material-icons">cloud_download</span>Скачать
+            </button>
+        </div>
+
+
+    </div>
+
+
+    <div class="xs_dogovor_show">
+        <div [innerHTML]="xs_actual_act.content" class="xs_generate_docs__content" id="content" #content></div>
+    </div>
+
+
+
+
+    <div class="xs_generate_docs___bottom">
+        <button type="submit" (click)="generatePDF()" class="xs_download">
+            <span class="material-icons">cloud_download</span>Скачать
+        </button>
+    </div>
+
+</form>
+<app-loader *ngIf="!xs_actual_act"></app-loader>

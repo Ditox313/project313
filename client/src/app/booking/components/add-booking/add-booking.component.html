@@ -1,0 +1,299 @@
+<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="xs_add__car___top">
+        <h1>
+            <span class="material-icons">contact_mail</span> Добавить бронь
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+            <a routerLink="/bookings-page">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+
+    <div class="xs_add__car__content">
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs" #tabs>
+                    <li class="tab col"><a href="#information" class="active">Общая информация</a></li>
+                </ul>
+            </div>
+
+            <div id="information" class="col s12">
+                <div class="xs_form">
+                    <div class="xs_form__item">
+
+                        <div class="input-field col s12">
+                            <div><label for="marka">Дата начала брони<span class="xszv">*</span></label></div>
+                            <input placeholder="Введите значение" id="booking_start" type="datetime-local" class="validate"
+                                formControlName="booking_start"
+                                [ngClass]="{'invalid': form.controls['booking_start'].invalid && form.controls['booking_start'].touched}"
+                                (change)="bookingStartDate($event)" min="">
+                        </div>
+
+
+
+
+                        <div class="xs_form__item___mod">
+                            <label for="marka">Автомобиль<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="car" formControlName="car"
+                                    [ngClass]="{'invalid': form.controls['car'].invalid && form.controls['car'].touched}"  (ngModelChange)="onChangeCar($event)">
+                                    <option value="" disabled selected>Выберите автомобиль</option>
+                                    <option *ngFor="let xscar of xscars$ | async" value="{{xscar | json}}">{{xscar.marka}} {{xscar.model}} ({{xscar.number}})</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        
+
+                        
+
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="place_start" type="text" class="validate" formControlName="place_start"
+                                [ngClass]="{'invalid': form.controls['place_start'].invalid && form.controls['place_start'].touched}">
+                            <label for="marka">Место выдачи<span class="xszv">*</span></label>
+                            <span class="helper-text red-text" *ngIf="form.controls['place_start'].invalid && form.controls['place_start'].touched">
+                                <p *ngIf="form.controls['place_start'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+
+                        <div>
+                            <label for="marka">Тариф<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="tariff" formControlName="tariff"
+                                    [ngClass]="{'invalid': form.controls['tariff'].invalid && form.controls['tariff'].touched}" (ngModelChange)="onChangeTariff($event)">
+                                    <option value="" disabled selected>Выберите тариф</option>
+                                    <option value="Город">Город</option>
+                                    <option value="Межгород">Межгород</option>
+                                    <option value="Россия">Россия</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="xs_form__item">
+
+                        <div class="input-field col s12">
+                            <div><label for="marka">Дата окончания брони<span class="xszv">*</span></label></div>
+                            <input placeholder="Введите значение" id="booking_end" type="datetime-local" class="validate"
+                                formControlName="booking_end"
+                                [ngClass]="{'invalid': form.controls['booking_end'].invalid && form.controls['booking_end'].touched}"
+                                (change)="bookingEndDate($event)">
+                        </div>
+
+
+
+                        <div class="xs_form__item___mod xs_form__item___mod___client">
+                            <fieldset>
+                                <label for="marka">Тип клиента<span class="xszv">*</span></label>
+                                <div class="input-field col s12">
+                                    <select id="client" formControlName="client" (change)="changeTypeClient($event)"
+                                        [ngClass]="{'invalid': form.controls['client'].invalid && form.controls['client'].touched}">
+                                        <option value="" selected disabled hidden>Выберите тип клиента</option>
+                                        <option value="fiz"  selected>Физическое лицо</option>
+                                        <option value="law">Юридическое лицо</option>
+                                    </select>
+                                </div>
+                            </fieldset>
+
+                            <div class="xs_fiz__search" *ngIf="fizSearchIsVisible">
+                                <div class="xs_search">
+                                    <label for="marka">Поиск клиента по Фамилии<span class="xszv">*</span></label>
+                                    <div class="xs_search__box">
+                                        <div class="input-field col s12">
+                                            <input type="text" (keyup)="searchData($event)" placeholder="Введите для поиска..." formControlName="search_fiz" id="search_fiz">
+                                        </div>
+                                        
+                                    </div>
+                                
+                                    <div class="xs_header_search_result" *ngIf="hasQuery">
+                                        <div *ngIf="searchResult.length < 1 && hasQuery" class="search_noresult_item">Результатов не найдено...</div>
+
+                                        <div *ngFor="let client of searchResult" class="search_result_item" (click)="changeClient(client)">
+                                            <div>{{client.surname}} {{client.name}} {{client.lastname}}</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Для физика -->
+                                    <div class="input-field col s12" *ngIf="isActiveDogovor === 'isActive'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_true" >
+                                            Есть активный договор!!!
+                                        </div>
+                                    </div>
+
+                                    <div class="input-field col s12 no_dogovor_active" *ngIf="isActiveDogovor === 'no_isActive'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false" >
+                                            Нет активного договора!!!
+
+                                            <a [routerLink]="['/add-client-dogovor', xs_actual_search__client_no_json._id]">Создать договор</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-field col s12" *ngIf="is_dogovor_finish_compare_booking === 'isDogovorFinish'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false">
+                                            Договор истечет во время брони!!!
+                                        </div>
+                                    </div>
+                                    <!-- Для физика -->
+
+                                </div>
+                            </div>
+
+
+                            <div class="xs_law__search" *ngIf="lawSearchIsVisible">
+                                <div class="xs_search">
+                                    <label for="marka">Поиск клиента по названии организации<span class="xszv">*</span></label>
+                                    <div class="xs_search__box">
+                                        <div class="input-field col s12">
+                                            <input type="text" (keyup)="searchDataLawFase($event)" placeholder="Введите для поиска..."
+                                                formControlName="search_law" id="search_law">
+                                        </div>
+                            
+                                    </div>
+                            
+                                    <div class="xs_header_search_result" *ngIf="hasQueryLawFase">
+                                        <div *ngIf="searchResultLawFase.length < 1 && hasQueryLawFase" class="search_noresult_item">Результатов не найдено...
+                                        </div>
+                            
+                                        <div *ngFor="let client of searchResultLawFase" class="search_result_item" (click)="changeClientLawFase(client)">
+                                            <div>{{client.name}}</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Для юр.лиц -->
+                                    <div class="input-field col s12" *ngIf="isActiveDogovor === 'isActive'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_true">
+                                            Есть активный договор!!!
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="input-field col s12 no_dogovor_active" *ngIf="isActiveDogovor === 'no_isActive'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false">
+                                            Нет активного договора!!!
+                                            <a [routerLink]="['/add-client-lawfase-dogovor', xs_actual_search__client___lawfase_no_json._id]">Создать договор</a>
+                                        </div>
+
+                                        
+                                    </div>
+                                    
+                                    <div class="input-field col s12" *ngIf="is_dogovor_finish_compare_booking === 'isDogovorFinish'">
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false">
+                                            Договор истечет во время брони!!!
+                                        </div>
+                                    </div>
+                                    <!-- Для юр.лиц -->
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="place_end" type="text" class="validate" formControlName="place_end"
+                                [ngClass]="{'invalid': form.controls['place_end'].invalid && form.controls['place_end'].touched}">
+                            <label for="marka">Место приема<span class="xszv">*</span></label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['place_end'].invalid && form.controls['place_end'].touched">
+                                <p *ngIf="form.controls['place_end'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12 xs_textarea">
+                            <textarea placeholder="Введите значение" id="comment" type="text" class="materialize-textarea"
+                                formControlName="comment"
+                                [ngClass]="{'invalid': form.controls['comment'].invalid && form.controls['comment'].touched}"> </textarea>
+                            <label for="marka">Комментарий</label>
+                            <span class="helper-text red-text" *ngIf="form.controls['comment'].invalid && form.controls['comment'].touched">
+                                <p *ngIf="form.controls['comment'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="xs_custome__zalog">
+            <div class="xs_paid_sale__wrap">
+                <input type="checkbox" (click)="xs_isCustomeZalogCheck()">
+                <div>Произвольный залог</div>
+            </div>
+        
+            <div class="xs_paid_sale__hide" ng-model='xs_isCustomeZalogCheck' *ngIf="isCustomeZalog">
+                <input type="text" placeholder="Введите сумму залога" formControlName="isCustomeZalogControl" id="isCustomeZalogControl"
+                (change)="onCustomeZalogValue($event)" (blur)="onBlurMethod($event)"> руб
+            </div>
+        </div>
+
+        <div class="xs_add_booking_dop_info">
+            <h4>Дополнительная информация:</h4>
+            <div class="xs_add_booking_dop_info___wrap">
+                <div>
+                    <span>Чистый автомобиль</span>
+                    <span><input type="checkbox" id="clear_auto" class="validate" formControlName="clear_auto"></span>
+                </div>
+        
+                <div>
+                    <span>Полный бак</span>
+                    <span><input type="checkbox" id="full_tank" class="validate" formControlName="full_tank"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="xs_summa" *ngIf="this.summa.summa"> 
+        <div *ngIf="!isCustomeZalog">
+            <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> 
+            + 
+            <span *ngIf="!isCustomeZalog">
+                <span *ngIf="this.summa.tariff === 'Город'">Залог {{this.summa.car.zalog}} ₽</span> 
+                <span *ngIf="this.summa.tariff === 'Межгород'">Залог {{this.summa.car.zalog_mej}} ₽</span>
+                <span *ngIf="this.summa.tariff === 'Россия'">Залог {{this.summa.car.zalog_rus}} ₽</span>
+            </span>
+            + 
+            <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
+                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
+            </span> =
+            <span>Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+        </div>
+
+        <div *ngIf="isCustomeZalog"> 
+            <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
+            +
+            <span *ngIf="isCustomeZalog">
+                <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽</span>
+            </span>
+            +
+            <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
+                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
+            </span> =
+            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+        </div>
+    </div>
+
+    
+    <div class="xs_add__car___top">
+        <div class="xs_add__car__top____actions">
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+</form>
+
+
+

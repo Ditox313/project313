@@ -1,0 +1,47 @@
+<div *ngIf="xs_dogovors">
+    <table class="striped" >
+        <thead>
+            <tr>
+                <th>Номер договора</th>
+                <th>Дата начала</th>
+                <th>Дата окончания</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+    
+        </thead>
+    
+        <tbody *ngIf="xs_dogovors; else empty">
+            <tr *ngFor="let xs_dogovor of xs_dogovors"  [class.xs_dogovor__active] = "xs_dogovor.state === 'active'">
+                <td>
+                    <span [routerLink]="['/show-client-dogovor',xs_dogovor._id]">
+                        {{xs_dogovor.dogovor_number}}
+                    </span>
+                </td>
+                <td>{{xs_dogovor.date_start | date : 'd MMMM y'}}</td>
+                <td>{{xs_dogovor.date_end | date : 'd MMMM y'}}</td>
+                <td *ngIf="xs_dogovor.state === 'active'">Активный</td>
+                <td *ngIf="xs_dogovor.state !== 'active'">Истек</td>
+                <td class="xs_actions__dogovors">
+                    <a [routerLink]="['/show-client-dogovor',xs_dogovor._id]"><span
+                            class="material-icons ">remove_red_eye</span></a>
+                    <a (click)="DeleteDogovor($event, xs_dogovor)"><span class="material-icons ">delete</span></a>
+                </td>
+            </tr>
+        </tbody>
+    
+        <ng-template #empty>
+            <div style="font-size: 20px; " class="xs_empty ">
+                Нет договоров...
+            </div>
+        </ng-template>
+    </table>
+
+    <div class="xs_cars__more" *ngIf="!noMoreDogovors">
+        <span (click)="loadmore()">Загрузить еще...</span>
+    </div>
+    
+</div>
+
+
+<app-loader *ngIf="!xs_dogovors"></app-loader>

@@ -1,0 +1,456 @@
+<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="xs_add__car___top">
+        <h1>
+            <span class="material-icons">garage</span> Редактировать автомобиль
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+            <a routerLink="/cars-page">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="xsActualCar">
+        <div class="xs_close_probeg_warning" *ngIf="+xsActualCar.probeg > +xsActualCar.to_probeg_next">
+            <div>НЕОБХОДИМО СРОЧНОЕ ТО ДЛЯ АВТОМОБИЛЯ</div>
+        </div>
+    </div>
+
+    <div class="xs_add__car__content">
+
+
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs" #tabs>
+                    <li class="tab col"><a href="#information" class="active">Информация</a></li>
+                    <li class="tab col"><a href="#register_data">Регистрационные данные</a></li>
+                    <li class="tab col"><a href="#to">Техобслуживание</a></li>
+                    <li class="tab col"><a href="#tariffs">Цены</a></li>
+                </ul>
+            </div>
+
+            <div id="information" class="col s12">
+                <div class="xs_form">
+                    <div class="xs_form__item">
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="marka" type="text" class="validate" formControlName="marka" [ngClass]="{'invalid': form.controls['marka'].invalid && form.controls['marka'].touched}">
+                            <label for="marka">Марка<span class="xszv">*</span></label>
+                            <span class="helper-text red-text" *ngIf="form.controls['marka'].invalid && form.controls['marka'].touched">
+                                <p *ngIf="form.controls['marka'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="model" type="text" class="validate" formControlName="model" [ngClass]="{'invalid': form.controls['model'].invalid && form.controls['model'].touched}">
+                            <label for="model">Модель<span class="xszv">*</span></label>
+                            <span class="helper-text red-text" *ngIf="form.controls['model'].invalid && form.controls['model'].touched">
+                                <p *ngIf="form.controls['model'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="number" type="text" class="validate" formControlName="number" [ngClass]="{'invalid': form.controls['number'].invalid && form.controls['number'].touched}">
+                            <label for="number">Номер<span class="xszv">*</span></label>
+                            <span class="helper-text red-text" *ngIf="form.controls['number'].invalid && form.controls['number'].touched">
+                                <p *ngIf="form.controls['model'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="probeg" type="text" class="validate" formControlName="probeg" [ngClass]="{'invalid': form.controls['probeg'].invalid && form.controls['probeg'].touched}">
+                            <label for="probeg">Пробег</label>
+                            <span class="helper-text red-text" *ngIf="form.controls['probeg'].invalid && form.controls['probeg'].touched">
+                                <p *ngIf="form.controls['probeg'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="transmission" type="text" class="validate" formControlName="transmission"
+                                [ngClass]="{'invalid': form.controls['transmission'].invalid && form.controls['transmission'].touched}">
+                            <label for="transmission">Трансмиссия</label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['transmission'].invalid && form.controls['transmission'].touched">
+                                <p *ngIf="form.controls['transmission'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+
+
+                        <div class="xs_input_wrap">
+                            <label for="start_arenda">Дата заезда авто в парк</label>
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="start_arenda" type="datetime-local" class="validate"
+                                    formControlName="start_arenda"
+                                    [ngClass]="{'invalid': form.controls['start_arenda'].invalid && form.controls['start_arenda'].touched}">
+                        
+                            </div>
+                        </div>
+
+
+                        <div class="xs_input_wrap">
+                            <label for="end_arenda">Конец аренды</label>
+                            <div class="input-field col s12">
+                                <input placeholder="Введите значение" id="end_arenda" type="datetime-local" class="validate"
+                                    formControlName="end_arenda"
+                                    [ngClass]="{'invalid': form.controls['end_arenda'].invalid && form.controls['end_arenda'].touched}">
+                        
+                            </div>
+                        </div>
+
+
+                        <div class="input-field xs_select">
+                            <label for="vladelec">Владелец</label>
+                            <select id="vladelec" formControlName="vladelec" [ngClass]="{'invalid': form.controls['vladelec'].invalid && form.controls['vladelec'].touched}">
+                                <option value="" disabled selected>Владелец:</option>
+                                <option value="{{xspartner.surname}} {{xspartner.name}} {{xspartner.lastname}}" *ngFor="let xspartner of xspartners">
+                                    {{xspartner.surname}} {{xspartner.name}} {{xspartner.lastname}}</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field xs_select">
+                            <label for="category">Категория</label>
+                            <select id="category" formControlName="category" [ngClass]="{'invalid': form.controls['category'].invalid && form.controls['category'].touched}">
+                                <option value="" disabled selected>Категория:</option>
+                                <option value="Бизнес">Бизнес</option>
+                                <option value="Комфорт">Комфорт</option>
+                                <option value="Премиум">Премиум</option>
+                            </select>
+                        </div>
+
+
+                        <div class="input-field xs_select">
+                            <label for="status">Статус</label>
+                            <select id="status" formControlName="status" [ngClass]="{'invalid': form.controls['status'].invalid && form.controls['status'].touched}">
+                                <option value="" disabled selected>Статус:</option>
+                                <option value="Рабочий в парке">Рабочий в парке</option>
+                                <option value="Тех.обслуживание">Тех.обслуживание</option>
+                                <option value="Кузовной ремонт">Кузовной ремонт</option>
+                                <option value="По запросу">Выбыл с парка</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="xs_form__item xs_form__item___img">
+                        <div class="xs_car__preview">
+                            <img [src]="[imagePreview]" alt="Изображение" *ngIf="imagePreview !== ''">
+                            <div class="prevEmpty" *ngIf="imagePreview == ''">Загрузить обложку автомобиля</div>
+                        </div>
+
+                        <div>
+                            <input type="file" class="dn" #input (change)="onFileUpload($event)">
+
+                            <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2" (click)="triggerClick()" [disabled]="form.disabled">
+                                <i class="material-icons left">backup</i>
+                                Изменить изображение
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="register_data" class="col s12">
+                <div class="xs_form__item">
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="sts_seria" type="text" class="validate"
+                            formControlName="sts_seria"
+                            [ngClass]="{'invalid': form.controls['sts_seria'].invalid && form.controls['sts_seria'].touched}">
+                        <label for="model">Серия СТС</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="sts_number" type="text" class="validate"
+                            formControlName="sts_number"
+                            [ngClass]="{'invalid': form.controls['sts_number'].invalid && form.controls['sts_number'].touched}">
+                        <label for="model">Номер СТС</label>
+                    </div>
+
+
+
+                    <div class="xs_input_wrap">
+                        <label for="sts_date">Дата выдачи СТС</label>
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="sts_date" type="datetime-local" class="validate"
+                                formControlName="sts_date"
+                                [ngClass]="{'invalid': form.controls['sts_date'].invalid && form.controls['sts_date'].touched}">
+                    
+                        </div>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="osago_seria" type="text" class="validate"
+                            formControlName="osago_seria"
+                            [ngClass]="{'invalid': form.controls['osago_seria'].invalid && form.controls['osago_seria'].touched}">
+                        <label for="model">Серия ОСАГО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="osago_number" type="text" class="validate"
+                            formControlName="osago_number"
+                            [ngClass]="{'invalid': form.controls['osago_number'].invalid && form.controls['osago_number'].touched}">
+                        <label for="model">Номер ОСАГО</label>
+                    </div>
+
+
+                    <div class="xs_input_wrap">
+                        <label for="osago_date_finish">Дата окончания полиса ОСАГО</label>
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="osago_date_finish" type="datetime-local" class="validate"
+                                formControlName="osago_date_finish"
+                                [ngClass]="{'invalid': form.controls['osago_date_finish'].invalid && form.controls['osago_date_finish'].touched}">
+                    
+                        </div>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="vin" type="text" class="validate" formControlName="vin"
+                            [ngClass]="{'invalid': form.controls['vin'].invalid && form.controls['vin'].touched}">
+                        <label for="model">VIN автомобиля</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="kuzov_number" type="text" class="validate" formControlName="kuzov_number"
+                            [ngClass]="{'invalid': form.controls['kuzov_number'].invalid && form.controls['kuzov_number'].touched}">
+                        <label for="model">Номер кузова</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="color" type="text" class="validate" formControlName="color"
+                            [ngClass]="{'invalid': form.controls['color'].invalid && form.controls['color'].touched}">
+                        <label for="model">Цвет автомобиля</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="year_production" type="text" class="validate"
+                            formControlName="year_production"
+                            [ngClass]="{'invalid': form.controls['year_production'].invalid && form.controls['year_production'].touched}">
+                        <label for="model">Год выпуска автомобиля</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="price_ocenka" type="text" class="validate"
+                            formControlName="price_ocenka"
+                            [ngClass]="{'invalid': form.controls['price_ocenka'].invalid && form.controls['price_ocenka'].touched}">
+                        <label for="model">Оценочная стоимость автомобиля</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="to" class="col s12">
+                <div class="xs_form__item">
+
+
+                    <div class="xs_input_wrap">
+                        <label for="to_date">Дата последнего ТО</label>
+                        <div class="input-field col s12">
+                            <input placeholder="Введите значение" id="to_date" type="datetime-local" class="validate"
+                                formControlName="to_date"
+                                [ngClass]="{'invalid': form.controls['to_date'].invalid && form.controls['to_date'].touched}">
+                    
+                        </div>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="to_probeg_prev" type="text" class="validate"
+                            formControlName="to_probeg_prev"
+                            [ngClass]="{'invalid': form.controls['to_probeg_prev'].invalid && form.controls['to_probeg_prev'].touched}">
+                        <label for="model">Пробег на последнем ТО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="to_probeg_next" type="text" class="validate"
+                            formControlName="to_probeg_next"
+                            [ngClass]="{'invalid': form.controls['to_probeg_next'].invalid && form.controls['to_probeg_next'].touched}">
+                        <label for="model">Пробег для следующего ТО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="to_interval" type="text" class="validate"
+                            formControlName="to_interval"
+                            [ngClass]="{'invalid': form.controls['to_interval'].invalid && form.controls['to_interval'].touched}">
+                        <label for="model">Интервал ТО</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="oil_name" type="text" class="validate" formControlName="oil_name"
+                            [ngClass]="{'invalid': form.controls['oil_name'].invalid && form.controls['oil_name'].touched}">
+                        <label for="model">Наименование моторного масла</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="stoa_name" type="text" class="validate"
+                            formControlName="stoa_name"
+                            [ngClass]="{'invalid': form.controls['stoa_name'].invalid && form.controls['stoa_name'].touched}">
+                        <label for="model">Название СТОА</label>
+                    </div>
+            
+                    <div class="input-field col s12">
+                        <input placeholder="Введите значение" id="stoa_phone" type="text" class="validate"
+                            formControlName="stoa_phone"
+                            [ngClass]="{'invalid': form.controls['stoa_phone'].invalid && form.controls['stoa_phone'].touched}">
+                        <label for="model">Телефон СТОА</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tariffs" class="col s12">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>1-2 дня</th>
+                            <th>3-7 дней</th>
+                            <th>8-14 дней</th>
+                            <th>15-30 дней</th>
+                            <th>31+</th>
+                            <th>Залог</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Город
+                            </td>
+            
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_1_2" class="validate"
+                                    formControlName="days_1_2"
+                                    [ngClass]="{'invalid': form.controls['days_1_2'].invalid && form.controls['days_1_2'].touched}">
+                            </td>
+            
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_3_7" class="validate"
+                                    formControlName="days_3_7"
+                                    [ngClass]="{'invalid': form.controls['days_3_7'].invalid && form.controls['days_3_7'].touched}">
+                            </td>
+            
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_8_14" class="validate"
+                                    formControlName="days_8_14"
+                                    [ngClass]="{'invalid': form.controls['days_8_14'].invalid && form.controls['days_8_14'].touched}">
+                            </td>
+            
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_15_30" class="validate"
+                                    formControlName="days_15_30"
+                                    [ngClass]="{'invalid': form.controls['days_15_30'].invalid && form.controls['days_15_30'].touched}">
+                            </td>
+            
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="days_31_more" class="validate"
+                                    formControlName="days_31_more"
+                                    [ngClass]="{'invalid': form.controls['days_31_more'].invalid && form.controls['days_31_more'].touched}">
+                            </td>
+            
+                            <td>
+                                <input placeholder="Введите значение" id="zalog" type="text" class="validate xs_custome_zalog"
+                                    formControlName="zalog"
+                                    [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
+                            </td>
+            
+                        </tr>
+            
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Межгород
+                            </td>
+            
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="mezgorod" class="validate"
+                                    formControlName="mezgorod"
+                                    [ngClass]="{'invalid': form.controls['mezgorod'].invalid && form.controls['mezgorod'].touched}">
+                            </td>
+            
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+            
+                            <td>
+                                <input placeholder="Введите значение" id="zalog_mej" type="text" class="validate xs_custome_zalog"
+                                    formControlName="zalog_mej"
+                                    [ngClass]="{'invalid': form.controls['zalog_mej'].invalid && form.controls['zalog_mej'].touched}">
+                            </td>
+                        </tr>
+            
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Россия
+                            </td>
+            
+                            <td>
+                                <input type="text" placeholder="Введите значение" id="russia" class="validate"
+                                    formControlName="russia"
+                                    [ngClass]="{'invalid': form.controls['russia'].invalid && form.controls['russia'].touched}">
+                            </td>
+            
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+            
+                            <td>
+                                <input placeholder="Введите значение" id="zalog_rus" type="text" class="validate xs_custome_zalog"
+                                    formControlName="zalog_rus"
+                                    [ngClass]="{'invalid': form.controls['zalog_rus'].invalid && form.controls['zalog_rus'].touched}">
+                            </td>
+                        </tr>
+            
+            
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Цена за час (доп время)
+                            </td>
+            
+                            <td>
+                                <input placeholder="Введите значение" id="price_dop_hour" type="text" class="validate"
+                                    formControlName="price_dop_hour"
+                                    [ngClass]="{'invalid': form.controls['price_dop_hour'].invalid && form.controls['price_dop_hour'].touched}">
+                            </td>
+                        </tr>
+            
+
+            
+                        <tr>
+                            <td style="color: #194A9E; font-weight: 600;">
+                                Мойка
+                            </td>
+            
+                            <td>
+                                <input placeholder="Введите значение" id="moyka" type="text" class="validate"
+                                    formControlName="moyka"
+                                    [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            </div>
+        </div>
+    </div>
+
+    <div class="xs_add__car___top">
+        <div class="xs_add__car__top____actions">
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+</form>

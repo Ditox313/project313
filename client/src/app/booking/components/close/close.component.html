@@ -1,0 +1,194 @@
+<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="actualBooking">
+    <div class="xs_add__car___top">
+        <h1>
+            <span class="material-icons">check_box</span> Закрыть бронь № {{actualBooking.order}}
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+
+
+            <a [routerLink]="['/view-booking',this.bookingId]">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+
+            <button type="submit" [disabled]="this.form.value.return_part && (this.form.value.return_part_comment.length === 0)">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+
+
+
+
+    <div class="xs_close_booking__content">
+        <div class="xs_close_booking__content___item">
+            <div class="xs_form_pay__information" *ngIf="actualBooking">
+                <h5>Информация</h5>
+                <div>
+                    <span>Номер брони: </span>
+                    <span class="pay_last_span">№{{actualBooking.order}}</span>
+                </div>
+                <div>
+                    <span>Создана: </span>
+                    <span class="pay_last_span">{{actualBooking.date | date : 'd MMMM y, H:mm'}}</span>
+                </div>
+        
+                <div>
+                    <span>Автомобиль: </span>
+                    <span class="pay_last_span">{{actualBooking.car.marka}} {{actualBooking.car.model}}
+                        ({{actualBooking.car.number}})</span>
+                </div>
+        
+        
+                <div>
+                    <span>Суток: </span>
+                    <span class="pay_last_span">{{actualBooking.booking_days | number: '1.0-0'}} д</span>
+                </div>
+
+        
+                <div class="pay_rashet">
+                    <div>
+                        <div> <span>Аренда: </span> <span class="pay_last_span">{{ this.summa.summa | number: '1.0-0'}} ₽</span>
+                        </div>
+                        <div> <span>Залог: </span> <span class="pay_last_span">{{ this.actualBooking.booking_zalog}} ₽</span> </div>
+                        <div *ngIf="summa.dop_hours > 0"> <span>Доп.час: </span> <span
+                                class="pay_last_span">({{summa.dop_hours}}ч)
+                                {{
+                                this.summa.car.price_dop_hour * summa.dop_hours}} ₽ </span> </div>
+                        <div> <span>Итого: </span> <span class="pay_last_span">{{ summa.summaFull | number: '1.0-0'}} ₽</span>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)"
+                    [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
+                    <div> <span class="xs_paid_span_1">Общая скидка:</span> <span class="xs_paid_span_1">{{this.actualBooking.sale}} ₽</span> </div>
+                    <div>
+                        <span class="xs_paid_span_1">Оплачено </span>
+                        <span class="xs_paid_span_1">{{actualBooking.paidCount}} ₽</span>
+                    </div>
+        
+                    <div>
+                        <span class="xs_paid_span_1">Остаток</span> <span class="xs_paid_span_1">{{+summa.summaFull - (+actualBooking.paidCount)}}
+                            ₽</span>
+                    </div>
+                </div>
+        
+        
+            </div>
+        </div>
+
+
+        <div class="xs_close_booking__content___item">
+            <div class="input-field col s12" >
+                <div><label for="booking_end">Дата и время окончания брони<span class="xszv">*</span></label></div>
+                <input  placeholder="Введите значение" id="booking_end" type="datetime-local" class="validate"
+                    formControlName="booking_end"
+                    [ngClass]="{'invalid': form.controls['booking_end'].invalid && form.controls['booking_end'].touched}">
+            </div>
+
+            <div class="input-field xs_close_input_wrap col s12">
+                <div><label>Предыдущий пробег</label></div>
+                <span>{{actualBooking.car.probeg}}</span>
+            </div>
+
+            <div class="input-field col s12">
+                <div><label>Новый пробег<span class="xszv">*</span></label></div>
+                <input placeholder="Введите значение" id="probeg_new" type="text" class="validate"
+                    formControlName="probeg_new"
+                    [ngClass]="{'invalid': form.controls['probeg_new'].invalid && form.controls['probeg_new'].touched}">
+            </div>
+
+            <div class="xs_close_probeg_warning" *ngIf="+this.actualBooking.car.to_probeg_next < this.form.value.probeg_new">
+                <div>
+                    <span>Пробег для следующего ТО:</span>
+                    <span>{{actualBooking.car.to_probeg_next}}</span>
+                </div>
+
+                <div>НЕОБХОДИМО СРОЧНОЕ ТО ДЛЯ АВТОМОБИЛЯ {{actualBooking.car.marka}} {{actualBooking.car.model}} {{actualBooking.car.number}}</div>
+            </div>
+
+            <div class="close_dop_info">
+                <div class="input-field col s12">
+                    <span>Чистый автомобиль</span>
+                    <input type="checkbox" id="clear_auto" class="validate" formControlName="clear_auto">
+                </div>
+
+                <div class="input-field col s12">
+                    <span>Полный бак</span>
+                    <input type="checkbox" id="clear_auto" class="validate" formControlName="full_tank">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="xs_close_booking__content___item">
+            <h4>Вернуть залог: {{actualBooking.booking_zalog}} руб</h4>
+
+            <div class="xs_form_pay__item">
+                <label for="marka">Тип возврата</label>
+                <div class="input-field col s12">
+                    <select id="typePayArenda" formControlName="typePayArenda" [(ngModel)]="defaultValueArenda"
+                        [ngClass]="{'invalid': form.controls['typePayArenda'].invalid && form.controls['typePayArenda'].touched}">
+                        <option value="Наличные" selected>Наличные</option>
+            
+                        <option *ngFor="let PayType of PayTypes" value="{{PayType.value}}">
+                            {{PayType.value}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="xs_close_booking__content___item___checkbox">
+                <span>Вернуть частично</span>
+
+                <input type="checkbox" id="return_part" class="validate" formControlName="return_part">
+
+                <input *ngIf="this.form.value.return_part === true" type="text" id="return_part_price" placeholder="Введите сумму для возврата" class="validate" formControlName="return_part_price">
+
+                <div *ngIf="this.form.value.return_part === true">
+                    <label for="">Комментарий <span class="xszv">*</span></label>
+                    <textarea placeholder="Введите комментарий" formControlName="return_part_comment" id="return_part_comment" cols="30" rows="10"
+                    [ngClass]="{'invalid': form.controls['return_part_comment'].invalid && form.controls['return_part_comment'].touched}"></textarea>
+
+                    <span class="helper-text red-text" *ngIf="form.controls['return_part_comment'].invalid && form.controls['return_part_comment'].touched">
+                        <p *ngIf="form.controls['return_part_comment'].errors?.required">
+                            Комментарий не должен быть пустым!
+                        </p>
+                    
+                        <p *ngIf="form.controls['return_part_comment'].errors?.return_part_comment">
+                            Введите корректный комментарий
+                        </p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="xs_add__car___top">
+        <div class="xs_add__car__top____actions">
+            <button type="submit"  
+            [disabled]="(this.form.value.return_part && (this.form.value.return_part_comment.length === 0)) || (this.form.value.probeg_new.length === 0)">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+
+
+    <div class="xs_warning__close" *ngIf="this.form.value.return_part && (this.form.value.return_part_comment.length === 0)">
+        <div>
+            Не заполнен комментарий для возврата залога
+        </div>
+    </div>
+
+
+    <div class="xs_warning__close" *ngIf="this.form.value.probeg_new.length === 0">
+        <div>
+            Не заполнен новый пробег автомобиля
+        </div>
+    </div>
+</form>
+
+
+<app-loader *ngIf="!actualBooking"></app-loader>

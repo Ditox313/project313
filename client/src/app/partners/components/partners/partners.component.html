@@ -1,0 +1,57 @@
+
+<div class="xs_cars">
+    <div class="xs_cars__top">
+        <h1>
+            <span class="material-icons">group_add</span>
+            <span> Партнеры</span>
+        </h1>
+
+        <div class="xs_add__car">
+            <a [routerLink]="['/add-partner']">
+                <span class="material-icons">library_add</span> Добавить партнера
+            </a>
+        </div>
+    </div>
+
+
+
+    <div class="xs_cars__content">
+        <app-loader *ngIf="loading"></app-loader>
+
+        <table class="striped" *ngIf="!loading">
+            <thead>
+                <tr>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                </tr>
+
+            </thead>
+
+            <tbody *ngIf="xspartners.length !== 0; else empty">
+                <tr *ngFor="let xspartner of xspartners" class="xs_partners_tr">
+                    <td>
+                        <a [routerLink]="['/show-partner','edit',xspartner._id]">
+                            {{xspartner.surname}} {{xspartner.name}} {{xspartner.lastname}}
+                        </a>
+                    </td>
+                    <td>{{xspartner.phone_main}}</td>
+                    <td class="xs_actions ">
+                        <a [routerLink]="['/show-partner','edit',xspartner._id]"><span
+                                class="material-icons ">mode_edit</span></a>
+                        <a (click)="onDeleteCar($event, xspartner)"><span class="material-icons ">delete</span></a>
+                    </td>
+                </tr>
+            </tbody>
+
+            <ng-template #empty>
+                <div style="font-size: 20px; " class="xs_empty ">
+                    Нет партнеров...
+                </div>
+            </ng-template>
+        </table>
+
+        <div class="xs_cars__more" *ngIf="!noMoreCars">
+            <span (click)="loadmore()">Загрузить еще...</span>
+        </div>
+    </div>
+</div>

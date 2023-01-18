@@ -1,0 +1,336 @@
+
+<form class="xs_add__car" *ngIf="actualBooking">
+    <div class="xs_add__car___top">
+        <h1 >
+            <span class="material-icons">contact_mail</span> Просмотр брони №{{actualBooking.order}} 
+        </h1>
+    </div>
+
+    <div class="xs_add__car__content">
+        <div class="row">
+
+            <div id="information" class="col s12">
+                <div class="xs_booking_view_content">
+                    <div class="xs_booking_view_content___item">
+                        <div class="view_info">
+                            <h5>Информация</h5>
+                            <div>
+                                <span>Номер брони:</span>
+                                <span>  <strong>№{{actualBooking.order}}</strong> </span>
+                            </div>
+                            <div>
+                                <span>Статус:</span>
+                                <span>
+                                    <span *ngIf="bookingStatus === 'В ожидании'" class="btn_waiting">В ожидании</span>
+                                    <span *ngIf="bookingStatus === 'В аренде'" class="btn_v_arende">В аренде</span>
+                                    <span *ngIf="bookingStatus === 'Закрыта'" class="btn_close">Закрыта</span>
+                                </span>
+                            </div>
+                            
+                            <div>
+                                <span>Создана:</span>
+                                <span>{{actualBooking.date | date : 'd MMMM y, H:mm'}}</span>
+                            </div>
+                            
+                            <div class="view_info_client">
+                                <span>Клиент:</span>
+                                <span [routerLink]="['/show-client','edit',xsActualClient._id]" *ngIf="actualBooking.client.type === 'fiz'">
+                                    {{actualBooking.client.surname}} {{actualBooking.client.name}} {{actualBooking.client.lastname}}
+                                </span>
+
+                                <span [routerLink]="['/show-client-lawfase','edit',xsActualClient._id]" *ngIf="actualBooking.client.type === 'law'">
+                                    {{actualBooking.client.short_name}} {{actualBooking.client.name}}
+                                </span>
+                            </div>
+                            
+                            <div class="view_info_phone">
+                                <span>Телефон:</span>
+                                <a href="tel:{{actualBooking.client.phone_main}}" *ngIf="actualBooking.client.type === 'fiz'">{{actualBooking.client.phone_main}}</a>
+                                <a href="tel:{{actualBooking.client.number_1}}" *ngIf="actualBooking.client.type === 'law'">{{actualBooking.client.number_1}}</a>
+                            </div>
+                            
+                            <div>
+                                <span>Автомобиль:</span>
+                                <span>{{actualBooking.car.marka}} {{actualBooking.car.model}} ({{actualBooking.car.number}})</span>
+                            </div>
+                            
+                            <div>
+                                <span>Время начала:</span>
+                                <span>{{actualBooking.booking_start | date : 'd MMMM y, H:mm'}} </span>
+                            </div>
+                            
+                            <div>
+                                <span>Время окончания:</span>
+                                <span>{{actualBooking.booking_end | date : 'd MMMM y, H:mm'}} </span>
+                            </div>
+                            
+                            <div>
+                                <span>Суток:</span>
+                                <span>{{actualBooking.booking_days | number: '1.0-0'}} д</span>
+                            </div>
+
+                            <div *ngIf="summa.dop_hours > 0">
+                                <span>Доп часы:</span>
+                                <span>{{summa.dop_hours}} ч</span>
+                            </div>
+                            
+                            <div>
+                                <span>Выдача:</span>
+                                <span>{{actualBooking.place_start}} </span>
+                            </div>
+                            
+                            <div>
+                                <span>Прием:</span>
+                                <span>{{actualBooking.place_end}} </span>
+                            </div>
+
+                            <div>
+                                <span>Тариф:</span>
+                                <span>{{actualBooking.tariff}} </span>
+                            </div>
+
+                            <div>
+                                <span>Цена тарифа:</span>
+                                <span>{{ this.summa.checkedTarif}} ₽</span>
+                            </div>
+
+                            <div *ngIf="summa.dop_hours > 0">
+                                <span>Цена за доп.час:</span>
+                                <span>{{ actualBooking.car.price_dop_hour}} ₽</span>
+                            </div>
+
+                            <div *ngIf="actualBooking.comment">
+                                <span>Комментарий:</span>
+                                <span>{{actualBooking.comment}} </span>
+                            </div>
+
+                            <div>
+                                <span>Выдан чистый авто:</span>
+                                <span>{{this.actualBooking.dop_info_open.clear_auto ? 'Да' : 'Нет'}}</span>
+                            </div>
+                            
+                            <div>
+                                <span>Выдан полный бак:</span>
+                                <span>{{this.actualBooking.dop_info_open.full_tank ? 'Да' : 'Нет'}}</span>
+                            </div>
+
+                            
+                        </div>
+                        
+
+                        <div class="view_rashet" *ngIf="!this.actualBooking.dop_info_close">
+                            <h5>Рассчет</h5>
+                            <div>
+                                <div> <span>Аренда:</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
+                                <div *ngIf="this.actualBooking.dop_info_close && !this.actualBooking.dop_info_close.clear_auto"> <span>Мойка:</span> 
+                                    <span>{{ this.actualBooking.car.moyka | number: '1.0-0'}} ₽</span> 
+                                </div>
+                                <div> <span *ngIf="this.summa.car.zalog > 0">Залог:</span> <span>{{ this.actualBooking.booking_zalog}} ₽</span> </div>
+                                <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
+                                <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
+                            </div>
+                        </div>
+
+                        <div class="view_rashet" *ngIf="this.actualBooking.dop_info_close">
+                            <h5>Рассчет</h5>
+                            <div>
+                                <div> <span>Аренда:</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
+                                <div *ngIf="this.actualBooking.dop_info_close && !this.actualBooking.dop_info_close.clear_auto"> <span>Мойка:</span> <span>{{ this.actualBooking.car.moyka | number: '1.0-0'}} ₽</span> </div>
+                                <div><span>Залог:</span> <span>{{ this.actualBooking.dop_info_close.zalog}} ₽</span> </div>
+                                <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
+                                <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
+                            </div>
+                        </div>
+                        
+                        <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)" [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
+                            <div> <span>Общая скидка:</span> <span class="xs_paid_span_2">{{ this.summa.sale}} ₽</span> </div>
+                            <div>
+                                <span class="xs_paid_span_1">Оплачено: </span>
+                                <span class="xs_paid_span_2">{{actualBooking.paidCount}} ₽</span>
+                            </div>
+                            
+                            <div> 
+                                <span>Остаток:</span> <span class="xs_paid_span_2">{{+summa.summaFull - (+actualBooking.paidCount)}} ₽</span> 
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+                    <div class="xs_booking_view_content___item">
+                        <div class="pay_view_info extend_list">
+                            <h5>Платежи</h5>
+                            <div class="pay_view_info__content">
+                                 <table class="striped" *ngIf="pays">
+                                    <thead>
+                                        <tr>
+                                            <th>Дата</th>
+                                            <th>Сумма</th>
+                                            <th>Тип</th>
+                                            <th>Группа</th>
+                                        </tr>
+                            
+                                    </thead>
+                            
+                                    <tbody >
+                                        <tr *ngFor="let pay of pays; let i = index" class="xs_partners_tr xsbooking" [class.xs_paid_zalog]="pay.vidPay === 'Залог'">
+                                            <td>
+                                                <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.pricePay}} ₽</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.typePay}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.vidPay}}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="xs_booking_view_content___item">
+                        <div class="setting_view_info">
+                            <div class="to_pay " *ngIf="+actualBooking.paidCount <= 0">
+                                <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">Оплатить</a>
+                                <a  class="to_pay_act" (click)="clickAct($event)" *ngIf="actualActs.length <= 0">Сформировать акт</a>
+
+                                <a [routerLink]="['/show-act-booking', actualActs[0]._id]" class="to_pay_act" *ngIf="actualActs.length > 0">Просмотр акта</a>
+                            </div>
+
+                            <div class="to_pay " *ngIf="+actualBooking.paidCount > 0 && +actualBooking.paidCount < (+summa.summaFull)">
+                                <a [routerLink]="['/add-pay', bookingId]" class="to_pay_none">-{{+summa.summaFull - (+actualBooking.paidCount)}}</a>
+                                <a class="to_pay_act" (click)="clickAct($event)" *ngIf="actualActs.length <= 0">Сформировать акт</a>
+                                
+                                <a [routerLink]="['/show-act-booking', actualActs[0]._id]" class="to_pay_act" *ngIf="actualActs.length > 0">Просмотр акта</a>
+                            </div>
+
+                            <div class="to_pay" *ngIf="+actualBooking.paidCount >= (+summa.summaFull)">
+                                <a [routerLink]="['/add-pay', bookingId]" class="to_pay_ok">Оплачено</a>
+                                <a class="to_pay_act" (click)="clickAct($event)" *ngIf="actualActs.length <= 0">Сформировать акт</a>
+                                
+                                <a [routerLink]="['/show-act-booking', actualActs[0]._id]" class="to_pay_act" *ngIf="actualActs.length > 0">Просмотр акта</a>
+                            </div>
+
+                            <h5>Управление</h5>
+
+                            <div class="setting_view_info__box" *ngIf="bookingStatus === 'В ожидании'">
+                                <span *ngIf="actualActs.length > 0"  title="Выдать автомобиль"  (click)="toggleStatus('В аренде')">
+                                    <img src="../../../../assets/img/vidat_avto.png" alt="">
+                                </span>
+
+                                <span title="Редактировать бронь" [routerLink]="['/edit-booking',actualBooking._id,'view']">
+                                    <img src="../../../../assets/img/edit_avto.png" alt="">
+                                </span>
+
+                            </div>
+
+
+                            <div class="setting_view_info__box" *ngIf="bookingStatus=== 'В аренде'">
+      
+                                <span [routerLink]="['/extend-booking', bookingId]" title="Продлить бронь">
+                                    <img src="../../../../assets/img/prodlit.png">
+                                </span>
+
+                                <span [routerLink]="['/close-booking', bookingId]" title="Принять автомобиль">
+                                    <img src="../../../../assets/img/vernut.png">
+                                </span>
+                            
+                                <span title="Редактировать бронь" [routerLink]="['/edit-booking',actualBooking._id,'view']">
+                                    <img src="../../../../assets/img/edit_avto.png">
+                                </span>
+                            
+                            </div>
+
+
+
+                            <div class="xs_booking_close_info" *ngIf="this.actualBooking.dop_info_close">
+                                <h5>Дополнительная информация</h5>
+                                
+                                <div>
+                                    <span>Сдан чистый авто:</span>
+                                    <span>{{this.actualBooking.dop_info_close.clear_auto ? 'Да' : 'Нет'}}</span>
+                                </div>
+                                
+                                <div>
+                                    <span>Сдан полный бак:</span>
+                                    <span>{{this.actualBooking.dop_info_close.full_tank ? 'Да' : 'Нет'}}</span>
+                                </div>
+
+                                <div>
+                                    <span>Пробег на начало аренды:</span>
+                                    <span>{{this.actualBooking.car.probeg}}</span>
+                                </div>
+
+                                <div>
+                                    <span>Пробег на конец аренды:</span>
+                                    <span>{{this.actualBooking.dop_info_close.probeg_new}}</span>
+                                </div>
+
+
+                                <div>
+                                    <span>Частичный возврат залога:</span>
+                                    <span>{{this.actualBooking.dop_info_close.return_part_price.length > 0 ? 'Да' : 'Нет'}}</span>
+                                </div>
+
+                                <div *ngIf="this.actualBooking.dop_info_close.return_part_comment">
+                                    <span>Комментарий:</span>
+                                    <span>{{this.actualBooking.dop_info_close.return_part_comment}}</span>
+                                </div>
+                            </div>
+
+                            <div class="extend_block" *ngIf="actualBooking.extend.length > 0">
+                                <h5>Продления</h5>
+                                <div class="extend_block__list">
+                                    <table class="striped" *ngIf="pays">
+                                        <thead>
+                                            <tr>
+                                                <th>Дата</th>
+                                                <th>Дней</th>
+                                                <th>Сумма</th>
+                                                <th>Скидка</th>
+                                            </tr>
+                            
+                                        </thead>
+                            
+                                        <tbody>
+                                            <tr *ngFor="let pay of actualBooking.extend.slice().reverse(); let i = index" class="xs_partners_tr xsbooking">
+                                                <td>
+                                                    <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{pay.days}} д</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{pay.summ || 0}} ₽</span>
+                                                </td>
+
+                                                <td >
+                                                    <span *ngIf="pay.sale > 0">{{pay.sale}} ₽</span>
+                                                    <span *ngIf="!pay.sale">Нет</span>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</form>
+<app-loader *ngIf="!actualBooking"></app-loader>

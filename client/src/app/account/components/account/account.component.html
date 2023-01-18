@@ -1,0 +1,130 @@
+<form [formGroup]="form" (ngSubmit)="onSubmitProfile()"  class="xs_account" *ngIf="currentUser" >
+    <div class="xs_add__car___top">
+        <h1 style="margin-top: 0;">
+            <span class="material-icons">perm_data_setting</span> Настройки профиля
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Редактировать
+            </button>
+        </div>
+    </div>
+
+
+    <div class="xs_account__content" id="content" #content>
+        <div class="xs_account_box">
+            <div class="xs_account_box___item">
+                <label for="email">Email:</label>
+                <div class="input-field">
+                    <input id="email" type="email" formControlName="email"
+                        [ngClass]="{'invalid': form.controls['email'].invalid && form.controls['email'].touched}">
+                
+                    <span class="helper-text red-text" *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
+                        <p *ngIf="form.controls['email'].errors?.required">
+                            Поле не должно быть пустым
+                        </p>
+                
+                        <p *ngIf="form.controls['email'].errors?.email">
+                            Введите корректный Email
+                        </p>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="xs_account_box___item">
+                <label for="password">Новый пароль:</label>
+                <div class="input-field">
+                    <input id="password" type="password" formControlName="password"
+                        [ngClass]="{'invalid': form.controls['password'].invalid && form.controls['password'].touched}">
+                    <span class="helper-text red-text" *ngIf="form.controls['password'].invalid && form.controls['password'].touched">
+                        <p *ngIf="form.controls['password'].errors?.required">
+                            Поле не должно быть пустым
+                        </p>
+                
+                        <p *ngIf="form.controls['password'].errors?.minlength">
+                            Минимальная длина пароля 6 символов
+                        </p>
+                    </span>
+                </div>
+            </div>
+            
+
+            <div class="xs_account_box___item">
+                <label for="password">Номер доверенности:</label>
+                <div class="input-field">
+                    <input id="doverenost" type="text" formControlName="doverenost"
+                        [ngClass]="{'invalid': form.controls['doverenost'].invalid && form.controls['doverenost'].touched}">
+                    <span class="helper-text red-text"
+                        *ngIf="form.controls['doverenost'].invalid && form.controls['doverenost'].touched">
+                        <p *ngIf="form.controls['doverenost'].errors?.required">
+                            Поле не должно быть пустым
+                        </p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="xs_account_box___item">
+                <label for="password">Дата доверенности:</label>
+                <div class="input-field">
+                    <input id="doverenostDate" type="date" formControlName="doverenostDate"
+                        [ngClass]="{'invalid': form.controls['doverenostDate'].invalid && form.controls['doverenostDate'].touched}">
+                    <span class="helper-text red-text"
+                        *ngIf="form.controls['doverenostDate'].invalid && form.controls['doverenost'].touched">
+                        <p *ngIf="form.controls['doverenostDate'].errors?.required">
+                            Поле не должно быть пустым
+                        </p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="xs_account_box">
+            <div class="xs_account_box___item">
+                <label for="name">Имя:</label>
+                <div class="input-field">
+                    <input id="name" type="text" formControlName="name"
+                        [ngClass]="{'invalid': form.controls['name'].invalid && form.controls['name'].touched}">
+                    <span class="helper-text red-text" *ngIf="form.controls['name'].invalid && form.controls['name'].touched">
+                        <p *ngIf="form.controls['name'].errors?.required">
+                            Поле не должно быть пустым
+                        </p>
+                
+                    </span>
+                </div>
+            </div>
+            
+        
+            <div class="xs_account_box___item">
+                <label for="secondName">Фамилия:</label>
+                <div class="input-field">
+                    <input id="secondName" type="text" formControlName="secondName"
+                        [ngClass]="{'invalid': form.controls['secondName'].invalid && form.controls['secondName'].touched}">
+                    <span class="helper-text red-text"
+                        *ngIf="form.controls['secondName'].invalid && form.controls['secondName'].touched">
+                        <p *ngIf="form.controls['secondName'].errors?.required">
+                            Поле не должно быть пустым
+                        </p>
+                
+                    </span>
+                </div>
+            </div>
+            
+        
+            <div class="xs_account_box___item">
+                <label for="thirdName">Отчество:</label>
+                <div class="input-field">
+                    <input id="thirdName" type="text" formControlName="thirdName"
+                        [ngClass]="{'invalid': form.controls['thirdName'].invalid && form.controls['thirdName'].touched}">
+                    <span class="helper-text red-text" *ngIf="form.controls['thirdName'].invalid && form.controls['thirdName'].touched">
+                        <p *ngIf="form.controls['thirdName'].errors?.required">
+                            Поле не должно быть пустым
+                        </p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<app-loader *ngIf="!currentUser"></app-loader>

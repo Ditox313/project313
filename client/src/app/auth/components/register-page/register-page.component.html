@@ -1,0 +1,35 @@
+
+<form class="card" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card-content">
+        <span class="card-title">Создать аккаунт</span>
+        <div class="input-field">
+            <input id="email" type="email" formControlName="email" [ngClass]="{'invalid': form.controls['email'].invalid && form.controls['email'].touched}">
+            <label for="email">Email:</label>
+            <span class="helper-text red-text" *ngIf="form.controls['email'].invalid && form.controls['email'].touched">
+                <p *ngIf="form.controls['email'].errors?.required">
+                    Email не должен быть пустым
+                </p>
+
+                <p *ngIf="form.controls['email'].errors?.email">
+                    Введите корректный Email
+                </p>
+            </span>
+        </div>
+        <div class="input-field">
+            <input id="password" type="password" formControlName="password" [ngClass]="{'invalid': form.controls['password'].invalid && form.controls['password'].touched}">
+            <label for="password">Пароль:</label>
+            <span class="helper-text red-text" *ngIf="form.controls['password'].invalid && form.controls['password'].touched">
+                <p *ngIf="form.controls['password'].errors?.required">
+                    Пароль не должен быть пустым
+                </p>
+
+                <p *ngIf="form.controls['password'].errors?.minlength">
+                    Минимальная длина пароля 6 символов
+                </p>
+            </span>
+        </div>
+    </div>
+    <div class="card-action">
+        <button class="modal-action btn waves-effect" type="submit" [disabled]="form.invalid || form.disabled">Создать</button>
+    </div>
+</form>

@@ -1,0 +1,188 @@
+<app-loader *ngIf="!actualBooking"></app-loader>
+<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="xs_add__car___top">
+        <h1>
+            <span class="material-icons">contact_mail</span> Оплата брони
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+            <a [routerLink]="['/view-booking', bookingId]">
+                <span class="material-icons">arrow_back_ios</span>Назад
+            </a>
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+
+    <div class="xs_add__car__content">
+        <div class="row">
+
+            <div id="information" class="col s12">
+                <div class="xs_form_pay">
+                    <div class="xs_form_pay__information" *ngIf="actualBooking">
+                        <h5>Информация</h5>
+                        <div>
+                            <span>Номер брони: </span>
+                            <span class="pay_last_span">№{{actualBooking.order}}</span>
+                        </div>
+                        <div>
+                            <span>Создана: </span>
+                            <span class="pay_last_span">{{actualBooking.date | date : 'd MMMM y, H:mm'}}</span>
+                        </div>
+                        
+                        <div>
+                            <span>Автомобиль: </span>
+                            <span class="pay_last_span">{{actualBooking.car.marka}} {{actualBooking.car.model}} ({{actualBooking.car.number}})</span>
+                        </div>
+                        
+                        
+                        <div>
+                            <span>Суток: </span>
+                            <span class="pay_last_span">{{actualBooking.booking_days | number: '1.0-0'}} д</span>
+                        </div>
+                        
+                        
+                        <div>
+                            <span>Тариф: </span>
+                            <span class="pay_last_span">{{actualBooking.tariff}} </span>
+                        </div>
+                        
+                        <div>
+                            <span>Цена тарифа: </span>
+                            <span class="pay_last_span">{{ this.summa.checkedTarif}} ₽</span>
+                        </div>
+
+                        <div class="pay_rashet">
+                            <div>
+                                <div> <span>Аренда: </span> <span class="pay_last_span">{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
+                                <div> <span>Залог: </span> <span class="pay_last_span">{{ this.actualBooking.booking_zalog}} ₽</span> </div>
+
+                                <div *ngIf="summa.dop_hours > 0"> <span>Доп.час: </span> <span class="pay_last_span">({{summa.dop_hours}}ч) {{
+                                        this.summa.car.price_dop_hour * summa.dop_hours}} ₽ </span> </div>
+                                        
+                                <div> <span>Итого: </span> <span class="pay_last_span">{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
+                            </div>
+                        </div>
+
+                        <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)"
+                            [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
+                            <div>
+                                <span class="xs_paid_span_1">Оплачено </span>
+                                <span class="xs_paid_span_2">{{actualBooking.paidCount}} ₽</span>
+                            </div>
+                        
+                            <div>
+                                <span>Остаток</span> <span class="xs_paid_span_2">{{+summa.summaFull - (+actualBooking.paidCount)}} ₽</span>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+
+                    <div class="xs_form_pay__pays">
+                        <h5>Платежи</h5>
+
+                        <div class="pay_view_info__contentt">
+                            <table class="striped" *ngIf="xspays">
+                                <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Сумма</th>
+                                        <th>Тип</th>
+                                        <th>Группа</th>
+                                    </tr>
+                        
+                                </thead>
+                        
+                                <tbody >
+                                    <tr *ngFor="let pay of xspays; let i = index" class="xs_partners_tr xsbooking">
+                                        <td>
+                                            <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{pay.pricePay}} ₽</span>
+                                        </td>
+                                        <td>
+                                            <span>{{pay.typePay}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{pay.vidPay}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="xs_form_pay__actions">
+                        <h5>Оплата</h5>
+
+                        <div class="input-field col s12">
+                            <input placeholder="0" id="arenda" type="number" class="validate" formControlName="arenda"
+                                [ngClass]="{'invalid': form.controls['arenda'].invalid && form.controls['arenda'].touched}" >
+                            <label for="arenda">Аренда</label>
+                            <span class="helper-text red-text"
+                                *ngIf="form.controls['arenda'].invalid && form.controls['arenda'].touched">
+                                <p *ngIf="form.controls['arenda'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
+                        <div class="xs_form_pay__item">
+                            <label for="marka">Тип оплаты</label>
+                            <div class="input-field col s12">
+                                <select id="typePayArenda" formControlName="typePayArenda" [(ngModel)]="defaultValueArenda"
+                                    [ngClass]="{'invalid': form.controls['typePayArenda'].invalid && form.controls['typePayArenda'].touched}">
+                                    <option value="Наличные" selected>Наличные</option>
+                                    
+                                    <option *ngFor="let PayType of PayTypes" value="{{PayType.value}}">
+                                        {{PayType.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="xs_input_wrap">
+                            <label for="zalog">Залог</label>
+                            <div class="input-field pay_mod col s12">
+                                <input placeholder="0"  id="zalog" type="number" class="validate" formControlName="zalog"
+                                    [ngClass]="{'invalid': form.controls['zalog'].invalid && form.controls['zalog'].touched}">
+                                
+                                <span class="helper-text red-text" *ngIf="form.controls['zalog'].invalid && form.controls['zalog'].touched">
+                                    <p *ngIf="form.controls['zalog'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="xs_form_pay__item">
+                            <label for="marka">Тип оплаты</label>
+                            <div class="input-field col s12">
+                                <select id="typePayZalog" formControlName="typePayZalog" [(ngModel)]="defaultValueZalog"
+                                    [ngClass]="{'invalid': form.controls['typePayZalog'].invalid && form.controls['typePayZalog'].touched}">
+                                    <option value="Наличные" selected>Наличные</option>
+                        
+                                    <option *ngFor="let arendaPayType of PayTypes" value="{{arendaPayType.value}}">
+                                        {{arendaPayType.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="xs_add__car___top">
+        <div class="xs_add__car__top____actions">
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+    </div>
+</form>

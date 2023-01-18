@@ -1,0 +1,108 @@
+<div class="xs_clients">
+    <div class="xs_clients__content">
+        <app-loader *ngIf="loading"></app-loader>
+
+        <div class="col s12">
+            <ul class="tabs" #tabs>
+                <li class="tab col"><a href="#fizfase" class="active">Физические лица</a></li>
+                <li class="tab col"><a href="#lawfase">Юридические лица</a></li>
+            </ul>
+        </div>
+
+        <div id="fizfase">
+            <div class="xs_clients__top">
+                <div class="xs_add__car xs_add__client">
+                    <a [routerLink]="['/add-client']">
+                        <span class="material-icons">library_add</span> Добавить физ/лицо
+                    </a>
+                </div>
+            </div>
+
+
+            <table class="striped" *ngIf="!loading" >
+                <thead>
+                    <tr>
+                        <th>ФИО</th>
+                        <th>Телефон</th>
+                    </tr>
+
+                </thead>
+
+                <tbody *ngIf="xsclients.length !== 0; else empty">
+                    <tr *ngFor="let xsclient of xsclients" class="xs_partners_tr">
+                        <td>
+                            <a [routerLink]="['/show-client','edit',xsclient._id]">
+                                {{xsclient.surname}} {{xsclient.name}} {{xsclient.lastname}}
+                            </a>
+                        </td>
+                        <td>{{xsclient.phone_main}}</td>
+                        <td class="xs_actions ">
+                            <a [routerLink]="['/show-client','edit',xsclient._id]"><span
+                                    class="material-icons ">mode_edit</span></a>
+                            <a (click)="onDeleteCar($event, xsclient)"><span class="material-icons ">delete</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <ng-template #empty>
+                    <div style="font-size: 20px; " class="xs_empty ">
+                        Нет клиентов...
+                    </div>
+                </ng-template>
+            </table>
+
+            <div class="xs_cars__more" *ngIf="!noMoreCars">
+                <span (click)="loadmore()">Загрузить еще...</span>
+            </div>
+        </div>
+
+
+        <div id="lawfase">
+            <div class="xs_clients__top">
+            
+            
+                <div class="xs_add__car xs_add__client">
+                    <a [routerLink]="['/add-client-lawfase']">
+                        <span class="material-icons">library_add</span> Добавить юр/лицо
+                    </a>
+                </div>
+            </div>
+
+            <table class="striped" *ngIf="!loading">
+                <thead>
+                    <tr>
+                        <th>Наименование Юр/лица</th>
+                        <th>Телефон</th>
+                    </tr>
+            
+                </thead>
+            
+                <tbody *ngIf="xsclients_lawfase.length !== 0; else empty">
+                    <tr *ngFor="let xsclient_lawfase of xsclients_lawfase" class="xs_partners_tr">
+                        <td>
+                            <a [routerLink]="['/show-client-lawfase','edit',xsclient_lawfase._id]">
+                                {{xsclient_lawfase.short_name}} {{xsclient_lawfase.name}} 
+                            </a>
+                        </td>
+                        <td>{{xsclient_lawfase.number_1}}</td>
+                        <td class="xs_actions ">
+                            <a [routerLink]="['/show-client-lawfase','edit',xsclient_lawfase._id]"><span
+                                    class="material-icons ">mode_edit</span></a>
+                            <a (click)="onDeleteClientLawfase($event, xsclient_lawfase)"><span class="material-icons ">delete</span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            
+                <ng-template #empty>
+                    <div style="font-size: 20px; " class="xs_empty ">
+                        Нет клиентов...
+                    </div>
+                </ng-template>
+            </table>
+
+            <div class="xs_cars__more" *ngIf="!noMoreCarsLawfase">
+                <span (click)="loadmore_lawfase()">Загрузить ЮР/ЛИЦ...</span>
+            </div>
+        </div>
+    </div>
+</div>
