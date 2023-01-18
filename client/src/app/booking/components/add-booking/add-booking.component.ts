@@ -96,6 +96,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   is_dogovor_finish_compare_booking: any = '';
 
 
+  // Минимальная дата аренды
+  minDateBooking: string = '';
+
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
@@ -397,6 +401,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     // Получаем начало аренды
     this.summa.booking_start = e.target.value
 
+    // Задаем минимальную дату аренды
+    this.minDateBooking = e.target.value;
+
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
@@ -643,6 +650,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   {
     // Получаем конец аренды
     this.summa.booking_end = e.target.value
+    
 
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);

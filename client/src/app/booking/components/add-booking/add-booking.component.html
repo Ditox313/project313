@@ -84,10 +84,10 @@
 
                         <div class="input-field col s12">
                             <div><label for="marka">Дата окончания брони<span class="xszv">*</span></label></div>
-                            <input placeholder="Введите значение" id="booking_end" type="datetime-local" class="validate"
+                            <input  placeholder="Введите значение" id="booking_end" type="datetime-local" class="validate"
                                 formControlName="booking_end"
                                 [ngClass]="{'invalid': form.controls['booking_end'].invalid && form.controls['booking_end'].touched}"
-                                (change)="bookingEndDate($event)">
+                                (change)="bookingEndDate($event)" min="{{minDateBooking}}">
                         </div>
 
 
