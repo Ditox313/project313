@@ -35,7 +35,8 @@
             </thead>
     
             <tbody *ngIf="xsbookings.length !== 0; else empty">
-                <tr *ngFor="let xsbooking of xsbookings; let i = index" class="xs_partners_tr xsbooking" >
+                <tr *ngFor="let xsbooking of xsbookings; let i = index" class="xs_partners_tr xsbooking" 
+                [class.finish_booking]="this.todayDateFormat === (xsbooking.booking_end | date : 'yyyy-MM-dd')">
                     <td>
                         <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.order}}</a>
                     </td>
