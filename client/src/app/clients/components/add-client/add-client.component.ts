@@ -6,6 +6,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { ClientsService } from '../../services/clients.service';
 
 
+
 @Component({
   selector: 'app-add-client',
   templateUrl: './add-client.component.html',
@@ -38,6 +39,14 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   subGetParams$: Subscription;
   subClientCreate$: Subscription;
 
+
+  // Если не резидент
+  isNoResident: boolean = false; 
+
+  // Максимальное колличество символов в серии и номере паспорта
+  maxLengthSeriaAndNumber: any = 11;
+
+
   constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) {}
 
   ngOnInit(): void {
@@ -65,30 +74,32 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   initForm()
   {
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      surname: new FormControl('', [Validators.required]),
-      lastname: new FormControl('', [Validators.required]),
+      fio: new FormControl('', [Validators.required]),
       makedate: new FormControl('', [Validators.required]),
-      passport_seria: new FormControl('', [Validators.required]),
-      passport_number: new FormControl('', [Validators.required]),
+      passport_seria_and_number: new FormControl("", [Validators.required,
+        Validators.maxLength(this.maxLengthSeriaAndNumber),
+        Validators.minLength(this.maxLengthSeriaAndNumber)
+        ]),
       passport_date: new FormControl(''),
       passport_who_take: new FormControl('', [Validators.required]),
       code_podrazdeleniya: new FormControl('', [Validators.required]),
       passport_register: new FormControl('', [Validators.required]),
-      passport_address_fact: new FormControl('', [Validators.required]),
+      passport_address_fact: new FormControl('',),
       prava_seria: new FormControl('', [Validators.required]),
       prava_number: new FormControl('', [Validators.required]),
       prava_date: new FormControl(''),
       phone_main: new FormControl('', [Validators.required]),
-      phone_1_dop_name: new FormControl('', [Validators.required]),
-      phone_1_dop_number: new FormControl('', [Validators.required]),
-      phone_2_dop_name: new FormControl('', [Validators.required]),
-      phone_2_dop_number: new FormControl('', [Validators.required]),
+      phone_1_dop_name: new FormControl('', []),
+      phone_1_dop_number: new FormControl('', []),
+      phone_2_dop_name: new FormControl('', []),
+      phone_2_dop_number: new FormControl('', []),
       phone_3_dop_name: new FormControl('', []),
       phone_3_dop_number: new FormControl('', []),
       phone_4_dop_name: new FormControl('', []),
       phone_4_dop_number: new FormControl('', []),
     });
+    
+    
   }
 
 
@@ -102,13 +113,17 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   onSubmit() {
+    let fio = this.form.value.fio.split(' ');
+    let seria_and_number = this.form.value.passport_seria_and_number.split(' ');
+    
+    
     const client = {
-      name: this.form.value.name,
-      surname: this.form.value.surname,
-      lastname: this.form.value.lastname,
+      name: fio[1],
+      surname: fio[0],
+      lastname: fio[2],
       makedate: this.form.value.makedate,
-      passport_seria: this.form.value.passport_seria,
-      passport_number: this.form.value.passport_number,
+      passport_seria: seria_and_number[0],
+      passport_number: seria_and_number[1],
       passport_date: this.form.value.passport_date,
       passport_who_take: this.form.value.passport_who_take,
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
@@ -149,12 +164,29 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
         }
                 
       });
+
+    
   }
+
+
+
+
+  // Если нажат-"Не резидент РФ"
+  isNoResidentInput() {
+    this.isNoResident = !this.isNoResident;
+    this.maxLengthSeriaAndNumber = 25;
+    console.log(this.isNoResident);
+  }
+
+
+
 
   // Обрабатываем загрузку картинок
   onFileUpload(event: any) {
     const file = event.target.files['0'];
     this.passport__1 = file;
+    console.log(this.passport__1);
+    
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();

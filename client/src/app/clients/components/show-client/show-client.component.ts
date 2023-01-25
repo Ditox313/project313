@@ -44,6 +44,12 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   subGetByClientId$: Subscription;
   subUpdateClient$: Subscription;
 
+  // Если не резидент
+  isNoResident: boolean = false;
+
+  // Максимальное колличество символов в серии и номере паспорта
+  maxLengthSeriaAndNumber: any = 11;
+
   constructor(
     private clients: ClientsService,
     private rote: ActivatedRoute,
@@ -79,12 +85,12 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   initForm()
   {
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      surname: new FormControl('', [Validators.required]),
-      lastname: new FormControl('', [Validators.required]),
+      fio: new FormControl('', [Validators.required]),
       makedate: new FormControl('', [Validators.required]),
-      passport_seria: new FormControl('', [Validators.required]),
-      passport_number: new FormControl('', [Validators.required]),
+      passport_seria_and_number: new FormControl("", [Validators.required,
+        Validators.maxLength(this.maxLengthSeriaAndNumber),
+        Validators.minLength(this.maxLengthSeriaAndNumber)
+      ]),
       passport_date: new FormControl(''),
       passport_who_take: new FormControl('', [Validators.required]),
       code_podrazdeleniya: new FormControl('', [Validators.required]),
@@ -135,12 +141,9 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       this.form.patchValue({
-        name: res.name,
-        surname: res.surname,
-        lastname: res.lastname,
+        fio: res.name + ' ' + res.surname + ' ' + res.lastname,
         makedate: res.makedate,
-        passport_seria: res.passport_seria,
-        passport_number: res.passport_number,
+        passport_seria_and_number: res.passport_seria + ' ' + res.passport_number,
         passport_date: res.passport_date,
         passport_who_take: res.passport_who_take,
         code_podrazdeleniya: res.code_podrazdeleniya,
@@ -165,13 +168,16 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   onSubmit() {
+    let fio = this.form.value.fio.split(' ');
+    let seria_and_number = this.form.value.passport_seria_and_number.split(' ');
+
     const client = {
-      name: this.form.value.name,
-      surname: this.form.value.surname,
-      lastname: this.form.value.lastname,
+      name: fio[1],
+      surname: fio[0],
+      lastname: fio[2],
       makedate: this.form.value.makedate,
-      passport_seria: this.form.value.passport_seria,
-      passport_number: this.form.value.passport_number,
+      passport_seria: seria_and_number[0],
+      passport_number: seria_and_number[1],
       passport_date: this.form.value.passport_date,
       passport_who_take: this.form.value.passport_who_take,
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
@@ -204,6 +210,15 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
         MaterialService.toast('Клиент Изменен');
       });
   }
+
+
+  // Если нажат-"Не резидент РФ"
+  isNoResidentInput() {
+    this.isNoResident = !this.isNoResident;
+    this.maxLengthSeriaAndNumber = 25;
+  }
+
+
 
   // Обрабатываем загрузку картинок
   onFileUpload(event: any) {

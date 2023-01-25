@@ -87,7 +87,7 @@ const clientSchema = new Schema({
     passport_address_fact: {
         type: String,
         default: '',
-        required: true,
+        required: false,
     },
 
     // Серия водительского удостоверения

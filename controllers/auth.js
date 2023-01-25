@@ -98,7 +98,6 @@ module.exports.register = async function(req, res) {
         }
     }
 
-
 };
 
 
@@ -116,7 +115,7 @@ module.exports.get_user = async function (req, res) {
 
     if (!user) {
         res.status(409).json({
-            message: "Нет такого юзера"
+            message: "Нет такого пользователя"
         });
     } else {
         try {
@@ -148,11 +147,7 @@ module.exports.update = async function (req, res) {
         }
         
 
-        
-
-
-
-
+    
         // Находим и обновляем позицию. 
         const UserUpdate = await User.findOneAndUpdate({ _id: req.user._id, }, //Ищем по id
             { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые

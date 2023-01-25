@@ -8,6 +8,7 @@
     padding-top: 30px;
 }
 
+
 *
 {
     cursor: pointer !important;
@@ -1465,3 +1466,10 @@ select {
     background-color: rgba(255, 165, 0, 0.2) !important;
 }
 
+
+
+.xs_no_resident
+{
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+}

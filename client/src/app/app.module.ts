@@ -24,6 +24,7 @@ import { DocumentsModule } from './documents/documents.module';
 
 
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -47,7 +48,7 @@ import { DocumentsModule } from './documents/documents.module';
     }),
     PaysModule,
     AccountModule,
-    DocumentsModule
+    DocumentsModule,
   ],
   providers: [
     {

@@ -111,15 +111,15 @@ export interface Client
     passport_who_take: string
     code_podrazdeleniya: string
     passport_register: string
-    passport_address_fact: string
+    passport_address_fact?: string
     prava_seria: string
     prava_number: string
     prava_date: string
     phone_main: string
-    phone_1_dop_name: string
-    phone_1_dop_number: string
-    phone_2_dop_name: string
-    phone_2_dop_number: string
+    phone_1_dop_name?: string
+    phone_1_dop_number?: string
+    phone_2_dop_name?: string
+    phone_2_dop_number?: string
     phone_3_dop_name?: any
     phone_3_dop_number?: any
     phone_4_dop_name?: any
