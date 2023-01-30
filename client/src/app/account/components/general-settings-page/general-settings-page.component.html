@@ -1,0 +1,19 @@
+<div class="account_settings">
+    <h1 style="margin-top: 0;">
+        <span class="material-icons">perm_data_setting</span> Общие настройки аккаунта
+    </h1>
+
+   
+    
+    <app-loader *ngIf="!currentUser"></app-loader>
+    
+    <div class="account_settings__content" *ngIf="currentUser">
+        <div class="account_settings__content___item">
+            <a [routerLink]="['/account',currentUser._id]">Настройки профиля</a>
+        </div>
+
+        <div class="account_settings__content___item">
+            <a [routerLink]="['/settings-avtopark',currentUser._id]">Настройки автопарка</a>
+        </div>
+    </div>
+</div>

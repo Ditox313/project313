@@ -1,0 +1,128 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="xs_account">
+    <div class="xs_add__car___top">
+        <h1 style="margin-top: 0;">
+            <span class="material-icons">perm_data_setting</span> Настройки профиля
+        </h1>
+
+    
+        <div class="xs_add__car__top____actions">
+    
+            <app-go-back></app-go-back>
+    
+            <button type="submit">
+                <span class="material-icons">beenhere</span>Сохранить
+            </button>
+        </div>
+
+        
+    </div>
+
+    <app-loader *ngIf="!currentUser"></app-loader>
+
+    <div class="xs_settings_avtopark" id="xs_settings_avtopark">
+        <div class="col s12">
+            <div class="xs_settings_avtopark___wrap">
+                <div class="xs_account_box">
+                    <h5>Настройки подачи автомобиля</h5>
+
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="airport_price">Аэропорт:</span>
+                        <div class="input-field">
+                            <input id="airport_price" type="text" formControlName="airport_price">
+                        </div>
+                        <span> руб</span>
+                    </div>
+
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="railway_price">Ж/д вокзал:</span>
+                        <div class="input-field">
+                            <input id="railway_price" type="text" formControlName="railway_price">
+                        </div>
+                        <span> руб</span>
+                    </div>
+
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="kristal_tc_price">ТЦ Кристалл:</span>
+                        <div class="input-field">
+                            <input id="kristal_tc_price" type="text" formControlName="kristal_tc_price">
+                        </div>
+                        <span> руб</span>
+                    </div>
+
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="sitymol_tc_price">Тц Сити Молл:</span>
+                        <div class="input-field">
+                            <input id="sitymol_tc_price" type="text" formControlName="sitymol_tc_price">
+                        </div>
+                        <span> руб</span>
+                    </div>
+                </div>
+
+                <div class="xs_account_box">
+                    <h5>Настройки стоимости мойки</h5>
+                
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="moyka_komfort">Мойка комфорт:</span>
+                        <div class="input-field">
+                            <input id="moyka_komfort" type="text" formControlName="moyka_komfort">
+                        </div>
+                        <span> руб</span>
+                    </div>
+                
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="moyka_business">Мойка бизнес:</span>
+                        <div class="input-field">
+                            <input id="moyka_business" type="text" formControlName="moyka_business">
+                        </div>
+                        <span> руб</span>
+                    </div>
+                
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="moyka_premium">Мойка премиум:</span>
+                        <div class="input-field">
+                            <input id="moyka_premium" type="text" formControlName="moyka_premium">
+                        </div>
+                        <span> руб</span>
+                    </div>
+                </div>
+
+                <div class="xs_account_box">
+                    <h5>Настройки доп.услуг</h5>
+                
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="additionally_det_kreslo">Детское кресло:</span>
+                        <div class="input-field">
+                            <input id="additionally_det_kreslo" type="text" formControlName="additionally_det_kreslo">
+                        </div>
+                        <span> руб</span>
+                    </div>
+                
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="additionally_buster">Бустер:</span>
+                        <div class="input-field">
+                            <input id="additionally_buster" type="text" formControlName="additionally_buster">
+                        </div>
+                        <span> руб</span>
+                    </div>
+                
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="additionally_videoregister">Видеорегистратор:</span>
+                        <div class="input-field">
+                            <input id="additionally_videoregister" type="text" formControlName="additionally_videoregister">
+                        </div>
+                        <span> руб</span>
+                    </div>
+
+                    <div class="xs_account_box___item xs_account_box___item__settings_avtopark">
+                        <span for="additionally_battery_charger">Зарядное устройство:</span>
+                        <div class="input-field">
+                            <input id="additionally_battery_charger" type="text"
+                                formControlName="additionally_battery_charger">
+                        </div>
+                        <span> руб</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

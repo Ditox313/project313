@@ -21,6 +21,7 @@ import '@angular/common/locales/global/ru'
 import { PaysModule } from './pays/pays.module';
 import { AccountModule } from './account/account.module';
 import { DocumentsModule } from './documents/documents.module';
+import { GoBackModule } from './shared/modules/ga-back/go-back.module';
 
 
 
@@ -49,6 +50,7 @@ import { DocumentsModule } from './documents/documents.module';
     PaysModule,
     AccountModule,
     DocumentsModule,
+    GoBackModule
   ],
   providers: [
     {

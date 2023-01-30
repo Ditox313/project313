@@ -4,6 +4,7 @@ const carsRoutes = require('./routes/cars.js');
 const clientsRoutes = require('./routes/clients.js');
 const partnersRoutes = require('./routes/partners.js');
 const bookingsRoutes = require('./routes/bookings.js');
+const settingsRoutes = require('./routes/settings.js');
 const paysRoutes = require('./routes/pays.js');
 const documentsRoutes = require('./routes/documents.js');
 const bodyParser = require('body-parser');
@@ -87,6 +88,10 @@ app.use('/api/pays', paysRoutes);
 
 // Регистрируем роут documents
 app.use('/api/documents', documentsRoutes);
+
+
+// Регистрируем роут на settings
+app.use('/api/settings', settingsRoutes);
 
 
 

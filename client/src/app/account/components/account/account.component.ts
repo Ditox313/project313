@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
 
@@ -10,6 +10,8 @@ import { MaterialService } from 'src/app/shared/services/material.service';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit, OnDestroy {
+
+
   currentUser!: any;
   form!: FormGroup; 
   subUpdate$: Subscription = null;
@@ -33,6 +35,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       this.currentUser$.unsubscribe();
     }
   }
+
 
 
   patchValuesForm()

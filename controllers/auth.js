@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User.js');
+const Settings = require('../models/Settings.js');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 const errorHandler = require('../Utils/errorHendler');
@@ -84,6 +85,26 @@ module.exports.register = async function(req, res) {
             password: bcrypt.hashSync(password, salt)
         });
 
+        const settings = new Settings({
+            share_avto: {
+                airport_price: '0',
+                railway_price: '0',
+                kristal_tc_price: '0',
+                sitymol_tc_price: '0',
+            },
+            washing_avto: {
+                komfort: '0',
+                business: '0',
+                premium: '0'
+            },
+            additionally_avto: {
+                det_kreslo: '0',
+                buster: '0',
+                videoregister: '0',
+                battery_charger: '0',
+            }
+        });
+
 
         const userResponse = {
             email: user.email,
@@ -91,6 +112,7 @@ module.exports.register = async function(req, res) {
         }
 
         try {
+            await settings.save();
             await user.save();
             res.status(201).json(userResponse);
         } catch (error) {

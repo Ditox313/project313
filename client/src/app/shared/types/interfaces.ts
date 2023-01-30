@@ -6,6 +6,7 @@
 // Интерфейс для юзера
 export interface User
 {
+    _id?: string
     email: string,
     password?: string
     name?: string
@@ -13,7 +14,29 @@ export interface User
     thirdName?: string
     doverenost?: string
     doverenostDate?: string
-    _id?: string
+}
+
+
+// Интерфейс для юзера
+export interface Settings {
+  _id?: string
+  share_avto?: {
+    airport_price?: any
+    railway_price?: any
+    kristal_tc_price?: any
+    sitymol_tc_price?: any
+  }
+  washing_avto?: {
+    komfort?: any
+    business?: any
+    premium?: any
+  }
+  additionally_avto?: {
+    det_kreslo?: any
+    buster?: any
+    videoregister?: any
+    battery_charger?: any
+  }
 }
 
 
@@ -342,6 +365,7 @@ export interface BookingAct {
   booking?: any;
   bookingId?: any;
 }
+
 
 
 

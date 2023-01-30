@@ -9,6 +9,9 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 import { AccountComponent } from './components/account/account.component';
 import { SiteLayoutComponent } from '../shared/layouts/components/site-layout/site-layout.component';
 import { AccountService } from './services/account.service';
+import { SettingsAvtoprokatComponent } from './components/settings-avtoprokat/settings-avtoprokat.component';
+import { GeneralSettingsPageComponent } from './components/general-settings-page/general-settings-page.component';
+import { GoBackModule } from '../shared/modules/ga-back/go-back.module';
 
 
 const routes = [
@@ -18,6 +21,8 @@ const routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'account/:id', component: AccountComponent },
+      { path: 'general-settings', component: GeneralSettingsPageComponent },
+      { path: 'settings-avtopark/:id', component: SettingsAvtoprokatComponent },
     ],
   },
 ];
@@ -26,7 +31,9 @@ const routes = [
 
 @NgModule({
   declarations: [
-    AccountComponent
+    AccountComponent,
+    SettingsAvtoprokatComponent,
+    GeneralSettingsPageComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +44,7 @@ const routes = [
     RouterModule.forChild(routes),
     LoaderModule,
     LayoutsModule,
+    GoBackModule
   ],
   providers: [AccountService],
 })
