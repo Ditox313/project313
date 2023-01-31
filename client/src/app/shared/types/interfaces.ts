@@ -117,6 +117,7 @@ export interface Car {
   zalog_mej?: any;
   zalog_rus?: any;
   moyka?: any;
+  user?: any;
 }
 
 

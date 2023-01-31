@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CarsService } from '../../services/cars.service';
 import { PartnersService } from 'src/app/partners/services/partners.service';
-import { Car } from 'src/app/shared/types/interfaces';
+import { Car, Settings } from 'src/app/shared/types/interfaces';
 import { MaterialService } from 'src/app/shared/services/material.service';
+import { AccountService } from '../../../account/services/account.service';
 
 
 @Component({
@@ -52,9 +53,14 @@ export class ShowCarComponent implements OnInit, OnDestroy {
   @ViewChild('input') inputRef!: ElementRef;
 
 
+  // Получаем настройки текущего пользователя
+  currentUserSetings$: Subscription = null;
+  currentUserSetings!: Settings
 
 
-  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private partners: PartnersService) { }
+
+
+  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private partners: PartnersService, private AccountService: AccountService,) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -128,7 +134,6 @@ export class ShowCarComponent implements OnInit, OnDestroy {
       zalog: new FormControl(''),
       zalog_mej: new FormControl(''),
       zalog_rus: new FormControl(''),
-      moyka: new FormControl(''),
     });
   }
 
@@ -143,6 +148,10 @@ export class ShowCarComponent implements OnInit, OnDestroy {
   {
     this.subGetCarById$ = this.cars.getById(this.carId).subscribe((res) => {
       this.xsActualCar = res
+      console.log(this.xsActualCar);
+
+
+      
       if (res.previewSrc) {
         this.imagePreview = res.previewSrc
       }
@@ -187,8 +196,12 @@ export class ShowCarComponent implements OnInit, OnDestroy {
         zalog: res.zalog,
         zalog_mej: res.zalog_mej,
         zalog_rus: res.zalog_rus,
-        moyka: res.moyka,
       });
+
+      this.currentUserSetings$ = this.AccountService.get_settings_user(this.xsActualCar.user).subscribe(res => {
+        this.currentUserSetings = res;
+        console.log('111', this.currentUserSetings);
+      })
     });
   }
 
@@ -239,6 +252,17 @@ export class ShowCarComponent implements OnInit, OnDestroy {
 
 
   onSubmit(){
+    let moyka = '0';
+    if (this.form.value.category === 'Бизнес') {
+      moyka = this.currentUserSetings.washing_avto.business
+    }
+    else if (this.form.value.category === 'Комфорт') {
+      moyka = this.currentUserSetings.washing_avto.komfort
+    }
+    else if (this.form.value.category === 'Премиум') {
+      moyka = this.currentUserSetings.washing_avto.premium
+    }
+
     const car = {
       marka: this.form.value.marka,
       model: this.form.value.model,
@@ -279,7 +303,7 @@ export class ShowCarComponent implements OnInit, OnDestroy {
       zalog: this.form.value.zalog,
       zalog_mej: this.form.value.zalog_mej,
       zalog_rus: this.form.value.zalog_rus,
-      moyka: this.form.value.moyka,
+      moyka: moyka,
     };
     
     this.subUpdateCar$ = this.cars.update(this.carId, car, this.image).subscribe((car) =>{
