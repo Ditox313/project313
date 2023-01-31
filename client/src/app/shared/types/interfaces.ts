@@ -316,7 +316,8 @@ export interface Summa {
   dop_hours: any
   checkedTarif?: any
   paidCount?: any
-  sale?: any
+  sale?: any,
+  place_start_price?: any
 }
 
 

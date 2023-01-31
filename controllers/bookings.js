@@ -116,6 +116,7 @@ module.exports.updateActClicked = async function (req, res) {
                     clear_auto: updated.dop_info_open.clear_auto,
                     full_tank: updated.dop_info_open.full_tank,
                     moyka: updated.dop_info_open.moyka,
+                    place_start_price: updated.dop_info_open.place_start_price
                 }
             },
         }

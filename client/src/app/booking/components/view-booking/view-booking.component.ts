@@ -130,9 +130,6 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
       this.summa.dop_hours = res.dop_hours;
       this.xsActualClient = res.client;
 
-      // this.bookings.getById(this.bookingId).subscribe((res) => {
-      //   this.bookingStatus = res.status;
-      // });
 
       this.bookingStatus = res.status;
 
@@ -205,7 +202,9 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
         clickedAct: true,
         clear_auto: this.actualBooking.dop_info_open.clear_auto,
         full_tank: this.actualBooking.dop_info_open.full_tank,
-        moyka: this.actualBooking.dop_info_open.moyka
+        moyka: this.actualBooking.dop_info_open.moyka,
+        place_start_price: this.actualBooking.dop_info_open.place_start_price
+
       },
     };
 

@@ -38,7 +38,7 @@
 
 
                         <div class="xs_form__item___mod">
-                            <label for="marka">Автомобиль<span class="xszv">*</span></label>
+                            <label for="car">Автомобиль<span class="xszv">*</span></label>
                             <div class="input-field col s12">
                                 <select id="car" formControlName="car"
                                     [ngClass]="{'invalid': form.controls['car'].invalid && form.controls['car'].touched}"  (ngModelChange)="onChangeCar($event)">
@@ -53,7 +53,7 @@
                         
 
 
-                        <div class="input-field col s12">
+                        <!-- <div class="input-field col s12">
                             <input placeholder="Введите значение" id="place_start" type="text" class="validate" formControlName="place_start"
                                 [ngClass]="{'invalid': form.controls['place_start'].invalid && form.controls['place_start'].touched}">
                             <label for="marka">Место выдачи<span class="xszv">*</span></label>
@@ -62,14 +62,14 @@
                                     Поле не должно быть пустым
                                 </p>
                             </span>
-                        </div>
-
+                        </div> -->
 
                         <div>
                             <label for="marka">Тариф<span class="xszv">*</span></label>
                             <div class="input-field col s12">
                                 <select id="tariff" formControlName="tariff"
-                                    [ngClass]="{'invalid': form.controls['tariff'].invalid && form.controls['tariff'].touched}" (ngModelChange)="onChangeTariff($event)">
+                                    [ngClass]="{'invalid': form.controls['tariff'].invalid && form.controls['tariff'].touched}"
+                                    (ngModelChange)="onChangeTariff($event)">
                                     <option value="" disabled selected>Выберите тариф</option>
                                     <option value="Город">Город</option>
                                     <option value="Межгород">Межгород</option>
@@ -77,7 +77,25 @@
                                 </select>
                             </div>
                         </div>
-                        
+
+
+
+
+                        <div class="xs_form__item___mod">
+                            <label for="place_start">Место выдачи<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="place_start" formControlName="place_start"
+                                    [ngClass]="{'invalid': form.controls['place_start'].invalid && form.controls['place_start'].touched}" 
+                                    (ngModelChange)="onChangePlaceStart($event)">
+                                    <option value="" disabled selected>Офис</option>
+                                    <option value="Офис">Офис</option>
+                                    <option value="Аэропорт">Аэропорт</option>
+                                    <option value="Ж/д вокзал">Ж/д вокзал</option>
+                                    <option value="ТЦ Кристалл">ТЦ Кристалл</option>
+                                    <option value="Тц Сити Молл">Тц Сити Молл</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="xs_form__item">
@@ -257,18 +275,22 @@
 
     <div class="xs_summa" *ngIf="this.summa.summa"> 
         <div *ngIf="!isCustomeZalog">
-            <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> 
+            <span style="font-weight: bold;">Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span> 
             + 
             <span *ngIf="!isCustomeZalog">
                 <span *ngIf="this.summa.tariff === 'Город'">Залог {{this.summa.car.zalog}} ₽</span> 
                 <span *ngIf="this.summa.tariff === 'Межгород'">Залог {{this.summa.car.zalog_mej}} ₽</span>
                 <span *ngIf="this.summa.tariff === 'Россия'">Залог {{this.summa.car.zalog_rus}} ₽</span>
             </span>
+            +
+            <span>
+                <span> Подача авто {{this.summa.place_start_price}} ₽</span>
+            </span>
             + 
             <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
                 Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
             </span> =
-            <span>Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+            <span>Итого {{(+summa.summaFull + (+this.summa.place_start_price)) | number: '1.0-0'}} ₽</span>
         </div>
 
         <div *ngIf="isCustomeZalog"> 
@@ -278,10 +300,14 @@
                 <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽</span>
             </span>
             +
+            <span>
+                <span> Подача авто {{this.summa.place_start_price}} ₽</span>
+            </span>
+            +
             <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
                 Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
             </span> =
-            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{summa.summaFull | number: '1.0-0'}} ₽</span>
+            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{(+summa.summaFull + (+this.summa.place_start_price)) | number: '1.0-0'}} ₽</span>
         </div>
     </div>
 

@@ -6,7 +6,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { BookingsService } from 'src/app/booking/services/bookings.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Booking, Summa } from 'src/app/shared/types/interfaces';
@@ -94,6 +94,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       typePayArenda: new FormControl('',),
       zalog: new FormControl('',),
       typePayZalog: new FormControl('',),
+      place_start_price: new FormControl('',),
     });
   }
 
@@ -129,14 +130,16 @@ export class AddPayComponent implements OnInit, OnDestroy {
         // Подгружаем сумму залога и аренды в поля
         this.form.patchValue({
           arenda: +res.summa + (+this.summa.car.price_dop_hour * (+this.summa.dop_hours)),
-          zalog: res.booking_zalog
+          zalog: res.booking_zalog,
+          place_start_price: res.dop_info_open.place_start_price
         });
       }
       else {
         // Подружаем сумму залога и аренды в поля
         this.form.patchValue({
           arenda: res.summa,
-          zalog: res.booking_zalog
+          zalog: res.booking_zalog,
+          place_start_price: res.dop_info_open.place_start_price
         });
       }
     });
@@ -174,23 +177,43 @@ export class AddPayComponent implements OnInit, OnDestroy {
         bookingId: this.bookingId,
       };
 
+      const pay_2 = {
+        vid: 'Подача авто',
+        pricePay: this.actualBooking.dop_info_open.place_start_price,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
 
-      this.subCreatePay$ = this.pays.create(pay).subscribe((pay) => {
+      this.subCreatePay$ = this.pays.create(pay).pipe(
+        switchMap(res => this.pays.create(pay_2)),
+      ).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
         this.router.navigate(['/view-booking', this.bookingId]);
       });
+
     }
 
     if (this.form.value.zalog && !this.form.value.arenda) {
       const pay = {
         vid: 'Залог',
-        pricePay: this.form.value.zalog,
+        pricePay: this.form.value.zalog ,
         typePay: this.form.value.typePayZalog,
         bookingId: this.bookingId,
       };
 
+      const pay_2 = {
+        vid: 'Подача авто',
+        pricePay: this.actualBooking.dop_info_open.place_start_price,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
 
-      this.subCreatePay$ =  this.pays.create(pay).subscribe((pay) => {
+
+  
+
+      this.subCreatePay$ = this.pays.create(pay).pipe(
+        switchMap(res => this.pays.create(pay_2)),
+      ).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
         this.router.navigate(['/view-booking', this.bookingId]);
       });
@@ -201,7 +224,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
     {
       const pay = {
         vid: 'Аренда',
-        pricePay: this.form.value.arenda,
+        pricePay: this.form.value.arenda ,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
@@ -213,20 +236,23 @@ export class AddPayComponent implements OnInit, OnDestroy {
         bookingId: this.bookingId,
       };
 
+      const pay_3 = {
+        vid: 'Подача авто',
+        pricePay: this.actualBooking.dop_info_open.place_start_price,
+        typePay: this.form.value.typePayArenda,
+        bookingId: this.bookingId,
+      };
+
 
       this.subCreatePay$ = this.pays.create(pay).pipe(
-        map(
-          res => {
-            this.pays.create(pay_2).pipe().subscribe((pay) => {
-              MaterialService.toast('Платеж создан');
-              this.router.navigate(['/view-booking', this.bookingId]);
-            });
-            return res
-          }
-        )
+        switchMap(res => this.pays.create(pay_2)),
+        switchMap(res => this.pays.create(pay_3)),
       ).subscribe((pay) => {
         MaterialService.toast('Платеж создан');
+        this.router.navigate(['/view-booking', this.bookingId]);
       });
     }
   }
 }
+
+

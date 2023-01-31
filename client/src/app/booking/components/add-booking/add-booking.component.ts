@@ -51,7 +51,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     summa: '',
     booking_days: '',
     summaFull: '',
-    dop_hours: ''
+    dop_hours: '',
+    place_start_price: 0
   }
 
   // Нажат ли произвольный залог
@@ -161,9 +162,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       this.currentUser$.unsubscribe();
     }
-
-    
-    
   }
 
   get_user()
@@ -185,7 +183,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       client: new FormControl('', [Validators.required]),
       booking_start: new FormControl('', [Validators.required]),
       booking_end: new FormControl('', [Validators.required]),
-      place_start: new FormControl('Офис', [Validators.required]),
+      place_start: new FormControl('', [Validators.required]),
       place_end: new FormControl('Офис', [Validators.required]),
       tariff: new FormControl('', [Validators.required]),
       comment: new FormControl(''),
@@ -1201,6 +1199,36 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  onChangePlaceStart(e)
+  {
+    
+    if(e === 'Аэропорт')
+    {
+      this.summa.place_start_price = +this.currentUserSetings.share_avto.airport_price
+    }
+    else if (e === 'Ж/д вокзал')
+    {
+      this.summa.place_start_price = +this.currentUserSetings.share_avto.railway_price
+      
+    }
+    else if (e === 'ТЦ Кристалл')
+    {
+      this.summa.place_start_price = +this.currentUserSetings.share_avto.kristal_tc_price
+      
+    }
+    else if (e === 'Тц Сити Молл')
+    {
+      this.summa.place_start_price = +this.currentUserSetings.share_avto.sitymol_tc_price
+      
+    }
+    else if (e === 'Офис')
+    {
+      this.summa.place_start_price = 0
+     
+    }
+  }
+
+
 
   // При выборе клиента юр/лица
   changeClientLawFase(client) {
@@ -1440,13 +1468,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_start: this.form.value.booking_start,
             booking_end: this.form.value.booking_end,
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-            summaFull: Math.round(this.summa.summaFull),
+            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price)),
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
-              moyka: moyka || false
+              moyka: moyka || false,
+              place_start_price: this.summa.place_start_price || false
             },
             booking_zalog: this.summa.car.zalog,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1482,13 +1511,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_start: this.form.value.booking_start,
             booking_end: this.form.value.booking_end,
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-            summaFull: Math.round(this.summa.summaFull),
+            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price)),
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
-              moyka: moyka || false
+              moyka: moyka || false,
+              place_start_price: this.summa.place_start_price || false
             },
             booking_zalog: this.summa.car.zalog_mej,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1523,13 +1553,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_start: this.form.value.booking_start,
             booking_end: this.form.value.booking_end,
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-            summaFull: Math.round(this.summa.summaFull),
+            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price)),
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
-              moyka: moyka || false
+              moyka: moyka || false,
+              place_start_price: this.summa.place_start_price || false
             },
             booking_zalog: this.summa.car.zalog_rus,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1565,13 +1596,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
           booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-          summaFull: Math.round(this.summa.summaFull),
+          summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price)),
           summa: Math.round(this.summa.summa),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
             clear_auto: this.form.value.clear_auto || false,
             full_tank: this.form.value.full_tank || false,
             moyka: moyka || false,
+            place_start_price: this.summa.place_start_price || false
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1612,13 +1644,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_start: this.form.value.booking_start,
             booking_end: this.form.value.booking_end,
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-            summaFull: Math.round(this.summa.summaFull),
+            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price)),
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
-              moyka: moyka || false
+              moyka: moyka || false,
+              place_start_price: this.summa.place_start_price || false
             },
             booking_zalog: this.summa.car.zalog,
           };
@@ -1653,13 +1686,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_start: this.form.value.booking_start,
             booking_end: this.form.value.booking_end,
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-            summaFull: Math.round(this.summa.summaFull),
+            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price)),
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
-              moyka: moyka || false
+              moyka: moyka || false,
+              place_start_price: this.summa.place_start_price || false
             },
             booking_zalog: this.summa.car.zalog_mej,
           };
@@ -1693,13 +1727,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_start: this.form.value.booking_start,
             booking_end: this.form.value.booking_end,
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-            summaFull: Math.round(this.summa.summaFull),
+            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price)),
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
-              moyka: moyka || false
+              moyka: moyka || false,
+              place_start_price: this.summa.place_start_price || false
             },
             booking_zalog: this.summa.car.zalog_rus,
           };
@@ -1734,13 +1769,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
           booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-          summaFull: Math.round(this.summa.summaFull),
+          summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price)),
           summa: Math.round(this.summa.summa),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
             clear_auto: this.form.value.clear_auto || false,
             full_tank: this.form.value.full_tank || false,
-            moyka: moyka || false
+            moyka: moyka || false,
+            place_start_price: this.summa.place_start_price || false
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
         };
