@@ -167,11 +167,6 @@ const bookingSchema = new Schema({
     },
 
 
-    moyka: {
-        type: Number,
-        default: 0,
-        required: false,
-    }
     
 
 });

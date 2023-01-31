@@ -1445,11 +1445,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false
+              full_tank: this.form.value.full_tank || false,
+              moyka: moyka || false
             },
             booking_zalog: this.summa.car.zalog,
             dogovor_number__actual: this.xs_dogovor_number__actual,
-            moyka: moyka
           };
 
 
@@ -1487,11 +1487,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false
+              full_tank: this.form.value.full_tank || false,
+              moyka: moyka || false
             },
             booking_zalog: this.summa.car.zalog_mej,
             dogovor_number__actual: this.xs_dogovor_number__actual,
-            moyka: moyka
           };
 
 
@@ -1528,11 +1528,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false
+              full_tank: this.form.value.full_tank || false,
+              moyka: moyka || false
             },
             booking_zalog: this.summa.car.zalog_rus,
             dogovor_number__actual: this.xs_dogovor_number__actual,
-            moyka: moyka
           };
 
           // Отправляем запрос
@@ -1570,11 +1570,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
             clear_auto: this.form.value.clear_auto || false,
-            full_tank: this.form.value.full_tank || false
+            full_tank: this.form.value.full_tank || false,
+            moyka: moyka || false,
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
-          moyka: moyka
+          
         };
 
 
@@ -1616,10 +1617,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false
+              full_tank: this.form.value.full_tank || false,
+              moyka: moyka || false
             },
             booking_zalog: this.summa.car.zalog,
-            moyka: moyka
           };
 
 
@@ -1657,10 +1658,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false
+              full_tank: this.form.value.full_tank || false,
+              moyka: moyka || false
             },
             booking_zalog: this.summa.car.zalog_mej,
-            moyka: moyka
           };
 
 
@@ -1697,10 +1698,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false
+              full_tank: this.form.value.full_tank || false,
+              moyka: moyka || false
             },
             booking_zalog: this.summa.car.zalog_rus,
-            moyka: moyka
           };
 
           // Отправляем запрос
@@ -1738,10 +1739,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
             clear_auto: this.form.value.clear_auto || false,
-            full_tank: this.form.value.full_tank || false
+            full_tank: this.form.value.full_tank || false,
+            moyka: moyka || false
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
-          moyka: moyka
         };
 
 

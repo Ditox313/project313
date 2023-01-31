@@ -130,6 +130,8 @@ export class CloseComponent implements OnInit, OnDestroy {
 
   onSubmit()
   {
+    
+     
     if (!this.form.value.clear_auto && !this.form.value.return_part)
     {
       const car: any = {
@@ -145,14 +147,14 @@ export class CloseComponent implements OnInit, OnDestroy {
 
       const pay2 = {
         vid: 'Мойка',
-        pricePay: this.actualBooking.moyka,
+        pricePay: this.actualBooking.dop_info_open.moyka,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
 
 
       const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog) + (+this.actualBooking.moyka),
+        summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog) + (+this.actualBooking.dop_info_open.moyka),
         booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
         status: 'Закрыта',
         dop_info_close: {
@@ -247,14 +249,14 @@ export class CloseComponent implements OnInit, OnDestroy {
 
       const pay2 = {
         vid: 'Мойка',
-        pricePay: this.actualBooking.moyka,
+        pricePay: this.actualBooking.dop_info_open.moyka,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
 
 
       const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price) + (+this.actualBooking.moyka),
+        summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price) + (+this.actualBooking.dop_info_open.moyka),
         booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
         status: 'Закрыта',
         dop_info_close: {

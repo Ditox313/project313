@@ -95,6 +95,9 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // Храним результат поиска клиента
   searchResultClient$: Subscription;
 
+
+  
+
   constructor(
     private bookings: BookingsService,
     private router: Router,

@@ -43,7 +43,6 @@ module.exports.create = async function(req, res) {
             dop_info_open: req.body.dop_info_open,
             booking_zalog: req.body.booking_zalog,
             dogovor_number__actual: req.body.dogovor_number__actual,
-            moyka: req.body.moyka
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
@@ -115,7 +114,8 @@ module.exports.updateActClicked = async function (req, res) {
                 dop_info_open: {
                     clickedAct: true,
                     clear_auto: updated.dop_info_open.clear_auto,
-                    full_tank: updated.dop_info_open.full_tank
+                    full_tank: updated.dop_info_open.full_tank,
+                    moyka: updated.dop_info_open.moyka,
                 }
             },
         }

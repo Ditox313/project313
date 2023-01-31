@@ -204,7 +204,8 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
       dop_info_open: {
         clickedAct: true,
         clear_auto: this.actualBooking.dop_info_open.clear_auto,
-        full_tank: this.actualBooking.dop_info_open.full_tank
+        full_tank: this.actualBooking.dop_info_open.full_tank,
+        moyka: this.actualBooking.dop_info_open.moyka
       },
     };
 

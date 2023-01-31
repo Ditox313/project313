@@ -300,7 +300,6 @@ export interface Booking {
   booking_zalog?: any,
   dogovor_number__actual?: any
   user?: any;
-  moyka?: any
 }
 
 
