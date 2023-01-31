@@ -53,14 +53,10 @@ export class ShowCarComponent implements OnInit, OnDestroy {
   @ViewChild('input') inputRef!: ElementRef;
 
 
-  // Получаем настройки текущего пользователя
-  currentUserSetings$: Subscription = null;
-  currentUserSetings!: Settings
 
 
 
-
-  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private partners: PartnersService, private AccountService: AccountService,) { }
+  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private partners: PartnersService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -197,11 +193,6 @@ export class ShowCarComponent implements OnInit, OnDestroy {
         zalog_mej: res.zalog_mej,
         zalog_rus: res.zalog_rus,
       });
-
-      this.currentUserSetings$ = this.AccountService.get_settings_user(this.xsActualCar.user).subscribe(res => {
-        this.currentUserSetings = res;
-        console.log('111', this.currentUserSetings);
-      })
     });
   }
 
@@ -252,17 +243,6 @@ export class ShowCarComponent implements OnInit, OnDestroy {
 
 
   onSubmit(){
-    let moyka = '0';
-    if (this.form.value.category === 'Бизнес') {
-      moyka = this.currentUserSetings.washing_avto.business
-    }
-    else if (this.form.value.category === 'Комфорт') {
-      moyka = this.currentUserSetings.washing_avto.komfort
-    }
-    else if (this.form.value.category === 'Премиум') {
-      moyka = this.currentUserSetings.washing_avto.premium
-    }
-
     const car = {
       marka: this.form.value.marka,
       model: this.form.value.model,
@@ -303,7 +283,6 @@ export class ShowCarComponent implements OnInit, OnDestroy {
       zalog: this.form.value.zalog,
       zalog_mej: this.form.value.zalog_mej,
       zalog_rus: this.form.value.zalog_rus,
-      moyka: moyka,
     };
     
     this.subUpdateCar$ = this.cars.update(this.carId, car, this.image).subscribe((car) =>{

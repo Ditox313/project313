@@ -73,7 +73,6 @@ export interface MaterialDatepicker extends MaterialInstance {
 
 //Интерфейс для автомобиля
 export interface Car {
-  //price: string;
   marka: string;
   model: string;
   probeg: string;
@@ -116,7 +115,6 @@ export interface Car {
   zalog?: any;
   zalog_mej?: any;
   zalog_rus?: any;
-  moyka?: any;
   user?: any;
 }
 
@@ -301,6 +299,8 @@ export interface Booking {
   dop_info_close?: any
   booking_zalog?: any,
   dogovor_number__actual?: any
+  user?: any;
+  moyka?: any
 }
 
 

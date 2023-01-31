@@ -6,9 +6,7 @@ import { DatePipe } from '@angular/common';
 import { CarsService } from '../../services/cars.service';
 import { PartnersService } from 'src/app/partners/services/partners.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { AccountService } from '../../../account/services/account.service';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { Settings } from 'src/app/shared/types/interfaces';
+
 
 @Component({
   selector: 'app-add-car',
@@ -47,22 +45,16 @@ export class AddCarComponent implements OnInit,AfterViewInit, OnDestroy {
   subPartners$: Subscription;
 
 
-  // Получаем настройки текущего пользователя
-  currentUserSetings$: Subscription = null;
-  currentUserSetings!: Settings
-  currentUser$: Subscription = null;
-  currentUser!: any;
+
   
 
   
 
-  constructor(private cars: CarsService, private router: Router,private partners: PartnersService,  public datePipe: DatePipe,
-    private AccountService: AccountService, private auth: AuthService) { }
+  constructor(private cars: CarsService, private router: Router,private partners: PartnersService,  public datePipe: DatePipe,) { }
 
   ngOnInit(): void {
     this.initForm();
     this.getPartners();
-    this.get_user();
   }
 
   ngOnDestroy(): void {
@@ -74,14 +66,7 @@ export class AddCarComponent implements OnInit,AfterViewInit, OnDestroy {
     {
       this.Sub.unsubscribe();
     }
-    if (this.currentUserSetings$)
-    {
-      this.currentUserSetings$.unsubscribe();
-    }
-    if (this.currentUser$)
-    {
-      this.currentUser$.unsubscribe();
-    }
+
   }
 
   initForm()
@@ -141,15 +126,6 @@ export class AddCarComponent implements OnInit,AfterViewInit, OnDestroy {
   }
 
 
-  get_user() {
-    this.currentUser$ = this.auth.get_user().subscribe(user => {
-      this.currentUser = user;
-
-      this.currentUserSetings$ = this.AccountService.get_settings_user(user._id).subscribe(res => {
-        this.currentUserSetings = res;
-      })
-    })
-  }
 
 
 
@@ -193,19 +169,6 @@ export class AddCarComponent implements OnInit,AfterViewInit, OnDestroy {
 
 
   onSubmit(){
-    let moyka = '0';
-    if (this.form.value.category === 'Бизнес')
-    {
-       moyka = this.currentUserSetings.washing_avto.business
-    }
-    else if (this.form.value.category === 'Комфорт')
-    {
-       moyka = this.currentUserSetings.washing_avto.komfort
-    }
-    else if (this.form.value.category === 'Премиум') {
-       moyka = this.currentUserSetings.washing_avto.premium
-    }
-
     // Создаем авто
     const car = {
       marka: this.form.value.marka,
@@ -247,7 +210,6 @@ export class AddCarComponent implements OnInit,AfterViewInit, OnDestroy {
       zalog: this.form.value.zalog,
       zalog_mej: this.form.value.zalog_mej,
       zalog_rus: this.form.value.zalog_rus,
-      moyka: moyka,
     };
 
 

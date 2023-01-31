@@ -67,12 +67,6 @@ const carSchema = new Schema({
 
 
 
-    // Стоимость
-    // price: {
-    //     type: String,
-    //     default: '',
-    //     required: false,
-    // },
 
 
 
@@ -325,13 +319,6 @@ const carSchema = new Schema({
     zalog_rus: {
         type: String,
         default: '',
-        required: false,
-    },
-
-    // Тариф (мойка)
-    moyka: {
-        type: Number,
-        default: 0,
         required: false,
     },
 

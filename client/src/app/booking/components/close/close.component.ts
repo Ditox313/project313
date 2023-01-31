@@ -6,8 +6,9 @@ import { map } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { PaysService } from 'src/app/pays/services/pays.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Booking, Summa } from 'src/app/shared/types/interfaces';
+import { Booking, Settings, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
+
 
 @Component({
   selector: 'app-close',
@@ -51,6 +52,7 @@ export class CloseComponent implements OnInit, OnDestroy {
   defaultValueArenda: string = 'Наличные'
   defaultValueZalog: string = 'Наличные'
 
+
   
 
   constructor(
@@ -58,7 +60,8 @@ export class CloseComponent implements OnInit, OnDestroy {
     private router: Router,
     private rote: ActivatedRoute,
     private pays: PaysService,
-    private cars: CarsService
+    private cars: CarsService,
+    
   ) { }
 
   ngOnInit(): void {
@@ -119,6 +122,8 @@ export class CloseComponent implements OnInit, OnDestroy {
       this.summa.booking_days = res.booking_days;
       this.summa.dop_hours = res.dop_hours;
 
+      
+
       MaterialService.updateTextInputs();
     });
   }
@@ -140,14 +145,14 @@ export class CloseComponent implements OnInit, OnDestroy {
 
       const pay2 = {
         vid: 'Мойка',
-        pricePay: this.actualBooking.car.moyka,
+        pricePay: this.actualBooking.moyka,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
 
 
       const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog) + (+this.actualBooking.car.moyka),
+        summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog) + (+this.actualBooking.moyka),
         booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
         status: 'Закрыта',
         dop_info_close: {
@@ -183,6 +188,8 @@ export class CloseComponent implements OnInit, OnDestroy {
     } 
     else if(this.form.value.clear_auto && this.form.value.return_part)
     {
+      
+
       const car: any = {
         probeg: this.form.value.probeg_new,
       }
@@ -240,14 +247,14 @@ export class CloseComponent implements OnInit, OnDestroy {
 
       const pay2 = {
         vid: 'Мойка',
-        pricePay: this.actualBooking.car.moyka,
+        pricePay: this.actualBooking.moyka,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
 
 
       const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price) + (+this.actualBooking.car.moyka),
+        summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price) + (+this.actualBooking.moyka),
         booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
         status: 'Закрыта',
         dop_info_close: {

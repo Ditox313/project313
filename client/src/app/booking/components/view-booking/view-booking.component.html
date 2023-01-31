@@ -123,7 +123,7 @@
                             <div>
                                 <div> <span>Аренда:</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
                                 <div *ngIf="this.actualBooking.dop_info_close && !this.actualBooking.dop_info_close.clear_auto"> <span>Мойка:</span> 
-                                    <span>{{ this.actualBooking.car.moyka | number: '1.0-0'}} ₽</span> 
+                                    <span>{{ this.actualBooking.moyka | number: '1.0-0'}} ₽</span> 
                                 </div>
                                 <div> <span *ngIf="this.summa.car.zalog > 0">Залог:</span> <span>{{ this.actualBooking.booking_zalog}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
@@ -135,7 +135,7 @@
                             <h5>Рассчет</h5>
                             <div>
                                 <div> <span>Аренда:</span> <span>{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
-                                <div *ngIf="this.actualBooking.dop_info_close && !this.actualBooking.dop_info_close.clear_auto"> <span>Мойка:</span> <span>{{ this.actualBooking.car.moyka | number: '1.0-0'}} ₽</span> </div>
+                                <div *ngIf="this.actualBooking.dop_info_close && !this.actualBooking.dop_info_close.clear_auto"> <span>Мойка:</span> <span>{{ this.actualBooking.moyka | number: '1.0-0'}} ₽</span> </div>
                                 <div><span>Залог:</span> <span>{{ this.actualBooking.dop_info_close.zalog}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
                                 <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>

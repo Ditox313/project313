@@ -12,11 +12,6 @@ import { Booking, Client } from 'src/app/shared/types/interfaces';
 })
 export class BookingsService {
 
-  // // Храним запрос
-  // query: string = '' || null;
-
-  // // Храним результаты
-  // searchResult: Client[];
 
   
 
@@ -78,8 +73,6 @@ export class BookingsService {
   searchWidget(searchData: any): Observable<Client[]> {
     return this.http.post<Client[]>('/api/bookings/search_client', { searchData: searchData }).pipe(
       map(res => {
-        // this.query = searchData.query;
-        // this.searchResult = res;
         return res;
       })
     )

@@ -2,12 +2,14 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { DocumentsService } from 'src/app/documents/services/documents.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Client, Client_Law_Fase, MaterialDatepicker, Summa } from 'src/app/shared/types/interfaces';
+import { Client, Client_Law_Fase, MaterialDatepicker, Settings, Summa, User } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
+import { AccountService } from '../../../account/services/account.service';
 
 
 @Component({
@@ -100,22 +102,33 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   minDateBooking: string = '';
 
 
+
+  // Получаем настройки текущего пользователя
+  currentUserSetings$: Subscription = null;
+  currentUserSetings!: Settings
+
+  // Получаем текущего юзера
+  currentUser$: Subscription = null;
+  currentUser!: User
+
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
     private cars: CarsService,
     private clients: ClientsService,
-    private documents: DocumentsService
+    private documents: DocumentsService,
+    private auth: AuthService,
+    private AccountService: AccountService,
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.setMinDate();
-
     this.xscars$ = this.cars.fetch();
     this.xsclients$ = this.clients.fetch();
-
     MaterialService.updateTextInputs();
+    this.get_user();
   }
 
 
@@ -140,6 +153,28 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       this.subCreateBooking$.unsubscribe();
     }
+    if (this.currentUserSetings$)
+    {
+      this.currentUserSetings$.unsubscribe();
+    }
+    if (this.currentUser$)
+    {
+      this.currentUser$.unsubscribe();
+    }
+
+    
+    
+  }
+
+  get_user()
+  {
+    this.currentUser$ = this.auth.get_user().subscribe(res => {
+      this.currentUser = res;
+      
+       this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
+         this.currentUserSetings = res;
+       })
+    })
   }
 
 
@@ -1372,6 +1407,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+
+
   onSubmit() {
     
     // Получаем знапчения начала и конца аренды
@@ -1382,6 +1419,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       if (!this.isCustomeZalog) {
         if (this.form.value.tariff === 'Город') {
+            let moyka = '0';
+            if (this.summa.car.category === 'Бизнес') {
+              moyka = this.currentUserSetings.washing_avto.business
+            }
+            else if (this.summa.car.category === 'Комфорт') {
+              moyka = this.currentUserSetings.washing_avto.komfort
+            }
+            else if (this.summa.car.category === 'Премиум') {
+              moyka = this.currentUserSetings.washing_avto.premium
+            }
+
           const booking = {
             car: JSON.parse(this.form.value.car),
             client: JSON.parse(this.xs_actual_search__client),
@@ -1400,7 +1448,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               full_tank: this.form.value.full_tank || false
             },
             booking_zalog: this.summa.car.zalog,
-            dogovor_number__actual: this.xs_dogovor_number__actual
+            dogovor_number__actual: this.xs_dogovor_number__actual,
+            moyka: moyka
           };
 
 
@@ -1412,6 +1461,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         }
         if (this.form.value.tariff === 'Межгород') {
+          let moyka = '0';
+          if (this.summa.car.category === 'Бизнес') {
+            moyka = this.currentUserSetings.washing_avto.business
+          }
+          else if (this.summa.car.category === 'Комфорт') {
+            moyka = this.currentUserSetings.washing_avto.komfort
+          }
+          else if (this.summa.car.category === 'Премиум') {
+            moyka = this.currentUserSetings.washing_avto.premium
+          }
+
           const booking = {
             car: JSON.parse(this.form.value.car),
             client: JSON.parse(this.xs_actual_search__client),
@@ -1430,7 +1490,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               full_tank: this.form.value.full_tank || false
             },
             booking_zalog: this.summa.car.zalog_mej,
-            dogovor_number__actual: this.xs_dogovor_number__actual
+            dogovor_number__actual: this.xs_dogovor_number__actual,
+            moyka: moyka
           };
 
 
@@ -1441,6 +1502,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         }
         if (this.form.value.tariff === 'Россия') {
+          let moyka = '0';
+          if (this.summa.car.category === 'Бизнес') {
+            moyka = this.currentUserSetings.washing_avto.business
+          }
+          else if (this.summa.car.category === 'Комфорт') {
+            moyka = this.currentUserSetings.washing_avto.komfort
+          }
+          else if (this.summa.car.category === 'Премиум') {
+            moyka = this.currentUserSetings.washing_avto.premium
+          }
+
           const booking = {
             car: JSON.parse(this.form.value.car),
             client: JSON.parse(this.xs_actual_search__client),
@@ -1459,7 +1531,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               full_tank: this.form.value.full_tank || false
             },
             booking_zalog: this.summa.car.zalog_rus,
-            dogovor_number__actual: this.xs_dogovor_number__actual
+            dogovor_number__actual: this.xs_dogovor_number__actual,
+            moyka: moyka
           };
 
           // Отправляем запрос
@@ -1471,6 +1544,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       else {
+        let moyka = '0';
+        if (this.summa.car.category === 'Бизнес') {
+          moyka = this.currentUserSetings.washing_avto.business
+        }
+        else if (this.summa.car.category === 'Комфорт') {
+          moyka = this.currentUserSetings.washing_avto.komfort
+        }
+        else if (this.summa.car.category === 'Премиум') {
+          moyka = this.currentUserSetings.washing_avto.premium
+        }
+
         const booking = {
           car: JSON.parse(this.form.value.car),
           client: JSON.parse(this.xs_actual_search__client),
@@ -1489,7 +1573,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             full_tank: this.form.value.full_tank || false
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
-          dogovor_number__actual: this.xs_dogovor_number__actual
+          dogovor_number__actual: this.xs_dogovor_number__actual,
+          moyka: moyka
         };
 
 
@@ -1505,6 +1590,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     { 
       if (!this.isCustomeZalog) {
         if (this.form.value.tariff === 'Город') {
+          let moyka = '0';
+          if (this.summa.car.category === 'Бизнес') {
+            moyka = this.currentUserSetings.washing_avto.business
+          }
+          else if (this.summa.car.category === 'Комфорт') {
+            moyka = this.currentUserSetings.washing_avto.komfort
+          }
+          else if (this.summa.car.category === 'Премиум') {
+            moyka = this.currentUserSetings.washing_avto.premium
+          }
+
           const booking = {
             car: JSON.parse(this.form.value.car),
             client: JSON.parse(this.xs_actual_search__client___lawfase),
@@ -1522,7 +1618,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false
             },
-            booking_zalog: this.summa.car.zalog
+            booking_zalog: this.summa.car.zalog,
+            moyka: moyka
           };
 
 
@@ -1534,6 +1631,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         }
         if (this.form.value.tariff === 'Межгород') {
+          let moyka = '0';
+          if (this.summa.car.category === 'Бизнес') {
+            moyka = this.currentUserSetings.washing_avto.business
+          }
+          else if (this.summa.car.category === 'Комфорт') {
+            moyka = this.currentUserSetings.washing_avto.komfort
+          }
+          else if (this.summa.car.category === 'Премиум') {
+            moyka = this.currentUserSetings.washing_avto.premium
+          }
+
           const booking = {
             car: JSON.parse(this.form.value.car),
             client: JSON.parse(this.xs_actual_search__client___lawfase),
@@ -1551,7 +1659,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false
             },
-            booking_zalog: this.summa.car.zalog_mej
+            booking_zalog: this.summa.car.zalog_mej,
+            moyka: moyka
           };
 
 
@@ -1562,6 +1671,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         }
         if (this.form.value.tariff === 'Россия') {
+          let moyka = '0';
+          if (this.summa.car.category === 'Бизнес') {
+            moyka = this.currentUserSetings.washing_avto.business
+          }
+          else if (this.summa.car.category === 'Комфорт') {
+            moyka = this.currentUserSetings.washing_avto.komfort
+          }
+          else if (this.summa.car.category === 'Премиум') {
+            moyka = this.currentUserSetings.washing_avto.premium
+          }
+
           const booking = {
             car: JSON.parse(this.form.value.car),
             client: JSON.parse(this.xs_actual_search__client___lawfase),
@@ -1579,7 +1699,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false
             },
-            booking_zalog: this.summa.car.zalog_rus
+            booking_zalog: this.summa.car.zalog_rus,
+            moyka: moyka
           };
 
           // Отправляем запрос
@@ -1591,6 +1712,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       else {
+        let moyka = '0';
+        if (this.summa.car.category === 'Бизнес') {
+          moyka = this.currentUserSetings.washing_avto.business
+        }
+        else if (this.summa.car.category === 'Комфорт') {
+          moyka = this.currentUserSetings.washing_avto.komfort
+        }
+        else if (this.summa.car.category === 'Премиум') {
+          moyka = this.currentUserSetings.washing_avto.premium
+        }
+
         const booking = {
           car: JSON.parse(this.form.value.car),
           client: JSON.parse(this.xs_actual_search__client___lawfase),
@@ -1608,7 +1740,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             clear_auto: this.form.value.clear_auto || false,
             full_tank: this.form.value.full_tank || false
           },
-          booking_zalog: this.form.value.isCustomeZalogControl
+          booking_zalog: this.form.value.isCustomeZalogControl,
+          moyka: moyka
         };
 
 

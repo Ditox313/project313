@@ -54,7 +54,6 @@ export class CarsService {
       fd.append('zalog_mej', car.zalog_mej);
       fd.append('zalog_rus', car.zalog_rus);
       fd.append('zalog', car.zalog);
-      fd.append('moyka', car.moyka);
 
       if(image)
       {
@@ -118,7 +117,6 @@ export class CarsService {
       fd.append('zalog', xscar.zalog);
       fd.append('zalog_mej', xscar.zalog_mej);
       fd.append('zalog_rus', xscar.zalog_rus);
-      fd.append('moyka', xscar.moyka);
 
       if(image)
       {

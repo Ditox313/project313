@@ -164,6 +164,13 @@ const bookingSchema = new Schema({
         type: String,
         default: '',
         required: false,
+    },
+
+
+    moyka: {
+        type: Number,
+        default: 0,
+        required: false,
     }
     
 
