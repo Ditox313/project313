@@ -179,7 +179,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
 
       const pay_2 = {
         vid: 'Подача авто',
-        pricePay: this.actualBooking.dop_info_open.place_start_price,
+        pricePay: this.form.value.place_start_price,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
@@ -203,7 +203,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
 
       const pay_2 = {
         vid: 'Подача авто',
-        pricePay: this.actualBooking.dop_info_open.place_start_price,
+        pricePay: this.form.value.place_start_price,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
@@ -238,7 +238,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
 
       const pay_3 = {
         vid: 'Подача авто',
-        pricePay: this.actualBooking.dop_info_open.place_start_price,
+        pricePay: this.form.value.place_start_price,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
       };
