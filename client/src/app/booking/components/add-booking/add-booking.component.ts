@@ -10,6 +10,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { Client, Client_Law_Fase, MaterialDatepicker, Settings, Summa, User } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 import { AccountService } from '../../../account/services/account.service';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -60,6 +61,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Закончился ли ввод в поле нового залога
   isCustomeZalogCheck: boolean = false;
+
+
+  isCustomePlaceStart: boolean = false;
 
   // Результат поиска
   searchResult: any[] = [];
@@ -130,13 +134,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.xsclients$ = this.clients.fetch();
     MaterialService.updateTextInputs();
     this.get_user();
+    this.dasable_controls();
   }
 
 
   ngAfterViewInit(): void {
-    // Инициализируем табы
     MaterialService.initTabs(this.tabs.nativeElement);
-    // Обновление инпутов формы
     MaterialService.updateTextInputs();
   }
 
@@ -182,14 +185,16 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       car: new FormControl('', [Validators.required]),
       client: new FormControl('', [Validators.required]),
       booking_start: new FormControl('', [Validators.required]),
-      booking_end: new FormControl('', [Validators.required]),
-      place_start: new FormControl('', [Validators.required]),
+      booking_end: new FormControl('',  [Validators.required]),
+      place_start: new FormControl('Офис', [Validators.required]),
       place_end: new FormControl('Офис', [Validators.required]),
       tariff: new FormControl('', [Validators.required]),
       comment: new FormControl(''),
       clear_auto: new FormControl(''),
       full_tank: new FormControl(''),
       isCustomeZalogControl: new FormControl(''),
+      isCustomePlaceStartControl: new FormControl(''),
+      isCustomePlaceStartControlPrice: new FormControl(''),
       search_fiz: new FormControl(''),
       search_law: new FormControl(''),
     });
@@ -210,6 +215,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // При выборе атомобиля
   onChangeCar(e: any)
   {
+
+    if (this.form.value.booking_start) {
+      this.form.controls['client'].enable();
+    }
     // Получаем выбранный автомобиль
     this.summa.car = JSON.parse(e)
 
@@ -428,9 +437,27 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  // Отключаем все инпуты кроме даты старта
+  dasable_controls()
+  {
+    this.form.controls['booking_end'].disable();
+    this.form.controls['car'].disable();
+    this.form.controls['client'].disable();
+    this.form.controls['tariff'].disable();
+    this.form.controls['place_start'].disable();
+    this.form.controls['place_start'].disable();
+  }
+
+
   // При выборе начала аренды
   bookingStartDate(e: any)
   {
+
+    if (this.form.value.booking_start) {
+      this.form.controls['booking_end'].enable();
+    }
+
+
     // Получаем начало аренды
     this.summa.booking_start = e.target.value
 
@@ -681,8 +708,16 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // При выборе конца аренды
   bookingEndDate(e: any)
   {
+
+    if (this.form.value.booking_start) {
+      this.form.controls['car'].enable();
+    }
+
+
     // Получаем конец аренды
     this.summa.booking_end = e.target.value
+
+    
     
 
     // Получаем знапчения начала и конца аренды
@@ -927,6 +962,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // При ваыборе тарифа
   onChangeTariff(e: any)
   {
+    if (this.form.value.booking_start) {
+      this.form.controls['place_start'].enable();
+    }
+
     // Получаем тариф
     this.summa.tariff = e
     
@@ -1150,6 +1189,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // При выборе типа клиента
   changeTypeClient(e)
   {
+    if (this.form.value.booking_start) {
+      this.form.controls['tariff'].enable();
+    }
+
     if(e.target.value === 'fiz')
     {
       this.lawSearchIsVisible = false;
@@ -1199,8 +1242,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+
+  // При выборе места подачи авто
   onChangePlaceStart(e)
   {
+   
+    if (this.form.value.booking_start) {
+      this.form.controls['place_end'].enable();
+    }
     
     if(e === 'Аэропорт')
     {
@@ -1429,6 +1478,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  // Проверяем нажат ли чекбокс для кастомного места подачи
+  xs_isCustomePlaceStartCheck() {
+    this.isCustomePlaceStart = !this.isCustomePlaceStart;
+  }
+
+
   onBlurMethod(e)
   {
     this.isCustomeZalogCheck = !this.isCustomeZalogCheck;
@@ -1436,9 +1491,24 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+  // Привыборе произольной суммы подачи авто
+  onChangeisCustomePlaceStartControlPrice(e)
+  {
+    if (this.isCustomePlaceStart)
+    {
+      this.summa.place_start_price = +this.form.value.isCustomePlaceStartControlPrice || 0
+      
+      this.form.patchValue({
+        place_start: this.form.value.isCustomePlaceStartControl,
+      });
+    }
+    
+  }
+
+
+
 
   onSubmit() {
-    
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
@@ -1475,7 +1545,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || false
+              place_start_price: this.summa.place_start_price || 0
             },
             booking_zalog: this.summa.car.zalog,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1518,7 +1588,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || false
+              place_start_price: this.summa.place_start_price || 0
             },
             booking_zalog: this.summa.car.zalog_mej,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1560,7 +1630,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || false
+              place_start_price: this.summa.place_start_price || 0
             },
             booking_zalog: this.summa.car.zalog_rus,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1603,7 +1673,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             clear_auto: this.form.value.clear_auto || false,
             full_tank: this.form.value.full_tank || false,
             moyka: moyka || false,
-            place_start_price: this.summa.place_start_price || false
+            place_start_price: this.summa.place_start_price || 0
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1651,7 +1721,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || false
+              place_start_price: this.summa.place_start_price || 0
             },
             booking_zalog: this.summa.car.zalog,
           };
@@ -1693,7 +1763,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || false
+              place_start_price: this.summa.place_start_price || 0
             },
             booking_zalog: this.summa.car.zalog_mej,
           };
@@ -1734,7 +1804,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               clear_auto: this.form.value.clear_auto || false,
               full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || false
+              place_start_price: this.summa.place_start_price || 0
             },
             booking_zalog: this.summa.car.zalog_rus,
           };
@@ -1776,7 +1846,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             clear_auto: this.form.value.clear_auto || false,
             full_tank: this.form.value.full_tank || false,
             moyka: moyka || false,
-            place_start_price: this.summa.place_start_price || false
+            place_start_price: this.summa.place_start_price || 0
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
         };
