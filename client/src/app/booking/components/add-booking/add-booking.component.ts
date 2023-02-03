@@ -168,6 +168,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+
   get_user()
   {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
@@ -206,7 +207,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       isCustomeZalogControlclick: new FormControl(''),
     });
 
-    this.form.disable();
+    
   }
 
   // Задаем минимальный параметр даты
@@ -228,6 +229,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.form.value.booking_start) {
       this.form.controls['client'].enable();
     }
+
     // Получаем выбранный автомобиль
     this.summa.car = JSON.parse(e)
 
@@ -991,7 +993,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.controls['full_tank'].enable();
     this.form.controls['isCustomePlaceStartControlclick'].enable();
     this.form.controls['isCustomeZalogControlclick'].enable();
-    this.form.enable();
     
 
     // Получаем тариф
@@ -1324,15 +1325,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
- 
-
-
-
   // При выборе клиента юр/лица
   changeClientLawFase(client) {
     this.form.patchValue({
       search_law: client.name
     });
+
     this.hasQueryLawFase = false;
     this.xs_actual_search__client___lawfase = JSON.stringify(client)
     this.xs_actual_search__client___lawfase_no_json = client
@@ -1408,7 +1406,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // Проверяем нажат ли чекбокс для скидки
+  // Проверяем нажат ли чекбокс для кастомного залога
   xs_isCustomeZalogCheck() {
     this.isCustomeZalog = !this.isCustomeZalog;
   }
@@ -1601,6 +1599,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1649,6 +1649,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_mej,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1696,6 +1698,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_rus,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1744,6 +1748,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_buster: this.form.value.additional_services_buster,
             additional_services_videoregister: this.form.value.additional_services_videoregister,
             additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+            isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+            isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1797,6 +1803,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog,
           };
@@ -1844,6 +1852,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_mej,
           };
@@ -1890,6 +1900,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_rus,
           };
@@ -1937,6 +1949,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_buster: this.form.value.additional_services_buster,
             additional_services_videoregister: this.form.value.additional_services_videoregister,
             additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+            isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+            isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
         };

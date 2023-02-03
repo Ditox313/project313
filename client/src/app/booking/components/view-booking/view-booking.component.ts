@@ -209,6 +209,8 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
         additional_services_buster: this.actualBooking.dop_info_open.additional_services_buster,
         additional_services_videoregister: this.actualBooking.dop_info_open.additional_services_videoregister,
         additional_services_battery_charger: this.actualBooking.dop_info_open.additional_services_battery_charger,
+        isCustomePlaceStart: this.actualBooking.dop_info_open.isCustomePlaceStart,
+        isCustomeZalog: this.actualBooking.dop_info_open.isCustomeZalog
       },
     };
 

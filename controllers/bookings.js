@@ -122,6 +122,8 @@ module.exports.updateActClicked = async function (req, res) {
                     additional_services_buster: updated.dop_info_open.additional_services_buster,
                     additional_services_videoregister: updated.dop_info_open.additional_services_videoregister,
                     additional_services_battery_charger: updated.dop_info_open.additional_services_battery_charger,
+                    isCustomePlaceStart: updated.dop_info_open.isCustomePlaceStart,
+                    isCustomeZalog: updated.dop_info_open.isCustomeZalog
                 }
             },
         }
