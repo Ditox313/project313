@@ -1094,6 +1094,7 @@ select {
 .xs_paid_sale__wrap
 {
     display: flex;
+    align-items: center;
 }
 
 .xs_paid_sale__wrap input
@@ -1173,7 +1174,13 @@ select {
 {
     width: 15px;
     height: 15px;
-    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 8px;
+}
+
+.xs_add_booking_dop_info span
+{
+    margin-bottom: -5px;
 }
 
 .xs_add_booking_dop_info
@@ -1189,10 +1196,23 @@ select {
 
 .xs_add_booking_dop_info___wrap > div
 {
+    display: flex !important;
+    align-items: center !important;
+    font-size: 18px;
+}
+
+.xs_add_booking_dop_info___wrap
+{
+    display: flex;
+}
+
+.xs_add_booking_dop_info___wrap > div
+{
+    margin-right: 20px;
     display: flex;
     align-items: center;
-    font-size: 18px;
-}   
+    font-size: 20px;
+}
 
 .close_dop_info input
 {
@@ -1612,3 +1632,23 @@ select {
     margin-right: 25px;
     width: 350px !important;
 }
+
+input[type="checkbox"]
+{
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.xs_custome_place_start
+{
+    font-size: 20px;
+}
+
+.xs_custome__zalog
+{
+    font-size: 20px;
+}
+
+
+
+

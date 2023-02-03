@@ -116,7 +116,12 @@ module.exports.updateActClicked = async function (req, res) {
                     clear_auto: updated.dop_info_open.clear_auto,
                     full_tank: updated.dop_info_open.full_tank,
                     moyka: updated.dop_info_open.moyka,
-                    place_start_price: updated.dop_info_open.place_start_price
+                    place_start_price: updated.dop_info_open.place_start_price,
+                    additional_services_price: updated.dop_info_open.additional_services_price,
+                    additional_services_chair: updated.dop_info_open.additional_services_chair,
+                    additional_services_buster: updated.dop_info_open.additional_services_buster,
+                    additional_services_videoregister: updated.dop_info_open.additional_services_videoregister,
+                    additional_services_battery_charger: updated.dop_info_open.additional_services_battery_charger,
                 }
             },
         }

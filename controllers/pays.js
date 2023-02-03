@@ -18,14 +18,18 @@ module.exports.create = async function(req, res) {
         const maxOrder = lastOrder ? lastOrder.order : 0;
 
 
-        const pay = await new Pay({
-            userId: req.user._id,
-            vidPay: req.body.vid,
-            typePay: req.body.typePay,
-            bookingId: req.body.bookingId,
-            pricePay: req.body.pricePay,
-            order: maxOrder + 1,
-        }).save();
+        if (req.body.pricePay !== 0)
+        {
+            const pay = await new Pay({
+                userId: req.user._id,
+                vidPay: req.body.vid,
+                typePay: req.body.typePay,
+                bookingId: req.body.bookingId,
+                pricePay: req.body.pricePay,
+                order: maxOrder + 1,
+            }).save();
+        }
+        
 
 
         const actualBooking = await Booking.find({ _id: req.body.bookingId })

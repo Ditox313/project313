@@ -101,10 +101,10 @@
                         </div>
 
                         <div class="input-field col s12">
-                            <div class="xs_custome__zalog">
+                            <div class="xs_custome__zalog xs_custome_place_start">
                                 <div class="xs_paid_sale__wrap">
-                                    <input type="checkbox" (click)="xs_isCustomePlaceStartCheck()">
-                                    <div>Произвольный место подачи</div>
+                                    <input type="checkbox" formControlName="isCustomePlaceStartControlclick" id="isCustomePlaceStartControlclick"  (click)="xs_isCustomePlaceStartCheck()">
+                                    <div>Произвольное место подачи</div>
                                 </div>
                             
                                 <div class="xs_paid_sale__hide  customeStartPlaceWrap" *ngIf="isCustomePlaceStart">
@@ -112,7 +112,19 @@
                                         id="isCustomePlaceStartControl" >
 
                                     <input type="text" placeholder="Введите цену" formControlName="isCustomePlaceStartControlPrice"
-                                        id="isCustomePlaceStartControlPrice" (ngModelChange)="onChangeisCustomePlaceStartControlPrice($event)">
+                                        id="isCustomePlaceStartControlPrice" (ngModelChange)="onChangeisCustomePlaceStartControlPrice($event)"> руб
+                                </div>
+                            </div>
+
+                            <div class="xs_custome__zalog">
+                                <div class="xs_paid_sale__wrap">
+                                    <input type="checkbox" (click)="xs_isCustomeZalogCheck()" formControlName="isCustomeZalogControlclick" id="isCustomeZalogControlclick">
+                                    <div>Произвольный залог</div>
+                                </div>
+                            
+                                <div class="xs_paid_sale__hide" ng-model='xs_isCustomeZalogCheck' *ngIf="isCustomeZalog">
+                                    <input type="text" placeholder="Введите сумму" formControlName="isCustomeZalogControl"
+                                        id="isCustomeZalogControl" (change)="onCustomeZalogValue($event)" (blur)="onBlurMethod($event)"> руб
                                 </div>
                             </div>
                         </div>
@@ -264,29 +276,39 @@
             </div>
         </div>
 
-        <div class="xs_custome__zalog">
-            <div class="xs_paid_sale__wrap">
-                <input type="checkbox" (click)="xs_isCustomeZalogCheck()">
-                <div>Произвольный залог</div>
-            </div>
         
-            <div class="xs_paid_sale__hide" ng-model='xs_isCustomeZalogCheck' *ngIf="isCustomeZalog">
-                <input type="text" placeholder="Введите сумму залога" formControlName="isCustomeZalogControl" id="isCustomeZalogControl"
-                (change)="onCustomeZalogValue($event)" (blur)="onBlurMethod($event)"> руб
-            </div>
-        </div>
 
         <div class="xs_add_booking_dop_info">
             <h4>Дополнительная информация:</h4>
             <div class="xs_add_booking_dop_info___wrap">
                 <div>
-                    <span>Чистый автомобиль</span>
                     <span><input type="checkbox" id="clear_auto" class="validate" formControlName="clear_auto"></span>
+                    <span>Чистый автомобиль</span>
                 </div>
         
                 <div>
-                    <span>Полный бак</span>
                     <span><input type="checkbox" id="full_tank" class="validate" formControlName="full_tank"></span>
+                    <span>Полный бак</span>
+                </div>
+
+                <div>
+                    <span><input type="checkbox" id="additional_services_chair" class="validate" formControlName="additional_services_chair" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
+                    <span>Детское кресло</span>
+                </div>
+
+                <div>
+                    <span><input type="checkbox" id="additional_services_buster" class="validate" formControlName="additional_services_buster" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
+                    <span>Бустер</span>
+                </div>
+
+                <div>
+                    <span><input type="checkbox" id="additional_services_videoregister" class="validate" formControlName="additional_services_videoregister" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
+                    <span>Видеорегистратор</span>
+                </div>
+
+                <div>
+                    <span><input type="checkbox" id="additional_services_battery_charger" class="validate" formControlName="additional_services_battery_charger" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
+                    <span>Зарядное устройство</span>
                 </div>
             </div>
         </div>
@@ -308,11 +330,15 @@
             <span *ngIf="this.isCustomePlaceStart">
                 <span> Подача авто {{this.form.value.isCustomePlaceStartControlPrice || 0}} ₽</span>
             </span>
+            +
+            <span>
+                <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
+            </span>
             + 
             <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
                 Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
             </span> =
-            <span>Итого {{(+summa.summaFull + (+this.summa.place_start_price)) | number: '1.0-0'}} ₽</span>
+            <span>Итого {{(+summa.summaFull + (+this.summa.place_start_price)) + (this.summa.additional_services_price) | number: '1.0-0'}} ₽</span>
         </div>
 
         <div *ngIf="isCustomeZalog"> 
@@ -329,10 +355,14 @@
                 <span> Подача авто {{this.form.value.isCustomePlaceStartControlPrice}} ₽</span>
             </span>
             +
+            <span>
+                <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
+            </span>
+            +
             <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
                 Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
             </span> =
-            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{(+summa.summaFull + (+this.summa.place_start_price)) | number: '1.0-0'}} ₽</span>
+            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{(+summa.summaFull + (+this.summa.place_start_price)) + (this.summa.additional_services_price) | number: '1.0-0'}} ₽</span>
         </div>
     </div>
 

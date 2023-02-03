@@ -58,6 +58,7 @@
                                 <div> <span>Аренда: </span> <span class="pay_last_span">{{ this.summa.summa | number: '1.0-0'}} ₽</span> </div>
                                 <div> <span>Залог: </span> <span class="pay_last_span">{{ this.actualBooking.booking_zalog}} ₽</span> </div>
                                 <div> <span>Цена подачи авто: </span> <span class="pay_last_span">{{ this.actualBooking.dop_info_open.place_start_price}} ₽</span> </div>
+                                <div> <span>Доп.услуги: </span> <span class="pay_last_span">{{ this.actualBooking.dop_info_open.additional_services_price}} ₽</span> </div>
 
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час: </span> <span class="pay_last_span">({{summa.dop_hours}}ч) {{
                                         this.summa.car.price_dop_hour * summa.dop_hours}} ₽ </span> </div>
@@ -135,6 +136,22 @@
 
                         <div class="xs_input_wrap">
                             <label for="place_start_price">Подача авто</label>
+                            <div class="input-field pay_mod col s12">
+                                <input placeholder="0" id="additional_services_price" type="number" class="validate" formControlName="additional_services_price"
+                                    [ngClass]="{'invalid': form.controls['additional_services_price'].invalid && form.controls['additional_services_price'].touched}">
+                        
+                                <span class="helper-text red-text"
+                                    *ngIf="form.controls['place_start_price'].invalid && form.controls['place_start_price'].touched">
+                                    <p *ngIf="form.controls['place_start_price'].errors?.required">
+                                        Поле не должно быть пустым
+                                    </p>
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="xs_input_wrap">
+                            <label for="place_start_price">Доп.услуги</label>
                             <div class="input-field pay_mod col s12">
                                 <input placeholder="0" id="place_start_price" type="number" class="validate" formControlName="place_start_price"
                                     [ngClass]="{'invalid': form.controls['place_start_price'].invalid && form.controls['place_start_price'].touched}">

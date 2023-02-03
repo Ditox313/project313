@@ -317,7 +317,8 @@ export interface Summa {
   checkedTarif?: any
   paidCount?: any
   sale?: any,
-  place_start_price?: any
+  place_start_price?: any,
+  additional_services_price?: any
 }
 
 

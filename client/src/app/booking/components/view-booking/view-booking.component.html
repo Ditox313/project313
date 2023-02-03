@@ -114,6 +114,14 @@
                                 <span>{{this.actualBooking.dop_info_open.full_tank ? 'Да' : 'Нет'}}</span>
                             </div>
 
+                            <div>
+                                <span>Доп.услуги:</span>[
+                                <span>{{this.actualBooking.dop_info_open.additional_services_chair ? 'Детское кресло' : ''}} ,</span>
+                                <span>{{this.actualBooking.dop_info_open.additional_services_buster ? 'Бустер' : ''}} ,</span>
+                                <span>{{this.actualBooking.dop_info_open.additional_services_videoregister ? 'Видеорегистратор' : ''}} ,</span>
+                                <span>{{this.actualBooking.dop_info_open.additional_services_battery_charger ? 'Зарядное устройство' : ''}} </span>]
+                            </div>
+
                             
                         </div>
                         
@@ -128,6 +136,7 @@
                                 <div> <span *ngIf="this.summa.car.zalog > 0">Залог:</span> <span>{{ this.actualBooking.booking_zalog}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
                                 <div> <span>Подача авто:</span> <span>{{ this.actualBooking.dop_info_open.place_start_price | number: '1.0-0'}} ₽</span> </div>
+                                <div> <span>Доп.услуги:</span> <span>{{ this.actualBooking.dop_info_open.additional_services_price | number: '1.0-0'}} ₽</span> </div>
                                 <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
                             </div>
                         </div>
@@ -140,6 +149,7 @@
                                 <div><span>Залог:</span> <span>{{ this.actualBooking.dop_info_close.zalog}} ₽</span> </div>
                                 <div *ngIf="summa.dop_hours > 0"> <span>Доп.час:</span> <span>({{summa.dop_hours}}ч) {{ this.summa.car.price_dop_hour * summa.dop_hours}} ₽</span> </div>
                                 <div> <span>Подача авто:</span> <span>{{ this.actualBooking.dop_info_open.place_start_price | number: '1.0-0'}} ₽</span> </div>
+                                <div> <span>Доп.услуги :</span> <span>{{ this.actualBooking.dop_info_open.additional_services_price | number: '1.0-0'}} ₽</span> </div>
                                 <div> <span>Итого:</span> <span>{{ summa.summaFull | number: '1.0-0'}} ₽</span> </div>
                             </div>
                         </div>
