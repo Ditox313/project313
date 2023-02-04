@@ -1460,7 +1460,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_start: this.form.value.booking_start,
             booking_end: this.form.value.booking_end,
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
-            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + this.summa.additional_services_price),
+            summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) +
+                (+this.summa.additional_services_price) + (+this.summa.car.zalog) + (this.summa.car.price_dop_hour * this.summa.dop_hours)),
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {

@@ -141,8 +141,8 @@
                                     [ngClass]="{'invalid': form.controls['additional_services_price'].invalid && form.controls['additional_services_price'].touched}">
                         
                                 <span class="helper-text red-text"
-                                    *ngIf="form.controls['place_start_price'].invalid && form.controls['place_start_price'].touched">
-                                    <p *ngIf="form.controls['place_start_price'].errors?.required">
+                                    *ngIf="form.controls['additional_services_price'].invalid && form.controls['additional_services_price'].touched">
+                                    <p *ngIf="form.controls['additional_services_price'].errors?.required">
                                         Поле не должно быть пустым
                                     </p>
                                 </span>

@@ -132,7 +132,8 @@ export class AddPayComponent implements OnInit, OnDestroy {
         this.form.patchValue({
           arenda: +res.summa + (+this.summa.car.price_dop_hour * (+this.summa.dop_hours)),
           zalog: res.booking_zalog,
-          place_start_price: res.dop_info_open.place_start_price
+          place_start_price: res.dop_info_open.place_start_price,
+          additional_services_price: res.dop_info_open.additional_services_price,
         });
       }
       else {
