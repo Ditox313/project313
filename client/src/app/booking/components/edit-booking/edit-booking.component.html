@@ -405,7 +405,7 @@
                 Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
             </span> =
 
-            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{(+summa.summa + (+this.summa.place_start_price)) +
+            <span >Итого {{(+summa.summa + (+this.summa.place_start_price)) +
                 (+this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl) + (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
         </div>
 

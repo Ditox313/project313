@@ -176,21 +176,60 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
 
   checkedTarif(countDay: any)
   {
-    if (this.summa.booking_days < 3)
+    
+
+    if (this.actualBooking.tariff === 'Город')
     {
-      this.summa.checkedTarif = this.summa.car.days_1_2
+      if (this.summa.booking_days < 3) {
+        this.summa.checkedTarif = this.summa.car.days_1_2
+      }
+      if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        this.summa.checkedTarif = this.summa.car.days_3_7
+      }
+      if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        this.summa.checkedTarif = this.summa.car.days_8_14
+      }
+      if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        this.summa.checkedTarif = this.summa.car.days_15_30
+      }
+      if (this.summa.booking_days >= 31) {
+        this.summa.checkedTarif = this.summa.car.days_31_more
+      }
     }
-    if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
-      this.summa.checkedTarif = this.summa.car.days_3_7
+    else if(this.actualBooking.tariff === 'Межгород')
+      {
+        if (this.summa.booking_days < 3) {
+          this.summa.checkedTarif = this.summa.car.mezgorod
+        }
+        if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+          this.summa.checkedTarif = this.summa.car.mezgorod
+        }
+        if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+          this.summa.checkedTarif = this.summa.car.mezgorod
+        }
+        if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+          this.summa.checkedTarif = this.summa.car.mezgorod
+        }
+        if (this.summa.booking_days >= 31) {
+          this.summa.checkedTarif = this.summa.car.mezgorod
+        }
     }
-    if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
-      this.summa.checkedTarif = this.summa.car.days_8_14
-    }
-    if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
-      this.summa.checkedTarif = this.summa.car.days_15_30
-    }
-    if (this.summa.booking_days >= 31) {
-      this.summa.checkedTarif = this.summa.car.days_31_more
+    else if (this.actualBooking.tariff === 'Россия') {
+      if (this.summa.booking_days < 3) {
+        this.summa.checkedTarif = this.summa.car.russia
+      }
+      if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        this.summa.checkedTarif = this.summa.car.russia
+      }
+      if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        this.summa.checkedTarif = this.summa.car.russia
+      }
+      if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        this.summa.checkedTarif = this.summa.car.russia
+      }
+      if (this.summa.booking_days >= 31) {
+        this.summa.checkedTarif = this.summa.car.russia
+      }
     }
   }
 
