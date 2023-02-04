@@ -115,11 +115,20 @@
                             </div>
 
                             <div>
-                                <span>Доп.услуги:</span>[
-                                <span>{{this.actualBooking.dop_info_open.additional_services_chair ? 'Детское кресло' : ''}} ,</span>
-                                <span>{{this.actualBooking.dop_info_open.additional_services_buster ? 'Бустер' : ''}} ,</span>
-                                <span>{{this.actualBooking.dop_info_open.additional_services_videoregister ? 'Видеорегистратор' : ''}} ,</span>
-                                <span>{{this.actualBooking.dop_info_open.additional_services_battery_charger ? 'Зарядное устройство' : ''}} </span>]
+                                <span>Доп.услуги:</span>
+
+                                <span *ngIf="actualBooking.dop_info_open.additional_services_price > 0">
+                                    [
+                                    <span>{{this.actualBooking.dop_info_open.additional_services_chair ? 'Детское кресло' : ''}} ,</span>
+                                    <span>{{this.actualBooking.dop_info_open.additional_services_buster ? 'Бустер' : ''}} ,</span>
+                                    <span>{{this.actualBooking.dop_info_open.additional_services_videoregister ? 'Видеорегистратор' : ''}} ,</span>
+                                    <span>{{this.actualBooking.dop_info_open.additional_services_battery_charger ? 'Зарядное устройство' : ''}} </span>
+                                    ]
+                                </span>
+
+                                <span *ngIf="actualBooking.dop_info_open.additional_services_price === 0">
+                                    <span>нет</span>
+                                </span>
                             </div>
 
                             

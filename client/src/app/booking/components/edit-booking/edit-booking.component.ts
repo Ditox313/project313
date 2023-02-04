@@ -944,7 +944,6 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.form.value.booking_end > dogovor[0].date_end) {
           this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
-          console.log('Бронь закончится раньше договора');
         }
 
       }
@@ -1022,7 +1021,6 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.form.value.booking_end > dogovor[0].date_end) {
           this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
-          console.log('Бронь закончится раньше договора');
         }
 
       }
@@ -1087,6 +1085,10 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // Проверяем нажат ли чекбокс для кастомного залога
   xs_isCustomeZalogCheck() {
     this.isCustomeZalog = !this.isCustomeZalog;
+
+    this.form.patchValue({
+      isCustomeZalogControl: 0,
+    });
   }
 
 
@@ -1094,7 +1096,6 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   onCustomeZalogValue(e)
   {
 
-    console.log(this.form.value.isCustomeZalogControl);
     
     let xs_custome__zalog = e.target.value
 
@@ -1211,7 +1212,9 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isCustomePlaceStart = !this.isCustomePlaceStart;
 
     this.form.patchValue({
-      place_start: ''
+      place_start: null,
+      isCustomePlaceStartControl: '',
+      isCustomePlaceStartControlPrice: 0
     });
   }
 
