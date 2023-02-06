@@ -39,6 +39,7 @@ export class ClientsService {
       fd.append('phone_3_dop_number', client.phone_3_dop_number);
       fd.append('phone_4_dop_name', client.phone_4_dop_name);
       fd.append('phone_4_dop_number', client.phone_4_dop_number);
+      fd.append('isNoResident', client.isNoResident);
 
       if(passport__1)
       {
@@ -181,6 +182,7 @@ export class ClientsService {
       fd.append('phone_4_dop_name', xsclient.phone_4_dop_name);
       fd.append('phone_4_dop_number', xsclient.phone_4_dop_number);
       fd.append('clientId', id);
+      fd.append('isNoResident', xsclient.isNoResident);
 
       if(passport__1)
       {

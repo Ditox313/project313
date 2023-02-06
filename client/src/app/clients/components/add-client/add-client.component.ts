@@ -97,6 +97,7 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
       phone_3_dop_number: new FormControl('', []),
       phone_4_dop_name: new FormControl('', []),
       phone_4_dop_number: new FormControl('', []),
+      isNoResident: new FormControl('', []),
     });
     
     
@@ -111,12 +112,27 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  // Если нажат-"Не резидент РФ"
+  isNoResidentInput() {
+    this.isNoResident = !this.isNoResident;
+    if (this.isNoResident)
+    {
+      this.maxLengthSeriaAndNumber = 25;
+    }
+    else
+    {
+      this.maxLengthSeriaAndNumber = 11;
+    }
+    
+  }
+
+
 
   onSubmit() {
     let fio = this.form.value.fio.split(' ');
     let seria_and_number = this.form.value.passport_seria_and_number.split(' ');
-    
-    
+
+
     const client = {
       name: fio[1],
       surname: fio[0],
@@ -141,7 +157,13 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
       phone_3_dop_number: this.form.value.phone_3_dop_number,
       phone_4_dop_name: this.form.value.phone_4_dop_name,
       phone_4_dop_number: this.form.value.phone_4_dop_number,
+      isNoResident: this.form.value.isNoResident
     };
+
+    
+
+    
+    
 
     this.subClientCreate$ = this.clients
       .create(
@@ -154,31 +176,17 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((client) => {
         MaterialService.toast('Клиент физ/лицо добавлен');
 
-        if(this.breadcrumbsId)
-        {
+        if (this.breadcrumbsId) {
           this.router.navigate(['/add-booking']);
         }
-        else
-        {
+        else {
           this.router.navigate(['/clients-page']);
         }
-                
+
       });
 
-    
+
   }
-
-
-
-
-  // Если нажат-"Не резидент РФ"
-  isNoResidentInput() {
-    this.isNoResident = !this.isNoResident;
-    this.maxLengthSeriaAndNumber = 25;
-    console.log(this.isNoResident);
-  }
-
-
 
 
   // Обрабатываем загрузку картинок

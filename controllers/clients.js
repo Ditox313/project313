@@ -45,6 +45,7 @@ module.exports.create = async function(req, res) {
             phone_4_dop_name: req.body.phone_4_dop_name,
             phone_4_dop_number: req.body.phone_4_dop_number,
             user: req.user._id,
+            isNoResident: req.body.isNoResident,
             passport_1_img: req.files.passport_1_img[0].path, //Если файл загружен то задаем путь до файла
             passport_2_img: req.files.passport_2_img[0].path, 
             prava_1_img: req.files.prava_1_img[0].path, 

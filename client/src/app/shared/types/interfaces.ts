@@ -153,6 +153,7 @@ export interface Client
     _id?: any,
     date?: any,
     order?: any
+    isNoResident?: any
 }
 
 

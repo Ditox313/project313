@@ -217,6 +217,12 @@ const clientSchema = new Schema({
         required: true,
     },
 
+
+    isNoResident: {
+        type: Boolean,
+        required: true,
+    },
+
     
 
     // Пользователь который создал партнера

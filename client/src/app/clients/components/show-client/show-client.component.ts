@@ -45,7 +45,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   subUpdateClient$: Subscription;
 
   // Если не резидент
-  isNoResident: boolean = false;
+  isNoResident: boolean;
 
   // Максимальное колличество символов в серии и номере паспорта
   maxLengthSeriaAndNumber: any = 11;
@@ -61,6 +61,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getParams();
     this.getByClientId(); 
     MaterialService.updateTextInputs();
+    this.isNoResidentInput();
   }
 
   ngOnDestroy(): void {
@@ -108,7 +109,9 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
       phone_3_dop_number: new FormControl('', []),
       phone_4_dop_name: new FormControl('', []),
       phone_4_dop_number: new FormControl('', []),
+      isNoResident: new FormControl('', []),
     });
+
   }
 
   getParams()
@@ -139,6 +142,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
       if (res.prava_2_img) {
         this.prava_2_preview = res.prava_2_img;
       }
+      console.log('111', res);
+      
 
       this.form.patchValue({
         fio: res.name + ' ' + res.surname + ' ' + res.lastname,
@@ -161,8 +166,28 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
         phone_3_dop_number: res.phone_3_dop_number,
         phone_4_dop_name: res.phone_4_dop_name,
         phone_4_dop_number: res.phone_4_dop_number,
+        isNoResident: res.isNoResident,
       });
+
+      
     });
+  }
+
+
+  // Если нажат-"Не резидент РФ"
+  isNoResidentInput() {
+    this.isNoResident = !this.isNoResident;
+    
+    
+    if (this.isNoResident)
+    {
+      this.maxLengthSeriaAndNumber = 25;
+    }
+    else
+    {
+      this.maxLengthSeriaAndNumber = 11;
+    }
+
   }
 
 
@@ -195,6 +220,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
       phone_3_dop_number: this.form.value.phone_3_dop_number,
       phone_4_dop_name: this.form.value.phone_4_dop_name,
       phone_4_dop_number: this.form.value.phone_4_dop_number,
+      isNoResident: this.form.value.isNoResident
     };
 
     this.subUpdateClient$ = this.clients
@@ -212,11 +238,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // Если нажат-"Не резидент РФ"
-  isNoResidentInput() {
-    this.isNoResident = !this.isNoResident;
-    this.maxLengthSeriaAndNumber = 25;
-  }
+
 
 
 

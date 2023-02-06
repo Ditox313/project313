@@ -57,7 +57,7 @@
                         <div class="input-field col s12 xs_no_resident">
                             <span class="xs_paid_sale">
                                 <div class="xs_paid_sale__wrap">
-                                    <input type="checkbox" (click)="isNoResidentInput()">
+                                    <input type="checkbox" (click)="isNoResidentInput()" formControlName="isNoResident" id="isNoResident">
                                     <div>Не резидент</div>
                                 </div>
                             </span>
@@ -77,12 +77,12 @@
                                 </p>
 
                                 <p *ngIf="form.controls['passport_seria_and_number'].errors?.minlength">
-                                    <span *ngIf="!isNoResident">
+                                    <span *ngIf="!this.form.value.isNoResident">
                                         Нужное колличество символов: {{maxLengthSeriaAndNumber}}(с пробелом)<br>
                                         Введено: {{form.controls['passport_seria_and_number'].errors?.minlength.actualLength}}
                                     </span>
                                      
-                                    <span *ngIf="isNoResident">
+                                    <span *ngIf="this.form.value.isNoResident">
                                         Максимальное колличество символов: {{maxLengthSeriaAndNumber}}(с пробелом)<br>
                                         Введено: {{form.controls['passport_seria_and_number'].errors?.minlength.actualLength}}
                                     </span>
