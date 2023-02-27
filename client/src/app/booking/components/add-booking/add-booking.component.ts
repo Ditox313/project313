@@ -472,6 +472,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.controls['additional_services_videoregister'].disable();
     this.form.controls['additional_services_battery_charger'].disable();
     this.form.controls['additional_services_antiradar'].disable();
+    this.form.controls['additional_services_moyka'].disable();
     this.form.controls['isCustomePlaceStartControlclick'].disable();
     this.form.controls['isCustomeZalogControlclick'].disable();
   }
@@ -1000,6 +1001,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.controls['additional_services_videoregister'].enable();
     this.form.controls['additional_services_battery_charger'].enable();
     this.form.controls['additional_services_antiradar'].enable();
+    this.form.controls['additional_services_moyka'].enable();
     this.form.controls['full_tank'].enable();
     this.form.controls['isCustomePlaceStartControlclick'].enable();
     this.form.controls['isCustomeZalogControlclick'].enable();
@@ -1780,6 +1782,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
               additional_services_antiradar: this.form.value.additional_services_antiradar,
+              additional_services_moyka: this.form.value.additional_services_moyka,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1831,6 +1834,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
               additional_services_antiradar: this.form.value.additional_services_antiradar,
+              additional_services_moyka: this.form.value.additional_services_moyka,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1881,6 +1885,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
               additional_services_antiradar: this.form.value.additional_services_antiradar,
+              additional_services_moyka: this.form.value.additional_services_moyka,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1932,6 +1937,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_videoregister: this.form.value.additional_services_videoregister,
             additional_services_battery_charger: this.form.value.additional_services_battery_charger,
             additional_services_antiradar: this.form.value.additional_services_antiradar,
+            additional_services_moyka: this.form.value.additional_services_moyka,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
@@ -1988,6 +1994,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
               additional_services_antiradar: this.form.value.additional_services_antiradar,
+              additional_services_moyka: this.form.value.additional_services_moyka,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -2038,6 +2045,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
               additional_services_antiradar: this.form.value.additional_services_antiradar,
+              additional_services_moyka: this.form.value.additional_services_moyka,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -2087,6 +2095,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
               additional_services_antiradar: this.form.value.additional_services_antiradar,
+              additional_services_moyka: this.form.value.additional_services_moyka,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -2137,6 +2146,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_videoregister: this.form.value.additional_services_videoregister,
             additional_services_battery_charger: this.form.value.additional_services_battery_charger,
             additional_services_antiradar: this.form.value.additional_services_antiradar,
+            additional_services_moyka: this.form.value.additional_services_moyka,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
