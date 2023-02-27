@@ -192,8 +192,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       place_end: new FormControl('Офис', [Validators.required]),
       tariff: new FormControl('', [Validators.required]),
       comment: new FormControl(''),
-      clear_auto: new FormControl(''),
-      full_tank: new FormControl(''),
+      // clear_auto: new FormControl(''),
+      // full_tank: new FormControl(''),
       isCustomeZalogControl: new FormControl(''),
       isCustomePlaceStartControl: new FormControl(''),
       isCustomePlaceStartControlPrice: new FormControl(''),
@@ -461,9 +461,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.controls['client'].disable();
     this.form.controls['tariff'].disable();
     this.form.controls['place_start'].disable();
-    this.form.controls['clear_auto'].disable();
-    this.form.controls['clear_auto'].disable();
-    this.form.controls['full_tank'].disable();
+    // this.form.controls['clear_auto'].disable();
+    // this.form.controls['full_tank'].disable();
     this.form.controls['additional_services_chair'].disable();
     this.form.controls['additional_services_buster'].disable();
     this.form.controls['additional_services_videoregister'].disable();
@@ -992,14 +991,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.form.controls['place_start'].enable();
     }
 
-    this.form.controls['clear_auto'].enable();
+    // this.form.controls['clear_auto'].enable();
+    // this.form.controls['full_tank'].enable();
     this.form.controls['additional_services_chair'].enable();
     this.form.controls['additional_services_buster'].enable();
     this.form.controls['additional_services_videoregister'].enable();
     this.form.controls['additional_services_battery_charger'].enable();
     this.form.controls['additional_services_antiradar'].enable();
     this.form.controls['additional_services_moyka'].enable();
-    this.form.controls['full_tank'].enable();
     this.form.controls['isCustomePlaceStartControlclick'].enable();
     this.form.controls['isCustomeZalogControlclick'].enable();
     
@@ -1769,8 +1768,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
@@ -1821,8 +1820,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_chair: this.form.value.additional_services_chair || false,
@@ -1871,8 +1870,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
@@ -1923,8 +1922,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           summa: Math.round(this.summa.summa),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
-            clear_auto: this.form.value.clear_auto || false,
-            full_tank: this.form.value.full_tank || false,
+            // clear_auto: this.form.value.clear_auto || false,
+            // full_tank: this.form.value.full_tank || false,
             moyka: moyka || false,
             place_start_price: this.summa.place_start_price || 0,
             additional_services_price: this.summa.additional_services_price,
@@ -1980,8 +1979,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
@@ -2031,8 +2030,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
@@ -2081,8 +2080,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
@@ -2132,8 +2131,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           summa: Math.round(this.summa.summa),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
-            clear_auto: this.form.value.clear_auto || false,
-            full_tank: this.form.value.full_tank || false,
+            // clear_auto: this.form.value.clear_auto || false,
+            // full_tank: this.form.value.full_tank || false,
             moyka: moyka || false,
             place_start_price: this.summa.place_start_price || 0,
             additional_services_price: this.summa.additional_services_price,
