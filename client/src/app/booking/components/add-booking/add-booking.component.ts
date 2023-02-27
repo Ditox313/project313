@@ -176,6 +176,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       
        this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
          this.currentUserSetings = res;
+
+         console.log(this.currentUserSetings);
+         
        })
     })
   }
@@ -234,6 +237,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Получаем выбранный автомобиль
     this.summa.car = JSON.parse(e)
+
+    
+    
 
     if (!this.isCustomeZalog)
     {
@@ -465,6 +471,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.controls['additional_services_buster'].disable();
     this.form.controls['additional_services_videoregister'].disable();
     this.form.controls['additional_services_battery_charger'].disable();
+    this.form.controls['additional_services_antiradar'].disable();
     this.form.controls['isCustomePlaceStartControlclick'].disable();
     this.form.controls['isCustomeZalogControlclick'].disable();
   }
@@ -992,6 +999,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.controls['additional_services_buster'].enable();
     this.form.controls['additional_services_videoregister'].enable();
     this.form.controls['additional_services_battery_charger'].enable();
+    this.form.controls['additional_services_antiradar'].enable();
     this.form.controls['full_tank'].enable();
     this.form.controls['isCustomePlaceStartControlclick'].enable();
     this.form.controls['isCustomeZalogControlclick'].enable();
@@ -1314,17 +1322,69 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // При выборе доп услуги
   onChangeAdditionalServicesInput(e)
   {
-    let additional_services_summ = {
-      additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
-      additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
-      additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
-      additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
-      additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
-    }
+    if (this.form.value.additional_services_moyka)
+    {
+      if(this.summa.car.category === 'Комфорт')
+      {
+        let additional_services_summ = {
+          additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
+          additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
+          additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
+          additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+          additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
+          additional_services_moyka: this.form.value.additional_services_moyka ? +this.currentUserSetings.washing_avto.komfort : 0,
+        }
 
-    let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
-    
-    this.summa.additional_services_price = summ;
+        let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
+
+        this.summa.additional_services_price = summ;
+        
+      }
+      else if (this.summa.car.category === 'Бизнес')
+      {
+        let additional_services_summ = {
+          additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
+          additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
+          additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
+          additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+          additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
+          additional_services_moyka: this.form.value.additional_services_moyka ? +this.currentUserSetings.washing_avto.business : 0,
+        }
+
+        let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
+
+        this.summa.additional_services_price = summ;
+      }
+      else if (this.summa.car.category === 'Премиум')
+      {
+        let additional_services_summ = {
+          additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
+          additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
+          additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
+          additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+          additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
+          additional_services_moyka: this.form.value.additional_services_moyka ? +this.currentUserSetings.washing_avto.premium : 0,
+        }
+
+        let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
+
+        this.summa.additional_services_price = summ;
+      }
+      
+    }else{
+      let additional_services_summ = {
+        additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
+        additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
+        additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
+        additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+        additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
+        additional_services_moyka: this.form.value.additional_services_moyka ? 1000 : 0,
+      }
+
+      let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
+
+      this.summa.additional_services_price = summ;
+    }
   }
 
 
@@ -1411,7 +1471,119 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Проверяем нажат ли чекбокс для кастомного залога
   xs_isCustomeZalogCheck() {
+
     this.isCustomeZalog = !this.isCustomeZalog;
+
+    if (!this.isCustomeZalog) {
+      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+        if (this.summa.tariff === 'Город') {
+          if (this.summa.booking_days < 3) {
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            }
+            if (this.summa.dop_hours === 0) {
+              this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            }
+
+          }
+          else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            }
+            if (this.summa.dop_hours === 0) {
+              this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            }
+          }
+          else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            }
+            if (this.summa.dop_hours === 0) {
+              this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            }
+          }
+          else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            }
+            if (this.summa.dop_hours === 0) {
+              this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
+              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            }
+          }
+          else if (this.summa.booking_days > 31) {
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+            }
+            if (this.summa.dop_hours === 0) {
+              this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
+              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+            }
+          }
+        }
+        else if (this.summa.tariff === 'Межгород') {
+          if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+          }
+          if (this.summa.dop_hours >= 12) {
+            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
+          }
+          if (this.summa.dop_hours === 0) {
+            this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
+          }
+        }
+        else if (this.summa.tariff === 'Россия') {
+          if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+          }
+          if (this.summa.dop_hours >= 12) {
+            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
+          }
+          if (this.summa.dop_hours === 0) {
+            this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
+          }
+        }
+
+      }
+    }
+
+    this.form.patchValue({
+      isCustomeZalogControl: '',
+    })
   }
 
 
@@ -1531,6 +1703,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // Проверяем нажат ли чекбокс для кастомного места подачи
   xs_isCustomePlaceStartCheck() {
     this.isCustomePlaceStart = !this.isCustomePlaceStart;
+
+    this.form.patchValue({
+      isCustomePlaceStartControlPrice: '',
+      isCustomePlaceStartControl: ''
+    })
   }
 
 
