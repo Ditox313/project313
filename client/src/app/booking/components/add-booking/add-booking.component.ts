@@ -203,6 +203,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       additional_services_buster: new FormControl(''),
       additional_services_videoregister: new FormControl(''),
       additional_services_battery_charger: new FormControl(''),
+      additional_services_antiradar: new FormControl(''),
+      additional_services_moyka: new FormControl(''),
       isCustomePlaceStartControlclick: new FormControl(''),
       isCustomeZalogControlclick: new FormControl(''),
     });
@@ -1317,6 +1319,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
       additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
       additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+      additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
     }
 
     let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
@@ -1557,7 +1560,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   onSubmit() {
-    // Получаем знапчения начала и конца аренды
+    // Получаем значения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
 
@@ -1599,6 +1602,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_antiradar: this.form.value.additional_services_antiradar,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1649,6 +1653,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_antiradar: this.form.value.additional_services_antiradar,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1698,6 +1703,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_antiradar: this.form.value.additional_services_antiradar,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1748,6 +1754,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_buster: this.form.value.additional_services_buster,
             additional_services_videoregister: this.form.value.additional_services_videoregister,
             additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+            additional_services_antiradar: this.form.value.additional_services_antiradar,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
@@ -1803,6 +1810,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_antiradar: this.form.value.additional_services_antiradar,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1852,6 +1860,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_antiradar: this.form.value.additional_services_antiradar,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1900,6 +1909,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_buster: this.form.value.additional_services_buster,
               additional_services_videoregister: this.form.value.additional_services_videoregister,
               additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_antiradar: this.form.value.additional_services_antiradar,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1949,6 +1959,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_buster: this.form.value.additional_services_buster,
             additional_services_videoregister: this.form.value.additional_services_videoregister,
             additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+            additional_services_antiradar: this.form.value.additional_services_antiradar,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
