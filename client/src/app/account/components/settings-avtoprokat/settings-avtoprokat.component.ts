@@ -52,6 +52,7 @@ export class SettingsAvtoprokatComponent implements OnInit, OnDestroy {
       additionally_buster: new FormControl(null, []),
       additionally_videoregister: new FormControl(null, []),
       additionally_battery_charger: new FormControl(null, []),
+      additionally_antiradar: new FormControl(null, []),
     });
   }
 
@@ -74,6 +75,7 @@ export class SettingsAvtoprokatComponent implements OnInit, OnDestroy {
         additionally_buster: res.additionally_avto.buster,
         additionally_videoregister: res.additionally_avto.videoregister,
         additionally_battery_charger: res.additionally_avto.battery_charger,
+        additionally_antiradar: res.additionally_avto.antiradar,
       });
         
       })
@@ -102,6 +104,7 @@ export class SettingsAvtoprokatComponent implements OnInit, OnDestroy {
         buster: this.form.value.additionally_buster,
         videoregister: this.form.value.additionally_videoregister,
         battery_charger: this.form.value.additionally_battery_charger,
+        antiradar: this.form.value.additionally_antiradar,
       }
     };
 
@@ -119,6 +122,7 @@ export class SettingsAvtoprokatComponent implements OnInit, OnDestroy {
         additionally_buster: res.additionally_avto.buster,
         additionally_videoregister: res.additionally_avto.videoregister,
         additionally_battery_charger: res.additionally_avto.battery_charger,
+        additionally_antiradar: res.additionally_avto.antiradar,
       });
 
       MaterialService.toast('Данные изменены');

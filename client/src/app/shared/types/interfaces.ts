@@ -36,6 +36,7 @@ export interface Settings {
     buster?: any
     videoregister?: any
     battery_charger?: any
+    antiradar?: any
   }
 }
 
