@@ -7,12 +7,14 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Booking, Summa } from 'src/app/shared/types/interfaces';
+import { Booking, Settings, Summa, User } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 import * as moment from 'moment';
 import { PaysService } from 'src/app/pays/services/pays.service';
 import { DocumentsService } from 'src/app/documents/services/documents.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { AccountService } from '../../../account/services/account.service';
 
 @Component({
   selector: 'app-view-booking',
@@ -69,12 +71,22 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
 
   subUpdateAct$: Subscription;
 
+  // Получаем настройки текущего пользователя
+  currentUserSetings$: Subscription = null;
+  currentUserSetings!: Settings
+
+  // Получаем текущего юзера
+  currentUser$: Subscription = null;
+  currentUser!: User
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
     private rote: ActivatedRoute,
     private pay: PaysService,
-    private ducumentsServise: DocumentsService
+    private ducumentsServise: DocumentsService,
+    private auth: AuthService,
+    private AccountService: AccountService,
   ) {}
 
   ngOnInit(): void {
@@ -82,6 +94,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     this.getBookingById();
     this.getPaysByBookingId();
     MaterialService.updateTextInputs();
+    this.get_user();
   }
 
   ngOnDestroy(): void {
@@ -105,6 +118,28 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     {
       this.subUpdateAct$.unsubscribe();
     }
+    if (this.currentUserSetings$)
+    {
+      this.currentUserSetings$.unsubscribe();
+    }
+    if (this.currentUser$)
+    {
+      this.currentUser$.unsubscribe();
+    }
+  }
+
+  get_user()
+  {
+    this.currentUser$ = this.auth.get_user().subscribe(res => {
+      this.currentUser = res;
+      
+       this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
+         this.currentUserSetings = res;
+
+         console.log(this.currentUserSetings);
+         
+       })
+    })
   }
 
   getParams()

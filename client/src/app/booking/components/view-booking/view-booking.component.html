@@ -104,27 +104,18 @@
                                 <span>{{actualBooking.comment}} </span>
                             </div>
 
-                            <div>
-                                <span>Выдан чистый авто:</span>
-                                <span>{{this.actualBooking.dop_info_open.clear_auto ? 'Да' : 'Нет'}}</span>
-                            </div>
-                            
-                            <div>
-                                <span>Выдан полный бак:</span>
-                                <span>{{this.actualBooking.dop_info_open.full_tank ? 'Да' : 'Нет'}}</span>
-                            </div>
 
                             <div>
                                 <span>Доп.услуги:</span>
 
-                                <span *ngIf="actualBooking.dop_info_open.additional_services_price > 0">
+                                <span *ngIf="actualBooking.dop_info_open.additional_services_price > 0 && this.currentUserSetings" class="xs_dop_serv_view_booking">
                                     [
-                                    <span>{{this.actualBooking.dop_info_open.additional_services_chair ? 'Детское кресло' : ''}} ,</span>
-                                    <span>{{this.actualBooking.dop_info_open.additional_services_buster ? 'Бустер' : ''}} ,</span>
-                                    <span>{{this.actualBooking.dop_info_open.additional_services_videoregister ? 'Видеорегистратор' : ''}} ,</span>
-                                    <span>{{this.actualBooking.dop_info_open.additional_services_battery_charger ? 'Зарядное устройство' : ''}} </span>
-                                    <span>{{this.actualBooking.dop_info_open.additional_services_antiradar ? ', Антирадар' : ''}} </span>
-                                    <span>{{this.actualBooking.dop_info_open.additional_services_moyka ? ', Мойка' : ''}} </span>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_chair ? 'Детское кресло' : ''}} <span >({{this.currentUserSetings.additionally_avto.det_kreslo}} руб)</span> </div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_buster ? 'Бустер' : ''}} <span>({{this.currentUserSetings.additionally_avto.buster}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_videoregister ? 'Видеорегистратор' : ''}} <span>({{this.currentUserSetings.additionally_avto.videoregister}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_battery_charger ? 'Зарядное устройство' : ''}} <span>({{this.currentUserSetings.additionally_avto.battery_charger}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_antiradar ? 'Антирадар' : ''}} <span>({{this.currentUserSetings.additionally_avto.antiradar}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_moyka ? 'Мойка' : ''}} <span>({{this.actualBooking.dop_info_open.moyka}} руб)</span></div>
                                     ]
                                 </span>
 

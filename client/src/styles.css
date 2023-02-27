@@ -1650,5 +1650,8 @@ input[type="checkbox"]
 }
 
 
-
-
+.xs_dop_serv_view_booking > div
+{
+    font-size: 12px;
+    padding-left: 20px;
+}

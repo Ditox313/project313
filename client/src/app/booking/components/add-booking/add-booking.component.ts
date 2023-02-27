@@ -176,9 +176,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       
        this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
          this.currentUserSetings = res;
-
-         console.log(this.currentUserSetings);
-         
        })
     })
   }
