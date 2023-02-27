@@ -108,6 +108,10 @@ export class CloseComponent implements OnInit, OnDestroy {
   {
     this.subGetByIdBooking$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
+      console.log(this.actualBooking);
+      
+
+
       this.form.patchValue({
         booking_end: res.booking_end,
       });
@@ -129,209 +133,511 @@ export class CloseComponent implements OnInit, OnDestroy {
   }
 
   onSubmit()
-  {
+  { 
+
     
-     
-    if (!this.form.value.clear_auto && !this.form.value.return_part)
+    if (this.actualBooking.dop_info_open.additional_services_moyka)
     {
-      const car: any = {
-        probeg: this.form.value.probeg_new,
-      }
-
-      const pay = {
-        vid: 'Возврат залога',
-        pricePay: this.actualBooking.booking_zalog,
-        typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId,
-      };
-
-      const pay2 = {
-        vid: 'Мойка',
-        pricePay: this.actualBooking.dop_info_open.moyka,
-        typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId,
-      };
-
-
-      const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog) + (+this.actualBooking.dop_info_open.moyka),
-        booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
-        status: 'Закрыта',
-        dop_info_close: {
-          clear_auto: this.form.value.clear_auto || false,
-          full_tank: this.form.value.full_tank || false,
-          probeg_new: this.form.value.probeg_new,
+      if (!this.form.value.return_part)
+      {
+        const car: any = {
+          probeg: this.form.value.probeg_new,
         }
-      }
+
+        const pay = {
+          vid: 'Возврат залога',
+          pricePay: this.actualBooking.booking_zalog,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+        };
 
 
-      this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
-        map(res => {
-          this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
-            MaterialService.toast('Возврат залога проведен');
+        const booking: any = {
+          summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog),
+          booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
+          status: 'Закрыта',
+          dop_info_close: {
+            clear_auto: this.form.value.clear_auto || false,
+            full_tank: this.form.value.full_tank || false,
+            probeg_new: this.form.value.probeg_new,
+          }
+        }
 
-            this.pays.create(pay2).subscribe((pay) => {
-              MaterialService.toast('Оплата мойки');
+
+        this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+              MaterialService.toast('Возврат залога');
             });
-          });
-          return res;
-        })
-      ).pipe(
-        map(res => {
-          this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
-          });
-          return res;
-        })
-      ).subscribe((booking) => {
-        MaterialService.toast('Бронь закрыта');
-        this.router.navigate(['/bookings-page']);
-      });
-
-    } 
-    else if(this.form.value.clear_auto && this.form.value.return_part)
-    {
-      
-
-      const car: any = {
-        probeg: this.form.value.probeg_new,
-      }
-
-      const pay = {
-        vid: 'Частичный возврат залога',
-        pricePay: this.form.value.return_part_price,
-        typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId,
-      };
-
-
-      const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price),
-        booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
-        status: 'Закрыта',
-        dop_info_close: {
-          clear_auto: this.form.value.clear_auto || false,
-          full_tank: this.form.value.full_tank || false,
-          probeg_new: this.form.value.probeg_new,
-          return_part_comment: this.form.value.return_part_comment,
-          return_part_price: this.form.value.return_part_price
-        }
-      }
-
-
-      this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
-        map(res => {
-          this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
-          });
-          return res;
-        })
-      ).pipe(
-        map(res => {
-          this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
-          });
-          return res;
-        })
-      ).subscribe((booking) => {
-        MaterialService.toast('Бронь закрыта');
-        this.router.navigate(['/bookings-page']);
-      });
-    } 
-    else if (!this.form.value.clear_auto && this.form.value.return_part) {
-      const car: any = {
-        probeg: this.form.value.probeg_new,
-      }
-
-      const pay = {
-        vid: 'Частичный возврат залога',
-        pricePay: this.form.value.return_part_price,
-        typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId,
-      };
-
-      const pay2 = {
-        vid: 'Мойка',
-        pricePay: this.actualBooking.dop_info_open.moyka,
-        typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId,
-      };
-
-
-      const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price) + (+this.actualBooking.dop_info_open.moyka),
-        booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
-        status: 'Закрыта',
-        dop_info_close: {
-          clear_auto: this.form.value.clear_auto || false,
-          full_tank: this.form.value.full_tank || false,
-          probeg_new: this.form.value.probeg_new,
-          return_part_comment: this.form.value.return_part_comment,
-          return_part_price: this.form.value.return_part_price
-        }
-      }
-
-
-      this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
-        map(res => {
-          this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
-            MaterialService.toast('Частичный возврат залога');
-
-            this.pays.create(pay2).subscribe((pay) => {
-              MaterialService.toast('Оплата мойки');
+            return res;
+          })
+        ).pipe(
+          map(res => {
+            this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
             });
-          });
-          return res;
-        })
-      ).pipe(
-        map(res => {
-          this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
-          });
-          return res;
-        })
-      ).subscribe((booking) => {
-        MaterialService.toast('Бронь закрыта');
-        this.router.navigate(['/bookings-page']);
-      });
-    } 
-    else if (this.form.value.clear_auto && !this.form.value.return_part) {
-      const car: any = {
-        probeg: this.form.value.probeg_new,
-      }
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь закрыта');
+          this.router.navigate(['/bookings-page']);
+        });
 
-      const pay = {
-        vid: 'Возврат залога',
-        pricePay: this.actualBooking.booking_zalog,
-        typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId,
-      };
+      } 
+      else if(this.form.value.return_part)
+      {
+        
 
-      const booking: any = {
-        summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog),
-        booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
-        status: 'Закрыта',
-        dop_info_close: {
-          clear_auto: this.form.value.clear_auto || false,
-          full_tank: this.form.value.full_tank || false,
-          probeg_new: this.form.value.probeg_new,
+        const car: any = {
+          probeg: this.form.value.probeg_new,
         }
-      }
+
+        const pay = {
+          vid: 'Частичный возврат залога',
+          pricePay: this.form.value.return_part_price,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+        };
 
 
-      this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
-        map(res => {
-          this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
-            MaterialService.toast('Возврат залога проведен');
-          });
-          return res;
-        })
-      ).pipe(
-        map(res => {
-          this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
-          });
-          return res;
-        })
-      ).subscribe((booking) => {
-        MaterialService.toast('Бронь закрыта');
-        this.router.navigate(['/bookings-page']);
-      });
+        const booking: any = {
+          summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price),
+          booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
+          status: 'Закрыта',
+          dop_info_close: {
+            clear_auto: this.form.value.clear_auto || false,
+            full_tank: this.form.value.full_tank || false,
+            probeg_new: this.form.value.probeg_new,
+            return_part_comment: this.form.value.return_part_comment,
+            return_part_price: this.form.value.return_part_price
+          }
+        }
+
+
+        this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+              MaterialService.toast('Частичный возврат залога');
+            });
+            return res;
+          })
+        ).pipe(
+          map(res => {
+            this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь закрыта');
+          this.router.navigate(['/bookings-page']);
+        });
+      } 
     }
+    else
+    {
+    if(!this.form.value.clear_auto && !this.form.value.return_part)
+      {
+        const car: any = {
+          probeg: this.form.value.probeg_new,
+        }
+
+        const pay = {
+          vid: 'Возврат залога',
+          pricePay: this.actualBooking.booking_zalog,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+        };
+
+        const pay2 = {
+          vid: 'Мойка',
+          pricePay: this.actualBooking.dop_info_open.moyka,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+        };
+
+
+        const booking: any = {
+          summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog) + (+this.actualBooking.dop_info_open.moyka),
+          booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
+          status: 'Закрыта',
+          dop_info_close: {
+            clear_auto: this.form.value.clear_auto || false,
+            full_tank: this.form.value.full_tank || false,
+            probeg_new: this.form.value.probeg_new,
+          }
+        }
+
+
+        this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+              MaterialService.toast('Возврат залога проведен');
+
+              this.pays.create(pay2).subscribe((pay) => {
+                MaterialService.toast('Оплата мойки');
+              });
+            });
+            return res;
+          })
+        ).pipe(
+          map(res => {
+            this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь закрыта');
+          this.router.navigate(['/bookings-page']);
+        });
+
+      } 
+    else if(this.form.value.clear_auto && this.form.value.return_part)
+      {
+        
+
+        const car: any = {
+          probeg: this.form.value.probeg_new,
+        }
+
+        const pay = {
+          vid: 'Частичный возврат залога',
+          pricePay: this.form.value.return_part_price,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+        };
+
+
+        const booking: any = {
+          summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price),
+          booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
+          status: 'Закрыта',
+          dop_info_close: {
+            clear_auto: this.form.value.clear_auto || false,
+            full_tank: this.form.value.full_tank || false,
+            probeg_new: this.form.value.probeg_new,
+            return_part_comment: this.form.value.return_part_comment,
+            return_part_price: this.form.value.return_part_price
+          }
+        }
+
+
+        this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+            });
+            return res;
+          })
+        ).pipe(
+          map(res => {
+            this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь закрыта');
+          this.router.navigate(['/bookings-page']);
+        });
+      } 
+    else if (!this.form.value.clear_auto && this.form.value.return_part) {
+        const car: any = {
+          probeg: this.form.value.probeg_new,
+        }
+
+        const pay = {
+          vid: 'Частичный возврат залога',
+          pricePay: this.form.value.return_part_price,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+        };
+
+        const pay2 = {
+          vid: 'Мойка',
+          pricePay: this.actualBooking.dop_info_open.moyka,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+        };
+
+
+        const booking: any = {
+          summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price) + (+this.actualBooking.dop_info_open.moyka),
+          booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
+          status: 'Закрыта',
+          dop_info_close: {
+            clear_auto: this.form.value.clear_auto || false,
+            full_tank: this.form.value.full_tank || false,
+            probeg_new: this.form.value.probeg_new,
+            return_part_comment: this.form.value.return_part_comment,
+            return_part_price: this.form.value.return_part_price
+          }
+        }
+
+
+        this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+              MaterialService.toast('Частичный возврат залога');
+
+              this.pays.create(pay2).subscribe((pay) => {
+                MaterialService.toast('Оплата мойки');
+              });
+            });
+            return res;
+          })
+        ).pipe(
+          map(res => {
+            this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь закрыта');
+          this.router.navigate(['/bookings-page']);
+        });
+      } 
+    else if (this.form.value.clear_auto && !this.form.value.return_part) {
+        const car: any = {
+          probeg: this.form.value.probeg_new,
+        }
+
+        const pay = {
+          vid: 'Возврат залога',
+          pricePay: this.actualBooking.booking_zalog,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+        };
+
+        const booking: any = {
+          summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog),
+          booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
+          status: 'Закрыта',
+          dop_info_close: {
+            clear_auto: this.form.value.clear_auto || false,
+            full_tank: this.form.value.full_tank || false,
+            probeg_new: this.form.value.probeg_new,
+          }
+        }
+
+
+        this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+              MaterialService.toast('Возврат залога проведен');
+            });
+            return res;
+          })
+        ).pipe(
+          map(res => {
+            this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь закрыта');
+          this.router.navigate(['/bookings-page']);
+        });
+      }
+    }
+
+
+    // if(!this.form.value.clear_auto && !this.form.value.return_part)
+    //   {
+    //     const car: any = {
+    //       probeg: this.form.value.probeg_new,
+    //     }
+
+    //     const pay = {
+    //       vid: 'Возврат залога',
+    //       pricePay: this.actualBooking.booking_zalog,
+    //       typePay: this.form.value.typePayArenda,
+    //       bookingId: this.bookingId,
+    //     };
+
+    //     const pay2 = {
+    //       vid: 'Мойка',
+    //       pricePay: this.actualBooking.dop_info_open.moyka,
+    //       typePay: this.form.value.typePayArenda,
+    //       bookingId: this.bookingId,
+    //     };
+
+
+    //     const booking: any = {
+    //       summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog) + (+this.actualBooking.dop_info_open.moyka),
+    //       booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
+    //       status: 'Закрыта',
+    //       dop_info_close: {
+    //         clear_auto: this.form.value.clear_auto || false,
+    //         full_tank: this.form.value.full_tank || false,
+    //         probeg_new: this.form.value.probeg_new,
+    //       }
+    //     }
+
+
+    //     this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+    //       map(res => {
+    //         this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+    //           MaterialService.toast('Возврат залога проведен');
+
+    //           this.pays.create(pay2).subscribe((pay) => {
+    //             MaterialService.toast('Оплата мойки');
+    //           });
+    //         });
+    //         return res;
+    //       })
+    //     ).pipe(
+    //       map(res => {
+    //         this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+    //         });
+    //         return res;
+    //       })
+    //     ).subscribe((booking) => {
+    //       MaterialService.toast('Бронь закрыта');
+    //       this.router.navigate(['/bookings-page']);
+    //     });
+
+    //   } 
+    // else if(this.form.value.clear_auto && this.form.value.return_part)
+    //   {
+        
+
+    //     const car: any = {
+    //       probeg: this.form.value.probeg_new,
+    //     }
+
+    //     const pay = {
+    //       vid: 'Частичный возврат залога',
+    //       pricePay: this.form.value.return_part_price,
+    //       typePay: this.form.value.typePayArenda,
+    //       bookingId: this.bookingId,
+    //     };
+
+
+    //     const booking: any = {
+    //       summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price),
+    //       booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
+    //       status: 'Закрыта',
+    //       dop_info_close: {
+    //         clear_auto: this.form.value.clear_auto || false,
+    //         full_tank: this.form.value.full_tank || false,
+    //         probeg_new: this.form.value.probeg_new,
+    //         return_part_comment: this.form.value.return_part_comment,
+    //         return_part_price: this.form.value.return_part_price
+    //       }
+    //     }
+
+
+    //     this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+    //       map(res => {
+    //         this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+    //         });
+    //         return res;
+    //       })
+    //     ).pipe(
+    //       map(res => {
+    //         this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+    //         });
+    //         return res;
+    //       })
+    //     ).subscribe((booking) => {
+    //       MaterialService.toast('Бронь закрыта');
+    //       this.router.navigate(['/bookings-page']);
+    //     });
+    //   } 
+    // else if (!this.form.value.clear_auto && this.form.value.return_part) {
+    //     const car: any = {
+    //       probeg: this.form.value.probeg_new,
+    //     }
+
+    //     const pay = {
+    //       vid: 'Частичный возврат залога',
+    //       pricePay: this.form.value.return_part_price,
+    //       typePay: this.form.value.typePayArenda,
+    //       bookingId: this.bookingId,
+    //     };
+
+    //     const pay2 = {
+    //       vid: 'Мойка',
+    //       pricePay: this.actualBooking.dop_info_open.moyka,
+    //       typePay: this.form.value.typePayArenda,
+    //       bookingId: this.bookingId,
+    //     };
+
+
+    //     const booking: any = {
+    //       summaFull: (+this.summa.summaFull) - (+this.form.value.return_part_price) + (+this.actualBooking.dop_info_open.moyka),
+    //       booking_zalog: (+this.actualBooking.booking_zalog) - (+this.form.value.return_part_price),
+    //       status: 'Закрыта',
+    //       dop_info_close: {
+    //         clear_auto: this.form.value.clear_auto || false,
+    //         full_tank: this.form.value.full_tank || false,
+    //         probeg_new: this.form.value.probeg_new,
+    //         return_part_comment: this.form.value.return_part_comment,
+    //         return_part_price: this.form.value.return_part_price
+    //       }
+    //     }
+
+
+    //     this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+    //       map(res => {
+    //         this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+    //           MaterialService.toast('Частичный возврат залога');
+
+    //           this.pays.create(pay2).subscribe((pay) => {
+    //             MaterialService.toast('Оплата мойки');
+    //           });
+    //         });
+    //         return res;
+    //       })
+    //     ).pipe(
+    //       map(res => {
+    //         this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+    //         });
+    //         return res;
+    //       })
+    //     ).subscribe((booking) => {
+    //       MaterialService.toast('Бронь закрыта');
+    //       this.router.navigate(['/bookings-page']);
+    //     });
+    //   } 
+    // else if (this.form.value.clear_auto && !this.form.value.return_part) {
+    //     const car: any = {
+    //       probeg: this.form.value.probeg_new,
+    //     }
+
+    //     const pay = {
+    //       vid: 'Возврат залога',
+    //       pricePay: this.actualBooking.booking_zalog,
+    //       typePay: this.form.value.typePayArenda,
+    //       bookingId: this.bookingId,
+    //     };
+
+    //     const booking: any = {
+    //       summaFull: (+this.summa.summaFull) - (+this.actualBooking.booking_zalog),
+    //       booking_zalog: (+this.actualBooking.booking_zalog) - (+this.actualBooking.booking_zalog),
+    //       status: 'Закрыта',
+    //       dop_info_close: {
+    //         clear_auto: this.form.value.clear_auto || false,
+    //         full_tank: this.form.value.full_tank || false,
+    //         probeg_new: this.form.value.probeg_new,
+    //       }
+    //     }
+
+
+    //     this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
+    //       map(res => {
+    //         this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+    //           MaterialService.toast('Возврат залога проведен');
+    //         });
+    //         return res;
+    //       })
+    //     ).pipe(
+    //       map(res => {
+    //         this.cars.close(this.actualBooking.car._id, car).subscribe((car) => {
+    //         });
+    //         return res;
+    //       })
+    //     ).subscribe((booking) => {
+    //       MaterialService.toast('Бронь закрыта');
+    //       this.router.navigate(['/bookings-page']);
+    //     });
+    //   }
   }
 }

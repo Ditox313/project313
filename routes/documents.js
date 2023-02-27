@@ -42,16 +42,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), controller.fet
 router.get('/fetch_acts', passport.authenticate('jwt', { session: false }), controller.fetch_acts);
 
 
-// Роут на изменение state все договоров клиента при создании нового
-// router.patch('/clear_state', passport.authenticate('jwt', { session: false }), controller.update_state);
 
-// Роут на create
-//router.post('/', passport.authenticate('jwt', { session: false }), controller.create);
-
-
-
-// Роут на update
-//router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update);
 
 
 

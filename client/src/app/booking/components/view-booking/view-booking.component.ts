@@ -135,9 +135,6 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
       
        this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
          this.currentUserSetings = res;
-
-         console.log(this.currentUserSetings);
-         
        })
     })
   }
@@ -153,6 +150,8 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   {
     this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
+
+      
 
       this.summa.car = res.car;
       this.summa.sale = res.sale;
@@ -283,6 +282,8 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
         additional_services_buster: this.actualBooking.dop_info_open.additional_services_buster,
         additional_services_videoregister: this.actualBooking.dop_info_open.additional_services_videoregister,
         additional_services_battery_charger: this.actualBooking.dop_info_open.additional_services_battery_charger,
+        additional_services_moyka: this.actualBooking.dop_info_open.additional_services_moyka,
+        additional_services_antiradar: this.actualBooking.dop_info_open.additional_services_antiradar,
         isCustomePlaceStart: this.actualBooking.dop_info_open.isCustomePlaceStart,
         isCustomeZalog: this.actualBooking.dop_info_open.isCustomeZalog
       },

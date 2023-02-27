@@ -110,12 +110,12 @@
 
                                 <span *ngIf="actualBooking.dop_info_open.additional_services_price > 0 && this.currentUserSetings" class="xs_dop_serv_view_booking">
                                     [
-                                    <div>{{this.actualBooking.dop_info_open.additional_services_chair ? 'Детское кресло' : ''}} <span >({{this.currentUserSetings.additionally_avto.det_kreslo}} руб)</span> </div>
-                                    <div>{{this.actualBooking.dop_info_open.additional_services_buster ? 'Бустер' : ''}} <span>({{this.currentUserSetings.additionally_avto.buster}} руб)</span></div>
-                                    <div>{{this.actualBooking.dop_info_open.additional_services_videoregister ? 'Видеорегистратор' : ''}} <span>({{this.currentUserSetings.additionally_avto.videoregister}} руб)</span></div>
-                                    <div>{{this.actualBooking.dop_info_open.additional_services_battery_charger ? 'Зарядное устройство' : ''}} <span>({{this.currentUserSetings.additionally_avto.battery_charger}} руб)</span></div>
-                                    <div>{{this.actualBooking.dop_info_open.additional_services_antiradar ? 'Антирадар' : ''}} <span>({{this.currentUserSetings.additionally_avto.antiradar}} руб)</span></div>
-                                    <div>{{this.actualBooking.dop_info_open.additional_services_moyka ? 'Мойка' : ''}} <span>({{this.actualBooking.dop_info_open.moyka}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_chair ? 'Детское кресло' : ''}} <span *ngIf="this.actualBooking.dop_info_open.additional_services_chair">({{this.currentUserSetings.additionally_avto.det_kreslo}} руб)</span> </div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_buster ? 'Бустер' : ''}} <span *ngIf="this.actualBooking.dop_info_open.additional_services_buster">({{this.currentUserSetings.additionally_avto.buster}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_videoregister ? 'Видеорегистратор' : ''}} <span *ngIf="this.actualBooking.dop_info_open.additional_services_videoregister">({{this.currentUserSetings.additionally_avto.videoregister}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_battery_charger ? 'Зарядное устройство' : ''}} <span *ngIf="this.actualBooking.dop_info_open.additional_services_battery_charger">({{this.currentUserSetings.additionally_avto.battery_charger}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_antiradar ? 'Антирадар' : ''}} <span *ngIf="this.actualBooking.dop_info_open.additional_services_antiradar">({{this.currentUserSetings.additionally_avto.antiradar}} руб)</span></div>
+                                    <div>{{this.actualBooking.dop_info_open.additional_services_moyka ? 'Мойка' : ''}} <span *ngIf="this.actualBooking.dop_info_open.additional_services_moyka">({{this.actualBooking.dop_info_open.moyka}} руб)</span></div>
                                     ]
                                 </span>
 
@@ -269,10 +269,6 @@
                             <div class="xs_booking_close_info" *ngIf="this.actualBooking.dop_info_close">
                                 <h5>Дополнительная информация</h5>
                                 
-                                <div>
-                                    <span>Сдан чистый авто:</span>
-                                    <span>{{this.actualBooking.dop_info_close.clear_auto ? 'Да' : 'Нет'}}</span>
-                                </div>
                                 
                                 <div>
                                     <span>Сдан полный бак:</span>

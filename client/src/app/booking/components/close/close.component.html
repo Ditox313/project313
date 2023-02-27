@@ -109,13 +109,13 @@
             </div>
 
             <div class="close_dop_info">
-                <div class="input-field col s12">
-                    <span>Чистый автомобиль</span>
+                <div class="input-field col s12" *ngIf="!this.actualBooking.dop_info_open.additional_services_moyka">
+                    <span>Клиент вернул чистый автомобиль?</span>
                     <input type="checkbox" id="clear_auto" class="validate" formControlName="clear_auto">
                 </div>
 
                 <div class="input-field col s12">
-                    <span>Полный бак</span>
+                    <span>Автомобиль заправлен?</span>
                     <input type="checkbox" id="clear_auto" class="validate" formControlName="full_tank">
                 </div>
             </div>
