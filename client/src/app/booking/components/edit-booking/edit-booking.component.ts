@@ -175,9 +175,6 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
       this.currentUser = res;
-
-      
-      
        this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
          this.currentUserSetings = res;
          
@@ -201,8 +198,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       place_end: new FormControl('', [Validators.required]),
       tariff: new FormControl('', [Validators.required]),
       comment: new FormControl(''),
-      clear_auto: new FormControl(''),
-      full_tank: new FormControl(''),
+      // clear_auto: new FormControl(''),
+      // full_tank: new FormControl(''),
       isCustomeZalogControl: new FormControl(''),
       isCustomePlaceStartControl: new FormControl(''),
       isCustomePlaceStartControlPrice: new FormControl(''),
@@ -212,6 +209,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       additional_services_buster: new FormControl(''),
       additional_services_videoregister: new FormControl(''),
       additional_services_battery_charger: new FormControl(''),
+      additional_services_antiradar: new FormControl(''),
+      additional_services_moyka: new FormControl(''),
       isCustomePlaceStartControlclick: new FormControl(''),
       isCustomeZalogControlclick: new FormControl(''),
     });
@@ -255,6 +254,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         additional_services_buster: res.dop_info_open.additional_services_buster,
         additional_services_videoregister: res.dop_info_open.additional_services_videoregister,
         additional_services_battery_charger: res.dop_info_open.additional_services_battery_charger,
+        additional_services_antiradar: res.dop_info_open.additional_services_antiradar,
+        additional_services_moyka: res.dop_info_open.additional_services_moyka,
       });
 
       this.isCustomePlaceStart = res.dop_info_open.isCustomePlaceStart
@@ -989,16 +990,69 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // При выборе доп услуги
   onChangeAdditionalServicesInput(e)
   {
-    let additional_services_summ = {
-      additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
-      additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
-      additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
-      additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
-    }
+    if (this.form.value.additional_services_moyka)
+    {
+      if(this.summa.car.category === 'Комфорт')
+      {
+        let additional_services_summ = {
+          additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
+          additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
+          additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
+          additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+          additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
+          additional_services_moyka: this.form.value.additional_services_moyka ? +this.currentUserSetings.washing_avto.komfort : 0,
+        }
 
-    let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
-    
-    this.summa.additional_services_price = summ;
+        let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
+
+        this.summa.additional_services_price = summ;
+        
+      }
+      else if (this.summa.car.category === 'Бизнес')
+      {
+        let additional_services_summ = {
+          additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
+          additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
+          additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
+          additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+          additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
+          additional_services_moyka: this.form.value.additional_services_moyka ? +this.currentUserSetings.washing_avto.business : 0,
+        }
+
+        let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
+
+        this.summa.additional_services_price = summ;
+      }
+      else if (this.summa.car.category === 'Премиум')
+      {
+        let additional_services_summ = {
+          additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
+          additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
+          additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
+          additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+          additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
+          additional_services_moyka: this.form.value.additional_services_moyka ? +this.currentUserSetings.washing_avto.premium : 0,
+        }
+
+        let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
+
+        this.summa.additional_services_price = summ;
+      }
+      
+    }else{
+      let additional_services_summ = {
+        additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
+        additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
+        additional_services_videoregister: this.form.value.additional_services_videoregister ? +this.currentUserSetings.additionally_avto.videoregister : 0,
+        additional_services_battery_charger: this.form.value.additional_services_battery_charger ? +this.currentUserSetings.additionally_avto.battery_charger : 0,
+        additional_services_antiradar: this.form.value.additional_services_antiradar ? +this.currentUserSetings.additionally_avto.antiradar : 0,
+        additional_services_moyka: this.form.value.additional_services_moyka ? 1000 : 0,
+      }
+
+      let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
+
+      this.summa.additional_services_price = summ;
+    }
   }
 
 
@@ -1326,6 +1380,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       isCustomePlaceStartControl: '',
       isCustomePlaceStartControlPrice: 0
     });
+
   }
 
 
@@ -1352,197 +1407,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // onSubmit() {
-  //   // Получаем знапчения начала и конца аренды
-  //   const booking_start__x: any = new Date(this.form.value.booking_start);
-  //   const booking_end__x: any = new Date(this.form.value.booking_end);
 
-  //   if (booking_start__x === undefined && booking_end__x !== undefined) {
-  //     this.booking_days_fin = moment(booking_end__x, 'DD.MM.YYYY').diff(
-  //       moment(this.form.value.booking_start, 'DD.MM.YYYY'),
-  //       'days'
-  //     );
-  //   } else if (booking_end__x === undefined && booking_start__x !== undefined) {
-  //     this.booking_days_fin = moment(
-  //       this.form.value.booking_end,
-  //       'DD.MM.YYYY'
-  //     ).diff(moment(booking_start__x, 'DD.MM.YYYY'), 'days');
-  //   } else if ((booking_end__x && booking_start__x) === undefined) {
-  //     this.booking_days_fin = moment(
-  //       this.form.value.booking_end,
-  //       'DD.MM.YYYY'
-  //     ).diff(moment(this.form.value.booking_start, 'DD.MM.YYYY'), 'days');
-  //   } else if (booking_end__x !== undefined && booking_start__x !== undefined) {
-  //     this.booking_days_fin =
-  //       (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
-  //   }
-
-  //   if (this.xs_actual_client_type === 'fiz')
-  //   {
-  //     if (this.form.value.tariff === 'Город') {
-  //       const booking = {
-  //         car: JSON.parse(this.form.value.car),
-  //         client: JSON.parse(this.xs_actual_search__client),
-  //         place_start: this.form.value.place_start,
-  //         place_end: this.form.value.place_end,
-  //         tariff: this.form.value.tariff,
-  //         comment: this.form.value.comment,
-  //         booking_start: this.form.value.booking_start,
-  //         booking_end: this.form.value.booking_end,
-  //         booking_days: this.booking_days_fin,
-  //         summaFull: this.summa.summaFull,
-  //         summa: this.summa.summa,
-  //         dop_hours: this.summa.dop_hours,
-  //         dop_info_open: {
-  //           clear_auto: this.form.value.clear_auto,
-  //           full_tank: this.form.value.full_tank
-  //         },
-  //         booking_zalog: this.summa.car.zalog
-  //       };
-
-  //       this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-  //         MaterialService.toast('Бронь обновлена');
-  //       });
-  //     }
-
-
-  //     if (this.form.value.tariff === 'Межгород') {
-  //       const booking = {
-  //         car: JSON.parse(this.form.value.car),
-  //         client: JSON.parse(this.xs_actual_search__client),
-  //         place_start: this.form.value.place_start,
-  //         place_end: this.form.value.place_end,
-  //         tariff: this.form.value.tariff,
-  //         comment: this.form.value.comment,
-  //         booking_start: this.form.value.booking_start,
-  //         booking_end: this.form.value.booking_end,
-  //         booking_days: this.booking_days_fin,
-  //         summaFull: this.summa.summaFull,
-  //         summa: this.summa.summa,
-  //         dop_hours: this.summa.dop_hours,
-  //         dop_info_open: {
-  //           clear_auto: this.form.value.clear_auto,
-  //           full_tank: this.form.value.full_tank
-  //         },
-  //         booking_zalog: this.summa.car.zalog_mej
-  //       };
-
-  //       this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-  //         MaterialService.toast('Бронь обновлена');
-  //       });
-  //     }
-
-
-  //     if (this.form.value.tariff === 'Россия') {
-  //       const booking = {
-  //         car: JSON.parse(this.form.value.car),
-  //         client: JSON.parse(this.xs_actual_search__client),
-  //         place_start: this.form.value.place_start,
-  //         place_end: this.form.value.place_end,
-  //         tariff: this.form.value.tariff,
-  //         comment: this.form.value.comment,
-  //         booking_start: this.form.value.booking_start,
-  //         booking_end: this.form.value.booking_end,
-  //         booking_days: this.booking_days_fin,
-  //         summaFull: this.summa.summaFull,
-  //         summa: this.summa.summa,
-  //         dop_hours: this.summa.dop_hours,
-  //         dop_info_open: {
-  //           clear_auto: this.form.value.clear_auto,
-  //           full_tank: this.form.value.full_tank
-  //         },
-  //         booking_zalog: this.summa.car.zalog_rus
-  //       };
-
-  //       this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-  //         MaterialService.toast('Бронь обновлена');
-  //       });
-  //     }
-  //   } else if (this.xs_actual_client_type === 'law')
-  //   {
-  //     if (this.form.value.tariff === 'Город') {
-  //       const booking = {
-  //         car: JSON.parse(this.form.value.car),
-  //         client: JSON.parse(this.xs_actual_search__client___lawfase),
-  //         place_start: this.form.value.place_start,
-  //         place_end: this.form.value.place_end,
-  //         tariff: this.form.value.tariff,
-  //         comment: this.form.value.comment,
-  //         booking_start: this.form.value.booking_start,
-  //         booking_end: this.form.value.booking_end,
-  //         booking_days: this.booking_days_fin,
-  //         summaFull: this.summa.summaFull,
-  //         summa: this.summa.summa,
-  //         dop_hours: this.summa.dop_hours,
-  //         dop_info_open: {
-  //           clear_auto: this.form.value.clear_auto,
-  //           full_tank: this.form.value.full_tank
-  //         },
-  //         booking_zalog: this.summa.car.zalog
-  //       };
-
-  //       this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-  //         MaterialService.toast('Бронь обновлена');
-  //       });
-  //     }
-
-
-  //     if (this.form.value.tariff === 'Межгород') {
-  //       const booking = {
-  //         car: JSON.parse(this.form.value.car),
-  //         client: JSON.parse(this.xs_actual_search__client___lawfase),
-  //         place_start: this.form.value.place_start,
-  //         place_end: this.form.value.place_end,
-  //         tariff: this.form.value.tariff,
-  //         comment: this.form.value.comment,
-  //         booking_start: this.form.value.booking_start,
-  //         booking_end: this.form.value.booking_end,
-  //         booking_days: this.booking_days_fin,
-  //         summaFull: this.summa.summaFull,
-  //         summa: this.summa.summa,
-  //         dop_hours: this.summa.dop_hours,
-  //         dop_info_open: {
-  //           clear_auto: this.form.value.clear_auto,
-  //           full_tank: this.form.value.full_tank
-  //         },
-  //         booking_zalog: this.summa.car.zalog_mej
-  //       };
-
-  //       this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-  //         MaterialService.toast('Бронь обновлена');
-  //       });
-  //     }
-
-
-  //     if (this.form.value.tariff === 'Россия') {
-  //       const booking = {
-  //         car: JSON.parse(this.form.value.car),
-  //         client: JSON.parse(this.xs_actual_search__client___lawfase),
-  //         place_start: this.form.value.place_start,
-  //         place_end: this.form.value.place_end,
-  //         tariff: this.form.value.tariff,
-  //         comment: this.form.value.comment,
-  //         booking_start: this.form.value.booking_start,
-  //         booking_end: this.form.value.booking_end,
-  //         booking_days: this.booking_days_fin,
-  //         summaFull: this.summa.summaFull,
-  //         summa: this.summa.summa,
-  //         dop_hours: this.summa.dop_hours,
-  //         dop_info_open: {
-  //           clear_auto: this.form.value.clear_auto,
-  //           full_tank: this.form.value.full_tank
-  //         },
-  //         booking_zalog: this.summa.car.zalog_rus
-  //       };
-
-  //       this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
-  //         MaterialService.toast('Бронь обновлена');
-  //       });
-  //     }
-  //   }
-    
-    
-  // }
   onSubmit() {
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
@@ -1578,15 +1443,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair,
-              additional_services_buster: this.form.value.additional_services_buster,
-              additional_services_videoregister: this.form.value.additional_services_videoregister,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_chair: this.form.value.additional_services_chair || false,
+              additional_services_buster: this.form.value.additional_services_buster || false,
+              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+              additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1629,15 +1496,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair,
-              additional_services_buster: this.form.value.additional_services_buster,
-              additional_services_videoregister: this.form.value.additional_services_videoregister,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_chair: this.form.value.additional_services_chair || false,
+              additional_services_buster: this.form.value.additional_services_buster || false,
+              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+              additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1680,14 +1549,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
               clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
-              moyka: moyka || false,
+              // full_tank: this.form.value.full_tank || false,
+              // moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair,
-              additional_services_buster: this.form.value.additional_services_buster,
-              additional_services_videoregister: this.form.value.additional_services_videoregister,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_chair: this.form.value.additional_services_chair || false,
+              additional_services_buster: this.form.value.additional_services_buster || false,
+              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+              additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1729,15 +1600,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           summa: Math.round(this.summa.summa),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
-            clear_auto: this.form.value.clear_auto || false,
-            full_tank: this.form.value.full_tank || false,
+            // clear_auto: this.form.value.clear_auto || false,
+            // full_tank: this.form.value.full_tank || false,
             moyka: moyka || false,
             place_start_price: this.summa.place_start_price || 0,
             additional_services_price: this.summa.additional_services_price,
-            additional_services_chair: this.form.value.additional_services_chair,
-            additional_services_buster: this.form.value.additional_services_buster,
-            additional_services_videoregister: this.form.value.additional_services_videoregister,
-            additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+            additional_services_chair: this.form.value.additional_services_chair || false,
+            additional_services_buster: this.form.value.additional_services_buster || false,
+            additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+            additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+            additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+            additional_services_moyka: this.form.value.additional_services_moyka || false,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
@@ -1784,15 +1657,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair,
-              additional_services_buster: this.form.value.additional_services_buster,
-              additional_services_videoregister: this.form.value.additional_services_videoregister,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_chair: this.form.value.additional_services_chair || false,
+              additional_services_buster: this.form.value.additional_services_buster || false,
+              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+              additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1834,15 +1709,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair,
-              additional_services_buster: this.form.value.additional_services_buster,
-              additional_services_videoregister: this.form.value.additional_services_videoregister,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_chair: this.form.value.additional_services_chair || false,
+              additional_services_buster: this.form.value.additional_services_buster || false,
+              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+              additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1883,15 +1760,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
-              clear_auto: this.form.value.clear_auto || false,
-              full_tank: this.form.value.full_tank || false,
+              // clear_auto: this.form.value.clear_auto || false,
+              // full_tank: this.form.value.full_tank || false,
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair,
-              additional_services_buster: this.form.value.additional_services_buster,
-              additional_services_videoregister: this.form.value.additional_services_videoregister,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+              additional_services_chair: this.form.value.additional_services_chair || false,
+              additional_services_buster: this.form.value.additional_services_buster || false,
+              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+              additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
@@ -1932,15 +1811,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           summa: Math.round(this.summa.summa),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
-            clear_auto: this.form.value.clear_auto || false,
-            full_tank: this.form.value.full_tank || false,
+            // clear_auto: this.form.value.clear_auto || false,
+            // full_tank: this.form.value.full_tank || false,
             moyka: moyka || false,
             place_start_price: this.summa.place_start_price || 0,
             additional_services_price: this.summa.additional_services_price,
-            additional_services_chair: this.form.value.additional_services_chair,
-            additional_services_buster: this.form.value.additional_services_buster,
-            additional_services_videoregister: this.form.value.additional_services_videoregister,
-            additional_services_battery_charger: this.form.value.additional_services_battery_charger,
+            additional_services_chair: this.form.value.additional_services_chair || false,
+            additional_services_buster: this.form.value.additional_services_buster || false,
+            additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+            additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+            additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+            additional_services_moyka: this.form.value.additional_services_moyka || false,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
