@@ -113,7 +113,7 @@ module.exports.updateActClicked = async function (req, res) {
             $set: {
                 dop_info_open: {
                     clickedAct: true,
-                    // clear_auto: updated.dop_info_open.clear_auto,
+                    clear_auto: updated.dop_info_open.clear_auto,
                     // full_tank: updated.dop_info_open.full_tank,
                     moyka: updated.dop_info_open.moyka,
                     place_start_price: updated.dop_info_open.place_start_price,
@@ -191,7 +191,7 @@ module.exports.close = async function (req, res) {
                 status: updated.status,
                 booking_zalog: updated.booking_zalog,
                 dop_info_close: {
-                    // clear_auto: updated.dop_info_close.clear_auto,
+                    clear_auto: updated.dop_info_close.clear_auto,
                     full_tank: updated.dop_info_close.full_tank,
                     probeg_new: updated.dop_info_close.probeg_new,
                     zalog: updated.booking_zalog,
