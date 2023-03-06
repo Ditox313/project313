@@ -6,6 +6,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { AuthService } from '../../services/auth.service';
 import { Store, select } from '@ngrx/store';
 import { registerAction } from '../../store/actions/register.action';
+import { AccountService } from '../../../account/services/account.service';
 // import {isSubmittingSelector,} from 'src/app/auth/store/selectors';
 
 
@@ -21,7 +22,8 @@ export class RegisterPageComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store
+    private store: Store,
+    private AccountService: AccountService
   ) {}
 
  
@@ -54,6 +56,10 @@ export class RegisterPageComponent implements OnInit {
 
     this.store.dispatch(registerAction({ user }));
     this.form.enable();
+
+
+
+
 
     // Выполняме метод auth.register из сервиса auth.service и в случае успеха делаем редирект на логин и обрабатываем ошибку
     // this.uSub = this.auth.register(user).subscribe(

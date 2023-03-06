@@ -21,6 +21,11 @@ const settingsSchema = new Schema({
     {
         type: Object,
         required: false,
+    },
+    userId:
+    {
+        type: String,
+        required: false,
     }
 });
 

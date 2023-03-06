@@ -11,6 +11,11 @@ import { Settings, User } from 'src/app/shared/types/interfaces';
 export class AccountService {
   constructor(private http: HttpClient) {}
 
+  // Создание настроек
+  create(settings: Settings): Observable<Settings> {
+    return this.http.post<Settings>('/api/settings/create_settings/', settings);
+  }
+
   // Обновляем настроки
   update_settings(data: Settings): Observable<Settings> {
     return this.http.patch<Settings>('/api/settings/save_settings/', data);

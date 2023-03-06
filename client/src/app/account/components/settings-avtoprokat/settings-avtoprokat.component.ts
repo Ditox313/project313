@@ -18,6 +18,7 @@ export class SettingsAvtoprokatComponent implements OnInit, OnDestroy {
   currentUserSetings$: Subscription = null;
   currentUser$: Subscription = null;
   settings_avtoprokat$: Subscription = null;
+  isCollectionsDb: Boolean;
 
   constructor(private AccountService: AccountService, private auth: AuthService) { }
 
@@ -60,24 +61,47 @@ export class SettingsAvtoprokatComponent implements OnInit, OnDestroy {
   patchValuesForm() {
     this.currentUser$ = this.auth.get_user().subscribe(user => {
       this.currentUser = user;
+      
 
-
+      // Если приходит null значит таблица не создана
       this.currentUserSetings$ = this.AccountService.get_settings_user(user._id).subscribe(res => {
-       this.form.patchValue({
-        airport_price: res.share_avto.airport_price,
-        railway_price: res.share_avto.railway_price,
-        kristal_tc_price: res.share_avto.kristal_tc_price,
-        sitymol_tc_price: res.share_avto.sitymol_tc_price,
-        moyka_komfort: res.washing_avto.komfort,
-        moyka_business: res.washing_avto.business,
-        moyka_premium: res.washing_avto.premium,
-        additionally_det_kreslo: res.additionally_avto.det_kreslo,
-        additionally_buster: res.additionally_avto.buster,
-        additionally_videoregister: res.additionally_avto.videoregister,
-        additionally_battery_charger: res.additionally_avto.battery_charger,
-        additionally_antiradar: res.additionally_avto.antiradar,
-      });
-        
+      if(res === null)
+      {
+        this.isCollectionsDb = false
+        this.form.patchValue({
+          airport_price: 0,
+          railway_price: 0,
+          kristal_tc_price: 0,
+          sitymol_tc_price: 0,
+          moyka_komfort: 0,
+          moyka_business: 0,
+          moyka_premium: 0,
+          additionally_det_kreslo: 0,
+          additionally_buster: 0,
+          additionally_videoregister: 0,
+          additionally_battery_charger: 0,
+          additionally_antiradar: 0,
+        });
+      }
+      else
+      {
+        this.isCollectionsDb = true
+
+        this.form.patchValue({
+          airport_price: res.share_avto.airport_price,
+          railway_price: res.share_avto.railway_price,
+          kristal_tc_price: res.share_avto.kristal_tc_price,
+          sitymol_tc_price: res.share_avto.sitymol_tc_price,
+          moyka_komfort: res.washing_avto.komfort,
+          moyka_business: res.washing_avto.business,
+          moyka_premium: res.washing_avto.premium,
+          additionally_det_kreslo: res.additionally_avto.det_kreslo,
+          additionally_buster: res.additionally_avto.buster,
+          additionally_videoregister: res.additionally_avto.videoregister,
+          additionally_battery_charger: res.additionally_avto.battery_charger,
+          additionally_antiradar: res.additionally_avto.antiradar,
+        });
+      }
       })
 
       
@@ -105,28 +129,40 @@ export class SettingsAvtoprokatComponent implements OnInit, OnDestroy {
         videoregister: this.form.value.additionally_videoregister,
         battery_charger: this.form.value.additionally_battery_charger,
         antiradar: this.form.value.additionally_antiradar,
-      }
+      },
+      userId: this.currentUser._id
     };
 
-    this.settings_avtoprokat$ = this.AccountService.update_settings(settings_avtoprokat).subscribe((res) => {
+    if (this.isCollectionsDb)
+    {
+      this.settings_avtoprokat$ = this.AccountService.update_settings(settings_avtoprokat).subscribe((res) => {
 
-      this.form.patchValue({
-        airport_price: res.share_avto.airport_price,
-        railway_price: res.share_avto.railway_price,
-        kristal_tc_price: res.share_avto.kristal_tc_price,
-        sitymol_tc_price: res.share_avto.sitymol_tc_price,
-        moyka_komfort: res.washing_avto.komfort,
-        moyka_business: res.washing_avto.business,
-        moyka_premium: res.washing_avto.premium,
-        additionally_det_kreslo: res.additionally_avto.det_kreslo,
-        additionally_buster: res.additionally_avto.buster,
-        additionally_videoregister: res.additionally_avto.videoregister,
-        additionally_battery_charger: res.additionally_avto.battery_charger,
-        additionally_antiradar: res.additionally_avto.antiradar,
+        this.form.patchValue({
+          airport_price: res.share_avto.airport_price,
+          railway_price: res.share_avto.railway_price,
+          kristal_tc_price: res.share_avto.kristal_tc_price,
+          sitymol_tc_price: res.share_avto.sitymol_tc_price,
+          moyka_komfort: res.washing_avto.komfort,
+          moyka_business: res.washing_avto.business,
+          moyka_premium: res.washing_avto.premium,
+          additionally_det_kreslo: res.additionally_avto.det_kreslo,
+          additionally_buster: res.additionally_avto.buster,
+          additionally_videoregister: res.additionally_avto.videoregister,
+          additionally_battery_charger: res.additionally_avto.battery_charger,
+          additionally_antiradar: res.additionally_avto.antiradar,
+        });
+
+        MaterialService.toast('Данные изменены');
       });
+    }
+    else
+    {
+      this.settings_avtoprokat$ = this.AccountService.create(settings_avtoprokat).subscribe((res) => {
+        MaterialService.toast('Данные сохранены');
+      });
+    }
 
-      MaterialService.toast('Данные изменены');
-    });
+   
   }
 
 }

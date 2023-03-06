@@ -37,7 +37,8 @@ export interface Settings {
     videoregister?: any
     battery_charger?: any
     antiradar?: any
-  }
+  },
+  userId?: any
 }
 
 

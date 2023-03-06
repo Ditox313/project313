@@ -3,6 +3,36 @@ const Settings = require('../models/Settings.js');
 const errorHandler = require('../Utils/errorHendler');
 
 
+// Контроллер для createSettings
+module.exports.createSettings = async function (req, res) {
+    try {
+
+        // // Ищем номер последнего заказа глобального
+        // const lastOrder = await Booking.findOne({
+        //     user: req.user.id
+        // })
+        //     .sort({ date: -1 });
+
+
+        // // Если мы нашли предполагаемы последнйи заказ, то устанвливает поле order
+        // const maxOrder = lastOrder ? lastOrder.order : 0;
+
+
+        const settings = await new Settings({
+            share_avto: req.body.share_avto,
+            washing_avto: req.body.washing_avto,
+            additionally_avto: req.body.additionally_avto,
+            userId: req.body.userId
+        }).save();
+
+        // Возвращаем пользователю позицию которую создали 
+        res.status(201).json(settings);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
 
 // Контроллер для updateSettings
 module.exports.updateSettings = async function(req, res) {
@@ -10,7 +40,7 @@ module.exports.updateSettings = async function(req, res) {
         const updated = req.body;
 
         // Находим и обновляем позицию. 
-        const settings = await Settings.findOneAndUpdate({ _id: req.user.id }, //Ищем по id
+        const settings = await Settings.findOneAndUpdate({ userId: req.user.id }, //Ищем по id
             { $set: updated }, //Обновлять мы будем body запроса. В req.body находятся данные на которые будем менять старые
             { new: true } //обновит позицию и верет нам уже обновленную
         );
@@ -30,7 +60,7 @@ module.exports.updateSettings = async function(req, res) {
 module.exports.getSettingsUser = async function (req, res) {
     try {
         // Находим и обновляем позицию. 
-        const settings = await Settings.findOne({ _id: req.params.id });
+        const settings = await Settings.findOne({ userId: req.params.id });
 
         // Возвращаем пользователю обновленную позицию 
         res.status(200).json(settings);

@@ -4,6 +4,10 @@ const controller = require('../controllers/settings.js');
 const passport = require('passport');
 
 
+// Роут на create
+router.post('/create_settings', passport.authenticate('jwt', { session: false }), controller.createSettings);
+
+
 
 // Роут на save_settings
 router.patch('/save_settings', passport.authenticate('jwt', { session: false }), controller.updateSettings);
