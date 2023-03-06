@@ -157,9 +157,12 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
       phone_3_dop_number: this.form.value.phone_3_dop_number,
       phone_4_dop_name: this.form.value.phone_4_dop_name,
       phone_4_dop_number: this.form.value.phone_4_dop_number,
-      isNoResident: this.form.value.isNoResident
+      isNoResident: this.isNoResident
     };
 
+    
+
+    console.log(client);
     
 
     
