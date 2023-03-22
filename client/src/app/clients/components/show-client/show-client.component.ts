@@ -97,8 +97,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
       code_podrazdeleniya: new FormControl('', [Validators.required]),
       passport_register: new FormControl('', [Validators.required]),
       passport_address_fact: new FormControl('', [Validators.required]),
-      prava_seria: new FormControl('', [Validators.required]),
-      prava_number: new FormControl('', [Validators.required]),
+      prava_seria_and_number: new FormControl('', [Validators.required]),
       prava_date: new FormControl(''),
       phone_main: new FormControl('', [Validators.required]),
       phone_1_dop_name: new FormControl('', [Validators.required]),
@@ -154,8 +153,9 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
         code_podrazdeleniya: res.code_podrazdeleniya,
         passport_register: res.passport_register,
         passport_address_fact: res.passport_address_fact,
-        prava_seria: res.prava_seria,
-        prava_number: res.prava_number,
+        // prava_seria: res.prava_seria,
+        // prava_number: res.prava_number,
+        prava_seria_and_number: res.prava_seria + ' ' + res.prava_number,
         prava_date: res.prava_date,
         phone_main: res.phone_main,
         phone_1_dop_name: res.phone_1_dop_name,
@@ -195,6 +195,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   onSubmit() {
     let fio = this.form.value.fio.split(' ');
     let seria_and_number = this.form.value.passport_seria_and_number.split(' ');
+    let prava_seria_and_number = this.form.value.prava_seria_and_number.split(' ');
 
     const client = {
       name: fio[1],
@@ -208,8 +209,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
       passport_register: this.form.value.passport_register,
       passport_address_fact: this.form.value.passport_address_fact,
-      prava_seria: this.form.value.prava_seria,
-      prava_number: this.form.value.prava_number,
+      prava_seria: prava_seria_and_number[0],
+      prava_number: prava_seria_and_number[1],
       prava_date: this.form.value.prava_date,
       phone_main: this.form.value.phone_main,
       phone_1_dop_name: this.form.value.phone_1_dop_name,

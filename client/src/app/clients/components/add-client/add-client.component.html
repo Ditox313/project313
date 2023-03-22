@@ -150,25 +150,14 @@
                             <label for="marka">Фактический адрес проживания</label>
                         </div>
 
+
                         <div class="input-field col s12">
-                            <input placeholder="Введите значение" id="prava_seria" type="text" class="validate" formControlName="prava_seria"
-                                [ngClass]="{'invalid': form.controls['prava_seria'].invalid && form.controls['prava_seria'].touched}">
-                            <label for="marka">Права - серия<span class="xszv">*</span></label>
+                            <input placeholder="Введите значение" id="prava_seria_and_number" type="text" class="validate" formControlName="prava_seria_and_number"
+                                [ngClass]="{'invalid': form.controls['prava_seria_and_number'].invalid && form.controls['prava_seria_and_number'].touched}">
+                            <label for="marka">Права - серия и номер<span class="xszv">*</span></label>
                             <span class="helper-text red-text"
-                                *ngIf="form.controls['prava_seria'].invalid && form.controls['prava_seria'].touched">
-                                <p *ngIf="form.controls['prava_seria'].errors?.required">
-                                    Поле не должно быть пустым
-                                </p>
-                            </span>
-                        </div>
-                        
-                        <div class="input-field col s12">
-                            <input placeholder="Введите значение" id="prava_number" type="text" class="validate" formControlName="prava_number"
-                                [ngClass]="{'invalid': form.controls['prava_number'].invalid && form.controls['prava_number'].touched}">
-                            <label for="marka">Права - номер<span class="xszv">*</span></label>
-                            <span class="helper-text red-text"
-                                *ngIf="form.controls['prava_number'].invalid && form.controls['prava_number'].touched">
-                                <p *ngIf="form.controls['prava_number'].errors?.required">
+                                *ngIf="form.controls['prava_seria_and_number'].invalid && form.controls['prava_seria_and_number'].touched">
+                                <p *ngIf="form.controls['prava_seria_and_number'].errors?.required">
                                     Поле не должно быть пустым
                                 </p>
                             </span>
