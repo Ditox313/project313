@@ -57,7 +57,8 @@ const routes = [
   ],
   exports: [
     DogovorListComponent,
-    BookingActListComponent
+    BookingActListComponent,
+    AddClientDogovorComponent
   ],
   providers: [DocumentsService],
 })

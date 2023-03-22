@@ -16,6 +16,7 @@ import { PaysModule } from '../pays/pays.module';
 import { ExtendBookingComponent } from './components/extend-booking/extend-booking.component';
 import { CloseComponent } from './components/close/close.component';
 import { DocumentsModule } from '../documents/documents.module';
+import { AddDogovorForClientModule } from '../documents/modules/add-dogovor-for-client/add-dogovor-for-client.module';
 
 
 
@@ -49,7 +50,8 @@ const routes = [
     LoaderModule,
     LayoutsModule,
     PaysModule,
-    DocumentsModule
+    DocumentsModule,
+    AddDogovorForClientModule
   ],
   providers: [BookingsService],
 })

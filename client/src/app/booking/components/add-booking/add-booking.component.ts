@@ -1734,6 +1734,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+
+
   onSubmit() {
     // Получаем значения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
