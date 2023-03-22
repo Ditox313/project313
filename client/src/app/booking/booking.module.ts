@@ -17,6 +17,7 @@ import { ExtendBookingComponent } from './components/extend-booking/extend-booki
 import { CloseComponent } from './components/close/close.component';
 import { DocumentsModule } from '../documents/documents.module';
 import { AddDogovorForClientModule } from '../documents/modules/add-dogovor-for-client/add-dogovor-for-client.module';
+import { AddDogovorForClientLawfaseModule } from '../documents/modules/add-dogovor-for-client-lawfase/add-dogovor-for-client-lawfase.module';
 
 
 
@@ -51,7 +52,8 @@ const routes = [
     LayoutsModule,
     PaysModule,
     DocumentsModule,
-    AddDogovorForClientModule
+    AddDogovorForClientModule,
+    AddDogovorForClientLawfaseModule
   ],
   providers: [BookingsService],
 })

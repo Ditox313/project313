@@ -213,13 +213,17 @@
                                     </div>
                                     
                                     <div class="input-field col s12 no_dogovor_active" *ngIf="isActiveDogovor === 'no_isActive'">
-                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false">
+                                        <!-- <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false">
                                             Нет активного договора!!!
                                             <a [routerLink]="['/add-client-lawfase-dogovor', xs_actual_search__client___lawfase_no_json._id]">Создать договор</a>
-                                        </div>
 
-                                        
+                                            
+                                        </div> -->
+                                        <app-add-dogovor-law [clientId]="xs_actual_search__client___lawfase_no_json._id"></app-add-dogovor-law>
                                     </div>
+
+
+
                                     
                                     <div class="input-field col s12" *ngIf="is_dogovor_finish_compare_booking === 'isDogovorFinish'">
                                         <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false">
