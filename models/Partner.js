@@ -79,34 +79,7 @@ const partnerSchema = new Schema({
         required: true,
     },
 
-    // Дополнительный телефон №1 - имя
-    phone_1_dop_name: {
-        type: String,
-        default: '',
-        required: false,
-    },
 
-    // Дополнительный телефон №1 - номер
-    phone_1_dop_number: {
-        type: String,
-        default: '',
-        required: false,
-    },
-
-
-     // Дополнительный телефон №2 - имя
-    phone_2_dop_name: {
-        type: String,
-        default: '',
-        required: false,
-    },
-
-    // Дополнительный телефон №2 - номер
-    phone_2_dop_number: {
-        type: String,
-        default: '',
-        required: false,
-    },
 
 
 

@@ -27,10 +27,6 @@ export class PartnersService {
     fd.append('code_podrazdeleniya', partner.code_podrazdeleniya);
     fd.append('passport_register', partner.passport_register);
     fd.append('phone_main', partner.phone_main);
-    fd.append('phone_1_dop_name', partner.phone_1_dop_name);
-    fd.append('phone_1_dop_number', partner.phone_1_dop_number);
-    fd.append('phone_2_dop_name', partner.phone_2_dop_name);
-    fd.append('phone_2_dop_number', partner.phone_2_dop_number);
 
     if (passport__1) {
       fd.append('passport_1_img', passport__1, passport__1.name);
@@ -74,10 +70,6 @@ export class PartnersService {
     fd.append('code_podrazdeleniya', xspartner.code_podrazdeleniya);
     fd.append('passport_register', xspartner.passport_register);
     fd.append('phone_main', xspartner.phone_main);
-    fd.append('phone_1_dop_name', xspartner.phone_1_dop_name);
-    fd.append('phone_1_dop_number', xspartner.phone_1_dop_number);
-    fd.append('phone_2_dop_name', xspartner.phone_2_dop_name);
-    fd.append('phone_2_dop_number', xspartner.phone_2_dop_number);
     fd.append('partnerId', id);
 
     if (passport__1) {

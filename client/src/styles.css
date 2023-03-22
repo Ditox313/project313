@@ -15,7 +15,7 @@
 }
 
 /* Клик для инпута даты */
-input[type="datetime-local"] {
+/* input[type="datetime-local"] {
     position: relative !important;
     cursor: pointer !important;
 }
@@ -93,7 +93,7 @@ input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-clear-button {
     z-index: 1 !important;
     cursor: pointer !important;
-}
+} */
 /* Клик для инпута даты */
 
 [type="checkbox"]:not(:checked),

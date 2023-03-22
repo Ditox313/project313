@@ -65,10 +65,6 @@ export class AddPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
       code_podrazdeleniya: new FormControl('', [Validators.required]),
       passport_register: new FormControl('', [Validators.required]),
       phone_main: new FormControl('', [Validators.required]),
-      phone_1_dop_name: new FormControl('', [Validators.required]),
-      phone_1_dop_number: new FormControl('', [Validators.required]),
-      phone_2_dop_name: new FormControl('', [Validators.required]),
-      phone_2_dop_number: new FormControl('', [Validators.required]),
     });
   }
 
@@ -86,10 +82,6 @@ export class AddPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
       passport_register: this.form.value.passport_register,
       phone_main: this.form.value.phone_main,
-      phone_1_dop_name: this.form.value.phone_1_dop_name,
-      phone_1_dop_number: this.form.value.phone_1_dop_number,
-      phone_2_dop_name: this.form.value.phone_2_dop_name,
-      phone_2_dop_number: this.form.value.phone_2_dop_number,
     };
 
     this.subCreatePartner$ = this.partners
