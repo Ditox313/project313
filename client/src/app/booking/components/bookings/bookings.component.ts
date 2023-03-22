@@ -32,6 +32,7 @@ export class BookingsComponent implements OnInit, OnDestroy {
   noMoreCars: Boolean = false;
   todayDate: any = new Date().toDateString();
   todayDateFormat = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
+  now = this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd');
 
   constructor(
     private bookings: BookingsService,
@@ -44,9 +45,6 @@ export class BookingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetch();
-
-    
-    
   }
 
   ngOnDestroy(): void {
@@ -77,9 +75,17 @@ export class BookingsComponent implements OnInit, OnDestroy {
 
       this.loading = false;
       this.xsbookings = this.xsbookings.concat(bookings);
-
+      console.log(this.xsbookings);
 
     });
+  }
+
+  you_need_to_give_out_a_car(data)
+  {
+    let xs_a = new Date().toISOString() ;
+    let xs_b = new Date(data.booking_start).toISOString() ;
+
+    return xs_a > xs_b;
   }
 
   loadmore() {

@@ -36,17 +36,30 @@
     
             <tbody *ngIf="xsbookings.length !== 0; else empty">
                 <tr *ngFor="let xsbooking of xsbookings; let i = index" class="xs_partners_tr xsbooking" 
-                [class.finish_booking]="this.todayDateFormat === (xsbooking.booking_end | date : 'yyyy-MM-dd')">
+                [class.finish_booking]="this.todayDateFormat === (xsbooking.booking_end | date : 'yyyy-MM-dd') && !xsbooking.dop_info_close" [class.you_need_to_give_out_a_car]="you_need_to_give_out_a_car(xsbooking) && !xsbooking.dop_info_close
+                && xsbooking.status === 'В ожидании'">
                     <td>
                         <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.order}}</a>
                     </td>
-                    <td *ngIf="xsbooking.status === 'В ожидании'">
+
+                    <td *ngIf="xsbooking.status === 'В ожидании'" style="display: flex; align-items: center;">
                         <a [routerLink]="['/view-booking',xsbooking._id]" class="xs_booking_btn btn_waiting">{{xsbooking.status}}</a>
+
+                        <span title="Автомобиль должен быть выдан. Время ожидания истекло!" class="material-icons" *ngIf="you_need_to_give_out_a_car(xsbooking) && !xsbooking.dop_info_close && xsbooking.status === 'В ожидании'">
+                            lightbulb_outline
+                        </span>
+
                     </td>
-                    <td *ngIf="xsbooking.status === 'В аренде'">
+
+                    <td *ngIf="xsbooking.status === 'В аренде'" style="display: flex;">
                         <a [routerLink]="['/view-booking',xsbooking._id]" class=" xs_booking_btn btn_v_arende">{{xsbooking.status}}</a>
+
+                        <span title="Бронь подходит к концу" class="material-icons"
+                            *ngIf="this.todayDateFormat === (xsbooking.booking_end | date : 'yyyy-MM-dd') && !xsbooking.dop_info_close && xsbooking.status === 'В аренде'">
+                            lightbulb_outline
+                        </span>
                     </td>
-                    <td *ngIf="xsbooking.status === 'Закрыта'">
+                    <td *ngIf="xsbooking.status === 'Закрыта'" style="display: flex;">
                         <a [routerLink]="['/view-booking',xsbooking._id]" class="xs_booking_btn btn_close">{{xsbooking.status}}</a>
                     </td>
                     <td>
