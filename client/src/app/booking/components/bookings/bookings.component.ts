@@ -75,8 +75,6 @@ export class BookingsComponent implements OnInit, OnDestroy {
 
       this.loading = false;
       this.xsbookings = this.xsbookings.concat(bookings);
-      console.log(this.xsbookings);
-
     });
   }
 

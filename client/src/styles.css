@@ -1102,6 +1102,10 @@ select {
     margin-right: 7px;
 }
 
+.xs_paid_sale__wrap div {
+    font-size: 20px;
+}
+
 
 .xs_paid_sale
 {
@@ -1194,24 +1198,21 @@ select {
     font-size: 21px;
 }
 
-.xs_add_booking_dop_info___wrap > div
-{
-    display: flex !important;
-    align-items: center !important;
-    font-size: 18px;
-}
+
 
 .xs_add_booking_dop_info___wrap
 {
     display: flex;
 }
 
-.xs_add_booking_dop_info___wrap > div
-{
+
+
+.xs_add_booking_dop_info___wrap>label {
     margin-right: 20px;
     display: flex;
     align-items: center;
     font-size: 20px;
+    color: #000;
 }
 
 .close_dop_info input

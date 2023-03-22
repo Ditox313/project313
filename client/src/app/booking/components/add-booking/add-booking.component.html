@@ -91,10 +91,10 @@
 
                         <div class="input-field col s12">
                             <div class="xs_custome__zalog xs_custome_place_start">
-                                <div class="xs_paid_sale__wrap">
+                                <label class="xs_paid_sale__wrap">
                                     <input type="checkbox" formControlName="isCustomePlaceStartControlclick" id="isCustomePlaceStartControlclick"  (click)="xs_isCustomePlaceStartCheck()">
                                     <div>Произвольное место подачи</div>
-                                </div>
+                                </label>
                             
                                 <div class="xs_paid_sale__hide  customeStartPlaceWrap" *ngIf="isCustomePlaceStart">
                                     <input type="text" placeholder="Введите место подачи" formControlName="isCustomePlaceStartControl"
@@ -106,10 +106,10 @@
                             </div>
 
                             <div class="xs_custome__zalog">
-                                <div class="xs_paid_sale__wrap">
+                                <label class="xs_paid_sale__wrap">
                                     <input type="checkbox" (click)="xs_isCustomeZalogCheck()" formControlName="isCustomeZalogControlclick" id="isCustomeZalogControlclick">
                                     <div>Произвольный залог</div>
-                                </div>
+                                </label>
                             
                                 <div class="xs_paid_sale__hide" ng-model='xs_isCustomeZalogCheck' *ngIf="isCustomeZalog">
                                     <input type="text" placeholder="Введите сумму" formControlName="isCustomeZalogControl"
@@ -270,45 +270,37 @@
         <div class="xs_add_booking_dop_info">
             <h4>Дополнительная информация:</h4>
             <div class="xs_add_booking_dop_info___wrap">
-                <!-- <div>
-                    <span><input type="checkbox" id="clear_auto" class="validate" formControlName="clear_auto"></span>
-                    <span>Чистый автомобиль</span>
-                </div>
-        
-                <div>
-                    <span><input type="checkbox" id="full_tank" class="validate" formControlName="full_tank"></span>
-                    <span>Полный бак</span>
-                </div> -->
 
-                <div>
+
+                <label for="additional_services_chair">
                     <span><input type="checkbox" id="additional_services_chair" class="validate" formControlName="additional_services_chair" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
                     <span>Детское кресло</span>
-                </div>
+                </label>
 
-                <div>
+                <label>
                     <span><input type="checkbox" id="additional_services_buster" class="validate" formControlName="additional_services_buster" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
                     <span>Бустер</span>
-                </div>
+                </label>
 
-                <div>
+                <label>
                     <span><input type="checkbox" id="additional_services_videoregister" class="validate" formControlName="additional_services_videoregister" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
                     <span>Видеорегистратор</span>
-                </div>
+                </label>
 
-                <div>
+                <label>
                     <span><input type="checkbox" id="additional_services_battery_charger" class="validate" formControlName="additional_services_battery_charger" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
                     <span>Зарядное устройство</span>
-                </div>
+                </label>
 
-                <div>
+                <label>
                     <span><input type="checkbox" id="additional_services_antiradar" class="validate" formControlName="additional_services_antiradar" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
                     <span>Антирадар</span>
-                </div>
+                </label>
 
-                <div>
+                <label>
                     <span><input type="checkbox" id="additional_services_moyka" class="validate" formControlName="additional_services_moyka" (ngModelChange)="onChangeAdditionalServicesInput($event)"></span>
                     <span>Мойка</span>
-                </div>
+                </label>
             </div>
         </div>
     </div>
