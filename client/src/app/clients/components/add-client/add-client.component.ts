@@ -222,9 +222,6 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       this.passport__1_name = event.target.files['0'].name;
-
-
-
     };
 
     // Читаем нужный нам файл

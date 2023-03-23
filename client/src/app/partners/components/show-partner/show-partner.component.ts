@@ -36,6 +36,12 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
   passport_1_preview: any = '';
   passport_2_preview: any = '';
 
+
+  // Имяна файлов
+  passport__1_name: string = '';
+  passport__2_name: string = '';
+
+
   subParams$: Subscription;
   subGetById$: Subscription;
   subUpdatePartner$: Subscription;
@@ -106,11 +112,13 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
       if (res.passport_1_img) {
-        this.passport_1_preview = res.passport_1_img;
+        this.passport_1_preview = '/' + res.passport_1_img.replace(/\\/g, "/");
+        this.passport__1_name = res.passport_1_img.split(/(\\|\/)/g).pop();
       }
 
       if (res.passport_2_img) {
-        this.passport_2_preview = res.passport_2_img;
+        this.passport_2_preview = '/' + res.passport_2_img.replace(/\\/g, "/");
+        this.passport__2_name = res.passport_2_img.split(/(\\|\/)/g).pop();
       }
 
 
@@ -128,6 +136,12 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     });
   }
+
+
+  // Проверяем оканчивается ли строка на определенные символы
+  endsWith(str, suffix) {
+    return new RegExp(suffix + '$').test(str);
+  };
 
 
   
@@ -159,13 +173,27 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
     const file = event.target.files['0'];
     this.passport__1 = file;
 
+
+
+
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.passport_1_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.passport_1_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.passport_1_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.passport__1_name = event.target.files['0'].name;
+
+
+
     };
 
     // Читаем нужный нам файл
@@ -180,8 +208,16 @@ export class ShowPartnerComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.passport_2_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.passport_2_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.passport_2_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.passport__2_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл

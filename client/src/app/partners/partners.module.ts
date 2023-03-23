@@ -12,7 +12,7 @@ import { AddPartnerComponent } from './components/add-partner/add-partner.compon
 import { ShowPartnerComponent } from './components/show-partner/show-partner.component';
 import { PartnersService } from './services/partners.service';
 
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from 'src/app/partners/store/reducers';
 import { EffectsModule } from '@ngrx/effects';
@@ -45,6 +45,7 @@ const routes = [
     LayoutsModule,
     StoreModule.forFeature('partners', reducers),
     EffectsModule.forFeature([PartnersEffect]),
+    PdfViewerModule
   ],
   providers: [PartnersService],
 })

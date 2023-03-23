@@ -163,38 +163,55 @@
 
                         <div class="xs_form__item___img___wrap">
                             <div class="xs_form__item___img___item">
-                                <div class="xs_passport_1_prev">
-                                    <img [src]="[passport_1_preview]" alt="Изображение"
-                                        *ngIf="passport_1_preview !== ''">
+                                <div class="xs_passport_1_prev" *ngIf="!this.endsWith(passport_1_preview, '.pdf')">
+                                    <img [src]="[passport_1_preview]" alt="Изображение" *ngIf="passport_1_preview !== ''">
                                     <div class="prevEmpty" *ngIf="passport_1_preview == ''">1 страница пасспорта</div>
                                 </div>
-
-                                <div>
+                            
+                                <div class="xs_passport_1_prev" *ngIf="this.endsWith(passport_1_preview, '.pdf')">
+                                    <pdf-viewer *ngIf="this.endsWith(this.passport_1_preview, '.pdf')" [src]="this.passport_1_preview"
+                                        [render-text]="true" [original-size]="false" style="width: 100%; height: 250px"></pdf-viewer>
+                            
+                                    <div class="prevEmpty" *ngIf="passport_1_preview == ''">1 страница пасспорта</div>
+                                </div>
+                            
+                                <div class="xs_views_buttons_wrap">
                                     <input type="file" class="dn" #input (change)="onFileUpload($event)">
-
-                                    <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2"
-                                        (click)="triggerClick()" [disabled]="form.disabled">
+                            
+                                    <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2" (click)="triggerClick()"
+                                        [disabled]="form.disabled">
                                         <i class="material-icons left">backup</i>
-                                        Загрузить изображение
+                                        <span>{{this.passport__1_name}}</span>
                                     </button>
+                                    <a href="{{this.passport_1_preview}}" *ngIf="this.endsWith(passport_1_preview, '.pdf')" target="__blank"
+                                        class="xs_pdf_view">Смотреть</a>
                                 </div>
                             </div>
 
+
                             <div class="xs_form__item___img___item">
-                                <div class="xs_passport_1_prev">
-                                    <img [src]="[passport_2_preview]" alt="Изображение"
-                                        *ngIf="passport_2_preview !== ''">
+                                <div class="xs_passport_1_prev" *ngIf="!this.endsWith(passport_2_preview, '.pdf')">
+                                    <img [src]="[passport_2_preview]" alt="Изображение" *ngIf="passport_2_preview !== ''">
                                     <div class="prevEmpty" *ngIf="passport_2_preview == ''">2 страница пасспорта</div>
                                 </div>
-
-                                <div>
+                            
+                                <div class="xs_passport_1_prev" *ngIf="this.endsWith(passport_2_preview, '.pdf')">
+                                    <pdf-viewer *ngIf="this.endsWith(this.passport_2_preview, '.pdf')" [src]="this.passport_2_preview"
+                                        [render-text]="true" [original-size]="false" style="width: 100%; height: 250px"></pdf-viewer>
+                            
+                                    <div class="prevEmpty" *ngIf="passport_2_preview == ''">2 страница пасспорта</div>
+                                </div>
+                            
+                                <div class="xs_views_buttons_wrap">
                                     <input type="file" class="dn" #input2 (change)="onFileUpload2($event)">
-
-                                    <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2"
-                                        (click)="triggerClick2()" [disabled]="form.disabled">
+                            
+                                    <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2" (click)="triggerClick2()"
+                                        [disabled]="form.disabled">
                                         <i class="material-icons left">backup</i>
-                                        Загрузить изображение
+                                        <span>{{this.passport__2_name}}</span>
                                     </button>
+                                    <a href="{{this.passport_2_preview}}" *ngIf="this.endsWith(passport_2_preview, '.pdf')" target="__blank"
+                                        class="xs_pdf_view">Смотреть</a>
                                 </div>
                             </div>
                         </div>
