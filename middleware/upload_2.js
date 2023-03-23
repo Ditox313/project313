@@ -26,11 +26,13 @@ const storage = multer.diskStorage({
 
 // Валидатор
 const fileFilter = function(req, file, cb) {
-    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
+    // if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
+    //     cb(null, true);
+    // } else {
+    //     cb(null, false);
+    // }
+
+    cb(null, true);
 };
 
 

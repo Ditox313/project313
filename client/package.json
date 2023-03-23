@@ -23,6 +23,8 @@
     "@ngrx/store-devtools": "^12.1.0",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.29.4",
+    "ng2-pdf-viewer": "^9.1.4",
+    "ngx-extended-pdf-viewer": "^16.2.8",
     "number-to-words-ru": "^2.3.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",

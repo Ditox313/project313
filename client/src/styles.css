@@ -642,7 +642,9 @@ img {
 
 .xs_passport_1_prev img
 {
-    height: 182px;
+    
+    width: 100%;
+    height: 250px;
 }
 
 .xs_partners_tr td a
@@ -1683,4 +1685,27 @@ input[type="checkbox"]
     padding: 5px 15px;
     outline: navajowhite;
     border: none;
+}
+
+.xs_pdf_view
+{
+    display: block !important;
+    text-align: center !important;
+    margin: 10px 0;
+}
+
+.xs_views_buttons_wrap
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.xs_views_buttons_wrap button
+{
+    margin: 0 !important;
+}
+
+.xs_views_buttons_wrap a {
+    border-radius: 0 !important;
 }

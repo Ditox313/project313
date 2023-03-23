@@ -22,6 +22,7 @@ import { PaysModule } from './pays/pays.module';
 import { AccountModule } from './account/account.module';
 import { DocumentsModule } from './documents/documents.module';
 import { GoBackModule } from './shared/modules/ga-back/go-back.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -50,7 +51,8 @@ import { GoBackModule } from './shared/modules/ga-back/go-back.module';
     PaysModule,
     AccountModule,
     DocumentsModule,
-    GoBackModule
+    GoBackModule,
+    PdfViewerModule
   ],
   providers: [
     {
