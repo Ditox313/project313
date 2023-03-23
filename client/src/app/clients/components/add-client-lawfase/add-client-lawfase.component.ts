@@ -35,6 +35,13 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
   doc_3_img_preview: any = '';
   doc_4_img_preview: any = '';
 
+  // Имена файлов
+  doc_1_name: string = 'Загрузите изображение';
+  doc_2_name: string = 'Загрузите изображение';
+  doc_3_name: string = 'Загрузите изображение';
+  doc_4_name: string = 'Загрузите изображение';
+  
+
 
   subGetParams$: Subscription;
   subCreateClient$: Subscription;
@@ -102,6 +109,12 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
   }
 
 
+  // Проверяем оканчивается ли строка на определенные символы
+  endsWith(str, suffix) {
+    return new RegExp(suffix + '$').test(str);
+  };
+
+
   onSubmit() {
     const client = {
       name: this.form.value.name,
@@ -159,8 +172,16 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.doc_1_img_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.doc_1_img_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.doc_1_img_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.doc_1_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
@@ -175,8 +196,16 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.doc_2_img_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.doc_2_img_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.doc_2_img_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.doc_2_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
@@ -191,8 +220,16 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.doc_3_img_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.doc_3_img_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.doc_3_img_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.doc_3_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
@@ -207,8 +244,16 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.doc_4_img_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.doc_4_img_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.doc_4_img_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.doc_4_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл

@@ -37,7 +37,7 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   prava_2_preview: any = '';
 
 
-  // Имяна файлов
+  // Имена файлов
   passport__1_name: string = 'Загрузите изображение';
   passport__2_name: string = 'Загрузите изображение';
   prava__1_name: string = 'Загрузите изображение';
