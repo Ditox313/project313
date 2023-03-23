@@ -36,6 +36,13 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   prava_1_preview: any = '';
   prava_2_preview: any = '';
 
+
+  // Имяна файлов
+  passport__1_name: string = 'Загрузите изображение';
+  passport__2_name: string = 'Загрузите изображение';
+  prava__1_name: string = 'Загрузите изображение';
+  prava__2_name: string = 'Загрузите изображение';
+
   subGetParams$: Subscription;
   subClientCreate$: Subscription;
 
@@ -126,6 +133,12 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  // Проверяем оканчивается ли строка на определенные символы
+  endsWith(str, suffix) {
+    return new RegExp(suffix + '$').test(str);
+  };
+
+
 
   onSubmit() {
     let fio = this.form.value.fio.split(' ');
@@ -183,8 +196,6 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
       });
-
-
   }
 
 
@@ -192,16 +203,28 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   onFileUpload(event: any) {
     const file = event.target.files['0'];
     this.passport__1 = file;
-    console.log(this.passport__1);
-    
+
+
+
 
     // Подключаем ридер для считывания картинки
     const reader = new FileReader();
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.passport_1_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.passport_1_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.passport_1_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.passport__1_name = event.target.files['0'].name;
+
+
+
     };
 
     // Читаем нужный нам файл
@@ -216,8 +239,16 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.passport_2_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.passport_2_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.passport_2_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.passport__2_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
@@ -232,8 +263,17 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.prava_1_preview = reader.result;
+
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.prava_1_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.prava_1_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.prava__1_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
@@ -248,13 +288,22 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Метод вызовется тогда, когда загрузится вся картинка
     reader.onload = () => {
-      // Переменная для хранения информации об изображении
-      this.prava_2_preview = reader.result;
+      if (event.target.files['0'].type !== 'application/pdf') {
+        // Переменная для хранения информации об изображении
+        this.prava_2_preview = reader.result;
+      }
+      else {
+        // Переменная для хранения информации об изображении
+        this.prava_2_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
+      }
+
+      this.prava__2_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
     reader.readAsDataURL(file);
   }
+  
 
   // Обрабатываем кнопку загрузки тригиря клик по скрытому инпуту
   triggerClick() {

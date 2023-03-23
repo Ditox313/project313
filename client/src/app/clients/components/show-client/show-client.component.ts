@@ -310,6 +310,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
         // Переменная для хранения информации об изображении
         this.passport_2_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
       }
+
+      this.passport__2_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
@@ -333,6 +335,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
         // Переменная для хранения информации об изображении
         this.prava_1_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
       }
+
+      this.prava__1_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
@@ -355,6 +359,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
         // Переменная для хранения информации об изображении
         this.prava_2_preview = 'https://i.etsystatic.com/7267864/r/il/5235cc/1979275153/il_1588xN.1979275153_71s3.jpg';
       }
+
+      this.prava__2_name = event.target.files['0'].name;
     };
 
     // Читаем нужный нам файл
