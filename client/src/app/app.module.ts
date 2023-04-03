@@ -23,6 +23,8 @@ import { AccountModule } from './account/account.module';
 import { DocumentsModule } from './documents/documents.module';
 import { GoBackModule } from './shared/modules/ga-back/go-back.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NgxMaskModule } from 'ngx-mask'
+
 
 
 
@@ -52,7 +54,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     AccountModule,
     DocumentsModule,
     GoBackModule,
-    PdfViewerModule
+    PdfViewerModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [
     {

@@ -67,7 +67,9 @@
                             <input placeholder="Введите значение типа 1234 567890" id="passport_seria_and_number" type="text" class="validate" formControlName="passport_seria_and_number"
                                 [ngClass]="{'invalid': form.controls['passport_seria_and_number'].invalid && form.controls['passport_seria_and_number'].touched || 
                                 form.controls['passport_seria_and_number'].errors?.minlength}"
-                                [maxlength]="maxLengthSeriaAndNumber" >
+                                
+                                [mask]="passport_seria_and_number_mask"
+                                >
                                 
                             <label for="passport_seria_and_number">Серия и номер паспорта<span class="xszv">*</span></label>
 
@@ -120,6 +122,7 @@
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="code_podrazdeleniya" type="text" class="validate"
                                 formControlName="code_podrazdeleniya"
+                                [mask]="'000-000'"
                                 [ngClass]="{'invalid': form.controls['code_podrazdeleniya'].invalid && form.controls['code_podrazdeleniya'].touched}">
                             <label for="marka">Код подразделения<span class="xszv">*</span></label>
                             <span class="helper-text red-text"
@@ -153,7 +156,9 @@
 
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="prava_seria_and_number" type="text" class="validate" formControlName="prava_seria_and_number"
-                                [ngClass]="{'invalid': form.controls['prava_seria_and_number'].invalid && form.controls['prava_seria_and_number'].touched}">
+                                [ngClass]="{'invalid': form.controls['prava_seria_and_number'].invalid && form.controls['prava_seria_and_number'].touched}"
+                                [mask]="'0000 000000'"
+                                >
                             <label for="marka">Права - серия и номер<span class="xszv">*</span></label>
                             <span class="helper-text red-text"
                                 *ngIf="form.controls['prava_seria_and_number'].invalid && form.controls['prava_seria_and_number'].touched">
@@ -180,7 +185,9 @@
                         <div class="xs_form__item___img___info">
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="phone_main" type="text" class="validate" formControlName="phone_main"
-                                    [ngClass]="{'invalid': form.controls['phone_main'].invalid && form.controls['phone_main'].touched}">
+                                    [ngClass]="{'invalid': form.controls['phone_main'].invalid && form.controls['phone_main'].touched}"
+                                    prefix="+7"
+                                    [mask]="'(000) 000-0000'">
                                 <label for="marka">Основной телефон<span class="xszv">*</span></label>
                                 <span class="helper-text red-text"
                                     *ngIf="form.controls['phone_main'].invalid && form.controls['phone_main'].touched">
@@ -199,6 +206,8 @@
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="phone_1_dop_number" type="text" class="validate"
                                     formControlName="phone_1_dop_number"
+                                    prefix="+7"
+                                    [mask]="'(000) 000-0000'"
                                     [ngClass]="{'invalid': form.controls['phone_1_dop_number'].invalid && form.controls['phone_1_dop_number'].touched}">
                                 <label for="marka">Дополнительный телефон №1 - телефон</label>
                             </div>
@@ -213,6 +222,8 @@
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="phone_2_dop_number" type="text" class="validate"
                                     formControlName="phone_2_dop_number"
+                                    prefix="+7"
+                                    [mask]="'(000) 000-0000'"
                                     [ngClass]="{'invalid': form.controls['phone_2_dop_number'].invalid && form.controls['phone_2_dop_number'].touched}">
                                 <label for="marka">Дополнительный телефон №2 - телефон</label>
                             </div>
@@ -227,6 +238,8 @@
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="phone_3_dop_number" type="text" class="validate"
                                     formControlName="phone_3_dop_number"
+                                    prefix="+7"
+                                    [mask]="'(000) 000-0000'"
                                     [ngClass]="{'invalid': form.controls['phone_3_dop_number'].invalid && form.controls['phone_3_dop_number'].touched}">
                                 <label for="marka">Дополнительный телефон №3 - телефон</label>
                             </div>
@@ -241,6 +254,8 @@
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="phone_4_dop_number" type="text" class="validate"
                                     formControlName="phone_4_dop_number"
+                                    prefix="+7"
+                                    [mask]="'(000) 000-0000'"
                                     [ngClass]="{'invalid': form.controls['phone_4_dop_number'].invalid && form.controls['phone_4_dop_number'].touched}">
                                 <label for="marka">Дополнительный телефон №4 - телефон</label>
                             </div>

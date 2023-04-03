@@ -61,8 +61,9 @@
                         <div class="input-field col s12">
                             <input placeholder="Введите значение типа 1234 567890" id="passport_seria_and_number" type="text" class="validate"
                                 formControlName="passport_seria_and_number" [ngClass]="{'invalid': form.controls['passport_seria_and_number'].invalid && form.controls['passport_seria_and_number'].touched || 
-                                                        form.controls['passport_seria_and_number'].errors?.minlength}"
-                                [maxlength]="maxLengthSeriaAndNumber">
+                                form.controls['passport_seria_and_number'].errors?.minlength}"
+                                [mask]="passport_seria_and_number_mask"
+                                >
                         
                             <label for="passport_seria_and_number">Серия и номер паспорта<span class="xszv">*</span></label>
                         
@@ -116,6 +117,7 @@
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="code_podrazdeleniya" type="text" class="validate"
                                 formControlName="code_podrazdeleniya"
+                                [mask]="'000-000'"
                                 [ngClass]="{'invalid': form.controls['code_podrazdeleniya'].invalid && form.controls['code_podrazdeleniya'].touched}">
                             <label for="marka">Код подразделения<span class="xszv">*</span></label>
                             <span class="helper-text red-text"
@@ -152,6 +154,7 @@
                         <div class="input-field col s12">
                             <input placeholder="Введите значение" id="prava_seria_and_number" type="text" class="validate"
                                 formControlName="prava_seria_and_number"
+                                [mask]="'0000 000000'"
                                 [ngClass]="{'invalid': form.controls['prava_seria_and_number'].invalid && form.controls['prava_seria_and_number'].touched}">
                             <label for="marka">Права - серия и номер<span class="xszv">*</span></label>
                             <span class="helper-text red-text"

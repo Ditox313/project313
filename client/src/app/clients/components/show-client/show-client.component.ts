@@ -57,6 +57,9 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   // Максимальное колличество символов в серии и номере паспорта
   maxLengthSeriaAndNumber: any = 11;
 
+  // Значения маски ввода серии и номера паспорта в зависимости от резидента или не резидента
+  passport_seria_and_number_mask: string;
+
   constructor(
     private clients: ClientsService,
     private rote: ActivatedRoute,
@@ -68,7 +71,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getParams();
     this.getByClientId(); 
     MaterialService.updateTextInputs();
-    this.isNoResidentInput();
+    // this.isNoResidentInput();
+    
   }
 
   ngOnDestroy(): void {
@@ -95,10 +99,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form = new FormGroup({
       fio: new FormControl('', [Validators.required]),
       makedate: new FormControl('', [Validators.required]),
-      passport_seria_and_number: new FormControl("", [Validators.required,
-        Validators.maxLength(this.maxLengthSeriaAndNumber),
-        Validators.minLength(this.maxLengthSeriaAndNumber)
-      ]),
+      passport_seria_and_number: new FormControl("", [Validators.required,]),
       passport_date: new FormControl(''),
       passport_who_take: new FormControl('', [Validators.required]),
       code_podrazdeleniya: new FormControl('', [Validators.required]),
@@ -131,6 +132,8 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   {
     this.subGetByClientId$ = this.clients.getById(this.clientId).subscribe((res) => {
       this.xsActualClient = res;
+      
+      
 
 
       if (res.passport_1_img) {
@@ -179,7 +182,17 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
         isNoResident: res.isNoResident,
       });
 
-      
+      this.isNoResident = res.isNoResident;
+
+
+
+      if (res.isNoResident) {
+        this.passport_seria_and_number_mask = ''
+      }
+      else {
+        this.passport_seria_and_number_mask = '0000 000000'
+      }
+
     });
   }
 
@@ -191,11 +204,11 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
     
     if (this.isNoResident)
     {
-      this.maxLengthSeriaAndNumber = 25;
+      this.passport_seria_and_number_mask = ''
     }
     else
     {
-      this.maxLengthSeriaAndNumber = 11;
+      this.passport_seria_and_number_mask = '0000 000000'
     }
 
   }
@@ -210,23 +223,22 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSubmit() {
     let fio = this.form.value.fio.split(' ');
-    let seria_and_number = this.form.value.passport_seria_and_number.split(' ');
-    let prava_seria_and_number = this.form.value.prava_seria_and_number.split(' ');
+
 
     const client = {
       name: fio[1],
       surname: fio[0],
       lastname: fio[2],
       makedate: this.form.value.makedate,
-      passport_seria: seria_and_number[0],
-      passport_number: seria_and_number[1],
+      passport_seria: this.form.value.passport_seria_and_number.substring(0, 4),
+      passport_number: this.form.value.passport_seria_and_number.slice(4),
       passport_date: this.form.value.passport_date,
       passport_who_take: this.form.value.passport_who_take,
       code_podrazdeleniya: this.form.value.code_podrazdeleniya,
       passport_register: this.form.value.passport_register,
       passport_address_fact: this.form.value.passport_address_fact,
-      prava_seria: prava_seria_and_number[0],
-      prava_number: prava_seria_and_number[1],
+      prava_seria: this.form.value.prava_seria_and_number.substring(0, 4),
+      prava_number: this.form.value.prava_seria_and_number.slice(4),
       prava_date: this.form.value.prava_date,
       phone_main: this.form.value.phone_main,
       phone_1_dop_name: this.form.value.phone_1_dop_name,
