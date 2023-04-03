@@ -1,9 +1,14 @@
 
 <form class="xs_add__car" *ngIf="actualBooking">
+
+    
+
     <div class="xs_add__car___top">
         <h1 >
             <span class="material-icons">contact_mail</span> Просмотр брони №{{actualBooking.order}} 
         </h1>
+
+        <app-go-back></app-go-back>
     </div>
 
     <div class="xs_add__car__content">

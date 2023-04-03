@@ -18,7 +18,7 @@ import { CloseComponent } from './components/close/close.component';
 import { DocumentsModule } from '../documents/documents.module';
 import { AddDogovorForClientModule } from '../documents/modules/add-dogovor-for-client/add-dogovor-for-client.module';
 import { AddDogovorForClientLawfaseModule } from '../documents/modules/add-dogovor-for-client-lawfase/add-dogovor-for-client-lawfase.module';
-
+import { GoBackModule } from '../shared/modules/ga-back/go-back.module';
 
 
 const routes = [
@@ -53,7 +53,8 @@ const routes = [
     PaysModule,
     DocumentsModule,
     AddDogovorForClientModule,
-    AddDogovorForClientLawfaseModule
+    AddDogovorForClientLawfaseModule,
+    GoBackModule
   ],
   providers: [BookingsService],
 })

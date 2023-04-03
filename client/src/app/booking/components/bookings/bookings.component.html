@@ -9,6 +9,8 @@
             <a [routerLink]="['/add-booking']">
                 <span class="material-icons">library_add</span> Добавить бронь
             </a>
+
+            
         </div>
     </div>
 
@@ -42,7 +44,7 @@
                         <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.order}}</a>
                     </td>
 
-                    <td *ngIf="xsbooking.status === 'В ожидании'" style="display: flex; align-items: center;">
+                    <td *ngIf="xsbooking.status === 'В ожидании'" style="display: flex; align-items: center; margin-top: 4px;" >
                         <a [routerLink]="['/view-booking',xsbooking._id]" class="xs_booking_btn btn_waiting">{{xsbooking.status}}</a>
 
                         <span title="Автомобиль должен быть выдан. Время ожидания истекло!" class="material-icons" *ngIf="you_need_to_give_out_a_car(xsbooking) && !xsbooking.dop_info_close && xsbooking.status === 'В ожидании'">
@@ -51,7 +53,7 @@
 
                     </td>
 
-                    <td *ngIf="xsbooking.status === 'В аренде'" style="display: flex;">
+                    <td *ngIf="xsbooking.status === 'В аренде'" style="display: flex; margin-top: 4px;">
                         <a [routerLink]="['/view-booking',xsbooking._id]" class=" xs_booking_btn btn_v_arende">{{xsbooking.status}}</a>
 
                         <span title="Бронь подходит к концу" class="material-icons"
@@ -59,7 +61,7 @@
                             lightbulb_outline
                         </span>
                     </td>
-                    <td *ngIf="xsbooking.status === 'Закрыта'" style="display: flex;">
+                    <td *ngIf="xsbooking.status === 'Закрыта'" style="display: flex; margin-top: 4px;">
                         <a [routerLink]="['/view-booking',xsbooking._id]" class="xs_booking_btn btn_close">{{xsbooking.status}}</a>
                     </td>
                     <td>
