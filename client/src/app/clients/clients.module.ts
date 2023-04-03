@@ -21,7 +21,7 @@ import { AddClientLawfaseComponent } from './components/add-client-lawfase/add-c
 import { ShowClientLawfaseComponent } from './components/show-client-lawfase/show-client-lawfase.component';
 import { DocumentsModule } from '../documents/documents.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { NgxMaskModule } from 'ngx-mask'
+import { NgxMaskModule } from 'ngx-mask';
 
 const routes = [
   {

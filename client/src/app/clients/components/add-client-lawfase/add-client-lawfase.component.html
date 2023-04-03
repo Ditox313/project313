@@ -230,6 +230,8 @@
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="number_1" type="text" class="validate"
                                     formControlName="number_1"
+                                    prefix="+7"
+                                    [mask]="'(000) 000-0000'"
                                     [ngClass]="{'invalid': form.controls['number_1'].invalid && form.controls['number_1'].touched}">
                                 <label for="number_1">Номер телефона №1<span class="xszv">*</span></label>
                                 <span class="helper-text red-text"
@@ -243,6 +245,8 @@
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="number_2" type="text" class="validate"
                                     formControlName="number_2"
+                                    prefix="+7"
+                                    [mask]="'(000) 000-0000'"
                                     [ngClass]="{'invalid': form.controls['number_2'].invalid && form.controls['number_2'].touched}">
                                 <label for="number_2">Номер телефона №2<span class="xszv">*</span></label>
                                 <span class="helper-text red-text"

@@ -149,6 +149,8 @@
                             <div class="input-field col s12">
                                 <input placeholder="Введите значение" id="phone_main" type="text" class="validate"
                                     formControlName="phone_main"
+                                    prefix="+7"
+                                    [mask]="'(000) 000-0000'"
                                     [ngClass]="{'invalid': form.controls['phone_main'].invalid && form.controls['phone_main'].touched}">
                                 <label for="marka">Основной телефон<span class="xszv">*</span></label>
                                 <span class="helper-text red-text"

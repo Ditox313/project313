@@ -17,6 +17,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from 'src/app/partners/store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { PartnersEffect } from './store/effects/partners.effect';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 const routes = [
@@ -45,7 +46,8 @@ const routes = [
     LayoutsModule,
     StoreModule.forFeature('partners', reducers),
     EffectsModule.forFeature([PartnersEffect]),
-    PdfViewerModule
+    PdfViewerModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [PartnersService],
 })
