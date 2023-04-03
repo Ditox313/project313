@@ -88,7 +88,7 @@
         </div>
         
         <div class="xs_paid_sale__hide" ng-model='checkStatus' *ngIf="isSaleCheck" >
-            <input type="text" placeholder="Введите сумму скидки" formControlName="isSaleCheckbox" id="isSaleCheckbox"> руб
+            <input type="text" placeholder="Введите сумму скидки" formControlName="isSaleCheckbox" id="isSaleCheckbox" (change)="xs_isSaleValue($event)"> руб
         </div>
     </div>  
 

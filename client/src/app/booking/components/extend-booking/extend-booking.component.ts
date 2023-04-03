@@ -74,6 +74,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
 
   isSaleCheck: boolean = false; 
 
+  xsExtendSummBeforeSale: number = 0;
+
 
   PayTypes: Array<any> = [
     {
@@ -574,6 +576,20 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     this.extendDays = (exD1 - exD2) / (1000 * 60 * 60 * 24) ;
     this.extendSumm();
 
+
+    // Автоматически подставляем ссумму продления в поле оплата
+    if (this.summa_extend.summa > 0)
+    {
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
+
+      this.xsExtendSummBeforeSale = this.summa_extend.summa;
+    }
+
+   
+
+  
   }
 
 
@@ -694,6 +710,21 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   // Проверяем нажат ли чекбокс для скидки
   xs_isSaleCheck() {
     this.isSaleCheck = !this.isSaleCheck;
+
+    
+  }
+
+
+
+  // При вводе значения в поле скидки
+  xs_isSaleValue(e)
+  {
+    if (e.target.value > 0) {
+      this.form.patchValue({
+        arenda: this.xsExtendSummBeforeSale - e.target.value,
+      });
+    }
+    
   }
 
 
