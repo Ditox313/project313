@@ -1709,3 +1709,10 @@ input[type="checkbox"]
 .xs_views_buttons_wrap a {
     border-radius: 0 !important;
 }
+
+.xs_search__box span
+{
+    margin-right: 10px;
+    color: #fff;
+    cursor: pointer;
+}

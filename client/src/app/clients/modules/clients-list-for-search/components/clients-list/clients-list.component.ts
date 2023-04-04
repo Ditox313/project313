@@ -1,29 +1,27 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Client, Client_Law_Fase } from 'src/app/shared/types/interfaces';
-import { ClientsService } from '../../services/clients.service';
+import { ClientsService } from '../../../../services/clients.service';
 import { Store, select } from '@ngrx/store';
-import {
-  clientsAddAction,
-} from '../../store/actions/clients.action';
 import { EventEmitter } from '@angular/core';
 
 
 // Шаг пагинации
-  const STEP = 15
-  const STEP_LAWFASE = 15
+const STEP = 15
+const STEP_LAWFASE = 15
 
 @Component({
-  selector: 'app-clients',
-  templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.css']
+  selector: 'app-clients-list',
+  templateUrl: './clients-list.component.html',
+  styleUrls: ['./clients-list.component.css']
 })
-export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('tabs') tabs!: ElementRef;
-
+  @Input('clientType') clientType!: string;
+  @Output() onAddClientForSearch = new EventEmitter<any>()
 
 
   Sub!: Subscription;
@@ -39,24 +37,21 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = false;
   noMoreCars: Boolean = false
   noMoreCarsLawfase: Boolean = false
-  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute, private store: Store) { }
+  constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) { }
 
   ngOnInit(): void {
-    this.fetch() 
-    this.fetch_lawfase()   
+    this.fetch()
+    this.fetch_lawfase()
   }
 
   ngOnDestroy(): void {
-    if (this.subDeleteClient$)
-    {
+    if (this.subDeleteClient$) {
       this.subDeleteClient$.unsubscribe();
     }
-    if (this.subDeleteClientLawfase$)
-    {
+    if (this.subDeleteClientLawfase$) {
       this.subDeleteClientLawfase$.unsubscribe();
     }
-    if (this.Sub_clients_lawfase)
-    {
+    if (this.Sub_clients_lawfase) {
       this.Sub_clients_lawfase.unsubscribe();
     }
   }
@@ -69,61 +64,54 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-  public fetch()
-  {
+  public fetch() {
     const params = {
       offset: this.offset,
       limit: this.limit
     }
 
     this.loading = true
-    this.Sub = this.clients.fetch(params).subscribe((clients) =>{
-      this.store.dispatch(clientsAddAction({ clients: clients }));
+    this.Sub = this.clients.fetch(params).subscribe((clients) => {
 
-      if(clients.length < STEP)
-      {
+      if (clients.length < STEP) {
         this.noMoreCars = true
       }
-        
+
       this.loading = false
       this.xsclients = this.xsclients.concat(clients)
-    });    
+    });
   }
 
 
-  public fetch_lawfase()
-  {
+  public fetch_lawfase() {
     const params = {
       offset: this.offset_lawfase,
       limit: this.limit_lawfase
     }
 
     this.loading = true
-    this.Sub_clients_lawfase = this.clients.fetch_lawfase(params).subscribe((clients) =>{
+    this.Sub_clients_lawfase = this.clients.fetch_lawfase(params).subscribe((clients) => {
 
-      
-      if (clients.length < STEP_LAWFASE)
-      {
+
+      if (clients.length < STEP_LAWFASE) {
         this.noMoreCarsLawfase = true
       }
-        
+
       this.loading = false
       this.xsclients_lawfase = this.xsclients_lawfase.concat(clients)
-    });     
+    });
   }
 
 
 
-  loadmore()
-  {
+  loadmore() {
     this.loading = true
     this.offset += STEP
     this.fetch()
     this.loading = false
   }
 
-  loadmore_lawfase()
-  {
+  loadmore_lawfase() {
     this.loading = true
     this.offset_lawfase += STEP_LAWFASE
     this.fetch_lawfase()
@@ -132,9 +120,8 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-  
-  onDeleteCar(event: Event, xsclient: Client): void
-  {
+
+  onDeleteCar(event: Event, xsclient: Client): void {
     event.stopPropagation();
 
 
@@ -145,7 +132,7 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
         const idxPos = this.xsclients.findIndex((p) => p._id === xsclient._id);
         this.xsclients.splice(idxPos, 1);
         MaterialService.toast(res.message)
-        
+
       }, error => {
         MaterialService.toast(error.error.message);
       })
@@ -154,8 +141,7 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-  onDeleteClientLawfase(event: Event, xsclient: Client_Law_Fase): void
-  {
+  onDeleteClientLawfase(event: Event, xsclient: Client_Law_Fase): void {
     event.stopPropagation();
 
 
@@ -167,11 +153,17 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.xsclients_lawfase.splice(idxPos, 1);
         // this.store.dispatch(clientsAddAction({ clients: this.xsclients_lawfase }));
         MaterialService.toast(res.message)
-        
+
       }, error => {
         MaterialService.toast(error.error.message);
       })
     }
+  }
+
+  changeClient(data)
+  {
+
+    this.onAddClientForSearch.emit(data)
   }
 
 }

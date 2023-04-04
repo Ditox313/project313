@@ -55,7 +55,7 @@ import { NgxMaskModule } from 'ngx-mask'
     DocumentsModule,
     GoBackModule,
     PdfViewerModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     {

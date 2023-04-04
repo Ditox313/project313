@@ -7,7 +7,7 @@ import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { DocumentsService } from 'src/app/documents/services/documents.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Client, Client_Law_Fase, MaterialDatepicker, Settings, Summa, User } from 'src/app/shared/types/interfaces';
+import { Client, Client_Law_Fase, MaterialDatepicker, MaterialInstance, Settings, Summa, User } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 import { AccountService } from '../../../account/services/account.service';
 import { ThrowStmt } from '@angular/compiler';
@@ -118,6 +118,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUser!: User
 
 
+  // Храним референцию модального окна
+  @ViewChild('modal') modalRef: ElementRef
+
+
+  // Храним модальное окно
+  modal: MaterialInstance
+
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
@@ -142,6 +150,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
+    this.modal = MaterialService.initModalPos(this.modalRef)
   }
 
   ngOnDestroy(): void {
@@ -166,6 +175,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       this.currentUser$.unsubscribe();
     }
+
+    this.modal.destroy();
   }
 
 
@@ -461,8 +472,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.controls['client'].disable();
     this.form.controls['tariff'].disable();
     this.form.controls['place_start'].disable();
-    // this.form.controls['clear_auto'].disable();
-    // this.form.controls['full_tank'].disable();
     this.form.controls['additional_services_chair'].disable();
     this.form.controls['additional_services_buster'].disable();
     this.form.controls['additional_services_videoregister'].disable();
@@ -1442,7 +1451,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // Получаем данные для поиска физического лица
+  // Получаем данные для поиска юр лица
   searchDataLawFase(e: any) {
     // Отчищаем запрос
     let query: string = e.target.value.trim()
@@ -1464,6 +1473,22 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.searchResultLawFase = res;
       this.hasQueryLawFase = true;
     })
+  }
+
+
+
+  // При клике на кнопку выбора клиента в модальном окне
+  changeClientModal()
+  {
+    this.modal.open();
+  }
+
+
+  // Принимаем данные из модуля списка клиентов для поиска
+  inputDataClientsListModule(e)
+  {
+    this.changeClient(e);
+    this.modal.close();
   }
 
 

@@ -23,6 +23,7 @@ import { DocumentsModule } from '../documents/documents.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxMaskModule } from 'ngx-mask';
 
+
 const routes = [
   {
     path: '',
@@ -58,7 +59,8 @@ const routes = [
     NgxMaskModule.forRoot()
   ],
   exports: [
-    DocumentsModule
+    DocumentsModule,
+    ClientsComponent
   ],
   providers: [ClientsService],
 })

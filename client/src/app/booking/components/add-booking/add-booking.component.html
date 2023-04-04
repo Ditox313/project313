@@ -146,6 +146,7 @@
                             </fieldset>
 
                             <div class="xs_fiz__search" *ngIf="fizSearchIsVisible">
+                            <!-- <div class="xs_fiz__search" > -->
                                 <div class="xs_search">
                                     <label for="marka">Поиск клиента по Фамилии<span class="xszv">*</span></label>
                                     <div class="xs_search__box">
@@ -153,6 +154,7 @@
                                             <input type="text" (keyup)="searchData($event)" placeholder="Введите для поиска..." formControlName="search_fiz" id="search_fiz">
                                         </div>
                                         
+                                        <span class="material-icons" title="Выбрать клиента из списка" (click)="changeClientModal()">dehaze</span>
                                     </div>
                                 
                                     <div class="xs_header_search_result" *ngIf="hasQuery">
@@ -213,12 +215,6 @@
                                     </div>
                                     
                                     <div class="input-field col s12 no_dogovor_active" *ngIf="isActiveDogovor === 'no_isActive'">
-                                        <!-- <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false">
-                                            Нет активного договора!!!
-                                            <a [routerLink]="['/add-client-lawfase-dogovor', xs_actual_search__client___lawfase_no_json._id]">Создать договор</a>
-
-                                            
-                                        </div> -->
                                         <app-add-dogovor-law [clientId]="xs_actual_search__client___lawfase_no_json._id"></app-add-dogovor-law>
                                     </div>
 
@@ -234,7 +230,6 @@
                                 </div>
                             </div>
                         </div>
-
 
         
                         <div class="input-field col s12" >
@@ -367,5 +362,14 @@
     </div>
 </form>
 
+
+
+<!-- Modal Structure -->
+<div class="modal modal-search" id="#create-modal" #modal>
+    <div class="modal-content">
+        <h4>Выберите клиента</h4>
+        <app-clients-list *ngIf="this.xs_actual_client_type"  [clientType]="this.xs_actual_client_type" (onAddClientForSearch)="inputDataClientsListModule($event)"></app-clients-list>
+    </div>
+</div>
 
 
