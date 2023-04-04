@@ -12,8 +12,8 @@ import { EventEmitter } from '@angular/core';
 
 
 // Шаг пагинации
-  const STEP = 5
-  const STEP_LAWFASE = 5
+  const STEP = 3
+  const STEP_LAWFASE = 3
 
 @Component({
   selector: 'app-clients',
@@ -175,6 +175,8 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+
+  // Получаем результаты поиска физ лица
   takeDataSearchClient(e)
   {
 
@@ -182,9 +184,7 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       this.xsclients = e;
 
-      if (e.length < STEP) {
-        this.noMoreCars = true
-      }
+      this.noMoreCars = true
 
     }
     else
@@ -196,7 +196,7 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
   
       this.clients.fetch(params).subscribe((clients) => {
-        this.xsclients = clients.reverse()
+        this.xsclients = clients
 
         this.noMoreCars = false
       }); 
@@ -204,13 +204,14 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+
+
+  // Получаем результаты поиска юр лица
   takeDataSearchClientLaw(e) {
     if (e !== null) {
       this.xsclients_lawfase = e;
 
-      if (e.length < STEP_LAWFASE) {
-        this.noMoreCarsLawfase = true
-      }
+      this.noMoreCarsLawfase = true
 
     }
     else {
@@ -221,7 +222,7 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       this.Sub_clients_lawfase = this.clients.fetch_lawfase(params).subscribe((clients) => {
-        this.xsclients_lawfase = clients.reverse()
+        this.xsclients_lawfase = clients
 
         this.noMoreCarsLawfase = false
       }); 
