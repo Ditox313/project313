@@ -21,6 +21,9 @@ router.get('/law_fase_clients/', passport.authenticate('jwt', { session: false }
 // get_all
 router.get('/all', passport.authenticate('jwt', { session: false }), controller.get_all);
 
+// get all law face
+router.get('/all-lawface', passport.authenticate('jwt', { session: false }), controller.get_all_law_face);
+
 // // Роут на update физ/лиц
 router.patch('/update/:id',passport.authenticate('jwt', { session: false }), upload_2.fields([{name: 'passport_1_img'},{name: 'passport_2_img'},{name: 'prava_1_img'},{name: 'prava_2_img'}]), controller.update);
 

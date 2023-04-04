@@ -1,0 +1,15 @@
+
+<div class="xs_search_client" *ngIf="type==='fiz'">
+    <div class="">
+        <input type="text" (keyup)="searchData($event)" placeholder="Введите для поиска..." 
+            id="search_fiz">
+    </div>
+</div>
+
+
+<div class="xs_search_client" *ngIf="type==='law'">
+    <div class="">
+        <input type="text" (keyup)="searchDataLawFase($event)" placeholder="Введите для поиска..." 
+            id="search_fiz">
+    </div>
+</div>

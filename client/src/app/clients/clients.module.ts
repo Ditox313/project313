@@ -22,6 +22,7 @@ import { ShowClientLawfaseComponent } from './components/show-client-lawfase/sho
 import { DocumentsModule } from '../documents/documents.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxMaskModule } from 'ngx-mask';
+import { SearchClientModule } from './modules/search-client/search-client.module';
 
 
 const routes = [
@@ -56,7 +57,8 @@ const routes = [
     EffectsModule.forFeature([ClientsEffect]),
     DocumentsModule,
     PdfViewerModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    SearchClientModule
   ],
   exports: [
     DocumentsModule,

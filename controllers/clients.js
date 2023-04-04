@@ -178,6 +178,23 @@ module.exports.get_all = async function(req, res) {
 
 
 
+// Контроллер для get_all
+module.exports.get_all_law_face = async function (req, res) {
+    try {
+        // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
+        const clients = await Client_Law_Face.find({
+            user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+        })
+
+        // Возвращаем пользователю позиции 
+        res.status(200).json(clients);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
 
 
 

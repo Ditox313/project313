@@ -16,6 +16,10 @@
                         <span class="material-icons">library_add</span> Добавить физ/лицо
                     </a>
                 </div>
+
+                <div >
+                    <app-search-client (onSharedResultSearch)="takeDataSearchClient($event)" [type]="'fiz'"></app-search-client>
+                </div>
             </div>
 
 
@@ -65,6 +69,11 @@
                     <a [routerLink]="['/add-client-lawfase']">
                         <span class="material-icons">library_add</span> Добавить юр/лицо
                     </a>
+                </div>
+
+
+                <div>
+                    <app-search-client (onSharedResultSearch)="takeDataSearchClientLaw($event)" [type]="'law'"></app-search-client>
                 </div>
             </div>
 

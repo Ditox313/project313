@@ -1716,3 +1716,15 @@ input[type="checkbox"]
     color: #fff;
     cursor: pointer;
 }
+
+.xs_search_client
+{
+    width: 350px;
+}
+
+.xs_clients__top
+{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}

@@ -12,8 +12,8 @@ import { EventEmitter } from '@angular/core';
 
 
 // Шаг пагинации
-  const STEP = 15
-  const STEP_LAWFASE = 15
+  const STEP = 5
+  const STEP_LAWFASE = 5
 
 @Component({
   selector: 'app-clients',
@@ -35,7 +35,7 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
   offset: any = 0
   limit: any = STEP
   offset_lawfase: any = 0
-  limit_lawfase: any = STEP
+  limit_lawfase: any = STEP_LAWFASE
   loading = false;
   noMoreCars: Boolean = false
   noMoreCarsLawfase: Boolean = false
@@ -78,7 +78,7 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.loading = true
     this.Sub = this.clients.fetch(params).subscribe((clients) =>{
-      this.store.dispatch(clientsAddAction({ clients: clients }));
+
 
       if(clients.length < STEP)
       {
@@ -172,6 +172,61 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
         MaterialService.toast(error.error.message);
       })
     }
+  }
+
+
+  takeDataSearchClient(e)
+  {
+
+    if(e !== null)
+    {
+      this.xsclients = e;
+
+      if (e.length < STEP) {
+        this.noMoreCars = true
+      }
+
+    }
+    else
+    {
+
+      const params = {
+        offset: this.offset,
+        limit: this.limit
+      }
+  
+      this.clients.fetch(params).subscribe((clients) => {
+        this.xsclients = clients.reverse()
+
+        this.noMoreCars = false
+      }); 
+    }
+
+  }
+
+  takeDataSearchClientLaw(e) {
+    if (e !== null) {
+      this.xsclients_lawfase = e;
+
+      if (e.length < STEP_LAWFASE) {
+        this.noMoreCarsLawfase = true
+      }
+
+    }
+    else {
+
+      const params = {
+        offset: this.offset_lawfase,
+        limit: this.limit_lawfase
+      }
+
+      this.Sub_clients_lawfase = this.clients.fetch_lawfase(params).subscribe((clients) => {
+        this.xsclients_lawfase = clients.reverse()
+
+        this.noMoreCarsLawfase = false
+      }); 
+    }
+
   }
 
 }

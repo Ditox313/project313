@@ -141,6 +141,11 @@ export class ClientsService {
       return this.http.get<Client[]>('/api/clients/all');
   }
 
+   get_allLawFace(): Observable<Client_Law_Fase[]>
+  {
+     return this.http.get<Client_Law_Fase[]>('/api/clients/all-lawface');
+  }
+
 
    // Удаление для физ/лиц
    delete(id: any): Observable<any>
