@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoaderModule } from 'src/app/shared/loader/loader.module';
 import { LayoutsModule } from 'src/app/shared/layouts/layouts.module';
+import { SearchClientModule } from '../search-client/search-client.module';
 
 
 
@@ -23,6 +24,7 @@ import { LayoutsModule } from 'src/app/shared/layouts/layouts.module';
     RouterModule,
     LoaderModule,
     LayoutsModule,
+    SearchClientModule
   ],
   exports: [
     ClientsListComponent

@@ -20,6 +20,7 @@ import { AddDogovorForClientModule } from '../documents/modules/add-dogovor-for-
 import { AddDogovorForClientLawfaseModule } from '../documents/modules/add-dogovor-for-client-lawfase/add-dogovor-for-client-lawfase.module';
 import { GoBackModule } from '../shared/modules/ga-back/go-back.module';
 import { ClientsListForSearchModule } from '../clients/modules/clients-list-for-search/clients-list-for-search.module';
+import { SearchClientModule } from '../clients/modules/search-client/search-client.module';
 
 
 
@@ -58,7 +59,7 @@ const routes = [
     AddDogovorForClientLawfaseModule,
     GoBackModule,
     ClientsListForSearchModule,
-    
+    SearchClientModule
   ],
   providers: [BookingsService],
 })

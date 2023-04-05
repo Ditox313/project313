@@ -1489,6 +1489,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   {
     this.changeClient(e);
     this.modal.close();
+    this.changeClientLawFase(e)
   }
 
 

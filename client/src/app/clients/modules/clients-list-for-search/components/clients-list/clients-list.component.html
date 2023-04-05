@@ -16,6 +16,10 @@
                         <span class="material-icons">library_add</span> Добавить физ/лицо
                     </a>
                 </div>
+
+                <div>
+                    <app-search-client (onSharedResultSearch)="takeDataSearchClient($event)" [type]="'fiz'"></app-search-client>
+                </div>
             </div>
 
 
@@ -59,12 +63,15 @@
 
         <div id="lawfase" *ngIf="this.clientType !== 'fiz'">
             <div class="xs_clients__top">
-            
-            
                 <div class="xs_add__car xs_add__client">
                     <a [routerLink]="['/add-client-lawfase']">
                         <span class="material-icons">library_add</span> Добавить юр/лицо
                     </a>
+                </div>
+
+
+                <div>
+                    <app-search-client (onSharedResultSearch)="takeDataSearchClientLaw($event)" [type]="'law'"></app-search-client>
                 </div>
             </div>
 
@@ -80,7 +87,7 @@
                 <tbody *ngIf="xsclients_lawfase.length !== 0; else empty">
                     <tr *ngFor="let xsclient_lawfase of xsclients_lawfase" class="xs_partners_tr">
                         <td>
-                            <a [routerLink]="['/show-client-lawfase','edit',xsclient_lawfase._id]">
+                            <a (click)="changeClient(xsclient_lawfase)">
                                 {{xsclient_lawfase.short_name}} {{xsclient_lawfase.name}} 
                             </a>
                         </td>
