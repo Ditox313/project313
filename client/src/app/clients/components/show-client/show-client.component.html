@@ -5,12 +5,15 @@
         </h1>
 
         <div class="xs_add__car__top____actions">
-            <a routerLink="/clients-page">
+            <a routerLink="/clients-page" *ngIf="!isShowClientListModal">
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
+
             <button type="submit" [disabled]="form.controls['passport_seria_and_number'].errors?.minlength">
                 <span class="material-icons">beenhere</span>Сохранить
             </button>
+
+            <button *ngIf="isShowClientListModal" (click)="close_modal()" style="margin-left: 15px;">Зактыть</button>
         </div>
     </div>
 

@@ -23,6 +23,7 @@ import { DocumentsModule } from '../documents/documents.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxMaskModule } from 'ngx-mask';
 import { SearchClientModule } from './modules/search-client/search-client.module';
+import { GoBackModule } from '../shared/modules/ga-back/go-back.module';
 
 
 const routes = [
@@ -58,11 +59,14 @@ const routes = [
     DocumentsModule,
     PdfViewerModule,
     NgxMaskModule.forRoot(),
-    SearchClientModule
+    SearchClientModule,
+    GoBackModule
   ],
   exports: [
     DocumentsModule,
-    ClientsComponent
+    ClientsComponent,
+    AddClientComponent,
+    ShowClientComponent
   ],
   providers: [ClientsService],
 })

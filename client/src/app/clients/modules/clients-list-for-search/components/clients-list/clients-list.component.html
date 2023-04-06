@@ -6,13 +6,14 @@
             <ul class="tabs" #tabs>
                 <li class="tab col"><a href="#fizfase" *ngIf="this.clientType !== 'law'" class="active">Физические лица</a></li>
                 <li class="tab col"><a href="#lawfase" *ngIf="this.clientType !== 'fiz'">Юридические лица</a></li>
+                <!-- <span class="material-icons" title="Выбрать клиента из списка" (click)="changeClientModal()">dehaze</span> -->
             </ul>
         </div>
 
         <div id="fizfase" *ngIf="this.clientType !== 'law'">
             <div class="xs_clients__top">
                 <div class="xs_add__car xs_add__client">
-                    <a [routerLink]="['/add-client']" style="width: 196px; margin-bottom: 30px;">
+                    <a (click)="changeClientModal()" style="width: 196px; margin-bottom: 30px;">
                         <span class="material-icons">library_add</span> Добавить физ/лицо
                     </a>
                 </div>
@@ -41,7 +42,9 @@
                         </td>
                         <td>{{xsclient.phone_main}}</td>
                         <td class="xs_actions ">
-                            <a [routerLink]="['/show-client','edit',xsclient._id]"><span
+                            <!-- <a [routerLink]="['/show-client','edit',xsclient._id]"> -->
+                            <a (click)="viewClientModal(xsclient._id)">
+                                <span
                                     class="material-icons ">mode_edit</span></a>
                             <a (click)="onDeleteCar($event, xsclient)"><span class="material-icons ">delete</span></a>
                         </td>
@@ -93,7 +96,9 @@
                         </td>
                         <td>{{xsclient_lawfase.number_1}}</td>
                         <td class="xs_actions ">
-                            <a [routerLink]="['/show-client-lawfase','edit',xsclient_lawfase._id]"><span
+                            <!-- <a [routerLink]="['/show-client-lawfase','edit',xsclient_lawfase._id]"> -->
+                            <a (click)="viewClientModal(xsclient_lawfase._id)">
+                                <span
                                     class="material-icons ">mode_edit</span></a>
                             <a (click)="onDeleteClientLawfase($event, xsclient_lawfase)"><span class="material-icons ">delete</span></a>
                         </td>
@@ -113,3 +118,27 @@
         </div>
     </div>
 </div>
+
+
+
+
+<!-- Modal app client -->
+<div class="modal modal-add-client" id="create-modal2" #modal2>
+    <div class="modal-content">
+        <!-- <h4>Выберите клиента</h4> -->
+        <app-add-client [metaDataForClientListForSerach]="'hook_from_clients_list'" (onCloseModalAfterAddClient)="onCloseModalAfterAddClient($event)"></app-add-client>
+    </div>
+
+    
+</div>
+
+
+<!-- Modal app client show-->
+<div class="modal modal-show-client" id="create-modal3" #modal3 >
+    <div class="modal-content" *ngIf="this.temporary_id">
+       <app-show-client *ngIf="!close_modals"  [xs_client_id]="this.temporary_id" [isShowClientListModal]="'true_modal'" (onCloseModal)="close_modal($event)"></app-show-client>
+    </div>
+</div>
+
+
+

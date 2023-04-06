@@ -5,12 +5,15 @@
         </h1>
 
         <div class="xs_add__car__top____actions">
-            <a routerLink="/clients-page" *ngIf="!this.breadcrumbsId">
+            <!-- <a routerLink="/clients-page" *ngIf="!this.breadcrumbsId">
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
             <a routerLink="/add-booking" *ngIf="this.breadcrumbsId">
                 <span class="material-icons">arrow_back_ios</span>Назад
-            </a>
+            </a> -->
+
+            <app-go-back *ngIf="!this.metaDataForClientListForSerach"></app-go-back>
+
             <button type="submit" [disabled]="form.controls['passport_seria_and_number'].errors?.minlength">
                 <span class="material-icons">beenhere</span>Сохранить
             </button>

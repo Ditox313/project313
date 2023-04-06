@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,6 +14,9 @@ import { ClientsService } from '../../services/clients.service';
 })
 export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
+  @Input() metaDataForClientListForSerach?: string;
+  @Output() onCloseModalAfterAddClient? = new EventEmitter<any>()
+
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
   @ViewChild('input') inputRef!: ElementRef;
@@ -63,6 +66,7 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initForm();
     this.getParams();
     MaterialService.updateTextInputs();
+
   }
 
   ngOnDestroy(): void {
@@ -191,6 +195,10 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.breadcrumbsId) {
           this.router.navigate(['/add-booking']);
+        }
+        else if (this.metaDataForClientListForSerach === 'hook_from_clients_list')
+        {
+          this.onCloseModalAfterAddClient.emit('Success')
         }
         else {
           this.router.navigate(['/clients-page']);

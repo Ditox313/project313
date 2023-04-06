@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Client, Client_Law_Fase } from 'src/app/shared/types/interfaces';
+import { Client, Client_Law_Fase, MaterialInstance } from 'src/app/shared/types/interfaces';
 import { ClientsService } from '../../../../services/clients.service';
 import { Store, select } from '@ngrx/store';
 import { EventEmitter } from '@angular/core';
@@ -37,6 +37,25 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = false;
   noMoreCars: Boolean = false
   noMoreCarsLawfase: Boolean = false
+
+  // // Храним референцию модального окна
+  @ViewChild('modal2') modalRef: ElementRef
+  @ViewChild('modal3') modal3Ref: ElementRef
+
+
+  // Храним модальное окно
+  modal: MaterialInstance
+  modal3: MaterialInstance
+
+
+  // Храним временный id для передачи в модальное окно
+  temporary_id: string = '';
+
+
+  // Трегер для закрытия окна после закрытия окна редактирования.
+  close_modals:boolean = false;
+
+  
   constructor(private clients: ClientsService, private router: Router, private rote: ActivatedRoute,) { }
 
   ngOnInit(): void {
@@ -54,13 +73,21 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.Sub_clients_lawfase) {
       this.Sub_clients_lawfase.unsubscribe();
     }
+    
+    this.modal.destroy();
+    this.modal3.destroy();
+
   }
 
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
-
+    
+    this.modal = MaterialService.initModalPos(this.modalRef,)    
+    this.modal3 = MaterialService.initModalPosNotClickClose(this.modal3Ref,)    
   }
+
+ 
 
 
 
@@ -169,6 +196,20 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  // При клике на кнопку выбора клиента в модальном окне
+  changeClientModal() {
+    this.modal.open();
+  }
+
+
+  // При клике на кнопку просмотра клиента в модальном окне
+  viewClientModal(data: string) {
+    this.close_modals = false;
+    this.temporary_id = data
+    this.modal3.open();
+  }
+
+
   // Получаем результаты поиска физ лица
   takeDataSearchClient(e) {
 
@@ -219,5 +260,26 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
   }
+
+
+  // Если произошло успешное добавление клиента в модальном окне
+  onCloseModalAfterAddClient(e)
+  {
+    if (e === 'Success')
+    {
+      this.modal.close();
+      this.fetch();
+    }
+    
+  }
+
+
+  // Закрываем окно после закрытия модального окна редактирования клиента
+  close_modal(e)
+  {
+    this.close_modals = true;
+    this.modal3.close();
+  }
+
 
 }

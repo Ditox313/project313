@@ -8,6 +8,21 @@ import { RouterModule } from '@angular/router';
 import { LoaderModule } from 'src/app/shared/loader/loader.module';
 import { LayoutsModule } from 'src/app/shared/layouts/layouts.module';
 import { SearchClientModule } from '../search-client/search-client.module';
+import { SiteLayoutComponent } from 'src/app/shared/layouts/components/site-layout/site-layout.component';
+import { AuthGuard } from 'src/app/auth/guards/auth.guard';
+import { DocumentsModule } from 'src/app/documents/documents.module';
+
+
+const routes = [
+  {
+    path: '',
+    component: SiteLayoutComponent,
+    canActivate: [AuthGuard], //Защищаем роуты которые относятся к самому приложению
+    children: [
+      { path: 'clients-list-for-search', component: ClientsListComponent },
+    ],
+  },
+];
 
 
 
@@ -24,7 +39,10 @@ import { SearchClientModule } from '../search-client/search-client.module';
     RouterModule,
     LoaderModule,
     LayoutsModule,
-    SearchClientModule
+    SearchClientModule,
+    ClientsModule,
+    RouterModule.forChild(routes),
+    DocumentsModule
   ],
   exports: [
     ClientsListComponent

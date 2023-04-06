@@ -41,11 +41,17 @@ export class MaterialService
     }
 
 
-
     // Инициализируем модальное окно
     static initModalPos(ref: ElementRef): MaterialInstance
     {
-        return M.Modal.init(ref.nativeElement); 
+        return M.Modal.init(ref.nativeElement,); 
+    }
+
+    // Инициализируем модальное окно без закрытия на оверлэй
+    static initModalPosNotClickClose(ref: ElementRef): MaterialInstance {
+        return M.Modal.init(ref.nativeElement, {
+            dismissible: false
+        });
     }
 
 
