@@ -190,9 +190,11 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
     else
     {
 
+      this.offset = 0;
+
       const params = {
-        offset: this.offset,
-        limit: this.limit
+        offset: 0,
+        limit: 3
       }
   
       this.clients.fetch(params).subscribe((clients) => {
@@ -216,9 +218,11 @@ export class ClientsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else {
 
+      this.offset = 0;
+
       const params = {
-        offset: this.offset_lawfase,
-        limit: this.limit_lawfase
+        offset: 0,
+        limit: 3
       }
 
       this.Sub_clients_lawfase = this.clients.fetch_lawfase(params).subscribe((clients) => {

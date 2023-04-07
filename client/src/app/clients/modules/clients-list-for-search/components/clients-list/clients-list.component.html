@@ -6,7 +6,6 @@
             <ul class="tabs" #tabs>
                 <li class="tab col"><a href="#fizfase" *ngIf="this.clientType !== 'law'" class="active">Физические лица</a></li>
                 <li class="tab col"><a href="#lawfase" *ngIf="this.clientType !== 'fiz'">Юридические лица</a></li>
-                <!-- <span class="material-icons" title="Выбрать клиента из списка" (click)="changeClientModal()">dehaze</span> -->
             </ul>
         </div>
 
@@ -50,12 +49,17 @@
                         </td>
                     </tr>
                 </tbody>
-
+                
+                
                 <ng-template #empty>
                     <div style="font-size: 20px; " class="xs_empty ">
                         Нет клиентов...
                     </div>
                 </ng-template>
+
+                
+
+
             </table>
 
             <div class="xs_cars__more" *ngIf="!noMoreCars">
