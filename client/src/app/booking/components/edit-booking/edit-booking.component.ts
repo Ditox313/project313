@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { ClientsService } from 'src/app/clients/services/clients.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { Booking, Settings, Summa, User } from 'src/app/shared/types/interfaces';
+import { Booking, MaterialInstance, Settings, Summa, User } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 import { AccountService } from '../../../account/services/account.service';
 import * as moment from 'moment';
@@ -124,6 +124,14 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Текущая бронь
   isActualBooking: Booking;
+
+
+  // Храним референцию модального окна
+  @ViewChild('modal') modalRef: ElementRef
+
+
+  // Храним модальное окно
+  modal: MaterialInstance
   
 
   constructor(
@@ -185,6 +193,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
+    this.modal = MaterialService.initModalPos(this.modalRef)
   }
 
   initForm()
@@ -1837,5 +1846,20 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
    
+  }
+
+
+  // При клике на кнопку выбора клиента в модальном окне
+  changeClientModal() {
+    this.modal.open();
+  }
+
+
+
+  // Принимаем данные из модуля списка клиентов для поиска
+  inputDataClientsListModule(e) {
+    this.changeClient(e);
+    this.modal.close();
+    this.changeClientLawFase(e)
   }
 }

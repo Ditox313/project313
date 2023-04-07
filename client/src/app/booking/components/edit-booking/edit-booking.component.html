@@ -166,6 +166,8 @@
                                                 placeholder="Введите для поиска..." formControlName="search_fiz"
                                                 id="search_fiz">
                                         </div>
+
+                                        <span class="material-icons" title="Выбрать клиента из списка" (click)="changeClientModal()">dehaze</span>
     
                                     </div>
     
@@ -221,6 +223,8 @@
                                                 placeholder="Введите для поиска..." formControlName="search_law"
                                                 id="search_law">
                                         </div>
+
+                                        <span class="material-icons" title="Выбрать клиента из списка" (click)="changeClientModal()">dehaze</span>
     
                                     </div>
     
@@ -487,3 +491,15 @@
 </form>
 
 <app-loader *ngIf="!xsActualClient"></app-loader>
+
+
+
+
+
+<!-- Modal Structure -->
+<div class="modal modal-search" id="#create-modal" #modal>
+    <div class="modal-content">
+        <h4>Выберите клиента</h4>
+        <app-clients-list *ngIf="this.xs_actual_client_type" [clientType]="this.xs_actual_client_type" (onAddClientForSearch)="inputDataClientsListModule($event)"></app-clients-list>
+    </div>
+</div>
