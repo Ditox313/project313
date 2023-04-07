@@ -33,7 +33,7 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
   offset: any = 0
   limit: any = STEP
   offset_lawfase: any = 0
-  limit_lawfase: any = STEP
+  limit_lawfase: any = STEP_LAWFASE
   loading = false;
   noMoreCars: Boolean = false
   noMoreCarsLawfase: Boolean = false
@@ -41,11 +41,13 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
   // // Храним референцию модального окна
   @ViewChild('modal2') modalRef: ElementRef
   @ViewChild('modal3') modal3Ref: ElementRef
+  @ViewChild('modal4') modal4Ref: ElementRef
 
 
   // Храним модальное окно
   modal: MaterialInstance
   modal3: MaterialInstance
+  modal4: MaterialInstance
 
 
   // Храним временный id для передачи в модальное окно
@@ -83,8 +85,9 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
     
-    this.modal = MaterialService.initModalPosNotClickClose(this.modalRef,)    
-    this.modal3 = MaterialService.initModalPosNotClickClose(this.modal3Ref,)    
+    this.modal = MaterialService.initModalPosNotClickClose(this.modalRef)    
+    this.modal3 = MaterialService.initModalPosNotClickClose(this.modal3Ref)   
+    this.modal4 = MaterialService.initModalPosNotClickClose(this.modal4Ref)   
   }
 
  
@@ -195,9 +198,14 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // При клике на кнопку выбора клиента в модальном окне
+  // При клике на кнопку выбора клиента в модальном окне для физ
   changeClientModal() {
     this.modal.open();
+  }
+  // При клике на кнопку выбора клиента в модальном окне для юр
+  changeClientModalLaw()
+  {
+    this.modal4.open();
   }
 
 
@@ -240,6 +248,8 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Получаем результаты поиска юр лица
   takeDataSearchClientLaw(e) {
+    console.log(e);
+    
     if (e !== null) {
       this.xsclients_lawfase = e;
 
@@ -248,7 +258,7 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else {
 
-      this.offset = 0;
+      this.offset_lawfase = 0;
 
       const params = {
         offset: 0,
@@ -265,7 +275,7 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // Если произошло успешное добавление клиента в модальном окне
+  // Если произошло успешное добавление клиента в модальном окне физ лица
   addModalClient(client)
   {
     this.modal.close();
@@ -281,12 +291,43 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loading = true
     this.Sub = this.clients.fetch(params).subscribe((clients) => {
 
-      if (clients.length < STEP) {
-        this.noMoreCars = true
-      }
+      // if (clients.length < STEP) {
+      //   this.noMoreCars = true
+      // }
+
+      this.noMoreCars = false
 
       this.loading = false
       this.xsclients = clients
+    });
+  }
+
+
+
+
+  // Если произошло успешное добавление клиента в модальном окне юр лица
+  addModalClientLaw(client) {
+    this.modal4.close();
+    this.xsclients_lawfase.unshift(client)
+
+    this.offset_lawfase = 0;
+
+    const params = {
+      offset: 0,
+      limit: 3
+    }
+
+    this.loading = true
+    this.Sub_clients_lawfase = this.clients.fetch_lawfase(params).subscribe((clients) => {
+
+      // if (clients.length < STEP_LAWFASE) {
+      //   this.noMoreCarsLawfase = true
+      // }
+
+      this.noMoreCarsLawfase = false
+
+      this.loading = false
+      this.xsclients_lawfase = clients
     });
   }
 
@@ -297,7 +338,7 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.close_modals = true;
     this.modal3.close();
     this.modal.close();
-
+    this.modal4.close();
   }
 
 }

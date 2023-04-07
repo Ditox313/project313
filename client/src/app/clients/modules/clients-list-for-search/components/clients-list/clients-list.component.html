@@ -71,7 +71,7 @@
         <div id="lawfase" *ngIf="this.clientType !== 'fiz'">
             <div class="xs_clients__top">
                 <div class="xs_add__car xs_add__client">
-                    <a [routerLink]="['/add-client-lawfase']">
+                    <a (click)="changeClientModalLaw()">
                         <span class="material-icons">library_add</span> Добавить юр/лицо
                     </a>
                 </div>
@@ -126,20 +126,31 @@
 
 
 
-<!-- Modal app client -->
+<!-- Modal app client fiz -->
 <div class="modal modal-add-client" id="create-modal2" #modal2 >
     <div class="modal-content" >
         <app-add-client  [modalSearchHook]="'hook_from_clients_list'" (addModalClient)="addModalClient($event)" (onCloseModal)="close_modal($event)"></app-add-client>
     </div>
-
-    
 </div>
+
+
+
 
 
 <!-- Modal app client show-->
 <div class="modal modal-show-client" id="create-modal3" #modal3 >
     <div class="modal-content" *ngIf="this.temporary_id">
        <app-show-client *ngIf="!close_modals"  [xs_client_id]="this.temporary_id" [isShowClientListModal]="'true_modal'" (onCloseModal)="close_modal($event)"></app-show-client>
+    </div>
+</div>
+
+
+
+
+<!-- Modal app client law -->
+<div class="modal modal-add-client" id="create-modal4" #modal4>
+    <div class="modal-content">
+        <app-add-client-lawfase [modalSearchHook]="'hook_from_clients_list'" (addModalClient)="addModalClientLaw($event)" (onCloseModal)="close_modal($event)"></app-add-client-lawfase>
     </div>
 </div>
 

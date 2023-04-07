@@ -9,7 +9,7 @@
 
 <div class="xs_search_client" *ngIf="type==='law'">
     <div class="">
-        <input type="text" (onchange)="searchDataLawFase($event)" placeholder="Введите для поиска..." 
+        <input type="text" (keyup)="searchDataLawFase($event)" placeholder="Введите для поиска..." 
             id="search_fiz">
     </div>
 </div>

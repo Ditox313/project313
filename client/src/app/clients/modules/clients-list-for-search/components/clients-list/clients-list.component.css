@@ -12,3 +12,8 @@
 .modal {
     min-height: 700px !important;
 }
+
+#create-modal4 {
+    width: 90%;
+    min-height: 700px !important;
+}

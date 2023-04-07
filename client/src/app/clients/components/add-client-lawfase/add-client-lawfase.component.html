@@ -5,12 +5,19 @@
         </h1>
 
         <div class="xs_add__car__top____actions">
-            <a routerLink="/clients-page" *ngIf="!this.breadcrumbsId">
+            <!-- <a routerLink="/clients-page" *ngIf="!this.breadcrumbsId">
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
             <a routerLink="/add-booking" *ngIf="this.breadcrumbsId">
                 <span class="material-icons">arrow_back_ios</span>Назад
+            </a> -->
+
+            <app-go-back *ngIf="!this.modalSearchHook"></app-go-back>
+            
+            <a *ngIf="this.modalSearchHook" (click)="close_modal()" style="margin-left: 15px;">
+                <span class="material-icons">arrow_back_ios</span>Зактыть
             </a>
+            
             <button type="submit">
                 <span class="material-icons">beenhere</span>Сохранить
             </button>

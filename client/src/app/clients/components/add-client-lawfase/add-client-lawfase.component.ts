@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -19,6 +19,13 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild('input2') inputRef2!: ElementRef;
   @ViewChild('input3') inputRef3!: ElementRef;
   @ViewChild('input4') inputRef4!: ElementRef;
+
+  @Input() modalSearchHook?: string;
+  // Отправляем клиента наеврх
+  @Output() addModalClient?= new EventEmitter<any>()
+
+  // Отправляем данные что модальная форма с данным компонентов закрыты(Отправляем в компонент списка клиентов в модальном окне)
+  @Output() onCloseModal?= new EventEmitter<any>()
 
   form: any;
   breadcrumbsId!: any;
@@ -153,8 +160,18 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
       .subscribe((client) => {
         MaterialService.toast('Клиент юр/лицо добавлен');
 
+        this.form.reset()
+        this.doc_1_img_preview = '';
+        this.doc_2_img_preview = '';
+        this.doc_3_img_preview = '';
+        this.doc_4_img_preview = '';
+
+
         if (this.breadcrumbsId) {
           this.router.navigate(['/add-booking']);
+        }
+        else if (this.modalSearchHook === 'hook_from_clients_list') {
+          this.addModalClient.emit(client)
         }
         else {
           this.router.navigate(['/clients-page']);
@@ -272,5 +289,11 @@ export class AddClientLawfaseComponent implements OnInit, AfterViewInit, OnDestr
   }
   triggerClick4() {
     this.inputRef4.nativeElement.click();
+  }
+
+
+  // Закрываем модальное окно и уничтожаем данные когда (Из создания брони)
+  close_modal() {
+    this.onCloseModal.emit('ok')
   }
 }

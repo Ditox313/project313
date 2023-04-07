@@ -77,13 +77,13 @@ export class SearchClientComponent implements OnInit, OnDestroy {
     let matchSpaces = query.match(/\s*/);
     if (matchSpaces[0] === query) {
       this.onSharedResultSearch.emit(null)
-      this.hasQuery = false;
+      this.hasQueryLawFase = false;
       return;
     }
 
 
     this.searchResultClient$ = this.bookings.searchWidget(xs_query).subscribe(res => {
-      this.hasQuery = true;
+      this.hasQueryLawFase = true;
 
       this.onSharedResultSearch.emit(res)
 

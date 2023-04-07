@@ -66,7 +66,9 @@ const routes = [
     DocumentsModule,
     ClientsComponent,
     AddClientComponent,
-    ShowClientComponent
+    ShowClientComponent,
+    AddClientLawfaseComponent,
+    ShowClientLawfaseComponent
   ],
   providers: [ClientsService],
 })
