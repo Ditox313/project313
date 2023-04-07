@@ -1487,6 +1487,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // Принимаем данные из модуля списка клиентов для поиска
   inputDataClientsListModule(e)
   {
+    console.log('222', e);
+    
     this.changeClient(e);
     this.modal.close();
     this.changeClientLawFase(e)

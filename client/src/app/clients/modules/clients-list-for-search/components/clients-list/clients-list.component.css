@@ -1,7 +1,14 @@
 #create-modal2 {
     width: 90%;
+    min-height: 700px !important;
 }
 
 #create-modal3 {
     width: 90%;
+    min-height: 700px !important;
+}
+
+
+.modal {
+    min-height: 700px !important;
 }

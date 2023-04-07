@@ -14,8 +14,13 @@ import { ClientsService } from '../../services/clients.service';
 })
 export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
-  @Input() metaDataForClientListForSerach?: string;
-  @Output() onCloseModalAfterAddClient? = new EventEmitter<any>()
+  @Input() modalSearchHook?: string;
+
+  // Отправляем клиента наеврх
+  @Output() addModalClient? = new EventEmitter<any>()
+
+  // Отправляем данные что модальная форма с данным компонентов закрыты(Отправляем в компонент списка клиентов в модальном окне)
+  @Output() onCloseModal? = new EventEmitter<any>()
 
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
@@ -24,7 +29,7 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('input3') inputRef3!: ElementRef;
   @ViewChild('input4') inputRef4!: ElementRef;
 
-  form: any;
+  form: FormGroup;
   breadcrumbsId!: any;
 
   // Храним фалы загруженных документов
@@ -192,13 +197,18 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe((client) => {
         MaterialService.toast('Клиент физ/лицо добавлен');
+        this.form.reset()
+        this.passport_1_preview = '';
+        this.passport_2_preview = '';
+        this.prava_1_preview = '';
+        this.prava_2_preview = '';
 
         if (this.breadcrumbsId) {
           this.router.navigate(['/add-booking']);
         }
-        else if (this.metaDataForClientListForSerach === 'hook_from_clients_list')
+        else if (this.modalSearchHook === 'hook_from_clients_list')
         {
-          this.onCloseModalAfterAddClient.emit('Success')
+          this.addModalClient.emit(client)
         }
         else {
           this.router.navigate(['/clients-page']);
@@ -323,5 +333,11 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   triggerClick4() {
     this.inputRef4.nativeElement.click();
+  }
+
+  // Закрываем модальное окно и уничтожаем данные когда (Из создания брони)
+  close_modal()
+  {
+    this.onCloseModal.emit('ok')
   }
 }

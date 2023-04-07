@@ -12,7 +12,11 @@
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a> -->
 
-            <app-go-back *ngIf="!this.metaDataForClientListForSerach"></app-go-back>
+            <app-go-back *ngIf="!this.modalSearchHook"></app-go-back>
+
+            <a  *ngIf="this.modalSearchHook" (click)="close_modal()" style="margin-left: 15px;">
+                <span class="material-icons">arrow_back_ios</span>Зактыть
+            </a>
 
             <button type="submit" [disabled]="form.controls['passport_seria_and_number'].errors?.minlength">
                 <span class="material-icons">beenhere</span>Сохранить

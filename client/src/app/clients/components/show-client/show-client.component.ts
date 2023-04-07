@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
+
   @ViewChild('passport__date') passport__date__info!: ElementRef;
   @ViewChild('prava__date') prava__date__info!: ElementRef;
   @ViewChild('input') inputRef!: ElementRef;
@@ -82,9 +83,6 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getParams();
     this.getByClientId(); 
     MaterialService.updateTextInputs();
-
-    
-    
   }
 
   ngOnDestroy(): void {

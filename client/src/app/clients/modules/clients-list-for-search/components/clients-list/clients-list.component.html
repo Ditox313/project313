@@ -123,10 +123,9 @@
 
 
 <!-- Modal app client -->
-<div class="modal modal-add-client" id="create-modal2" #modal2>
-    <div class="modal-content">
-        <!-- <h4>Выберите клиента</h4> -->
-        <app-add-client [metaDataForClientListForSerach]="'hook_from_clients_list'" (onCloseModalAfterAddClient)="onCloseModalAfterAddClient($event)"></app-add-client>
+<div class="modal modal-add-client" id="create-modal2" #modal2 >
+    <div class="modal-content" >
+        <app-add-client  [modalSearchHook]="'hook_from_clients_list'" (addModalClient)="addModalClient($event)" (onCloseModal)="close_modal($event)"></app-add-client>
     </div>
 
     

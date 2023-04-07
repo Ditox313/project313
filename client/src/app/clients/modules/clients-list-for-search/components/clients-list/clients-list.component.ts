@@ -83,7 +83,7 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
     
-    this.modal = MaterialService.initModalPos(this.modalRef,)    
+    this.modal = MaterialService.initModalPosNotClickClose(this.modalRef,)    
     this.modal3 = MaterialService.initModalPosNotClickClose(this.modal3Ref,)    
   }
 
@@ -191,7 +191,6 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   changeClient(data)
   {
-
     this.onAddClientForSearch.emit(data)
   }
 
@@ -222,8 +221,8 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     else {
 
       const params = {
-        offset: this.offset,
-        limit: this.limit
+        offset: 0,
+        limit: 3
       }
 
       this.clients.fetch(params).subscribe((clients) => {
@@ -263,23 +262,36 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // Если произошло успешное добавление клиента в модальном окне
-  onCloseModalAfterAddClient(e)
+  addModalClient(client)
   {
-    if (e === 'Success')
-    {
-      this.modal.close();
-      this.fetch();
-    }
+    this.modal.close();
+    this.xsclients.unshift(client)
     
+    const params = {
+      offset: this.offset,
+      limit: this.limit
+    }
+
+    this.loading = true
+    this.Sub = this.clients.fetch(params).subscribe((clients) => {
+
+      if (clients.length < STEP) {
+        this.noMoreCars = true
+      }
+
+      this.loading = false
+      this.xsclients = clients
+    });
   }
 
 
-  // Закрываем окно после закрытия модального окна редактирования клиента
+  // Закрываем окно после закрытия модального окна редактирования
   close_modal(e)
   {
     this.close_modals = true;
     this.modal3.close();
-  }
+    this.modal.close();
 
+  }
 
 }

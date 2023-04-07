@@ -2,3 +2,14 @@
 {
     margin-top: 15px !important;
 }
+
+
+#create-modal
+{
+    height: 700px !important;
+}
+
+.modal
+{
+    min-height: 700px !important;
+}
