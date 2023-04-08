@@ -217,8 +217,13 @@
                                         </div>
                                     </div>
                                     
+
+                                    
                                     <div class="input-field col s12 no_dogovor_active" *ngIf="isActiveDogovor === 'no_isActive'">
-                                        <app-add-dogovor-law [clientId]="xs_actual_search__client___lawfase_no_json._id"></app-add-dogovor-law>
+                                        <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false_publick">
+                                            <span (click)="modalAddDogovor()">Создать договор</span>
+                                        </div>
+                                        <!-- <app-add-dogovor-law [clientId]="xs_actual_search__client___lawfase_no_json._id"></app-add-dogovor-law> -->
                                     </div>
 
 
@@ -384,3 +389,15 @@
     </div>
 </div>
 
+
+
+
+
+<!-- Modal Structure add dogovor law-->
+<div class="modal modal-add-dogovor-law" id="modal-add-dogovor-law" #modal3>
+    <div class="modal-content">
+        <app-add-dogovor-law *ngIf="isActiveDogovor === 'no_isActive'" [clientId]="xs_actual_search__client_no_json._id"
+            [create_booking_modal_hook]="'is_from_create_booking'" (onCloseModal)="onCloseModal($event)">
+        </app-add-dogovor-law>
+    </div>
+</div>

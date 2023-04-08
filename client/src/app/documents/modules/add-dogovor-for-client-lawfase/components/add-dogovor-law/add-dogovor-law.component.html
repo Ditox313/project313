@@ -1,12 +1,12 @@
 <div class="xs_search_result__error___active____dogovor xs_search_result__error___active____dogovor_false no_dogovor_active"
     *ngIf="is_window_active">
 
-    <div class="xs_generate_docs__content xs_generate_dogovor_module"  id="content" #content>
+    <div class="xs_generate_docs__content xs_generate_dogovor_module"  id="content" #content *ngIf="actualClient && actualUser">
         <div>
             Нет активного договора!!!
         </div>
 
-        <div class="row xs_doc_file_row" *ngIf="actualClient && actualUser">
+        <div class="row xs_doc_file_row" >
 
             <div class="xs_doc_file_title" style="margin-top: 30px; font-size: 20px;">
                 <strong>Договор проката транспортного средства без экипажа №

@@ -121,11 +121,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // Храним референцию модального окна
   @ViewChild('modal') modalRef: ElementRef
   @ViewChild('modal2') modal2Ref: ElementRef
+  @ViewChild('modal3') modal3Ref: ElementRef
 
 
   // Храним модальное окно
   modal: MaterialInstance
   modal2: MaterialInstance
+  modal3: MaterialInstance
 
 
   constructor(
@@ -154,6 +156,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     MaterialService.updateTextInputs();
     this.modal = MaterialService.initModalPos(this.modalRef)
     this.modal2 = MaterialService.initModalPos(this.modal2Ref)
+    this.modal3 = MaterialService.initModalPos(this.modal3Ref)
   }
 
   ngOnDestroy(): void {
@@ -1285,7 +1288,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       else
       {
         this.isActiveDogovor = 'no_isActive';
-        this.modal2.open();
+        if (this.xs_actual_client_type === 'fiz')
+        {
+          this.modal2.open();
+        }
+        
       }
       
     })
@@ -1424,6 +1431,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       else {
         this.isActiveDogovor = 'no_isActive';
+        if (this.xs_actual_client_type === 'law') {
+          this.modal3.open();
+        }
       }
 
     })
@@ -1765,14 +1775,29 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onCloseModal(e)
   {
-    this.modal2.close()
-    this.changeClient(e)
+    if (this.xs_actual_client_type === 'fiz')
+    {
+      this.modal2.close()
+      this.changeClient(e)
+    }
+
+    if (this.xs_actual_client_type === 'law') {
+      this.modal3.close()
+      this.changeClientLawFase(e)
+    }
+    
   }
 
 
   modalAddDogovor()
   {
-    this.modal2.open();
+    if (this.xs_actual_client_type === 'fiz') {
+      this.modal2.open();
+    }
+
+    if (this.xs_actual_client_type === 'law') {
+      this.modal3.open();
+    }
   }
 
 
