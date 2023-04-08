@@ -1,24 +1,25 @@
 #create-modal2 {
     width: 90%;
-    min-height: 700px !important;
+    min-height: 1300px !important;
 }
 
 #create-modal3 {
     width: 90%;
-    min-height: 700px !important;
+    min-height: 1300px !important;
 }
 
 
 .modal {
-    min-height: 700px !important;
+    width: 90%;
+    min-height: 1300px !important;
 }
 
 #create-modal4 {
     width: 90%;
-    min-height: 700px !important;
+    min-height: 1450px !important;
 }
 
 #create-modal5 {
     width: 90%;
-    min-height: 700px !important;
+    min-height: 1300px !important;
 }

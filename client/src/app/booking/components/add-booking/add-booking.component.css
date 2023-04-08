@@ -6,11 +6,13 @@
 
 #create-modal
 {
+    width: 90%;
     height: 700px !important;
 }
 
 .modal
 {
+    width: 60%;
     min-height: 700px !important;
 }
 
