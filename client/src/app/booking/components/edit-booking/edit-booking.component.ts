@@ -126,12 +126,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   isActualBooking: Booking;
 
 
+
   // Храним референцию модального окна
   @ViewChild('modal') modalRef: ElementRef
+  @ViewChild('modal2') modal2Ref: ElementRef
+  @ViewChild('modal3') modal3Ref: ElementRef
 
 
   // Храним модальное окно
   modal: MaterialInstance
+  modal2: MaterialInstance
+  modal3: MaterialInstance
   
 
   constructor(
@@ -194,6 +199,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
     this.modal = MaterialService.initModalPos(this.modalRef)
+    this.modal2 = MaterialService.initModalPos(this.modal2Ref)
+    this.modal3 = MaterialService.initModalPos(this.modal3Ref)
   }
 
   initForm()
@@ -959,6 +966,9 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       else {
         this.isActiveDogovor = 'no_isActive';
+        if (this.xs_actual_client_type === 'fiz') {
+          this.modal2.open();
+        }
       }
 
     })
@@ -1089,6 +1099,9 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       else {
         this.isActiveDogovor = 'no_isActive';
+        if (this.xs_actual_client_type === 'law') {
+          this.modal3.open();
+        }
       }
 
     })
@@ -1861,5 +1874,32 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.changeClient(e);
     this.modal.close();
     this.changeClientLawFase(e)
+  }
+
+
+  // Закрываем модальную форму создания договора в брони
+  onCloseModal(e) {
+    if (this.xs_actual_client_type === 'fiz') {
+      this.modal2.close()
+      this.changeClient(e)
+    }
+
+    if (this.xs_actual_client_type === 'law') {
+      this.modal3.close()
+      this.changeClientLawFase(e)
+    }
+
+  }
+
+
+  // Добавляем договор в модальной форме
+  modalAddDogovor() {
+    if (this.xs_actual_client_type === 'fiz') {
+      this.modal2.open();
+    }
+
+    if (this.xs_actual_client_type === 'law') {
+      this.modal3.open();
+    }
   }
 }

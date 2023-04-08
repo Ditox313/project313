@@ -108,10 +108,7 @@ export class CloseComponent implements OnInit, OnDestroy {
   {
     this.subGetByIdBooking$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
-      console.log(this.actualBooking);
       
-
-
       this.form.patchValue({
         booking_end: res.booking_end,
       });
