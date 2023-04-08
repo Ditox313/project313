@@ -248,7 +248,6 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Получаем результаты поиска юр лица
   takeDataSearchClientLaw(e) {
-    console.log(e);
     
     if (e !== null) {
       this.xsclients_lawfase = e;

@@ -1522,9 +1522,22 @@ select {
 
 .xs_search_result__error___active____dogovor_false
 {
-    background-color: red;
-    color: #fff;
     padding: 10px 30px 0px 30px;
+}
+
+.xs_search_result__error___active____dogovor_false_publick
+{
+    background-color: red;
+}
+
+.xs_search_result__error___active____dogovor_false_publick span
+{
+    display: inline-block;
+    padding: 3px 5px;
+    background-color: #fff;
+    color: #194A9E;
+    margin: 10px;
+    border-radius: 3px;
 }
 
 .no_dogovor_active a
@@ -1666,10 +1679,10 @@ input[type="checkbox"]
 
 .xs_generate_dogovor_module > div:first-child
 {
-    color: #194A9E;
+    color: #fff;
     font-size: 25px;
     display: inline-block;
-    background-color: #fff;
+    background-color: red;
     padding: 5px 15px;
     border-radius: 3px;
 }
@@ -1677,8 +1690,8 @@ input[type="checkbox"]
 .xs_create_module_dog
 {
     margin-bottom: 30px;
-    background-color: #fff;
-    color: #194A9E;
+    background-color: #194A9E;
+    color: #fff;
     border-radius: 3px;
     text-align: center;
     font-size: 18px;

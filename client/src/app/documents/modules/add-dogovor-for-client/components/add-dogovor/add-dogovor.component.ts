@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client, Dogovor, User } from 'src/app/shared/types/interfaces';
 import pdfMake from "pdfmake/build/pdfmake";
@@ -22,6 +22,12 @@ export class AddDogovorComponent implements OnInit, OnDestroy {
 
   // Принимаем id текущего кейса из вне
   @Input() clientId: string | undefined;
+
+  // Хук открытия мождалки из создания брони
+  @Input() create_booking_modal_hook: string | undefined | null;
+
+  // Отправляем данные что модальную форму нужно закрывать(Модалки в создании брони)
+  @Output() onCloseModal? = new EventEmitter<any>()
 
   
   is_window_active: boolean = true;
@@ -56,8 +62,6 @@ export class AddDogovorComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.clientId);
-    
     this.getParams();
     this.getClientById();
     this.getUser();
@@ -160,6 +164,11 @@ export class AddDogovorComponent implements OnInit, OnDestroy {
       MaterialService.toast('Договор создан');
       this.content.nativeElement.innerHTML = '';
       this.is_window_active = !this.is_window_active;
+
+      if (this.create_booking_modal_hook)
+      {
+        this.onCloseModal.emit(this.actualClient)
+      }
     });
   }
 

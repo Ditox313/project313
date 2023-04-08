@@ -120,10 +120,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Храним референцию модального окна
   @ViewChild('modal') modalRef: ElementRef
+  @ViewChild('modal2') modal2Ref: ElementRef
 
 
   // Храним модальное окно
   modal: MaterialInstance
+  modal2: MaterialInstance
 
 
   constructor(
@@ -151,6 +153,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     MaterialService.initTabs(this.tabs.nativeElement);
     MaterialService.updateTextInputs();
     this.modal = MaterialService.initModalPos(this.modalRef)
+    this.modal2 = MaterialService.initModalPos(this.modal2Ref)
   }
 
   ngOnDestroy(): void {
@@ -1282,6 +1285,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       else
       {
         this.isActiveDogovor = 'no_isActive';
+        this.modal2.open();
       }
       
     })
@@ -1759,6 +1763,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+  onCloseModal(e)
+  {
+    this.modal2.close()
+    this.changeClient(e)
+  }
+
+
+  modalAddDogovor()
+  {
+    this.modal2.open();
+  }
 
 
 
