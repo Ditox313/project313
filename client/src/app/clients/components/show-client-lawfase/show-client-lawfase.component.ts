@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -22,6 +22,16 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('input2') inputRef2!: ElementRef;
   @ViewChild('input3') inputRef3!: ElementRef;
   @ViewChild('input4') inputRef4!: ElementRef;
+
+  // Передаем id из списка клиентов в модалке в брони
+  @Input() xs_client_id?: string;
+
+  // Компонент открыт из модального окна поиска клиентов для брони
+  @Input() isShowClientListModal?: string;
+
+
+  // Отправляем данные что модальная форма с данным компонентов закрыты(Отправляем в компонент списка клиентов в модальном окне)
+  @Output() onCloseModal?= new EventEmitter<any>()
 
   form: any;
   breadcrumbsId!: any;
@@ -109,9 +119,17 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit, OnDest
 
   getParams()
   {
-    this.subParams$ = this.rote.params.subscribe((params) => {
-      this.clientId = params['id'];
-    });
+    // Если смотрим этот компонент из списка клиентов в модельном для брони
+    if (this.xs_client_id) {
+      this.subParams$ = this.rote.params.subscribe((params) => {
+        this.clientId = this.xs_client_id;
+      });
+    }
+    else {
+      this.subParams$ = this.rote.params.subscribe((params) => {
+        this.clientId = params['id'];
+      });
+    }
 
   }
 
@@ -218,6 +236,7 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit, OnDest
       )
       .subscribe((client) => {
         MaterialService.toast('Клиент Изменен');
+        this.onCloseModal.emit('ok')
       });
   }
 
@@ -331,6 +350,12 @@ export class ShowClientLawfaseComponent implements OnInit, AfterViewInit, OnDest
   }
   triggerClick4() {
     this.inputRef4.nativeElement.click();
+  }
+
+
+  // При нажатии на кнопку закрыть если мы смотрим компонент из спика клиентов в модалке при поиск. При создании брони
+  close_modal() {
+    this.onCloseModal.emit('ok')
   }
 
 }

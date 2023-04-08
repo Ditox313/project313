@@ -42,12 +42,14 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('modal2') modalRef: ElementRef
   @ViewChild('modal3') modal3Ref: ElementRef
   @ViewChild('modal4') modal4Ref: ElementRef
+  @ViewChild('modal5') modal5Ref: ElementRef
 
 
   // Храним модальное окно
   modal: MaterialInstance
   modal3: MaterialInstance
   modal4: MaterialInstance
+  modal5: MaterialInstance
 
 
   // Храним временный id для передачи в модальное окно
@@ -87,7 +89,8 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     
     this.modal = MaterialService.initModalPosNotClickClose(this.modalRef)    
     this.modal3 = MaterialService.initModalPosNotClickClose(this.modal3Ref)   
-    this.modal4 = MaterialService.initModalPosNotClickClose(this.modal4Ref)   
+    this.modal4 = MaterialService.initModalPosNotClickClose(this.modal4Ref)
+    this.modal5 = MaterialService.initModalPosNotClickClose(this.modal5Ref)
   }
 
  
@@ -211,9 +214,19 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // При клике на кнопку просмотра клиента в модальном окне
   viewClientModal(data: string) {
-    this.close_modals = false;
-    this.temporary_id = data
-    this.modal3.open();
+    if (this.clientType === 'fiz')
+    {
+      this.close_modals = false;
+      this.temporary_id = data
+      this.modal3.open();
+    }
+
+    if (this.clientType === 'law') {
+      this.close_modals = false;
+      this.temporary_id = data
+      this.modal5.open();
+    }
+    
   }
 
 
@@ -290,9 +303,7 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loading = true
     this.Sub = this.clients.fetch(params).subscribe((clients) => {
 
-      // if (clients.length < STEP) {
-      //   this.noMoreCars = true
-      // }
+
 
       this.noMoreCars = false
 
@@ -319,9 +330,6 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loading = true
     this.Sub_clients_lawfase = this.clients.fetch_lawfase(params).subscribe((clients) => {
 
-      // if (clients.length < STEP_LAWFASE) {
-      //   this.noMoreCarsLawfase = true
-      // }
 
       this.noMoreCarsLawfase = false
 
@@ -338,6 +346,40 @@ export class ClientsListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modal3.close();
     this.modal.close();
     this.modal4.close();
+    this.modal5.close();
+
+    const params = {
+      offset: 0,
+      limit: 3
+    }
+    
+
+    if (this.clientType === 'fiz')
+    {
+      this.Sub = this.clients.fetch(params).subscribe((clients) => {
+
+
+
+        this.noMoreCars = false
+
+        this.loading = false
+        this.xsclients = clients
+      });
+    }
+
+    if (this.clientType === 'law') {
+      this.Sub_clients_lawfase = this.clients.fetch_lawfase(params).subscribe((clients) => {
+
+
+        this.noMoreCarsLawfase = false
+
+        this.loading = false
+        this.xsclients_lawfase = clients
+      })
+    }
+
+
+    ;
   }
 
 }

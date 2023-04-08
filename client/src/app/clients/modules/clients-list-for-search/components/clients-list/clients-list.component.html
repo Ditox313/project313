@@ -146,6 +146,16 @@
 
 
 
+<!-- Modal app client show law-->
+<div class="modal modal-show-client-law" id="create-modal5" #modal5>
+    <div class="modal-content" *ngIf="this.temporary_id">
+        <app-show-client-lawfase *ngIf="!close_modals" [xs_client_id]="this.temporary_id" [isShowClientListModal]="'true_modal'"
+            (onCloseModal)="close_modal($event)"></app-show-client-lawfase>
+    </div>
+</div>
+
+
+
 
 <!-- Modal app client law -->
 <div class="modal modal-add-client" id="create-modal4" #modal4>

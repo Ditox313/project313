@@ -180,7 +180,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
 
     
       this.form.patchValue({
-        fio: res.name + ' ' + res.surname + ' ' + res.lastname,
+        fio: res.surname + ' ' + res.name + ' ' + res.lastname,
         makedate: res.makedate,
         passport_seria_and_number: res.passport_seria + ' ' + res.passport_number,
         passport_date: res.passport_date,
@@ -273,6 +273,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     this.subUpdateClient$ = this.clients
+
       .update(
         this.clientId,
         client,
@@ -283,6 +284,7 @@ export class ShowClientComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe((car) => {
         MaterialService.toast('Клиент Изменен');
+        this.onCloseModal.emit('ok')
       });
   }
 

@@ -5,15 +5,15 @@
         </h1>
 
         <div class="xs_add__car__top____actions">
-
-
-
-            <a (click)="isGoBack()">
+            <a (click)="isGoBack()" *ngIf="!isShowClientListModal">
                 <span class="material-icons">arrow_back_ios</span>Назад
             </a>
+
             <button type="submit">
                 <span class="material-icons">beenhere</span>Сохранить
             </button>
+
+            <button *ngIf="isShowClientListModal" (click)="close_modal()" style="margin-left: 15px;">Зактыть</button>
         </div>
     </div>
 
@@ -22,8 +22,8 @@
             <div class="col s12">
                 <ul class="tabs" #tabs>
                     <li class="tab col"><a href="#information" class="active">Общая информация</a></li>
-                    <li class="tab col"><a href="#docs">Договоры</a></li>
-                    <li class="tab col"><a href="#acts">Акты</a></li>
+                    <li class="tab col"><a href="#docs" *ngIf="!isShowClientListModal">Договоры</a></li>
+                    <li class="tab col"><a href="#acts" *ngIf="!isShowClientListModal">Акты</a></li>
                 </ul>
             </div>
 
