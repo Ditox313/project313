@@ -7,19 +7,11 @@ const errorHandler = require('../Utils/errorHendler');
 module.exports.createSettings = async function (req, res) {
     try {
 
-        // // Ищем номер последнего заказа глобального
-        // const lastOrder = await Booking.findOne({
-        //     user: req.user.id
-        // })
-        //     .sort({ date: -1 });
-
-
-        // // Если мы нашли предполагаемы последнйи заказ, то устанвливает поле order
-        // const maxOrder = lastOrder ? lastOrder.order : 0;
 
 
         const settings = await new Settings({
             share_avto: req.body.share_avto,
+            input_avto: req.body.input_avto,
             washing_avto: req.body.washing_avto,
             additionally_avto: req.body.additionally_avto,
             userId: req.body.userId

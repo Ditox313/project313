@@ -11,6 +11,12 @@ const settingsSchema = new Schema({
         required: false,
     },
 
+    input_avto:
+    {
+        type: Object,
+        required: false,
+    },
+
     washing_avto:
     {
         type: Object,

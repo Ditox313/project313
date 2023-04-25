@@ -25,12 +25,18 @@ export interface Settings {
     railway_price?: any
     kristal_tc_price?: any
     sitymol_tc_price?: any
-  }
+  },
+  input_avto?: {
+    airport_price_input?: any
+    railway_price_input?: any
+    kristal_tc_price_input?: any
+    sitymol_tc_price_input?: any
+  },
   washing_avto?: {
     komfort?: any
     business?: any
     premium?: any
-  }
+  },
   additionally_avto?: {
     det_kreslo?: any
     buster?: any
