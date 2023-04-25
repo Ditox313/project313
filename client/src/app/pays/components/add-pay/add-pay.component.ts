@@ -95,6 +95,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       zalog: new FormControl('',),
       typePayZalog: new FormControl('',),
       place_start_price: new FormControl('',),
+      place_end_price: new FormControl('',),
       additional_services_price: new FormControl('',),
     });
   }
@@ -133,6 +134,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
           arenda: +res.summa + (+this.summa.car.price_dop_hour * (+this.summa.dop_hours)),
           zalog: res.booking_zalog,
           place_start_price: res.dop_info_open.place_start_price,
+          place_end_price: res.dop_info_open.place_end_price,
           additional_services_price: res.dop_info_open.additional_services_price,
         });
       }
@@ -142,6 +144,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
           arenda: res.summa,
           zalog: res.booking_zalog,
           place_start_price: res.dop_info_open.place_start_price,
+          place_end_price: res.dop_info_open.place_end_price,
           additional_services_price: res.dop_info_open.additional_services_price,
         });
       }
@@ -192,10 +195,19 @@ export class AddPayComponent implements OnInit, OnDestroy {
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
     };
+    
 
     const pay_4 = {
       vid: 'Доп.услуги',
       pricePay: this.form.value.additional_services_price || 0,
+      typePay: this.form.value.typePayArenda,
+      bookingId: this.bookingId,
+    };
+
+
+    const pay_5 = {
+      vid: 'Прием авто',
+      pricePay: this.form.value.place_end_price || 0,
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
     };
@@ -205,6 +217,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       switchMap(res => this.pays.create(pay_2)),
       switchMap(res => this.pays.create(pay_3)),
       switchMap(res => this.pays.create(pay_4)),
+      switchMap(res => this.pays.create(pay_5)),
     ).subscribe((pay) => {
       MaterialService.toast('Платеж создан');
       this.router.navigate(['/view-booking', this.bookingId]);

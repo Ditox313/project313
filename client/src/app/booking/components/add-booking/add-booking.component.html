@@ -238,8 +238,21 @@
                             </div>
                         </div>
 
+
+                        <div class="input-field col s12 xs_textarea">
+                            <textarea placeholder="Введите значение" id="comment" type="text" class="materialize-textarea"
+                                style="margin-top: 8px;" formControlName="comment"
+                                [ngClass]="{'invalid': form.controls['comment'].invalid && form.controls['comment'].touched}"> </textarea>
+                            <label for="marka">Комментарий</label>
+                            <span class="helper-text red-text" *ngIf="form.controls['comment'].invalid && form.controls['comment'].touched">
+                                <p *ngIf="form.controls['comment'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
+                        </div>
+
         
-                        <div class="input-field col s12" >
+                        <!-- <div class="input-field col s12" >
                             <input placeholder="Введите значение" id="place_end" type="text" class="validate" formControlName="place_end" style="margin-top: 8px;"
                                 [ngClass]="{'invalid': form.controls['place_end'].invalid && form.controls['place_end'].touched}">
                             <label for="marka">Место приема<span class="xszv">*</span></label>
@@ -248,18 +261,42 @@
                                     Поле не должно быть пустым
                                 </p>
                             </span>
-                        </div>
+                        </div> -->
 
-                        <div class="input-field col s12 xs_textarea" >
-                            <textarea placeholder="Введите значение" id="comment" type="text" class="materialize-textarea" style="margin-top: 8px;"
-                                formControlName="comment"
-                                [ngClass]="{'invalid': form.controls['comment'].invalid && form.controls['comment'].touched}"> </textarea>
-                            <label for="marka">Комментарий</label>
-                            <span class="helper-text red-text" *ngIf="form.controls['comment'].invalid && form.controls['comment'].touched">
-                                <p *ngIf="form.controls['comment'].errors?.required">
-                                    Поле не должно быть пустым
-                                </p>
-                            </span>
+                        <div class="xs_form__item___mod">
+                            <label for="place_start">Место приема<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="place_end" formControlName="place_end"
+                                    [ngClass]="{'invalid': form.controls['place_end'].invalid && form.controls['place_end'].touched}"
+                                    (ngModelChange)="onChangePlaceEnd($event)">
+                                    <option value="" disabled selected>Офис</option>
+                                    <option value="Офис">Офис</option>
+                                    <option value="Аэропорт">Аэропорт</option>
+                                    <option value="Ж/д вокзал">Ж/д вокзал</option>
+                                    <option value="ТЦ Кристалл">ТЦ Кристалл</option>
+                                    <option value="Тц Сити Молл">Тц Сити Молл</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-field col s12">
+                            <div class="xs_custome__zalog xs_custome_place_start">
+                                <label class="xs_paid_sale__wrap">
+                                    <input type="checkbox" formControlName="isCustomePlaceStartControlclick"
+                                        id="isCustomePlaceStartControlclick" (click)="xs_isCustomePlaceStartCheck()">
+                                    <div>Произвольное место приема</div>
+                                </label>
+                        
+                                <div class="xs_paid_sale__hide  customeStartPlaceWrap" *ngIf="isCustomePlaceStart">
+                                    <input type="text" placeholder="Введите место подачи" formControlName="isCustomePlaceStartControl"
+                                        id="isCustomePlaceStartControl">
+                        
+                                    <input type="text" placeholder="Введите цену" formControlName="isCustomePlaceStartControlPrice"
+                                        id="isCustomePlaceStartControlPrice" (ngModelChange)="onChangeisCustomePlaceStartControlPrice($event)">
+                                    руб
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -324,6 +361,10 @@
                 <span> Подача авто {{this.form.value.isCustomePlaceStartControlPrice || 0}} ₽</span>
             </span>
             +
+            <span >
+                <span> Прием авто {{this.summa.place_end_price}} ₽</span>
+            </span>
+            +
             <span>
                 <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
             </span>
@@ -331,7 +372,7 @@
             <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
                 Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
             </span> =
-            <span>Итого {{(+summa.summaFull + (+this.summa.place_start_price)) + (this.summa.additional_services_price) | number: '1.0-0'}} ₽</span>
+            <span>Итого {{(+summa.summaFull + (+this.summa.place_start_price)) + this.summa.place_end_price + (this.summa.additional_services_price) | number: '1.0-0'}} ₽</span>
         </div>
 
         <div *ngIf="isCustomeZalog"> 
@@ -349,13 +390,17 @@
             </span>
             +
             <span>
+                <span> Прием авто {{this.summa.place_end_price}} ₽</span>
+            </span>
+            +
+            <span>
                 <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
             </span>
             +
             <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
                 Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
             </span> =
-            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{(+summa.summaFull + (+this.summa.place_start_price)) + (this.summa.additional_services_price) | number: '1.0-0'}} ₽</span>
+            <span *ngIf="this.isCustomeZalogCheck === true">Итого {{(+summa.summaFull + (+this.summa.place_start_price)) + this.summa.place_end_price  + (this.summa.additional_services_price) | number: '1.0-0'}} ₽</span>
         </div>
     </div>
 

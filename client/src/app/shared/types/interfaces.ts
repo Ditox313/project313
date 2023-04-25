@@ -323,6 +323,7 @@ export interface Summa {
   paidCount?: any
   sale?: any,
   place_start_price?: any,
+  place_end_price?: any,
   additional_services_price?: any
 }
 

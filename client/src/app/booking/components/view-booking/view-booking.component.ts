@@ -273,10 +273,10 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     const booking : any = {
       dop_info_open: {
         clickedAct: true,
-        // clear_auto: this.actualBooking.dop_info_open.clear_auto,
         full_tank: this.actualBooking.dop_info_open.full_tank,
         moyka: this.actualBooking.dop_info_open.moyka,
         place_start_price: this.actualBooking.dop_info_open.place_start_price,
+        place_end_price: this.actualBooking.dop_info_open.place_end_price,
         additional_services_price: this.actualBooking.dop_info_open.additional_services_price,
         additional_services_chair: this.actualBooking.dop_info_open.additional_services_chair,
         additional_services_buster: this.actualBooking.dop_info_open.additional_services_buster,
