@@ -282,17 +282,17 @@
                         <div class="input-field col s12">
                             <div class="xs_custome__zalog xs_custome_place_start">
                                 <label class="xs_paid_sale__wrap">
-                                    <input type="checkbox" formControlName="isCustomePlaceStartControlclick"
-                                        id="isCustomePlaceStartControlclick" (click)="xs_isCustomePlaceStartCheck()">
+                                    <input type="checkbox" formControlName="isCustomePlaceInputControlclick"
+                                        id="isCustomePlaceInputControlclick" (click)="xs_isCustomePlaceInputCheck()">
                                     <div>Произвольное место приема</div>
                                 </label>
                         
-                                <div class="xs_paid_sale__hide  customeStartPlaceWrap" *ngIf="isCustomePlaceStart">
-                                    <input type="text" placeholder="Введите место подачи" formControlName="isCustomePlaceStartControl"
-                                        id="isCustomePlaceStartControl">
+                                <div class="xs_paid_sale__hide  customeStartPlaceWrap" *ngIf="isCustomePlaceInput">
+                                    <input type="text" placeholder="Введите место подачи" formControlName="isCustomePlaceInputControl"
+                                        id="isCustomePlaceInputControl">
                         
-                                    <input type="text" placeholder="Введите цену" formControlName="isCustomePlaceStartControlPrice"
-                                        id="isCustomePlaceStartControlPrice" (ngModelChange)="onChangeisCustomePlaceStartControlPrice($event)">
+                                    <input type="text" placeholder="Введите цену" formControlName="isCustomePlaceInputControlPrice"
+                                        id="isCustomePlaceInputControlPrice" (ngModelChange)="onChangeisCustomePlaceInputControlPrice($event)">
                                     руб
                                 </div>
                             </div>

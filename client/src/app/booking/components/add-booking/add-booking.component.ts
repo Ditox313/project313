@@ -64,8 +64,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // Закончился ли ввод в поле нового залога
   isCustomeZalogCheck: boolean = false;
 
-
+  // Выбрано произвольное место подачи
   isCustomePlaceStart: boolean = false;
+
+  // Выбрано произвольное место приема
+  isCustomePlaceInput: boolean = false;
+  
 
   // Результат поиска
   searchResult: any[] = [];
@@ -213,6 +217,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       isCustomeZalogControl: new FormControl(''),
       isCustomePlaceStartControl: new FormControl(''),
       isCustomePlaceStartControlPrice: new FormControl(''),
+      isCustomePlaceInputControl: new FormControl(''),
+      isCustomePlaceInputControlPrice: new FormControl(''),
       search_fiz: new FormControl(''),
       search_law: new FormControl(''),
       additional_services_chair: new FormControl(''),
@@ -222,6 +228,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       additional_services_antiradar: new FormControl(''),
       additional_services_moyka: new FormControl(''),
       isCustomePlaceStartControlclick: new FormControl(''),
+      isCustomePlaceInputControlclick: new FormControl(''),
       isCustomeZalogControlclick: new FormControl(''),
     });
 
@@ -1005,8 +1012,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.form.controls['place_start'].enable();
     }
 
-    // this.form.controls['clear_auto'].enable();
-    // this.form.controls['full_tank'].enable();
+   
     this.form.controls['additional_services_chair'].enable();
     this.form.controls['additional_services_buster'].enable();
     this.form.controls['additional_services_videoregister'].enable();
@@ -1781,8 +1787,20 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isCustomePlaceStart = !this.isCustomePlaceStart;
 
     this.form.patchValue({
-      isCustomePlaceStartControlPrice: '',
-      isCustomePlaceStartControl: ''
+      isCustomePlaceInputControlPrice: '',
+      isCustomePlaceInputControl: ''
+    })
+  }
+
+
+
+  // Проверяем нажат ли чекбокс для кастомного места приема
+  xs_isCustomePlaceInputCheck() {
+    this.isCustomePlaceInput = !this.isCustomePlaceInput;
+
+    this.form.patchValue({
+      isCustomePlaceInputControlPrice: '',
+      isCustomePlaceInputControl: ''
     })
   }
 
@@ -1804,6 +1822,22 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.form.patchValue({
         place_start: this.form.value.isCustomePlaceStartControl,
+      });
+    }
+    
+  }
+
+
+
+  // Привыборе произольной суммы приема авто
+  onChangeisCustomePlaceInputControlPrice(e)
+  {
+    if (this.isCustomePlaceInput)
+    {
+      this.summa.place_end_price = +this.form.value.isCustomePlaceInputControlPrice || 0
+      
+      this.form.patchValue({
+        place_end: this.form.value.isCustomePlaceInputControl,
       });
     }
     
