@@ -361,8 +361,11 @@
                 <span> Подача авто {{this.form.value.isCustomePlaceStartControlPrice || 0}} ₽</span>
             </span>
             +
-            <span >
+            <span *ngIf="!this.isCustomePlaceInput">
                 <span> Прием авто {{this.summa.place_end_price}} ₽</span>
+            </span>
+            <span *ngIf="this.isCustomePlaceInput">
+                <span> Прием авто {{this.form.value.isCustomePlaceInputControlPrice || 0}} ₽</span>
             </span>
             +
             <span>
@@ -389,8 +392,11 @@
                 <span> Подача авто {{this.form.value.isCustomePlaceStartControlPrice}} ₽</span>
             </span>
             +
-            <span>
+            <span *ngIf="!this.isCustomePlaceInput">
                 <span> Прием авто {{this.summa.place_end_price}} ₽</span>
+            </span>
+            <span *ngIf="this.isCustomePlaceInput">
+                <span> Прием авто {{this.form.value.isCustomePlaceInputControlPrice || 0}} ₽</span>
             </span>
             +
             <span>
