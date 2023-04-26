@@ -116,6 +116,26 @@
                                         id="isCustomeZalogControl" (change)="onCustomeZalogValue($event)" (blur)="onBlurMethod($event)"> руб
                                 </div>
                             </div>
+
+
+                            <div class="input-field col s12" style="margin-top: 0;">
+                                <div class="xs_custome__zalog xs_custome_place_start">
+                                    <label class="xs_paid_sale__wrap">
+                                        <input type="checkbox" formControlName="isCustomePlaceInputControlclick"
+                                            id="isCustomePlaceInputControlclick" (click)="xs_isCustomePlaceInputCheck()">
+                                        <div>Произвольное место приема</div>
+                                    </label>
+                            
+                                    <div class="xs_paid_sale__hide  customeStartPlaceWrap" *ngIf="isCustomePlaceInput">
+                                        <input type="text" placeholder="Введите место подачи" formControlName="isCustomePlaceInputControl"
+                                            id="isCustomePlaceInputControl">
+                            
+                                        <input type="text" placeholder="Введите цену" formControlName="isCustomePlaceInputControlPrice"
+                                            id="isCustomePlaceInputControlPrice" (ngModelChange)="onChangeisCustomePlaceInputControlPrice($event)">
+                                        руб
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -239,17 +259,7 @@
                         </div>
 
 
-                        <div class="input-field col s12 xs_textarea">
-                            <textarea placeholder="Введите значение" id="comment" type="text" class="materialize-textarea"
-                                style="margin-top: 8px;" formControlName="comment"
-                                [ngClass]="{'invalid': form.controls['comment'].invalid && form.controls['comment'].touched}"> </textarea>
-                            <label for="marka">Комментарий</label>
-                            <span class="helper-text red-text" *ngIf="form.controls['comment'].invalid && form.controls['comment'].touched">
-                                <p *ngIf="form.controls['comment'].errors?.required">
-                                    Поле не должно быть пустым
-                                </p>
-                            </span>
-                        </div>
+                      
 
         
                         <!-- <div class="input-field col s12" >
@@ -279,7 +289,7 @@
                             </div>
                         </div>
                         
-                        <div class="input-field col s12">
+                        <!-- <div class="input-field col s12">
                             <div class="xs_custome__zalog xs_custome_place_start">
                                 <label class="xs_paid_sale__wrap">
                                     <input type="checkbox" formControlName="isCustomePlaceInputControlclick"
@@ -296,7 +306,21 @@
                                     руб
                                 </div>
                             </div>
+                        </div> -->
 
+
+
+
+                        <div class="input-field col s12 xs_textarea">
+                            <textarea placeholder="Введите значение" id="comment" type="text" class="materialize-textarea"
+                                style="margin-top: 8px;" formControlName="comment"
+                                [ngClass]="{'invalid': form.controls['comment'].invalid && form.controls['comment'].touched}"> </textarea>
+                            <label for="marka">Комментарий</label>
+                            <span class="helper-text red-text" *ngIf="form.controls['comment'].invalid && form.controls['comment'].touched">
+                                <p *ngIf="form.controls['comment'].errors?.required">
+                                    Поле не должно быть пустым
+                                </p>
+                            </span>
                         </div>
 
                     </div>
@@ -410,6 +434,8 @@
         </div>
     </div> -->
 
+
+
     <div class="xs_summa" *ngIf="this.summa.summa">
         <div >
             <span style="font-weight: bold;">Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
@@ -455,7 +481,7 @@
 
 
 
-
+            
             <span *ngIf="this.summa.tariff === 'Город' && isCustomeZalog">Итого {{(+summa.summa + (+this.summa.place_start_price))
                 +
                 this.summa.place_end_price +
@@ -475,10 +501,6 @@
 
 
         </div>
-
-
-
-
 
 
 
