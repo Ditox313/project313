@@ -1919,6 +1919,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_antiradar: this.form.value.additional_services_antiradar || false,
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog,
@@ -1969,6 +1970,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_antiradar: this.form.value.additional_services_antiradar || false,
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_mej,
@@ -2019,6 +2021,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_antiradar: this.form.value.additional_services_antiradar || false,
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_rus,
@@ -2070,6 +2073,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_antiradar: this.form.value.additional_services_antiradar || false,
             additional_services_moyka: this.form.value.additional_services_moyka || false,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+            isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
@@ -2126,6 +2130,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_antiradar: this.form.value.additional_services_antiradar || false,
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog,
@@ -2176,6 +2181,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_antiradar: this.form.value.additional_services_antiradar || false,
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_mej,
@@ -2225,6 +2231,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_antiradar: this.form.value.additional_services_antiradar || false,
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_rus,
@@ -2275,6 +2282,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_antiradar: this.form.value.additional_services_antiradar || false,
             additional_services_moyka: this.form.value.additional_services_moyka || false,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+            isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
           booking_zalog: this.form.value.isCustomeZalogControl,

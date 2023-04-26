@@ -274,7 +274,7 @@
     
     
     
-                        <div class="input-field col s12">
+                        <!-- <div class="input-field col s12">
                             <input placeholder="Введите значение" id="place_end" type="text" class="validate"
                                 formControlName="place_end" style="margin-top: 8px;"
                                 [ngClass]="{'invalid': form.controls['place_end'].invalid && form.controls['place_end'].touched}">
@@ -285,7 +285,7 @@
                                     Поле не должно быть пустым
                                 </p>
                             </span>
-                        </div>
+                        </div> -->
     
                         <div class="input-field col s12 xs_textarea">
                             <textarea placeholder="Введите значение" id="comment" type="text" class="materialize-textarea"
@@ -298,6 +298,44 @@
                                     Поле не должно быть пустым
                                 </p>
                             </span>
+                        </div>
+
+
+
+                        <div class="xs_form__item___mod">
+                            <label for="place_start">Место приема<span class="xszv">*</span></label>
+                            <div class="input-field col s12">
+                                <select id="place_end" formControlName="place_end"
+                                    [ngClass]="{'invalid': form.controls['place_end'].invalid && form.controls['place_end'].touched}"
+                                    (ngModelChange)="onChangePlaceEnd($event)">
+                                    <option value="" disabled selected>Офис</option>
+                                    <option value="Офис">Офис</option>
+                                    <option value="Аэропорт">Аэропорт</option>
+                                    <option value="Ж/д вокзал">Ж/д вокзал</option>
+                                    <option value="ТЦ Кристалл">ТЦ Кристалл</option>
+                                    <option value="Тц Сити Молл">Тц Сити Молл</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="input-field col s12">
+                            <div class="xs_custome__zalog xs_custome_place_start">
+                                <label class="xs_paid_sale__wrap">
+                                    <input type="checkbox" formControlName="isCustomePlaceInputControlclick"
+                                        id="isCustomePlaceInputControlclick" (click)="xs_isCustomePlaceInputCheck()">
+                                    <div>Произвольное место приема</div>
+                                </label>
+                        
+                                <div class="xs_paid_sale__hide  customeStartPlaceWrap" *ngIf="isCustomePlaceInput">
+                                    <input type="text" placeholder="Введите место подачи" formControlName="isCustomePlaceInputControl"
+                                        id="isCustomePlaceInputControl">
+                        
+                                    <input type="text" placeholder="Введите цену" formControlName="isCustomePlaceInputControlPrice"
+                                        id="isCustomePlaceInputControlPrice" (ngModelChange)="onChangeisCustomePlaceInputControlPrice($event)">
+                                    руб
+                                </div>
+                            </div>
+                        
                         </div>
     
                     </div>
@@ -355,7 +393,7 @@
         </div>
     </div>
     
-    <div class="xs_summa" *ngIf="this.summa.summa">
+    <!-- <div class="xs_summa" *ngIf="this.summa.summa">
         <div *ngIf="!isCustomeZalog && !isCustomePlaceStart">
             <span style="font-weight: bold;">Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
             +
@@ -478,9 +516,79 @@
                 (+this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl) + (+this.form.value.isCustomePlaceStartControlPrice) +
                 (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
         </div>
+    </div> -->
+
+
+
+    
+    <div class="xs_summa" *ngIf="this.summa.summa">
+        <div >
+            <span style="font-weight: bold;">Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
+            +
+            <span *ngIf="!isCustomeZalog ">
+                <span *ngIf="this.summa.tariff === 'Город'">Залог {{this.summa.car.zalog}} ₽</span>
+                <span *ngIf="this.summa.tariff === 'Межгород'">Залог {{this.summa.car.zalog_mej}} ₽</span>
+                <span *ngIf="this.summa.tariff === 'Россия'">Залог {{this.summa.car.zalog_rus}} ₽</span>
+            </span>
+            <span *ngIf="isCustomeZalog ">
+                <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽</span>
+            </span>
+            +
+            <span>
+                <span> Подача авто {{this.summa.place_start_price}} ₽</span>
+            </span>
+            +
+            <span>
+                <span> Прием авто {{this.summa.place_end_price}} ₽</span>
+            </span>
+            +
+            <span>
+                <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
+            </span>
+            +
+            <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
+                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
+            </span> =
+
+            <span *ngIf="this.summa.tariff === 'Город' && !isCustomeZalog">Итого {{(+summa.summa + (+this.summa.place_start_price)) + 
+                this.summa.place_end_price +
+                (+this.summa.additional_services_price) +
+                (+this.summa.car.zalog) + 
+                (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
+    
+            <span *ngIf="this.summa.tariff === 'Межгород' && !isCustomeZalog">Итого {{(+summa.summa + (+this.summa.place_start_price)) + this.summa.place_end_price +
+                (+this.summa.additional_services_price) + (+this.summa.car.zalog_mej) + (this.summa.car.price_dop_hour *
+                this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
+    
+            <span *ngIf="this.summa.tariff === 'Россия' && !isCustomeZalog">Итого {{(+summa.summa + (+this.summa.place_start_price)) + this.summa.place_end_price +
+                (+this.summa.additional_services_price) + (+this.summa.car.zalog_rus) + (this.summa.car.price_dop_hour *
+                this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
+
+
+
+            
+            <span *ngIf="this.summa.tariff === 'Город' && isCustomeZalog">Итого {{(+summa.summa + (+this.summa.place_start_price))
+                +
+                this.summa.place_end_price +
+                (+this.summa.additional_services_price) +
+                (+this.form.value.isCustomeZalogControl) +
+                (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
+            
+            <span *ngIf="this.summa.tariff === 'Межгород' && isCustomeZalog">Итого {{(+summa.summa +
+                (+this.summa.place_start_price)) + this.summa.place_end_price +
+                (+this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl) + (this.summa.car.price_dop_hour *
+                this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
+            
+            <span *ngIf="this.summa.tariff === 'Россия' && isCustomeZalog">Итого {{(+summa.summa + (+this.summa.place_start_price))
+                + this.summa.place_end_price +
+                (+this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl) + (this.summa.car.price_dop_hour *
+                this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
+
+
+        </div>
     </div>
-    
-    
+
+
     <div class="xs_add__car___top">
         <div class="xs_add__car__top____actions">
             <button type="submit">
