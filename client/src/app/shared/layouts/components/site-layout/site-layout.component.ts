@@ -36,11 +36,6 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
   {
     this.subGetUser$ = this.auth.get_user().subscribe(user => {
       this.currentUser = user;
-
-      // this.links.push({
-      //   url: `/account/${this.currentUser._id}`,
-      //   name: 'Настройки',
-      // })
     })
   }
 

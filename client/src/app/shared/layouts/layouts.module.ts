@@ -4,6 +4,7 @@ import { SiteLayoutComponent } from './components/site-layout/site-layout.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { UserInfoModule } from '../modules/user-info/user-info.module';
 
 
 
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    UserInfoModule
   ],
   exports: [SiteLayoutComponent],
 })

@@ -326,7 +326,7 @@ footer {
 }
 
 .xs_cars {
-    padding: 30px 0;
+    padding: 16px 0 30px 0;
 }
 
 .xs_side_nav li>a {
@@ -349,6 +349,11 @@ footer {
     justify-content: space-between;
 }
 
+
+/* .xs_add__car
+{
+    margin-left: auto;
+} */
 .xs_add__car a {
     display: flex;
     align-items: center;
@@ -1743,3 +1748,8 @@ input[type="checkbox"]
 }
 
 
+/* .account_settings
+{
+    display: flex;
+
+} */

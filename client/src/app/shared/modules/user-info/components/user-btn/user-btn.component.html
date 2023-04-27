@@ -1,0 +1,10 @@
+<div class="user_btn" *ngIf="currentUser" (click)="btnActive()">
+    <i class="material-icons">perm_identity</i>
+
+    {{currentUser.name}} {{currentUser.secondName}}
+
+    <div class="xs_user_info" *ngIf="userBtnActive">
+        <a [routerLink]="'/general-settings'">Мой профиль</a>
+        <a href="#"  (click)="logout($event)">Выйти</a>
+    </div>
+</div>

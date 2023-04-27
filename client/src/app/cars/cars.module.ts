@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from 'src/app/cars/store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { CarsEffect } from './store/effects/cars.effect';
+import { UserInfoModule } from '../shared/modules/user-info/user-info.module';
 
 
 const routes = [
@@ -45,6 +46,7 @@ const routes = [
     LayoutsModule,
     StoreModule.forFeature('cars', reducers),
     EffectsModule.forFeature([CarsEffect]),
+    UserInfoModule
   ],
   providers: [CarsService],
 })
