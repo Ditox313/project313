@@ -1573,7 +1573,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Добавляем информацию об обновлении
           let update = {
-            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
+            name: this.currentUser.name + ' ' + this.currentUser.secondName,
+            date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
           }
           booking.updates.push(update)
           
@@ -1632,7 +1633,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Добавляем информацию об обновлении
           let update = {
-            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
+            name: this.currentUser.name + ' ' + this.currentUser.secondName,
+            date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
           }
           booking.updates.push(update)
 
@@ -1690,7 +1692,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Добавляем информацию об обновлении
           let update = {
-            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
+            name: this.currentUser.name + ' ' + this.currentUser.secondName,
+            date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
           }
           booking.updates.push(update)
 
@@ -1752,7 +1755,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Добавляем информацию об обновлении
         let update = {
-          [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
+          name: this.currentUser.name + ' ' + this.currentUser.secondName,
+          date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
         }
         booking.updates.push(update)
 
@@ -1815,7 +1819,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Добавляем информацию об обновлении
           let update = {
-            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
+            name: this.currentUser.name + ' ' + this.currentUser.secondName,
+            date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
           }
           booking.updates.push(update)
 
@@ -1874,7 +1879,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Добавляем информацию об обновлении
           let update = {
-            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
+            name: this.currentUser.name + ' ' + this.currentUser.secondName,
+            date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
           }
           booking.updates.push(update)
 
@@ -1932,7 +1938,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Добавляем информацию об обновлении
           let update = {
-            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
+            name: this.currentUser.name + ' ' + this.currentUser.secondName,
+            date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
           }
           booking.updates.push(update)
 
@@ -1992,7 +1999,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Добавляем информацию об обновлении
         let update = {
-          [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
+          name: this.currentUser.name + ' ' + this.currentUser.secondName,
+          date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
         }
         booking.updates.push(update)
 

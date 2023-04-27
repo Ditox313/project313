@@ -248,6 +248,32 @@
                                 <a [routerLink]="['/show-act-booking', actualActs[0]._id]" class="to_pay_act" *ngIf="actualActs.length > 0">Просмотр акта</a>
                             </div>
 
+                            <div class="xs_booking_updates" *ngIf="actualBooking.updates.length > 0">
+                                <h5>Обновления брони</h5>
+
+                                <table class="striped" *ngIf="pays">
+                                    <thead>
+                                        <tr>
+                                            <th>Имя</th>
+                                            <th>дата</th>
+                                        </tr>
+                                
+                                    </thead>
+                                
+                                    <tbody>
+                                        <tr *ngFor="let update of actualBooking.updates; let i = index ">
+                                            <td>
+                                                <span>{{update.name}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{update.date}} </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+     
+                            </div>
+
                             <h5>Управление</h5>
 
                             <div class="setting_view_info__box" *ngIf="bookingStatus === 'В ожидании'">

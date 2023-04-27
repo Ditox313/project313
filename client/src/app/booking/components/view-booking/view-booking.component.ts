@@ -156,6 +156,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   {
     this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
+      
 
       this.responsibleUser$ = this.auth.get_user_by_id(this.actualBooking.user).subscribe(user => {
         this.responsibleUser = user;
