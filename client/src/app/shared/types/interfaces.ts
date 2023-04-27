@@ -302,6 +302,7 @@ export interface Booking {
   sale?: any
   dop_info_open?: any
   dop_info_close?: any
+  updates?: any
   booking_zalog?: any,
   dogovor_number__actual?: any
   user?: any;

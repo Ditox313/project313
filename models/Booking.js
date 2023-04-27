@@ -146,6 +146,13 @@ const bookingSchema = new Schema({
         required: false,
     },
 
+
+    // Информация по обновлениям
+    updates: {
+        type: Array,
+        required: false,
+    },
+
     // Дополнительная информация при закрытии брони
     dop_info_close: {
         type: Object,

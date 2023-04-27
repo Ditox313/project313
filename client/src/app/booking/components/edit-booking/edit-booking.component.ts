@@ -18,6 +18,7 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { DocumentsService } from 'src/app/documents/services/documents.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-booking',
@@ -56,7 +57,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   // Выбрано произвольное место приема
   isCustomePlaceInput: boolean = false;
 
-
+  // Храним информацию об обновлениях
+  updates!: any
 
   bookingId!: string;
   bookingViewRef!: string;
@@ -156,6 +158,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     private documents: DocumentsService,
     private auth: AuthService,
     private AccountService: AccountService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -198,7 +201,6 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.currentUser = res;
        this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
          this.currentUserSetings = res;
-         
        })
     })
   }
@@ -322,7 +324,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         this.fizSearchIsVisible = false;
         this.xs_actual_client_type = 'law';
       }
+
+
+      if (res.updates)
+      {
+        this.updates = res.updates
+      }
+
+      console.log(this.updates);
       
+
     });
   }
 
@@ -1023,34 +1034,33 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
    // При выборе места приема авто
   onChangePlaceEnd(e)
   {
-   
-    // if (this.form.value.booking_start) {
-    //   this.form.controls['place_end'].enable();
-    // }
-    
-    if(e === 'Аэропорт')
+
+    if (this.currentUserSetings)
     {
-      this.summa.place_end_price = +this.currentUserSetings.input_avto.airport_price_input
-    }
-    else if (e === 'Ж/д вокзал')
-    {
-      this.summa.place_end_price = +this.currentUserSetings.input_avto.railway_price_input
+      if(e === 'Аэропорт')
+      {
+        this.summa.place_end_price = +this.currentUserSetings.input_avto.airport_price_input
+      }
+      else if (e === 'Ж/д вокзал')
+      {
+        this.summa.place_end_price = +this.currentUserSetings.input_avto.railway_price_input
+        
+      }
+      else if (e === 'ТЦ Кристалл')
+      {
+        this.summa.place_end_price = +this.currentUserSetings.input_avto.kristal_tc_price_input
+        
+      }
+      else if (e === 'Тц Сити Молл')
+      {
+        this.summa.place_end_price = +this.currentUserSetings.input_avto.sitymol_tc_price_input
+        
+      }
+      else if (e === 'Офис')
+      {
+        this.summa.place_end_price = 0
       
-    }
-    else if (e === 'ТЦ Кристалл')
-    {
-      this.summa.place_end_price = +this.currentUserSetings.input_avto.kristal_tc_price_input
-      
-    }
-    else if (e === 'Тц Сити Молл')
-    {
-      this.summa.place_end_price = +this.currentUserSetings.input_avto.sitymol_tc_price_input
-      
-    }
-    else if (e === 'Офис')
-    {
-      this.summa.place_end_price = 0
-     
+      }
     }
   }
 
@@ -1509,6 +1519,8 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
 
+
+
     if (this.xs_actual_client_type === 'fiz')
     {
       if (!this.isCustomeZalog) {
@@ -1553,10 +1565,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
+            updates : this.updates,
             booking_zalog: this.summa.car.zalog,
             dogovor_number__actual: this.xs_dogovor_number__actual,
           };
 
+
+          // Добавляем информацию об обновлении
+          let update = {
+            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd hh:mm:ss')
+          }
+          booking.updates.push(update)
           
 
           // Отправляем запрос
@@ -1606,10 +1625,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
+            updates: this.updates,
             booking_zalog: this.summa.car.zalog_mej,
             dogovor_number__actual: this.xs_dogovor_number__actual,
           };
 
+          // Добавляем информацию об обновлении
+          let update = {
+            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd HH:MM:SS')
+          }
+          booking.updates.push(update)
 
           // Отправляем запрос
           this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
@@ -1658,9 +1683,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
+            updates: this.updates,
             booking_zalog: this.summa.car.zalog_rus,
             dogovor_number__actual: this.xs_dogovor_number__actual,
           };
+
+          // Добавляем информацию об обновлении
+          let update = {
+            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd HH:MM:SS')
+          }
+          booking.updates.push(update)
+
 
           // Отправляем запрос
           this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
@@ -1710,10 +1743,18 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
+          updates: this.updates,
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
 
         };
+
+
+        // Добавляем информацию об обновлении
+        let update = {
+          [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd HH:MM:SS')
+        }
+        booking.updates.push(update)
 
 
 
@@ -1767,8 +1808,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
+            updates: this.updates,
             booking_zalog: this.summa.car.zalog,
           };
+
+
+          // Добавляем информацию об обновлении
+          let update = {
+            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd HH:MM:SS')
+          }
+          booking.updates.push(update)
 
 
 
@@ -1819,8 +1868,15 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
+            updates: this.updates,
             booking_zalog: this.summa.car.zalog_mej,
           };
+
+          // Добавляем информацию об обновлении
+          let update = {
+            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd HH:MM:SS')
+          }
+          booking.updates.push(update)
 
 
           // Отправляем запрос
@@ -1870,8 +1926,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
+            updates: this.updates,
             booking_zalog: this.summa.car.zalog_rus,
           };
+
+          // Добавляем информацию об обновлении
+          let update = {
+            [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd HH:MM:SS')
+          }
+          booking.updates.push(update)
+
 
           // Отправляем запрос
           this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
@@ -1921,9 +1985,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
+          updates: this.updates,
           booking_zalog: this.form.value.isCustomeZalogControl,
         };
 
+
+        // Добавляем информацию об обновлении
+        let update = {
+          [this.currentUser.name + ' ' + this.currentUser.secondName]: this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd HH:MM:SS')
+        }
+        booking.updates.push(update)
 
 
         // Отправляем запрос
