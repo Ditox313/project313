@@ -23,6 +23,10 @@
                                 <span>Номер брони:</span>
                                 <span>  <strong>№{{actualBooking.order}}</strong> </span>
                             </div>
+                            <div *ngIf="responsibleUser">
+                                <span>Ответственный:</span>
+                                <span> <strong>{{responsibleUser.name}} {{responsibleUser.secondName}}</strong> </span>
+                            </div>
                             <div>
                                 <span>Статус:</span>
                                 <span>

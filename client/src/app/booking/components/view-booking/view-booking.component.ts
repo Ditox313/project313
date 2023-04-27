@@ -71,6 +71,9 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
 
   subUpdateAct$: Subscription;
 
+  responsibleUser!: User
+  responsibleUser$: Subscription
+
   // Получаем настройки текущего пользователя
   currentUserSetings$: Subscription = null;
   currentUserSetings!: Settings
@@ -98,6 +101,9 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.responsibleUser$) {
+      this.responsibleUser$.unsubscribe();
+    }
     if (this.subGetBookingById$)
     {
       this.subGetBookingById$.unsubscribe();
@@ -150,6 +156,10 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   {
     this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
+
+      this.responsibleUser$ = this.auth.get_user_by_id(this.actualBooking.user).subscribe(user => {
+        this.responsibleUser = user;
+      })
 
       
 

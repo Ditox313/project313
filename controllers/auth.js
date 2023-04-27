@@ -149,6 +149,27 @@ module.exports.get_user = async function (req, res) {
 }
 
 
+module.exports.get_user_by_ids = async function (req, res) {
+    // Делаем проверку на наличие пользователя в БД
+    const user = await User.findOne({
+        _id: req.params.id,
+    });
+
+
+    if (!user) {
+        res.status(409).json({
+            message: "Нет такого пользователя"
+        });
+    } else {
+        try {
+            res.status(200).json(user);
+        } catch (error) {
+            errorHandler(res, error);
+        }
+    }
+}
+
+
 
 // Контроллер для update
 module.exports.update = async function (req, res) {
