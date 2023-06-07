@@ -44,9 +44,13 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
   // Массив с ссылками навигации сайдбара
   links: any = [
     {
-      url: '/overview-page',
-      name: 'Обзор',
+      url: '/smena-list',
+      name: 'Смены',
     },
+    // {
+    //   url: '/overview-page',
+    //   name: 'Обзор',
+    // },
     {
       url: '/cars-page',
       name: 'Автомобили',

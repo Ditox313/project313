@@ -24,6 +24,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { GoBackModule } from './shared/modules/ga-back/go-back.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxMaskModule } from 'ngx-mask'
+import { SmenaModule } from './smena/smena.module';
 
 
 
@@ -56,6 +57,7 @@ import { NgxMaskModule } from 'ngx-mask'
     GoBackModule,
     PdfViewerModule,
     NgxMaskModule.forRoot(),
+    SmenaModule
   ],
   providers: [
     {
