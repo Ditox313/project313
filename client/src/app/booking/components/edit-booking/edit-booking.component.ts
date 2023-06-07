@@ -361,7 +361,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.summa.car = JSON.parse(e)
 
     // Если все необходимое заполнено то считаем суммы для тарифов
-    if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
+    if( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
     {
       if(this.summa.tariff === 'Город')
       {
@@ -522,7 +522,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.summa.booking_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
 
     // Если все необходимое заполнено то считаем суммы для тарифов
-    if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
+    if( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
     {
       if(this.summa.tariff === 'Город')
       {
@@ -683,7 +683,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.summa.booking_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
 
     // Если все необходимое заполнено то считаем суммы для тарифов
-    if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
+    if( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
     {
       if(this.summa.tariff === 'Город')
       {
@@ -821,7 +821,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.summa.tariff = e
     
     // Если все необходимое заполнено то считаем суммы для тарифов
-    if(this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
+    if( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '')
     {
       if(this.summa.tariff === 'Город')
       {
@@ -1228,7 +1228,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Перенес без тестов.Протестить
     if (!this.isCustomeZalog) {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -1344,7 +1344,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     
     let xs_custome__zalog = e.target.value
 
-    if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+    if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
       if (this.summa.tariff === 'Город') {
         if (this.summa.booking_days < 3) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {

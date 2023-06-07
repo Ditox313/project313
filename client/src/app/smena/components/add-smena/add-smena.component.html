@@ -1,0 +1,42 @@
+
+<form class="" class="xs_smena" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="xs_smena__top">
+        <h1>
+            <span class="material-icons">contact_mail</span> Создать смену
+        </h1>
+
+        <div class="xs_add__car__top____actions">
+            <app-go-back></app-go-back>
+        </div>
+    </div>
+
+    <div class="xs_smena__content">
+       <table class="striped">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Ответственный</th>
+                </tr>
+            </thead>
+    
+            <tbody >
+                <tr >
+                    <td>{{this.xs_actual_date}}</td>
+                    <td>
+                        <input type="text" formControlName="responsible" id="responsible">
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <div class="xs_add__car__top____actions">
+        <button type="submit" class="xs_smena__add">
+            <span class="material-icons">beenhere</span>Сохранить
+        </button>
+    </div>
+</form>

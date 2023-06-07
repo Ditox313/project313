@@ -263,7 +263,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (!this.isCustomeZalog)
     {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if (this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -369,7 +369,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else
     {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -535,7 +535,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (!this.isCustomeZalog)
     {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -642,7 +642,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else
     {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -790,7 +790,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (!this.isCustomeZalog)
     {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -897,7 +897,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else
     {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -1028,7 +1028,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     
     if (!this.isCustomeZalog)
     {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -1135,7 +1135,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else
     {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -1557,7 +1557,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isCustomeZalog = !this.isCustomeZalog;
 
     if (!this.isCustomeZalog) {
-      if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
@@ -1674,7 +1674,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   {
     let xs_custome__zalog = e.target.value
 
-    if (this.summa.car !== {} && this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+    if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
       if (this.summa.tariff === 'Город') {
         if (this.summa.booking_days < 3) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {

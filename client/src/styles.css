@@ -389,6 +389,7 @@ footer {
 
 .xs_add__car__top____actions {
     display: flex;
+    height: 100%;
 }
 
 .xs_add__car___top {
@@ -1750,4 +1751,45 @@ input[type="checkbox"]
 .xs_booking_updates
 {
     margin-bottom: 30px;
+}
+
+
+.xs_smena h1 {
+    font-size: 33px;
+    line-height: 40px;
+    margin: 0;
+    color: #333;
+}
+
+.xs_smena__add a {
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    border-radius: 7px;
+    background-color: #194A9E;
+    color: #fff;
+}
+
+.xs_smena__add a span {
+    margin-right: 5px;
+}
+
+.xs_smena__top {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.xs_smena__content
+{
+    margin: 70px 0;
+}
+
+.xs_smena__content table  tr
+{
+    display: flex;
+}
+
+.xs_smena__content table td,  .xs_smena__content table th{
+    width: 15%;
 }
