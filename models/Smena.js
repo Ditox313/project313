@@ -11,6 +11,12 @@ const smenaSchema = new Schema({
         required: true,
     },
 
+    
+    date: {
+        type: Date,
+        default: Date.now,
+    },
+
     open_date: {
         type: String,
         required: true,
@@ -44,6 +50,11 @@ const smenaSchema = new Schema({
     close_date_time: {
         type: String,
         required: false,
+    },
+
+    order: {
+        type: Number,
+        required: true,
     },
 
 

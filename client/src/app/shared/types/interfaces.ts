@@ -388,6 +388,7 @@ export interface Smena {
   close_date: any
   close_date_time: any
   userId: any
+  order?: Number
 }
 
 
