@@ -378,6 +378,22 @@ export interface BookingAct {
 
 
 
+// Интерфейс для акта брони
+export interface Smena {
+  _id?: any;
+  open_date: any;
+  open_date_time: any;
+  responsible: string,
+  status: string,
+  close_date: any
+  close_date_time: any
+  userId: any
+}
+
+
+
+
+
 
 
 

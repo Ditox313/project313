@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
-import { AccountService } from '../../../account/services/account.service';
-import { Settings, User } from 'src/app/shared/types/interfaces';
+import { User } from 'src/app/shared/types/interfaces';
 import { DatePipe } from '@angular/common';
+import { SmenaService } from '../../services/smena.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './add-smena.component.html',
   styleUrls: ['./add-smena.component.css']
 })
-export class AddSmenaComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AddSmenaComponent implements OnInit, OnDestroy {
 
   form: any;
 
@@ -22,13 +22,20 @@ export class AddSmenaComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUser$: Subscription = null;
   currentUser!: User
 
-  xs_actual_date!: any
+  open_date: string = null
+  open_date_time: string = null
+  close_date: string = null
+  close_date_time: string = null
+
+
+  // Создание смены подписка
+  subCreateSmena$: Subscription = null;
 
 
   constructor(
     private router: Router,
+    private smenaService: SmenaService,
     private auth: AuthService,
-    private AccountService: AccountService,
     private datePipe: DatePipe
     ) { }
 
@@ -36,17 +43,16 @@ export class AddSmenaComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initForm();
     this.get_user();
     this.moreLogicActions();
-    
-    console.log(this.xs_actual_date)
   }
 
-  ngAfterViewInit(): void {
-    
-  }
+
 
   ngOnDestroy(): void {
     if (this.currentUser$) {
       this.currentUser$.unsubscribe();
+    }
+    if (this.subCreateSmena$) {
+      this.subCreateSmena$.unsubscribe();
     }
   }
 
@@ -61,22 +67,38 @@ export class AddSmenaComponent implements OnInit, AfterViewInit, OnDestroy {
       this.currentUser = res;
 
       this.form.patchValue({
-        responsible: this.currentUser.secondName + '' + this.currentUser.name + ' ' + this.currentUser.thirdName,
+        responsible: this.currentUser.secondName + ' ' + this.currentUser.name + ' ' + this.currentUser.thirdName,
       });
 
-      console.log('User', this.currentUser)
       
     })
   }
 
   moreLogicActions()
   {
-    this.xs_actual_date = this.datePipe.transform(new Date(), 'dd.MM.yyyy hh:mm:ss')
+    this.open_date = this.datePipe.transform(new Date(), 'dd.MM.yyyy')
+    this.open_date_time = this.datePipe.transform(new Date(), 'HH:mm:ss')
   }
 
   onSubmit()
   {
-    
+    const smena = {
+      open_date: this.open_date,
+      open_date_time: this.open_date_time,
+      responsible: this.form.value.responsible,
+      status: 'open',
+      close_date: this.close_date,
+      close_date_time: this.close_date_time,
+      userId: this.currentUser._id
+    }
+
+
+
+    // Отправляем запрос
+    this.subCreateSmena$ = this.smenaService.create(smena).subscribe((smena) => {
+      MaterialService.toast('Смена создана');
+      this.router.navigate(['/smena-list']);
+    });
   }
 
 }

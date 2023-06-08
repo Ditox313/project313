@@ -10,6 +10,7 @@ import { LayoutsModule } from '../shared/layouts/layouts.module';
 import { GoBackModule } from '../shared/modules/ga-back/go-back.module';
 import { SmenaListComponent } from './components/smena-list/smena-list.component';
 import { AddSmenaComponent } from './components/add-smena/add-smena.component';
+import { SmenaService } from './services/smena.service';
 
 
 
@@ -41,6 +42,7 @@ const routes = [
     LoaderModule,
     LayoutsModule,
     GoBackModule,
-  ]
+  ],
+  providers: [SmenaService],
 })
 export class SmenaModule { }

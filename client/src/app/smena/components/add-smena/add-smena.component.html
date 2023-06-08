@@ -2,7 +2,7 @@
 <form class="" class="xs_smena" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="xs_smena__top">
         <h1>
-            <span class="material-icons">contact_mail</span> Создать смену
+            <span class="material-icons">contact_mail</span> Открыть смену
         </h1>
 
         <div class="xs_add__car__top____actions">
@@ -21,7 +21,7 @@
     
             <tbody >
                 <tr >
-                    <td>{{this.xs_actual_date}}</td>
+                    <td>{{this.open_date}} {{this.open_date_time}}</td>
                     <td>
                         <input type="text" formControlName="responsible" id="responsible">
                     </td>

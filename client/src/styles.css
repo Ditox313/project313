@@ -1793,3 +1793,9 @@ input[type="checkbox"]
 .xs_smena__content table td,  .xs_smena__content table th{
     width: 15%;
 }
+
+.xs_smena__content table td
+{
+    display: flex;
+    align-items: center;
+}
