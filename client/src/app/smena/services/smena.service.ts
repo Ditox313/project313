@@ -21,6 +21,20 @@ export class SmenaService {
   }
 
 
+  fetch(params: any = {}): Observable<Smena[]> {
+    return this.http.get<Smena[]>('/api/smena/get-all', {
+      params: new HttpParams({
+        fromObject: params
+      })
+    });
+  }
+
+
+  delete(id: any): Observable<any> {
+    return this.http.delete<any>(`/api/smena/remove/${id}`);
+  }
+
+
 
 
 

@@ -11,4 +11,70 @@
             </a>
         </div>
     </div>
+
+
+    <div class="xs_smena__content">
+        <app-loader *ngIf="loading"></app-loader>
+        
+        <table class="striped" *ngIf="!loading">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Дата открытия</th>
+                    <th>Ответственный</th>
+                    <th>Статус</th>
+                    <th>Дата закрытия</th>
+                    <!-- <th>Действия</th> -->
+                </tr>
+        
+            </thead>
+        
+            <tbody>
+                <tr  *ngFor="let smena of smenas">
+                    <td>
+                        {{smena.order}}
+                    </td>
+
+                    <td>
+                        {{smena.open_date}} {{smena.open_date_time}}
+                    </td>
+
+                    <td>
+                        {{smena.responsible}}
+                    </td>
+
+                    <td *ngIf="smena.status === 'open'">
+                        Открыта
+                    </td>
+
+                    <td *ngIf="smena.status !== 'open'">
+                        Закрыта
+                    </td>
+
+                    <td *ngIf="!smena.close_date">
+                        ...
+                    </td>
+
+                    <td *ngIf="smena.close_date">
+                        {{smena.close_date}} {{smena.close_date_time}}
+                    </td>
+        
+
+                    <td class="xs_actions ">
+                        <a (click)="onDeleteSmena($event, smena)"><span class="material-icons ">delete</span></a>
+                    </td>
+                </tr>
+            </tbody>
+        
+            <ng-template #empty>
+                <div style="font-size: 20px; " class="xs_empty ">
+                    Нет броней...
+                </div>
+            </ng-template>
+        </table>
+        
+        <div class="xs_cars__more" *ngIf="!noMoreSmenas">
+            <span (click)="loadmore()">Загрузить еще...</span>
+        </div>
+    </div>
 </div>

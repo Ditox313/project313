@@ -10,9 +10,7 @@ module.exports.create = async function(req, res) {
     try {
 
         // Ищем номер последнего заказа глобального
-        const lastOrder = await Smena.findOne({
-            
-        }).sort({ date: -1 });
+        const lastOrder = await Smena.findOne({}).sort({ date: -1 });
 
 
         // Если мы нашли предполагаемы последнйи заказ, то устанвливает поле order
@@ -33,6 +31,50 @@ module.exports.create = async function(req, res) {
         
 
         res.status(201).json(smena);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+
+// Контроллер для fetch
+module.exports.fetch = async function (req, res) {
+    try {
+
+        const smenas = await Smena.find({}).sort({ date: -1 })
+            .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
+            .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
+
+        // Возвращаем пользователю позиции 
+        res.status(200).json(smenas);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+
+
+
+// Контроллер для remove
+module.exports.remove = async function (req, res) {
+    try {
+        await Smena.remove({
+            _id: req.params.id
+        });
+
+
+        // Возвращаем результат
+        res.status(200).json({
+            message: "Смена удалена"
+        });
     } catch (e) {
         errorHandler(res, e);
     }
