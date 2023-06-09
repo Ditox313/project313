@@ -329,6 +329,14 @@ const carSchema = new Schema({
         required: false,
     },
 
+
+    bookings: {
+        type: Object,
+        required: false,
+    },
+
+
+
     // Пользователь который создал партнера
     user: {
         type: String,

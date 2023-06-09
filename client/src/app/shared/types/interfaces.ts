@@ -125,6 +125,7 @@ export interface Car {
   zalog_rus?: any;
   user?: any;
   status_booking?: string
+  bookings?: any
 }
 
 
