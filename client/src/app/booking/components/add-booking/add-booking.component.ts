@@ -258,9 +258,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     // Получаем выбранный автомобиль
     this.summa.car = JSON.parse(e)
 
-    console.log(this.summa.car)
 
-    
     
 
     if (!this.isCustomeZalog)
@@ -1878,6 +1876,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
 
+    
+
     if (this.xs_actual_client_type === 'fiz')
     {
       if (!this.isCustomeZalog) {
@@ -1926,12 +1926,26 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           };
 
 
+          
+          
+
+
 
           // Отправляем запрос
           this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+            // Вносим изменения в инфу броней а автомобиле
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+              console.log('Бронь добавлена в авто')
+            })
+
+
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
+
+
+
         }
         if (this.form.value.tariff === 'Межгород') {
           let moyka = '0';
@@ -1979,6 +1993,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Отправляем запрос
           this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+            // Вносим изменения в инфу броней а автомобиле
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+              console.log('Бронь добавлена в авто')
+            })
+
+
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -2029,6 +2050,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Отправляем запрос
           this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+            // Вносим изменения в инфу броней а автомобиле
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+              console.log('Бронь добавлена в авто')
+            })
+
+
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -2084,6 +2112,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Отправляем запрос
         this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+          // Вносим изменения в инфу броней а автомобиле
+          this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+            console.log('Бронь добавлена в авто')
+          })
+
+
           MaterialService.toast('Бронь добавлена');
           this.router.navigate(['/bookings-page']);
         });
@@ -2139,6 +2174,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Отправляем запрос
           this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+            // Вносим изменения в инфу броней а автомобиле
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+              console.log('Бронь добавлена в авто')
+            })
+
+
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -2189,6 +2231,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Отправляем запрос
           this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+            // Вносим изменения в инфу броней а автомобиле
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+              console.log('Бронь добавлена в авто')
+            })
+
+
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -2238,6 +2287,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Отправляем запрос
           this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+            // Вносим изменения в инфу броней а автомобиле
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+              console.log('Бронь добавлена в авто')
+            })
+
+
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
@@ -2291,11 +2347,18 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // Отправляем запрос
         this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+          // Вносим изменения в инфу броней а автомобиле
+          this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+            console.log('Бронь добавлена в авто')
+          })
+
+          
           MaterialService.toast('Бронь добавлена');
           this.router.navigate(['/bookings-page']);
         });
       }
     }
-   
+
   }
 }

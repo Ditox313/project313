@@ -93,7 +93,6 @@ module.exports.fetch = async function(req, res) {
 
 
 
-
 // Контроллер для update
 module.exports.update = async function(req, res) {
     try {
@@ -118,6 +117,31 @@ module.exports.update = async function(req, res) {
 
         // Возвращаем пользователю обновленную позицию 
         res.status(200).json(req.body);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+module.exports.update_after_booking_create = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+
+
+        const carUpdate = await Car.updateOne(
+            { _id: updated.car._id },
+            { $set: { bookings: updated, status_booking: 'Бронь' } }
+        ).then(updateResult => {
+            console.log('Результат обновления:', updateResult);
+        }).catch(error => {
+            console.error('Ошибка при обновлении:', error);
+        });
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(carUpdate);
     } catch (e) {
         errorHandler(res, e);
     }

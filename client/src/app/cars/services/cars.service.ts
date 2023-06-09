@@ -2,7 +2,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { Car } from 'src/app/shared/types/interfaces';
+import { Booking, Car } from 'src/app/shared/types/interfaces';
 
 
 
@@ -126,6 +126,11 @@ export class CarsService {
       }
 
       return this.http.patch<Car>(`/api/cars/update/${id}`, fd);
+  }
+
+   update_after_booking_create(id: string, data: Booking): Observable<any> {
+
+      return this.http.patch<any>(`/api/cars/update-after-booking-create/${id}`, data);
    }
 
 
@@ -138,7 +143,7 @@ export class CarsService {
   getById(id: string): Observable<Car>
    {
       return this.http.get<Car>(`/api/cars/${id}`);
-   }
+}
 
 
    // Удаление авто

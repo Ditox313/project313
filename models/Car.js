@@ -331,7 +331,7 @@ const carSchema = new Schema({
 
 
     bookings: {
-        type: Object,
+        type: Array,
         required: false,
     },
 
