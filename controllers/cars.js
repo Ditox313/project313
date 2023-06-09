@@ -130,10 +130,9 @@ module.exports.update_after_booking_create = async function (req, res) {
         const updated = req.body;
 
 
-
         const carUpdate = await Car.updateOne(
             { _id: updated.car._id },
-            { $set: { bookings: updated, status_booking: 'Бронь' } }
+            { $push: { bookings: updated }, $set: { status_booking: 'Бронь' } }
         ).then(updateResult => {
             console.log('Результат обновления:', updateResult);
         }).catch(error => {

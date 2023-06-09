@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const Booking = require('../models/Booking');
 const Client = require('../models/Clients/Client');
 const Client_Law_Fase = require('../models/Clients/Client_Law_Fase');
+const Car = require('../models/Car');
 const Pays = require('../models/Pays');
 const errorHandler = require('../Utils/errorHendler');
 
@@ -251,6 +252,19 @@ module.exports.getStatusBooking = async function (req, res) {
 // Контроллер для remove
 module.exports.remove = async function(req, res) {
     try {
+       
+
+
+        const actualBooking = await Booking.find({ _id: req.params.id })
+        const carId = await actualBooking[0].car._id
+
+
+        const car = await Car.updateOne(
+            { _id: carId },
+            { $pull: { bookings: { _id: req.params.id } } }
+        )
+
+
         await Booking.remove({
             _id: req.params.id
         });
@@ -259,8 +273,9 @@ module.exports.remove = async function(req, res) {
             bookingId: req.params.id
         });
 
-
         // Возвращаем результат
+        // res.status(200).json(actualBooking);
+
         res.status(200).json({
             message: "Бронь удалена"
         });
