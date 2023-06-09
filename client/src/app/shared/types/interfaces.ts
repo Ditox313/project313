@@ -124,6 +124,7 @@ export interface Car {
   zalog_mej?: any;
   zalog_rus?: any;
   user?: any;
+  status_booking?: string
 }
 
 

@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
 
 // Шаг пагинации
-const STEP = 10;
+const STEP = 2;
 
 
 @Component({

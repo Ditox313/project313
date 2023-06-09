@@ -322,6 +322,13 @@ const carSchema = new Schema({
         required: false,
     },
 
+
+    status_booking: {
+        type: String,
+        default: '',
+        required: false,
+    },
+
     // Пользователь который создал партнера
     user: {
         type: String,

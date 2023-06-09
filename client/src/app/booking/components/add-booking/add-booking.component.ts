@@ -258,6 +258,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     // Получаем выбранный автомобиль
     this.summa.car = JSON.parse(e)
 
+    console.log(this.summa.car)
+
     
     
 
@@ -1348,9 +1350,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   onChangePlaceEnd(e)
   {
    
-    // if (this.form.value.booking_start) {
-    //   this.form.controls['place_end'].enable();
-    // }
     
     if(e === 'Аэропорт')
     {
