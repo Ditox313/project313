@@ -7,14 +7,14 @@ import { Booking, Car } from 'src/app/shared/types/interfaces';
 
 
 @Injectable({
-  providedIn: 'root', 
+   providedIn: 'root',
 })
 export class CarsService {
-  constructor(private http: HttpClient) {}
+   constructor(private http: HttpClient) { }
 
 
-  create(car: Car, image?: File): Observable<Car> {
-    const fd = new FormData(); 
+   create(car: Car, image?: File): Observable<Car> {
+      const fd = new FormData();
       fd.append('marka', car.marka);
       fd.append('model', car.model);
       fd.append('probeg', car.probeg);
@@ -57,28 +57,27 @@ export class CarsService {
       fd.append('status_booking', car.status_booking);
       fd.append('bookings', car.bookings);
 
-      if(image)
-      {
+      if (image) {
          fd.append('previewSrc', image, image.name);
       }
 
-    
-    return this.http.post<Car>(`/api/cars`, fd);
-  }
 
-  // // Получаем список всех позиций
-  fetch(params: any = {}): Observable<Car[]> {
-    return this.http.get<Car[]>('/api/cars', {
-       params: new HttpParams({
-          fromObject: params
-       })
-    });
-  }
+      return this.http.post<Car>(`/api/cars`, fd);
+   }
 
-  
-  update(id:string, xscar: Car, image?: File): Observable<Car> {
+   // // Получаем список всех позиций
+   fetch(params: any = {}): Observable<Car[]> {
+      return this.http.get<Car[]>('/api/cars', {
+         params: new HttpParams({
+            fromObject: params
+         })
+      });
+   }
 
-      const fd = new FormData(); 
+
+   update(id: string, xscar: Car, image?: File): Observable<Car> {
+
+      const fd = new FormData();
       fd.append('marka', xscar.marka);
       fd.append('model', xscar.model);
       fd.append('probeg', xscar.probeg);
@@ -120,35 +119,33 @@ export class CarsService {
       fd.append('zalog_mej', xscar.zalog_mej);
       fd.append('zalog_rus', xscar.zalog_rus);
 
-      if(image)
-      {
+      if (image) {
          fd.append('previewSrc', image, image.name);
       }
 
       return this.http.patch<Car>(`/api/cars/update/${id}`, fd);
-  }
+   }
 
    update_after_booking_create(id: string, data: Booking): Observable<any> {
-
       return this.http.patch<any>(`/api/cars/update-after-booking-create/${id}`, data);
    }
 
-
-  close(id: string, xscar: any): Observable<Car> {
-     return this.http.patch<Car>(`/api/cars/close/${id}`, xscar);
-  }
+   
 
 
-  // Получаем позицию по id
-  getById(id: string): Observable<Car>
-   {
+   close(id: string, xscar: any): Observable<Car> {
+      return this.http.patch<Car>(`/api/cars/close/${id}`, xscar);
+   }
+
+
+   // Получаем позицию по id
+   getById(id: string): Observable<Car> {
       return this.http.get<Car>(`/api/cars/${id}`);
-}
+   }
 
 
    // Удаление авто
-   delete(id: any): Observable<any>
-   {
+   delete(id: any): Observable<any> {
       return this.http.delete<any>(`/api/cars/${id}`);
    }
 }

@@ -45,6 +45,7 @@ module.exports.create = async function(req, res) {
             dop_info_open: req.body.dop_info_open,
             booking_zalog: req.body.booking_zalog,
             dogovor_number__actual: req.body.dogovor_number__actual,
+            booking_life_cycle: req.body.booking_life_cycle
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
@@ -333,4 +334,30 @@ module.exports.searchWidget = async function (req, res) {
         errorHandler(res, e);
     }
 
+};
+
+
+
+
+// Добавляем оплату в бронь для логирования
+module.exports.update_after_booking_pay = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+
+        const carUpdate = await Booking.updateOne(
+            { _id: updated.bookingId },
+            { $push: { 'booking_life_cycle.0': updated } }
+        ).then(updateResult => {
+            console.log('Результат обновления:', updateResult);
+        }).catch(error => {
+            console.error('Ошибка при обновлении:', error);
+        });
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(carUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
 };

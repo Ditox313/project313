@@ -308,6 +308,7 @@ export interface Booking {
   booking_zalog?: any,
   dogovor_number__actual?: any
   user?: any;
+  booking_life_cycle?: any
 }
 
 

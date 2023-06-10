@@ -174,6 +174,13 @@ const bookingSchema = new Schema({
     },
 
 
+    // Жизненный цикл брони
+    booking_life_cycle: {
+        type: Array,
+        required: false,
+    },
+
+
     
 
 });

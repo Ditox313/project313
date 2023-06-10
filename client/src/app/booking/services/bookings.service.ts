@@ -77,4 +77,9 @@ export class BookingsService {
       })
     )
   }
+
+
+  update_after_booking_pay(id: string, data: any): Observable<any> {
+    return this.http.patch<any>(`/api/bookings/update-after-booking-pay/${id}`, data);
+  }
 }

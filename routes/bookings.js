@@ -45,6 +45,9 @@ router.post('/toggleStatus', passport.authenticate('jwt', { session: false }), c
 
 
 // Роут на поиск
-router.post('/search_client', passport.authenticate('jwt', { session: false }), controller.searchWidget);
+
+
+// Добавляем оплату в бронь
+router.patch('/update-after-booking-pay/:id', passport.authenticate('jwt', { session: false }), controller.update_after_booking_pay);
 
 module.exports = router;

@@ -148,6 +148,9 @@ module.exports.update_after_booking_create = async function (req, res) {
 
 
 
+
+
+
 // Контроллер для закрытия брони
 module.exports.close = async function (req, res) {
     try {
