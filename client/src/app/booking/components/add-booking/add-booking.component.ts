@@ -1928,7 +1928,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               [],
               [],
               [],
-              []
             ],
           };
 
@@ -1995,6 +1994,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             },
             booking_zalog: this.summa.car.zalog_mej,
             dogovor_number__actual: this.xs_dogovor_number__actual,
+            booking_life_cycle: [
+              [],
+              [],
+              [],
+              [],
+            ],
           };
 
 
@@ -2053,6 +2058,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             },
             booking_zalog: this.summa.car.zalog_rus,
             dogovor_number__actual: this.xs_dogovor_number__actual,
+            booking_life_cycle: [
+              [],
+              [],
+              [],
+              [],
+            ],
           };
 
           // Отправляем запрос
@@ -2112,7 +2123,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
-
+          booking_life_cycle: [
+            [],
+            [],
+            [],
+            [],
+          ],
         };
 
 
@@ -2175,6 +2191,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog,
+            booking_life_cycle: [
+              [],
+              [],
+              [],
+              [],
+            ],
           };
 
 
@@ -2233,6 +2255,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_mej,
+            booking_life_cycle: [
+              [],
+              [],
+              [],
+              [],
+            ],
           };
 
 
@@ -2290,6 +2318,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
             booking_zalog: this.summa.car.zalog_rus,
+            booking_life_cycle: [
+              [],
+              [],
+              [],
+              [],
+            ],
           };
 
           // Отправляем запрос
@@ -2348,6 +2382,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             isCustomeZalog: this.form.value.isCustomeZalogControlclick
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
+          booking_life_cycle: [
+            [],
+            [],
+            [],
+            [],
+          ],
         };
 
 

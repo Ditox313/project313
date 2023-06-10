@@ -124,6 +124,7 @@ module.exports.update = async function(req, res) {
 
 
 
+// Добавляем бронь в массив броней в авто
 module.exports.update_after_booking_create = async function (req, res) {
     try {
 
@@ -141,6 +142,28 @@ module.exports.update_after_booking_create = async function (req, res) {
 
         // Возвращаем пользователю обновленную позицию 
         res.status(200).json(carUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+// При закрытии брони добаляем инфу в авто
+module.exports.update_after_booking_close = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+
+        // const carUpdate = await Car.updateOne(
+        //     { _id: carId, "bookings._id": bookingIdToUpdate }, // выбираем объект и элемент массива по соответствующим ID
+        //     { $set: { "bookings.$.propertyName": updatedBooking.propertyName } } // обновляем нужное свойство элемента массива
+        // );
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(updated);
     } catch (e) {
         errorHandler(res, e);
     }

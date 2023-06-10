@@ -15,6 +15,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), controller.fet
 // Роут на update
 router.patch('/update/:id', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.update);
 router.patch('/update-after-booking-create/:id', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.update_after_booking_create);
+router.patch('/update-after-booking-close/:id', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.update_after_booking_close);
 
 
 
