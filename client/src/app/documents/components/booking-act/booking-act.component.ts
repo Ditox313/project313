@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { DocumentsService } from '../../services/documents.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-booking-act',
@@ -51,20 +52,16 @@ export class BookingActComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subParams$)
-    {
+    if (this.subParams$) {
       this.subParams$.unsubscribe();
     }
-    if (this.getUser$)
-    {
+    if (this.getUser$) {
       this.getUser$.unsubscribe();
     }
-    if (this.subGetById$)
-    {
+    if (this.subGetById$) {
       this.subGetById$.unsubscribe();
     }
-    if (this.createAct$)
-    {
+    if (this.createAct$) {
       this.createAct$.unsubscribe();
     }
   }
@@ -88,24 +85,21 @@ export class BookingActComponent implements OnInit, OnDestroy {
     };
 
     pdfMake.createPdf(docDefinition).open();
-  } 
+  }
 
-  getParams()
-  {
+  getParams() {
     this.subParams$ = this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
     });
   }
 
-  getUser()
-  {
+  getUser() {
     this.getUser$ = this.auth.get_user().subscribe(user => {
       this.actualUser = user;
     })
   }
 
-  getById()
-  {
+  getById() {
     this.subGetById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
       this.xsNumberSummAuto = convertNumberToWordsRu(this.actualBooking.car.price_ocenka)
@@ -132,11 +126,21 @@ export class BookingActComponent implements OnInit, OnDestroy {
       bookingId: this.actualBooking._id
     }
 
-    
-    this.createAct$ = this.documentService.create_booking_act(act).subscribe((act) => {
+    this.createAct$ = this.documentService.create_booking_act(act).pipe(
+      switchMap(res => this.bookings.update_after_booking_act(this.actualBooking._id, act)),
+    ).subscribe((pay) => {
       MaterialService.toast('Акт сохранен');
       this.router.navigate(['/view-booking', this.actualBooking._id]);
     });
+
+
+    // this.createAct$ = this.documentService.create_booking_act(act).subscribe((act) => {
+    //   MaterialService.toast('Акт сохранен');
+    //   this.router.navigate(['/view-booking', this.actualBooking._id]);
+    // });
   }
 
 }
+
+
+

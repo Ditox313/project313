@@ -1924,6 +1924,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_zalog: this.summa.car.zalog,
             dogovor_number__actual: this.xs_dogovor_number__actual,
             booking_life_cycle: [
+              [],
+              [],
+              [],
+              [],
               []
             ],
           };

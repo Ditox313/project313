@@ -361,3 +361,30 @@ module.exports.update_after_booking_pay = async function (req, res) {
         errorHandler(res, e);
     }
 };
+
+
+
+
+
+// Добавляем акт в бронь для логирования
+module.exports.update_after_booking_act = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+
+        const carUpdate = await Booking.updateOne(
+            { _id: updated.bookingId },
+            { $push: { 'booking_life_cycle.1': updated } }
+        ).then(updateResult => {
+            console.log('Результат обновления:', updateResult);
+        }).catch(error => {
+            console.error('Ошибка при обновлении:', error);
+        });
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(carUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};

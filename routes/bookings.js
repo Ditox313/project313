@@ -45,9 +45,14 @@ router.post('/toggleStatus', passport.authenticate('jwt', { session: false }), c
 
 
 // Роут на поиск
+router.post('/search_client', passport.authenticate('jwt', { session: false }), controller.searchWidget);
 
 
-// Добавляем оплату в бронь
+// Создание логированный платеж в брони
 router.patch('/update-after-booking-pay/:id', passport.authenticate('jwt', { session: false }), controller.update_after_booking_pay);
+
+
+// Создание логированный акт в брони
+router.patch('/update-after-booking-act/:id', passport.authenticate('jwt', { session: false }), controller.update_after_booking_act);
 
 module.exports = router;
