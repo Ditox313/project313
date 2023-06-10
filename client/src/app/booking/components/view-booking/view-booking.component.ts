@@ -15,6 +15,8 @@ import { DocumentsService } from 'src/app/documents/services/documents.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { AccountService } from '../../../account/services/account.service';
+import { DatePipe } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-booking',
@@ -82,6 +84,13 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   currentUser$: Subscription = null;
   currentUser!: User
 
+
+  // Логируем статус в брони
+  update_after_booking_status$: Subscription
+
+
+  
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
@@ -90,6 +99,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     private ducumentsServise: DocumentsService,
     private auth: AuthService,
     private AccountService: AccountService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -131,6 +141,9 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     if (this.currentUser$)
     {
       this.currentUser$.unsubscribe();
+    }
+    if (this.update_after_booking_status$) {
+      this.update_after_booking_status$.unsubscribe();
     }
   }
 
@@ -201,20 +214,46 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     {
       const dicision = window.confirm(`Бронь не оплачена! Вы уверены что хотите выдать автомобиль?`);
 
+      const status_log = {
+        status: 'В аренде',
+        data: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss')
+      }
+
+
       if (dicision)
       {
         this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
           this.bookingStatus = res.status;
           MaterialService.toast(`Новый статус брони -  ${status}`);
         });
+
+        this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res=> {})
       }
     }
     else{
+      const status_log = {
+        status: 'В аренде',
+        data: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss')
+      }
+
       this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
         this.bookingStatus = res.status;
         MaterialService.toast(`Новый статус брони -  ${status}`);
       });
+
+      this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => { })
     }
+
+
+
+    // this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).pipe(
+    //   switchMap(res => this.bookings.update_after_booking_status(this.bookingId, status_log)),
+    // ).subscribe((res) => {
+    //   this.bookingStatus = res.status;
+    //   MaterialService.toast(`Новый статус брони -  ${status}`);
+    // });
+
+
   }
 
 

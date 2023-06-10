@@ -55,4 +55,8 @@ router.patch('/update-after-booking-pay/:id', passport.authenticate('jwt', { ses
 // Создание логированный акт в брони
 router.patch('/update-after-booking-act/:id', passport.authenticate('jwt', { session: false }), controller.update_after_booking_act);
 
+
+// Создание логированный статус в брони
+router.patch('/update-after-booking-status/:id', passport.authenticate('jwt', { session: false }), controller.update_after_booking_status);
+
 module.exports = router;

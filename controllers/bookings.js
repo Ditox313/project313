@@ -388,3 +388,27 @@ module.exports.update_after_booking_act = async function (req, res) {
         errorHandler(res, e);
     }
 };
+
+
+
+
+
+
+// Добавляем статус в бронь для логирования
+module.exports.update_after_booking_status = async function (req, res) {
+    try {
+
+        const updated = req.body;
+
+
+        const carUpdate = await Booking.updateOne(
+            { _id: req.params.id },
+            { $push: { 'booking_life_cycle.2': updated } }
+        )
+
+        // Возвращаем пользователю обновленную позицию 
+        res.status(200).json(carUpdate);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
