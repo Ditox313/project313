@@ -156,14 +156,18 @@ module.exports.update_after_booking_close = async function (req, res) {
 
         const updated = req.body;
 
-
-        // const carUpdate = await Car.updateOne(
-        //     { _id: carId, "bookings._id": bookingIdToUpdate }, // выбираем объект и элемент массива по соответствующим ID
-        //     { $set: { "bookings.$.propertyName": updatedBooking.propertyName } } // обновляем нужное свойство элемента массива
+        // const carUpdate = await Car.find(
+        //     { _id: updated.car._id}, 
+        //     // { $set: { "bookings.$": updated } } 
         // );
 
+        const carUpdate = await Car.updateOne(
+            { _id: updated.car._id, "bookings._id": updated._id }, // выбираем объект и элемент массива по соответствующим ID
+            { $set: { "bookings.$": updated } } 
+        );
+
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(updated);
+        res.status(200).json(carUpdate);
     } catch (e) {
         errorHandler(res, e);
     }

@@ -185,11 +185,8 @@ export class CloseComponent implements OnInit, OnDestroy {
         this.update_after_booking_close$ = this.bookings.update_after_booking_close(this.actualBooking._id, close_info_log).subscribe()
 
         
-
-        // Отправляем финальную бронь в авто
-        // this.car_add_close_booking$ = this.cars.update_after_booking_close(this.actualBooking.car._id, booking).subscribe(res => {
-        //   console.log('111', res)
-        // });
+       
+        
         
 
 
@@ -198,6 +195,7 @@ export class CloseComponent implements OnInit, OnDestroy {
             this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
               MaterialService.toast('Возврат залога');
             });
+
             return res;
           })
         ).pipe(
@@ -208,7 +206,10 @@ export class CloseComponent implements OnInit, OnDestroy {
           })
         ).subscribe((booking) => {
           MaterialService.toast('Бронь закрыта');
-          this.router.navigate(['/bookings-page']);
+           // Отправляем финальную бронь в авто
+            this.car_add_close_booking$ = this.cars.update_after_booking_close(this.actualBooking.car._id, booking).subscribe(res => {
+              this.router.navigate(['/bookings-page']);
+            });
         });
 
       } 
