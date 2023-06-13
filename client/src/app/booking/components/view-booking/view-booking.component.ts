@@ -42,6 +42,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
 
   actualBooking!: Booking;
 
+
   bookingId!: string;
 
   form: any;
@@ -158,6 +159,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
 
 
 
+
   get_user()
   {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
@@ -180,6 +182,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   {
     this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
+      console.log(this.actualBooking)
       
       // Отправляем финальную бронь в авто
       this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
@@ -238,6 +241,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
       if (dicision)
       {
         this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
+          this.actualBooking = res
           this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => { });
         })
 
@@ -255,6 +259,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
       }
 
       this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
+        this.actualBooking = res
         this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => { });
       })
 

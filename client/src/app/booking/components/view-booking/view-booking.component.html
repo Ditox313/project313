@@ -10,8 +10,7 @@
 
         <app-go-back></app-go-back>
     </div>
-
-    <div class="xs_add__car__content">
+    <div class="xs_add__car__content" *ngIf="this.actualBooking && this.responsibleUser">
         <div class="row">
 
             <div id="information" class="col s12">
@@ -220,6 +219,7 @@
                             </div>
                         </div>
 
+
                     </div>
 
 
@@ -273,7 +273,7 @@
                                 </table>
      
                             </div>
-
+                            
                             <h5>Управление</h5>
 
                             <div class="setting_view_info__box" *ngIf="bookingStatus === 'В ожидании'">
@@ -306,6 +306,23 @@
 
 
 
+                            <div class="xs_dop_info_booking" *ngIf="this.actualBooking.booking_life_cycle[1].length > 0 && !this.actualBooking.dop_info_close">
+                                <h5 style="margin-top: 70px;">Дополнительная информация</h5>
+                                <div>
+                                    <div *ngIf="this.actualBooking.booking_life_cycle[1].length > 0">
+                                        <span style="font-size: 18px; margin-right: 15px;">Акт создан: </span>
+                                        <span>{{this.actualBooking.booking_life_cycle[1][0].date}}</span>
+                                    </div>
+                            
+                                    <div *ngIf="this.actualBooking.booking_life_cycle[2].length > 0">
+                                        <span style="font-size: 18px; margin-right: 15px;">Автомобиль был выдан: </span>
+                                        <span>{{this.actualBooking.booking_life_cycle[2][0].data}}</span>
+                                    </div>
+                            
+                                </div>
+                            </div>
+
+
                             <div class="xs_booking_close_info" *ngIf="this.actualBooking.dop_info_close">
                                 <h5>Дополнительная информация</h5>
                                 
@@ -335,7 +352,19 @@
                                     <span>Комментарий:</span>
                                     <span>{{this.actualBooking.dop_info_close.return_part_comment}}</span>
                                 </div>
+
+                                <div *ngIf="this.actualBooking.booking_life_cycle[1].length > 0">
+                                    <span>Акт создан: </span>
+                                    <span>{{this.actualBooking.booking_life_cycle[1][0].date}}</span>
+                                </div>
+                                
+                                <div *ngIf="this.actualBooking.booking_life_cycle[2].length > 0">
+                                    <span>Автомобиль был выдан: </span>
+                                    <span>{{this.actualBooking.booking_life_cycle[2][0].data}}</span>
+                                </div>
+                                
                             </div>
+
 
                             <div class="extend_block" *ngIf="actualBooking.extend.length > 0">
                                 <h5>Продления</h5>
@@ -373,6 +402,7 @@
                                     </table>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -383,4 +413,4 @@
     </div>
 
 </form>
-<app-loader *ngIf="!actualBooking"></app-loader>
+<app-loader *ngIf="!this.actualBooking"></app-loader>

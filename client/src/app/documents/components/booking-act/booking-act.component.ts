@@ -48,7 +48,7 @@ export class BookingActComponent implements OnInit, OnDestroy {
     this.getParams();
     this.getUser();
     this.getById();
-    this.xs_actual_date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+    this.xs_actual_date = this.datePipe.transform(Date.now(), 'dd.MM.yyyy HH:mm:ss');
   }
 
   ngOnDestroy(): void {
@@ -125,6 +125,7 @@ export class BookingActComponent implements OnInit, OnDestroy {
       booking: this.actualBooking,
       bookingId: this.actualBooking._id
     }
+
 
     this.createAct$ = this.documentService.create_booking_act(act).pipe(
       switchMap(res => this.bookings.update_after_booking_act(this.actualBooking._id, act)),
