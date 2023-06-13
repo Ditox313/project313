@@ -182,7 +182,6 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   {
     this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
-      console.log(this.actualBooking)
       
       // Отправляем финальную бронь в авто
       this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});

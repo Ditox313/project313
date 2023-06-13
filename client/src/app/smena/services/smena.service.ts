@@ -35,6 +35,11 @@ export class SmenaService {
   }
 
 
+  // getSmena(): Observable<Smena> {
+  //   return this.http.get<Smena>(`/api/smena/getSmena`);
+  // }
+
+
 
 
 

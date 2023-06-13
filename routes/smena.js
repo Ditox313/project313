@@ -12,6 +12,9 @@ router.post('/create', passport.authenticate('jwt', { session: false }), control
 // Роут на fetch
 router.get('/get-all', passport.authenticate('jwt', { session: false }), controller.fetch);
 
+// Роут на getSmena
+// router.get('/getSmena', passport.authenticate('jwt', { session: false }), controller.getSmena);
+
 // // Роут на remove
 router.delete('/remove/:id', passport.authenticate('jwt', { session: false }), controller.remove);
 

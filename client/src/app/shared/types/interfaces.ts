@@ -309,6 +309,7 @@ export interface Booking {
   dogovor_number__actual?: any
   user?: any;
   booking_life_cycle?: any
+  smenaId?: any
 }
 
 

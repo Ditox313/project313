@@ -180,8 +180,11 @@ const bookingSchema = new Schema({
         required: false,
     },
 
-
-    
+    // Id смены
+    smenaId: {
+        type: Schema.Types.ObjectId,
+        required: false,
+    },
 
 });
 

@@ -11,6 +11,7 @@ import { Client, Client_Law_Fase, MaterialDatepicker, MaterialInstance, Settings
 import { BookingsService } from '../../services/bookings.service';
 import { AccountService } from '../../../account/services/account.service';
 import { ThrowStmt } from '@angular/compiler';
+import { SmenaService } from 'src/app/smena/services/smena.service';
 
 
 @Component({
@@ -123,6 +124,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUser!: User
 
 
+
+
   // Храним референцию модального окна
   @ViewChild('modal') modalRef: ElementRef
   @ViewChild('modal2') modal2Ref: ElementRef
@@ -143,6 +146,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     private documents: DocumentsService,
     private auth: AuthService,
     private AccountService: AccountService,
+    private smenaService: SmenaService,
   ) {}
 
   ngOnInit(): void {
@@ -187,6 +191,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.currentUser$.unsubscribe();
     }
 
+    
     this.modal.destroy();
   }
 
@@ -195,10 +200,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
       this.currentUser = res;
-      
+
        this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
          this.currentUserSetings = res;
        })
+
     })
   }
 

@@ -81,3 +81,24 @@ module.exports.remove = async function (req, res) {
 };
 
 
+
+// Контроллер для getSmena
+module.exports.getSmena = async function (req, res) {
+    try {
+        const smena = await Smena.findOne({ status: 'open' }, (err, doc) => {
+            if (err) {
+                // обработка ошибок
+            } else {
+                console.log(doc); // выводим найденный документ
+            }
+        });
+
+
+        // Возвращаем результат
+        res.status(200).json(smena);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+

@@ -5,6 +5,7 @@ const Client_Law_Fase = require('../models/Clients/Client_Law_Fase');
 const Car = require('../models/Car');
 const Pays = require('../models/Pays');
 const errorHandler = require('../Utils/errorHendler');
+const Smena = require('../models/Smena');
 
 
 
@@ -13,6 +14,9 @@ const errorHandler = require('../Utils/errorHendler');
 // Контроллер для create
 module.exports.create = async function(req, res) {
     try {
+
+        const smena = await Smena.findOne({ status: 'open' });
+
 
         // Ищем номер последнего заказа глобального
         const lastOrder = await Booking.findOne({
@@ -45,7 +49,8 @@ module.exports.create = async function(req, res) {
             dop_info_open: req.body.dop_info_open,
             booking_zalog: req.body.booking_zalog,
             dogovor_number__actual: req.body.dogovor_number__actual,
-            booking_life_cycle: req.body.booking_life_cycle
+            booking_life_cycle: req.body.booking_life_cycle,
+            smenaId: smena._id
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
