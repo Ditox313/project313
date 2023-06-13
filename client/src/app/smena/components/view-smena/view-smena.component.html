@@ -2,7 +2,7 @@
     <div class="xs_smena__top">
         <h1>
             <span class="material-icons">chat</span>
-            <span> Смена №</span>
+            <span *ngIf="actualSmena"> Смена № {{this.actualSmena.order}}</span>
         </h1>
 
         <div class="xs_add__car__top____actions">
@@ -14,7 +14,7 @@
     <div class="xs_smena__content">
         <div class="row">
             <div class="xs_smena__content__box" *ngIf="actualSmena">
-                <table class="striped" >
+                <table class="striped">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -24,45 +24,195 @@
                             <th *ngIf="actualSmena.status !== 'open'">Дата закрытия</th>
                             <th *ngIf="actualSmena.status == 'open'">Действия</th>
                         </tr>
-                
+
                     </thead>
-                
+
                     <tbody>
                         <tr>
-                            <td >
+                            <td>
                                 {{actualSmena.order}}
                             </td>
-                
-                            <td >
+
+                            <td>
                                 {{actualSmena.open_date}} {{actualSmena.open_date_time}}
                             </td>
-                
-                            <td >
+
+                            <td>
                                 {{actualSmena.responsible}}
                             </td>
-                
+
                             <td *ngIf="actualSmena.status === 'open'" style="color: green; font-weight: 600;">
                                 Открыта
                             </td>
-                
+
                             <td *ngIf="actualSmena.status !== 'open'" style="color: red; font-weight: 600;">
                                 Закрыта
                             </td>
-                
-                         
-                            <td  *ngIf="actualSmena.status !== 'open'">
+
+
+                            <td *ngIf="actualSmena.status !== 'open'">
                                 {{actualSmena.close_date}} {{actualSmena.close_date_time}}
                             </td>
-                
-                
+
+
                             <td class="xs_smena_view_actions ">
-                                <span (click)="closeSmena($event)" *ngIf="actualSmena.status == 'open'">Закрыть смену</span>
+                                <span (click)="closeSmena($event)" *ngIf="actualSmena.status == 'open'">Закрыть
+                                    смену</span>
                             </td>
                         </tr>
                     </tbody>
-                
+
                 </table>
             </div>
+
+            <div class="xs_smena__content___info">
+                <div *ngIf="xsbookings">
+                    <h5>Информация о бронях за смену</h5>
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <!-- <th>ID</th> -->
+                                <th>Статус</th>
+                                <th>Создана</th>
+                                <th>Авто</th>
+                                <th>Клиент</th>
+                                <th>Начало</th>
+                                <th>Конец</th>
+                                <th>Суток</th>
+                                <th>Выдача</th>
+                                <th>Прием</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody *ngIf="xsbookings.length !== 0; else empty">
+                            <tr *ngFor="let xsbooking of xsbookings; let i = index" class="xs_partners_tr xsbooking"
+                                [class.finish_booking]="this.todayDateFormat === (xsbooking.booking_end | date : 'yyyy-MM-dd') && !xsbooking.dop_info_close"
+                                [class.you_need_to_give_out_a_car]="you_need_to_give_out_a_car(xsbooking) && !xsbooking.dop_info_close
+                                && xsbooking.status === 'В ожидании'">
+                                <!-- <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.order}}</a>
+                                </td> -->
+
+                                <td *ngIf="xsbooking.status === 'В ожидании'"
+                                    style="display: flex; align-items: center; margin-top: 4px;">
+                                    <a [routerLink]="['/view-booking',xsbooking._id]"
+                                        class="xs_booking_btn btn_waiting">{{xsbooking.status}}</a>
+
+                                    <span title="Автомобиль должен быть выдан. Время ожидания истекло!"
+                                        class="material-icons"
+                                        *ngIf="you_need_to_give_out_a_car(xsbooking) && !xsbooking.dop_info_close && xsbooking.status === 'В ожидании'">
+                                        lightbulb_outline
+                                    </span>
+
+                                </td>
+
+                                <td *ngIf="xsbooking.status === 'В аренде'" style="display: flex; margin-top: 4px;">
+                                    <a [routerLink]="['/view-booking',xsbooking._id]"
+                                        class=" xs_booking_btn btn_v_arende">{{xsbooking.status}}</a>
+
+                                    <span title="Бронь подходит к концу" class="material-icons"
+                                        *ngIf="this.todayDateFormat === (xsbooking.booking_end | date : 'yyyy-MM-dd') && !xsbooking.dop_info_close && xsbooking.status === 'В аренде'">
+                                        lightbulb_outline
+                                    </span>
+                                </td>
+                                <td *ngIf="xsbooking.status === 'Закрыта'" style="display: flex; margin-top: 4px;">
+                                    <a [routerLink]="['/view-booking',xsbooking._id]"
+                                        class="xs_booking_btn btn_close">{{xsbooking.status}}</a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.date | date : 'd MMMM
+                                        y, H:mm'}}</a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.car.marka}}
+                                        {{xsbooking.car.model}}
+                                        ({{xsbooking.car.number}})</a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]"
+                                        *ngIf="xsbooking.client.type === 'fiz'">{{xsbooking.client.surname}}
+                                        {{xsbooking.client.name}}</a>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]"
+                                        *ngIf="xsbooking.client.type === 'law'">{{xsbooking.client.short_name}}
+                                        {{xsbooking.client.name}}</a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.booking_start | date :
+                                        'd MMMM y,
+                                        H:mm'}}</a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{ xsbooking.booking_end | date :
+                                        'd MMMM y,
+                                        H:mm'}}</a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.booking_days | number:
+                                        '1.0-0'}}</a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{ xsbooking.place_start}}</a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{ xsbooking.place_end}}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        <ng-template #empty>
+                            <div style="font-size: 20px; " class="xs_empty ">
+                                Нет броней...
+                            </div>
+                        </ng-template>
+                    </table>
+                </div>
+
+                <div>
+                    <h5>Информация по автомобилям</h5>
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th>Изображение</th>
+                                <th>Марка</th>
+                                <th>Статус</th>
+                                <th>Период</th>
+                                <th>Тариф</th>
+                                <th>Стоимость/Cутки</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody *ngIf="actualSmena && xsbookings">
+                            <tr *ngFor="let xsbooking of xsbookings" class="xs_cars_td">
+                                <td>
+                                    <a [routerLink]="['/show-car','edit',xsbooking.car._id]">
+                                        <img src="{{xsbooking.car.previewSrc}} " alt="Обложка авто " class="xs_car_list_img ">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/show-car','edit',xsbooking.car._id]">
+                                        {{xsbooking.car.marka}} {{xsbooking.car.model}} ({{xsbooking.car.number}})
+                                    </a>
+                                </td>
+                                <td style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
+                                    <span *ngFor="let item of xsbooking.car.bookings">{{item.status}}</span>
+                                </td>
+
+                                <td>
+                                    {{xsbooking.booking_start | date : 'dd.MM.yyyy'}}-{{xsbooking.booking_end | date : 'dd.MM.yyyy'}}
+                                </td>
+
+                                <td>
+                                    {{xsbooking.tariff}}
+                                </td>
+                            </tr>
+                        </tbody>
+        
+                    </table>
+                </div>
+            </div>
+
         </div>
 
 

@@ -29,6 +29,9 @@ router.patch('/close/:id', passport.authenticate('jwt', { session: false }), con
 // Роут на getById
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getById);
 
+// Роут на getByIdSmena
+router.get('/actual-bookings/:id', passport.authenticate('jwt', { session: false }), controller.getByIdSmena);
+
 // Роут на getStatusBooking
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getStatusBooking);
 

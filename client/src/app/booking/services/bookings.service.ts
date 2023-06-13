@@ -94,4 +94,8 @@ export class BookingsService {
   update_after_booking_close(id: string, data: any): Observable<any> {
     return this.http.patch<any>(`/api/bookings/update-after-booking-close/${id}`, data);
   }
+
+  getByIdSmena(id: string): Observable<Booking> {
+    return this.http.get<Booking>(`/api/bookings/actual-bookings/${id}`);
+  }
 }

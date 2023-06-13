@@ -323,11 +323,6 @@ const carSchema = new Schema({
     },
 
 
-    status_booking: {
-        type: String,
-        default: '',
-        required: false,
-    },
 
 
     bookings: {

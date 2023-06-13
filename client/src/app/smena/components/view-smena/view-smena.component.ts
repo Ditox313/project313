@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Settings, Smena, User } from 'src/app/shared/types/interfaces';
+import { Booking, Car, Settings, Smena, User } from 'src/app/shared/types/interfaces';
 import { SmenaService } from '../../services/smena.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -39,9 +39,23 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
   close_date_time: string = null
 
 
+  // Получаем брони по id смены
+  actualBookings$:Subscription
+  xsbookings!: any
+
+
   //Получаем текущую смену
   actualSmena$: Subscription
   actualSmena!: Smena
+
+
+  // Храним автомобили
+  xscars$: Subscription
+  xscars: Car[] = [];
+
+
+  todayDate: any = new Date().toDateString();
+  todayDateFormat = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
 
   constructor(
     private smenaService: SmenaService,
@@ -69,6 +83,9 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
     if (this.closeSmena$) {
       this.closeSmena$.unsubscribe();
     }
+    if (this.xscars$) {
+      this.xscars$.unsubscribe();
+    }
   }
 
   get_user() {
@@ -91,19 +108,31 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
   getBookingById() {
     this.actualSmena$ = this.smenaService.getById(this.smenaId).subscribe(res => {
       this.actualSmena = res
+
+      this.actualBookings$ = this.bookings.getByIdSmena(this.smenaId).subscribe(res =>{
+        this.xsbookings = res
+      })
     })
   }
 
+  you_need_to_give_out_a_car(data) {
+    let xs_a = new Date().toISOString();
+    let xs_b = new Date(data.booking_start).toISOString();
+
+    return xs_a > xs_b;
+  }
+
+
+
   closeSmena(event)
   {
-    
-
     const data = {
       close_date: this.datePipe.transform(new Date(), 'dd.MM.yyyy'),
       close_date_time: this.datePipe.transform(new Date(), 'HH:mm:ss')
     }
+
+
     this.closeSmena$ = this.smenaService.close(this.smenaId, data).subscribe(res =>{
-      console.log(res)
       this.actualSmena = res
     })
   }

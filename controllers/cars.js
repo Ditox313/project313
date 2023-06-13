@@ -54,9 +54,13 @@ module.exports.create = async function(req, res) {
             zalog: req.body.zalog,
             zalog_mej: req.body.zalog_mej,
             zalog_rus: req.body.zalog_rus,
-            status_booking: req.body.status_booking,
-            // bookings: req.body.bookings,
+            // status_booking: req.body.status_booking,
         }).save();
+
+
+    
+
+
 
         // Возвращаем пользователю позицию которую создали 
         res.status(201).json(car);

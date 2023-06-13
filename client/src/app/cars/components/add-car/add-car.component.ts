@@ -210,8 +210,7 @@ export class AddCarComponent implements OnInit,AfterViewInit, OnDestroy {
       zalog: this.form.value.zalog,
       zalog_mej: this.form.value.zalog_mej,
       zalog_rus: this.form.value.zalog_rus,
-      status_booking: 'Свободен',
-      // bookings: []
+      
     };
 
 

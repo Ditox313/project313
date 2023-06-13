@@ -1810,3 +1810,18 @@ input[type="checkbox"]
     font-size: 18px;
     border-radius: 5px;
 }
+
+.xs_smena__content___info
+{
+    display: flex;
+    margin-top: 70px;
+    justify-content: space-between;
+}
+.xs_smena__content___info > div
+{
+    width: 49%;
+}
+
+.xs_smena__content___info>div td a{
+    font-size: 12px;
+}
