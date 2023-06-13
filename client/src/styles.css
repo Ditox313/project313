@@ -1799,3 +1799,14 @@ input[type="checkbox"]
     display: flex;
     align-items: center;
 }
+
+.xs_smena_view_actions > span:first-child
+{
+    display: flex;
+    align-items: center;
+    background-color: red;
+    padding: 5px 15px;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 5px;
+}

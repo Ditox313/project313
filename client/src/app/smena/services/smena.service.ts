@@ -35,17 +35,14 @@ export class SmenaService {
   }
 
 
-  // getSmena(): Observable<Smena> {
-  //   return this.http.get<Smena>(`/api/smena/getSmena`);
-  // }
+
+  getById(id: string): Observable<Smena> {
+    return this.http.get<Smena>(`/api/smena/${id}`);
+  }
 
 
-
-
-
-  // close(id: string, xsbooking: Booking): Observable<Booking> {
-  //   xsbooking._id = id;
-  //   return this.http.patch<Booking>(`/api/bookings/close/${id}`, xsbooking);
-  // }
+  close(id: string, data): Observable<Smena> {
+    return this.http.patch<Smena>(`/api/smena/close/${id}`, data);
+  }
 
 }

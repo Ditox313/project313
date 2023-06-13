@@ -102,3 +102,40 @@ module.exports.getSmena = async function (req, res) {
 };
 
 
+
+// Контроллер для getById
+module.exports.getById = async function (req, res) {
+    try {
+        const smena = await Smena.findById(req.params.id); //Ищем категорию по id из переданных параметров
+        res.status(200).json(smena);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+
+// Контроллер для close
+module.exports.close = async function (req, res) {
+    try {
+
+        const smena = await Smena.updateMany(
+            { _id: req.params.id }, // выбираем объект и элемент массива по соответствующим ID
+            // { $set: { "status": 'close' }, { "close_date": req.body.close_date} }
+            { $set: { "status": 'close', "close_date": req.body.close_date, "close_date_time": req.body.close_date_time, } }
+        );
+
+        const smena_for_responce = await Smena.findOne(
+            { _id: req.params.id }, // выбираем объект и элемент массива по соответствующим ID
+        );
+
+
+        // Возвращаем результат
+        res.status(200).json(smena_for_responce);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};

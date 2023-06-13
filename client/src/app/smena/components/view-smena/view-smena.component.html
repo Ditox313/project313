@@ -12,6 +12,61 @@
 
 
     <div class="xs_smena__content">
-        <!-- <app-loader *ngIf="loading"></app-loader> -->
+        <div class="row">
+            <div class="xs_smena__content__box" *ngIf="actualSmena">
+                <table class="striped" >
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Дата открытия</th>
+                            <th>Ответственный</th>
+                            <th>Статус</th>
+                            <th *ngIf="actualSmena.status !== 'open'">Дата закрытия</th>
+                            <th *ngIf="actualSmena.status == 'open'">Действия</th>
+                        </tr>
+                
+                    </thead>
+                
+                    <tbody>
+                        <tr>
+                            <td >
+                                {{actualSmena.order}}
+                            </td>
+                
+                            <td >
+                                {{actualSmena.open_date}} {{actualSmena.open_date_time}}
+                            </td>
+                
+                            <td >
+                                {{actualSmena.responsible}}
+                            </td>
+                
+                            <td *ngIf="actualSmena.status === 'open'" style="color: green; font-weight: 600;">
+                                Открыта
+                            </td>
+                
+                            <td *ngIf="actualSmena.status !== 'open'" style="color: red; font-weight: 600;">
+                                Закрыта
+                            </td>
+                
+                         
+                            <td  *ngIf="actualSmena.status !== 'open'">
+                                {{actualSmena.close_date}} {{actualSmena.close_date_time}}
+                            </td>
+                
+                
+                            <td class="xs_smena_view_actions ">
+                                <span (click)="closeSmena($event)" *ngIf="actualSmena.status == 'open'">Закрыть смену</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                
+                </table>
+            </div>
+        </div>
+
+
+
+        <app-loader *ngIf="!this.actualSmena"></app-loader>
     </div>
 </div>
