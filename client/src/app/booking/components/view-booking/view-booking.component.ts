@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { AccountService } from '../../../account/services/account.service';
 import { DatePipe } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
+import { CarsService } from 'src/app/cars/services/cars.service';
 
 @Component({
   selector: 'app-view-booking',
@@ -99,7 +100,8 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     private ducumentsServise: DocumentsService,
     private auth: AuthService,
     private AccountService: AccountService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private cars: CarsService
   ) {}
 
   ngOnInit(): void {
@@ -147,6 +149,8 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
   get_user()
   {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
@@ -170,6 +174,8 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
       
+      // Отправляем финальную бронь в авто
+      this.cars.update_after_booking_close(res.car._id, res).subscribe(res => {});
 
       this.responsibleUser$ = this.auth.get_user_by_id(this.actualBooking.user).subscribe(user => {
         this.responsibleUser = user;
@@ -246,12 +252,6 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
 
 
 
-    // this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).pipe(
-    //   switchMap(res => this.bookings.update_after_booking_status(this.bookingId, status_log)),
-    // ).subscribe((res) => {
-    //   this.bookingStatus = res.status;
-    //   MaterialService.toast(`Новый статус брони -  ${status}`);
-    // });
 
 
   }

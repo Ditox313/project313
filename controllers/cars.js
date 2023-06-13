@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const Car = require('../models/Car');
 const errorHandler = require('../Utils/errorHendler');
+const Booking = require('../models/Booking');
 
 
 
@@ -54,7 +55,7 @@ module.exports.create = async function(req, res) {
             zalog_mej: req.body.zalog_mej,
             zalog_rus: req.body.zalog_rus,
             status_booking: req.body.status_booking,
-            bookings: req.body.bookings,
+            // bookings: req.body.bookings,
         }).save();
 
         // Возвращаем пользователю позицию которую создали 
@@ -134,11 +135,7 @@ module.exports.update_after_booking_create = async function (req, res) {
         const carUpdate = await Car.updateOne(
             { _id: updated.car._id },
             { $push: { bookings: updated }, $set: { status_booking: 'Бронь' } }
-        ).then(updateResult => {
-            console.log('Результат обновления:', updateResult);
-        }).catch(error => {
-            console.error('Ошибка при обновлении:', error);
-        });
+        )
 
         // Возвращаем пользователю обновленную позицию 
         res.status(200).json(carUpdate);
@@ -156,13 +153,10 @@ module.exports.update_after_booking_close = async function (req, res) {
 
         const updated = req.body;
 
-        // const carUpdate = await Car.find(
-        //     { _id: updated.car._id}, 
-        //     // { $set: { "bookings.$": updated } } 
-        // );
+
 
         const carUpdate = await Car.updateOne(
-            { _id: updated.car._id, "bookings._id": updated._id }, // выбираем объект и элемент массива по соответствующим ID
+            { _id: req.params.id, "bookings._id": updated._id }, // выбираем объект и элемент массива по соответствующим ID
             { $set: { "bookings.$": updated } } 
         );
 

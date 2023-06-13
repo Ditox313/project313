@@ -206,10 +206,11 @@ export class CloseComponent implements OnInit, OnDestroy {
           })
         ).subscribe((booking) => {
           MaterialService.toast('Бронь закрыта');
+          this.router.navigate(['/bookings-page']);
            // Отправляем финальную бронь в авто
-            this.car_add_close_booking$ = this.cars.update_after_booking_close(this.actualBooking.car._id, booking).subscribe(res => {
-              this.router.navigate(['/bookings-page']);
-            });
+            // this.car_add_close_booking$ = this.cars.update_after_booking_close(this.actualBooking.car._id, booking).subscribe(res => {
+            //   this.router.navigate(['/bookings-page']);
+            // });
         });
 
       } 
@@ -259,6 +260,7 @@ export class CloseComponent implements OnInit, OnDestroy {
         ).subscribe((booking) => {
           MaterialService.toast('Бронь закрыта');
           this.router.navigate(['/bookings-page']);
+         
         });
       } 
     }
@@ -317,6 +319,7 @@ export class CloseComponent implements OnInit, OnDestroy {
         ).subscribe((booking) => {
           MaterialService.toast('Бронь закрыта');
           this.router.navigate(['/bookings-page']);
+          
         });
 
       } 
@@ -364,7 +367,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           })
         ).subscribe((booking) => {
           MaterialService.toast('Бронь закрыта');
-          this.router.navigate(['/bookings-page']);
+        
         });
       } 
     else if (!this.form.value.clear_auto && this.form.value.return_part) {

@@ -346,17 +346,13 @@ module.exports.update_after_booking_pay = async function (req, res) {
         const updated = req.body;
 
 
-        const carUpdate = await Booking.updateOne(
+        const bookingUpdate = await Booking.updateOne(
             { _id: updated.bookingId },
             { $push: { 'booking_life_cycle.0': updated } }
-        ).then(updateResult => {
-            console.log('Результат обновления:', updateResult);
-        }).catch(error => {
-            console.error('Ошибка при обновлении:', error);
-        });
+        )
 
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(carUpdate);
+        res.status(200).json(bookingUpdate);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -373,7 +369,7 @@ module.exports.update_after_booking_act = async function (req, res) {
         const updated = req.body;
 
 
-        const carUpdate = await Booking.updateOne(
+        const bookingUpdate = await Booking.updateOne(
             { _id: updated.bookingId },
             { $push: { 'booking_life_cycle.1': updated } }
         ).then(updateResult => {
@@ -383,7 +379,7 @@ module.exports.update_after_booking_act = async function (req, res) {
         });
 
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(carUpdate);
+        res.status(200).json(bookingUpdate);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -401,13 +397,13 @@ module.exports.update_after_booking_status = async function (req, res) {
         const updated = req.body;
 
 
-        const carUpdate = await Booking.updateOne(
+        const bookingUpdate = await Booking.updateOne(
             { _id: req.params.id },
             { $push: { 'booking_life_cycle.2': updated } }
         )
 
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(carUpdate);
+        res.status(200).json(bookingUpdate);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -425,13 +421,13 @@ module.exports.update_after_booking_close = async function (req, res) {
         const updated = req.body;
 
 
-        const carUpdate = await Booking.updateOne(
+        const bookingUpdate = await Booking.updateOne(
             { _id: req.params.id },
             { $push: { 'booking_life_cycle.3': updated } }
         )
 
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(carUpdate);
+        res.status(200).json(bookingUpdate);
     } catch (e) {
         errorHandler(res, e);
     }

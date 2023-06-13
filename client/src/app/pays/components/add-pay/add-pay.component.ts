@@ -217,6 +217,8 @@ export class AddPayComponent implements OnInit, OnDestroy {
       bookingId: this.bookingId,
     };
 
+
+
  
     this.subCreatePay$ = this.pays.create(pay).pipe(
       switchMap(res => this.pays.create(pay_2)),
