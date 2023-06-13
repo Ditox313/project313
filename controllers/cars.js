@@ -148,7 +148,7 @@ module.exports.update_after_booking_create = async function (req, res) {
 
 
 // При закрытии брони добаляем инфу в авто
-module.exports.update_after_booking_close = async function (req, res) {
+module.exports.updateBookingInCar = async function (req, res) {
     try {
 
         const updated = req.body;

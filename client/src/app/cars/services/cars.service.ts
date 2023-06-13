@@ -130,8 +130,8 @@ export class CarsService {
       return this.http.patch<any>(`/api/cars/update-after-booking-create/${id}`, data);
    }
 
-   update_after_booking_close(id: string, data: Booking): Observable<any> {
-      return this.http.patch<any>(`/api/cars/update-after-booking-close/${id}`, data);
+   updateBookingInCar(id: string, data: Booking): Observable<any> {
+      return this.http.patch<any>(`/api/cars/update-booking-in-car/${id}`, data);
    }
 
    
