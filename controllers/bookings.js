@@ -372,11 +372,7 @@ module.exports.update_after_booking_act = async function (req, res) {
         const bookingUpdate = await Booking.updateOne(
             { _id: updated.bookingId },
             { $push: { 'booking_life_cycle.1': updated } }
-        ).then(updateResult => {
-            console.log('Результат обновления:', updateResult);
-        }).catch(error => {
-            console.error('Ошибка при обновлении:', error);
-        });
+        )
 
         // Возвращаем пользователю обновленную позицию 
         res.status(200).json(bookingUpdate);
@@ -402,8 +398,12 @@ module.exports.update_after_booking_status = async function (req, res) {
             { $push: { 'booking_life_cycle.2': updated } }
         )
 
+        const bookingUpdateFromResponce = await Booking.findOne(
+            { _id: req.params.id },
+        )
+
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(bookingUpdate);
+        res.status(200).json(bookingUpdateFromResponce);
     } catch (e) {
         errorHandler(res, e);
     }

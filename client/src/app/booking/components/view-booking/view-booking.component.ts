@@ -90,6 +90,10 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   update_after_booking_status$: Subscription
 
 
+  // Обновляем бронь в автомобиле
+  updateBookingInCar$: Subscription
+
+
   
 
   constructor(
@@ -147,6 +151,9 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     if (this.update_after_booking_status$) {
       this.update_after_booking_status$.unsubscribe();
     }
+    if (this.updateBookingInCar$) {
+      this.updateBookingInCar$.unsubscribe();
+    }
   }
 
 
@@ -175,7 +182,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
       this.actualBooking = res;
       
       // Отправляем финальную бронь в авто
-      this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
+      this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
 
       this.responsibleUser$ = this.auth.get_user_by_id(this.actualBooking.user).subscribe(user => {
         this.responsibleUser = user;
@@ -218,7 +225,6 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
   toggleStatus(status: string) {
 
     
-    
     if (+this.actualBooking.paidCount < (+this.summa.summaFull))
     {
       const dicision = window.confirm(`Бронь не оплачена! Вы уверены что хотите выдать автомобиль?`);
@@ -231,13 +237,15 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
 
       if (dicision)
       {
+        this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
+          this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => { });
+        })
+
         this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
           this.bookingStatus = res.status;
           MaterialService.toast(`Новый статус брони -  ${status}`);
-          this.cars.updateBookingInCar(res.car._id, res).subscribe(res => { });
         });
 
-        this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res=> {})
       }
     }
     else{
@@ -246,19 +254,15 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
         data: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss')
       }
 
+      this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
+        this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => { });
+      })
+
       this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
         this.bookingStatus = res.status;
         MaterialService.toast(`Новый статус брони -  ${status}`);
-        this.cars.updateBookingInCar(res.car._id, res).subscribe(res => { });
       });
-
-      this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => { })
     }
-
-
-
-
-
   }
 
 
