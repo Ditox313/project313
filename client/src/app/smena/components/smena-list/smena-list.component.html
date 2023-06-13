@@ -31,31 +31,31 @@
         
             <tbody>
                 <tr  *ngFor="let smena of smenas">
-                    <td>
+                    <td [routerLink]="['/view-smena',smena._id]">
                         {{smena.order}}
                     </td>
 
-                    <td>
+                    <td [routerLink]="['/view-smena',smena._id]">
                         {{smena.open_date}} {{smena.open_date_time}}
                     </td>
 
-                    <td>
+                    <td [routerLink]="['/view-smena',smena._id]">
                         {{smena.responsible}}
                     </td>
 
-                    <td *ngIf="smena.status === 'open'">
+                    <td *ngIf="smena.status === 'open'" style="color: green; font-weight: 600;" [routerLink]="['/view-smena',smena._id]">
                         Открыта
                     </td>
 
-                    <td *ngIf="smena.status !== 'open'">
+                    <td *ngIf="smena.status !== 'open'" style="color: red; font-weight: 600;" [routerLink]="['/view-smena',smena._id]">
                         Закрыта
                     </td>
 
-                    <td *ngIf="!smena.close_date">
+                    <td [routerLink]="['/view-smena',smena._id]" *ngIf="!smena.close_date">
                         ...
                     </td>
 
-                    <td *ngIf="smena.close_date">
+                    <td [routerLink]="['/view-smena',smena._id]" *ngIf="smena.close_date">
                         {{smena.close_date}} {{smena.close_date_time}}
                     </td>
         

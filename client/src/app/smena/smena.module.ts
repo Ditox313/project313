@@ -11,6 +11,7 @@ import { GoBackModule } from '../shared/modules/ga-back/go-back.module';
 import { SmenaListComponent } from './components/smena-list/smena-list.component';
 import { AddSmenaComponent } from './components/add-smena/add-smena.component';
 import { SmenaService } from './services/smena.service';
+import { ViewSmenaComponent } from './components/view-smena/view-smena.component';
 
 
 
@@ -22,6 +23,7 @@ const routes = [
     children: [
       { path: 'smena-list', component: SmenaListComponent },
       { path: 'add-smena', component: AddSmenaComponent },
+      { path: 'view-smena/:id', component: ViewSmenaComponent },
     ],
   },
 ];
@@ -30,7 +32,8 @@ const routes = [
 @NgModule({
   declarations: [
     SmenaListComponent,
-    AddSmenaComponent
+    AddSmenaComponent,
+    ViewSmenaComponent
   ],
   imports: [
     CommonModule,

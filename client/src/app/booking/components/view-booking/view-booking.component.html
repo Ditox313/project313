@@ -27,9 +27,6 @@
                                 <span> <strong>{{responsibleUser.name}} {{responsibleUser.secondName}}</strong> </span>
                             </div>
 
-                            <div *ngIf="responsibleUser">
-                                <span> <strong>{{responsibleUser.name}} {{responsibleUser.secondName}}</strong> </span>
-                            </div>
                             <div>
                                 <span>Статус:</span>
                                 <span>
@@ -365,6 +362,11 @@
                                 <div *ngIf="this.actualBooking.booking_life_cycle[2].length > 0">
                                     <span>Автомобиль был выдан: </span>
                                     <span>{{this.actualBooking.booking_life_cycle[2][0].data}}</span>
+                                </div>
+
+                                <div *ngIf="this.actualBooking.booking_life_cycle[3].length > 0">
+                                    <span>Бронь закрыта в : </span>
+                                    <span>{{this.actualBooking.booking_life_cycle[3][0].date}}</span>
                                 </div>
                                 
                             </div>
