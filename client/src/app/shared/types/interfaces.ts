@@ -343,6 +343,7 @@ export interface Pay {
   typePay?: any;
   bookingId?: any;
   order?: any;
+  smenaId?: any;
 }
 
 

@@ -239,7 +239,7 @@
                                 <td [routerLink]="['/show-car','edit',car._id]"
                                     style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
-                                        <div style="font-size: 14px;">{{booking.booking_zalog}} руб / {{booking.booking_life_cycle[0][1].typePay}}</div>
+                                        <div style="font-size: 14px;" *ngIf="booking.booking_life_cycle[0].length > 0">{{booking.booking_zalog}} руб / {{booking.booking_life_cycle[0][1].typePay}}</div>
                                     </div>
                                 
                                     <div *ngIf="filteredBookings(car.bookings).length === 0">...</div>
@@ -248,7 +248,7 @@
                                 <td [routerLink]="['/show-car','edit',car._id]"
                                     style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
-                                        <div style="font-size: 14px;">{{(+booking.summaFull) - (+booking.booking_zalog)}} руб / {{booking.booking_life_cycle[0][0].typePay}}</div>
+                                        <div style="font-size: 14px;" *ngIf="booking.booking_life_cycle[0].length > 0">{{(+booking.summaFull) - (+booking.booking_zalog)}} руб / {{booking.booking_life_cycle[0][0].typePay}}</div>
                                     </div>
                                 
                                     <div *ngIf="filteredBookings(car.bookings).length === 0">...</div>

@@ -50,6 +50,12 @@ const paySchema = new Schema({
         default: 1
     },
 
+    smenaId: {
+        type: String,
+        required: true,
+        default: 1
+    },
+
 
 
 });
