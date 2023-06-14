@@ -133,7 +133,8 @@ module.exports.updateActClicked = async function (req, res) {
                     additional_services_moyka: updated.dop_info_open.additional_services_moyka,
                     additional_services_antiradar: updated.dop_info_open.additional_services_antiradar,
                     isCustomePlaceStart: updated.dop_info_open.isCustomePlaceStart,
-                    isCustomeZalog: updated.dop_info_open.isCustomeZalog
+                    isCustomeZalog: updated.dop_info_open.isCustomeZalog,
+                    tarifPrice: updated.dop_info_open.tarifPrice,
                 }
             },
         }

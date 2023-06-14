@@ -138,6 +138,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   modal3: MaterialInstance
 
 
+
+  // Цена тарифа
+  tarifPrice!: String
+
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
@@ -1875,13 +1880,71 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  checkedTarif()
+  {
+  
+    if (this.form.value.tariff === 'Город')
+    {
+      if (this.summa.booking_days < 3) {
+        this.tarifPrice = this.summa.car.days_1_2
+      }
+      if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        this.tarifPrice = this.summa.car.days_3_7
+      }
+      if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        this.tarifPrice = this.summa.car.days_8_14
+      }
+      if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        this.tarifPrice = this.summa.car.days_15_30
+      }
+      if (this.summa.booking_days >= 31) {
+        this.tarifPrice = this.summa.car.days_31_more
+      }
+    }
+    else if (this.form.value.tariff === 'Межгород')
+      {
+        if (this.summa.booking_days < 3) {
+          this.tarifPrice = this.summa.car.mezgorod
+        }
+        if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+          this.tarifPrice = this.summa.car.mezgorod
+        }
+        if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+          this.tarifPrice = this.summa.car.mezgorod
+        }
+        if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+          this.tarifPrice = this.summa.car.mezgorod
+        }
+        if (this.summa.booking_days >= 31) {
+          this.tarifPrice = this.summa.car.mezgorod
+        }
+    }
+    else if (this.form.value.tariff === 'Россия') {
+      if (this.summa.booking_days < 3) {
+        this.tarifPrice = this.summa.car.russia
+      }
+      if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        this.tarifPrice = this.summa.car.russia
+      }
+      if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        this.tarifPrice = this.summa.car.russia
+      }
+      if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        this.tarifPrice = this.summa.car.russia
+      }
+      if (this.summa.booking_days >= 31) {
+        this.tarifPrice = this.summa.car.russia
+      }
+    }
+  }
+
 
 
   onSubmit() {
     // Получаем значения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
-
+    this.checkedTarif()
     
 
     if (this.xs_actual_client_type === 'fiz')
@@ -1925,7 +1988,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+              tarifPrice: this.tarifPrice
             },
             booking_zalog: this.summa.car.zalog,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -1996,7 +2060,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+              tarifPrice: this.tarifPrice
             },
             booking_zalog: this.summa.car.zalog_mej,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -2060,7 +2125,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+              tarifPrice: this.tarifPrice
             },
             booking_zalog: this.summa.car.zalog_rus,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -2125,7 +2191,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_moyka: this.form.value.additional_services_moyka || false,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-            isCustomeZalog: this.form.value.isCustomeZalogControlclick
+            isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+            tarifPrice: this.tarifPrice
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -2194,7 +2261,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+              tarifPrice: this.tarifPrice
             },
             booking_zalog: this.summa.car.zalog,
             booking_life_cycle: [
@@ -2258,7 +2326,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+              tarifPrice: this.tarifPrice
             },
             booking_zalog: this.summa.car.zalog_mej,
             booking_life_cycle: [
@@ -2321,7 +2390,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               additional_services_moyka: this.form.value.additional_services_moyka || false,
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+              tarifPrice: this.tarifPrice
             },
             booking_zalog: this.summa.car.zalog_rus,
             booking_life_cycle: [
@@ -2385,7 +2455,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             additional_services_moyka: this.form.value.additional_services_moyka || false,
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-            isCustomeZalog: this.form.value.isCustomeZalogControlclick
+            isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+            tarifPrice: this.tarifPrice
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           booking_life_cycle: [

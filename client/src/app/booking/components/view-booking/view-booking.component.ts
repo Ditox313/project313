@@ -364,7 +364,8 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
         additional_services_moyka: this.actualBooking.dop_info_open.additional_services_moyka,
         additional_services_antiradar: this.actualBooking.dop_info_open.additional_services_antiradar,
         isCustomePlaceStart: this.actualBooking.dop_info_open.isCustomePlaceStart,
-        isCustomeZalog: this.actualBooking.dop_info_open.isCustomeZalog
+        isCustomeZalog: this.actualBooking.dop_info_open.isCustomeZalog,
+        tarifPrice: this.actualBooking.dop_info_open.tarifPrice,
       },
     };
 

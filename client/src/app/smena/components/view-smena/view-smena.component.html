@@ -178,6 +178,7 @@
                                 <th>Марка</th>
                                 <th>Статус</th>
                                 <th>Время аренды</th>
+                                <th>Тариф</th>
                             </tr>
 
                         </thead>
@@ -197,19 +198,27 @@
                                
 
 
-                                <td style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                <td [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
-                                        <span *ngIf="booking.status === 'В аренде'">ЗАНЯТ</span>
-                                        <span *ngIf="booking.status === 'В ожидании'">БРОНЬ</span>
+                                        <span *ngIf="booking.status === 'В аренде'" style="color: red; font-weight: 600;">ЗАНЯТ</span>
+                                        <span *ngIf="booking.status === 'В ожидании'" style="color: orange; font-weight: 600;">БРОНЬ</span>
                                     </div>
                                 
-                                    <div *ngIf="filteredBookings(car.bookings).length === 0">СВОБОДЕН</div>
+                                    <div *ngIf="filteredBookings(car.bookings).length === 0" style="color: green; font-weight: 600;">СВОБОДЕН</div>
                                 </td>
 
 
-                                <td style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                <td [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
                                         <div style="font-size: 14px;">{{booking.booking_start | date : 'd MMMM y, H:mm'}} - {{booking.booking_end | date : 'd MMMM y, H:mm'}}</div>
+                                    </div>
+                                
+                                    <div *ngIf="filteredBookings(car.bookings).length === 0">...</div>
+                                </td>
+
+                                <td [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                    <div *ngFor="let booking of filteredBookings(car.bookings)">
+                                        <div style="font-size: 14px;">{{booking.tariff}}</div>
                                     </div>
                                 
                                     <div *ngIf="filteredBookings(car.bookings).length === 0">...</div>
