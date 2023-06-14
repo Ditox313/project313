@@ -1827,7 +1827,12 @@ input[type="checkbox"]
 .xs_smena__content___info>div:last-child {
     width: 100%;
 }
+/* .xs_cars_td th {
+    width: auto !important;
+}
 
-/* .xs_smena__content___info>div td a{
-    font-size: 12px;
+
+.xs_cars_td td
+{
+    width: 20% !important;
 } */

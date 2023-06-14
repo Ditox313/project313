@@ -93,6 +93,8 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
     return xsbookings
   }
 
+
+
   get_user() {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
       this.currentUser = res;
