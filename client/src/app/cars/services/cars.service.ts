@@ -63,13 +63,18 @@ export class CarsService {
       return this.http.post<Car>(`/api/cars`, fd);
    }
 
-   // // Получаем список всех позиций
+   // Получаем список всех позиций
    fetch(params: any = {}): Observable<Car[]> {
       return this.http.get<Car[]>('/api/cars', {
          params: new HttpParams({
             fromObject: params
          })
       });
+   }
+
+   // Получаем список всех позиций без параметров
+   fetchNoParams(): Observable<Car[]> {
+      return this.http.get<Car[]>('/api/cars/get-all');
    }
 
 

@@ -11,6 +11,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), upload.single
 
 // Роут на fetch
 router.get('/', passport.authenticate('jwt', { session: false }), controller.fetch);
+router.get('/get-all/', passport.authenticate('jwt', { session: false }), controller.fetchNoParams);
 
 // Роут на update
 router.patch('/update/:id', passport.authenticate('jwt', { session: false }), upload.single('previewSrc'), controller.update);

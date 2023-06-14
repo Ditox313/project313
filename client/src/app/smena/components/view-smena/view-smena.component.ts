@@ -88,6 +88,11 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
     }
   }
 
+  filteredBookings(bookings: any[]): any[] {
+    const xsbookings =  bookings.filter(booking => booking.status !== 'Закрыта');
+    return xsbookings
+  }
+
   get_user() {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
       this.currentUser = res;
@@ -112,6 +117,11 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
       this.actualBookings$ = this.bookings.getByIdSmena(this.smenaId).subscribe(res =>{
         this.xsbookings = res
       })
+    })
+
+    this.xscars$ = this.cars.fetchNoParams().subscribe(res =>{
+      this.xscars = res
+      console.log(res)
     })
   }
 

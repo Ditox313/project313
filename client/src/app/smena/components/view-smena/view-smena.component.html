@@ -67,7 +67,7 @@
 
             <div class="xs_smena__content___info">
                 <div *ngIf="xsbookings">
-                    <h5>Информация о бронях за смену</h5>
+                    <h5>Мониторинг смены</h5>
                     <table class="striped">
                         <thead>
                             <tr>
@@ -162,59 +162,65 @@
 
                         <ng-template #empty>
                             <div style="font-size: 20px; " class="xs_empty ">
-                                Нет броней...
+                                Нет информации...
                             </div>
                         </ng-template>
                     </table>
                 </div>
 
-                <div>
+                <div *ngIf="this.xscars.length > 0">
                     <h5>Информация по автомобилям</h5>
-                    <table class="striped">
+
+                    <table class="striped" >
                         <thead>
                             <tr>
                                 <th>Изображение</th>
                                 <th>Марка</th>
                                 <th>Статус</th>
-                                <th>Период</th>
-                                <th>Тариф</th>
-                                <th>Стоимость/Cутки</th>
+                                <th>Время аренды</th>
                             </tr>
 
                         </thead>
 
-                        <tbody *ngIf="actualSmena && xsbookings">
-                            <tr *ngFor="let xsbooking of xsbookings" class="xs_cars_td">
+                        <tbody *ngIf="xscars.length !== 0">
+                            <tr *ngFor="let car of xscars" class="xs_cars_td">
                                 <td>
-                                    <a [routerLink]="['/show-car','edit',xsbooking.car._id]">
-                                        <img src="{{xsbooking.car.previewSrc}} " alt="Обложка авто " class="xs_car_list_img ">
+                                    <a [routerLink]="['/show-car','edit',car._id]">
+                                        <img src="{{car.previewSrc}} " alt="Обложка авто " class="xs_car_list_img ">
                                     </a>
                                 </td>
                                 <td>
-                                    <a [routerLink]="['/show-car','edit',xsbooking.car._id]">
-                                        {{xsbooking.car.marka}} {{xsbooking.car.model}} ({{xsbooking.car.number}})
+                                    <a [routerLink]="['/show-car','edit',car._id]">
+                                        {{car.marka}} {{car.model}} ({{car.number}})
                                     </a>
                                 </td>
-                                <td style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
-                                    <span *ngFor="let item of xsbooking.car.bookings">{{item.status}}</span>
+                               
+
+
+                                <td style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                    <div *ngFor="let booking of filteredBookings(car.bookings)">
+                                        <span *ngIf="booking.status === 'В аренде'">ЗАНЯТ</span>
+                                        <span *ngIf="booking.status === 'В ожидании'">БРОНЬ</span>
+                                    </div>
+                                
+                                    <div *ngIf="filteredBookings(car.bookings).length === 0">СВОБОДЕН</div>
                                 </td>
 
-                                <td>
-                                    {{xsbooking.booking_start | date : 'dd.MM.yyyy'}}-{{xsbooking.booking_end | date : 'dd.MM.yyyy'}}
-                                </td>
 
-                                <td>
-                                    {{xsbooking.tariff}}
+                                <td style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                    <div *ngFor="let booking of filteredBookings(car.bookings)">
+                                        <div style="font-size: 14px;">{{booking.booking_start | date : 'd MMMM y, H:mm'}} - {{booking.booking_end | date : 'd MMMM y, H:mm'}}</div>
+                                    </div>
+                                
+                                    <div *ngIf="filteredBookings(car.bookings).length === 0">...</div>
                                 </td>
                             </tr>
                         </tbody>
-        
                     </table>
                 </div>
             </div>
 
         </div>
-
 
 
         <app-loader *ngIf="!this.actualSmena"></app-loader>

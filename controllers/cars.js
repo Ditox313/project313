@@ -90,6 +90,20 @@ module.exports.fetch = async function(req, res) {
     }
 };
 
+// Контроллер для fetchNoParams
+module.exports.fetchNoParams = async function (req, res) {
+    try {
+        // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
+        const cars = await Car.find({
+        }).sort({ date: -1 })
+
+        // Возвращаем пользователю позиции 
+        res.status(200).json(cars);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
 
 
 
@@ -164,8 +178,10 @@ module.exports.updateBookingInCar = async function (req, res) {
             { $set: { "bookings.$": updated } } 
         );
 
+        
+
         // Возвращаем пользователю обновленную позицию 
-        res.status(200).json(carUpdate);
+        res.status(200).json('test');
     } catch (e) {
         errorHandler(res, e);
     }

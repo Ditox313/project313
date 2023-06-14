@@ -1816,12 +1816,18 @@ input[type="checkbox"]
     display: flex;
     margin-top: 70px;
     justify-content: space-between;
+    flex-direction: column;
 }
-.xs_smena__content___info > div
+.xs_smena__content___info > div:first-child
 {
-    width: 49%;
+    width: 100%;
+    margin-bottom: 50px;
 }
 
-.xs_smena__content___info>div td a{
-    font-size: 12px;
+.xs_smena__content___info>div:last-child {
+    width: 100%;
 }
+
+/* .xs_smena__content___info>div td a{
+    font-size: 12px;
+} */

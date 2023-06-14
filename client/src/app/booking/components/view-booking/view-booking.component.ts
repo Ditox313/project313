@@ -231,23 +231,30 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     {
       const dicision = window.confirm(`Бронь не оплачена! Вы уверены что хотите выдать автомобиль?`);
 
-      const status_log = {
-        status: 'В аренде',
-        data: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss')
-      }
+      
 
 
       if (dicision)
       {
-        this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
-          this.actualBooking = res
-          this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => { });
-        })
+        const status_log = {
+          status: 'В аренде',
+          data: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss')
+        }
 
         this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
           this.bookingStatus = res.status;
           MaterialService.toast(`Новый статус брони -  ${status}`);
         });
+
+
+        this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
+          this.actualBooking = res
+
+
+          this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {
+            console.log('111')
+          });
+        })
 
       }
     }
@@ -257,17 +264,26 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
         data: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss')
       }
 
-      this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
-        this.actualBooking = res
-        this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => { });
-      })
-
       this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
         this.bookingStatus = res.status;
         MaterialService.toast(`Новый статус брони -  ${status}`);
       });
+
+
+      this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
+        this.actualBooking = res
+        
+
+        this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {
+          console.log('111')
+        });
+      })
+
+      
     }
   }
+
+
 
 
 
