@@ -25,5 +25,9 @@ export class PaysService {
     return this.http.get<Pay[]>(`/api/pays/${id}`);
   }
 
+  getPaysBySmenaId(id: string): Observable<Pay[]> {
+    return this.http.get<Pay[]>(`/api/pays/get-all-by-smenaId/${id}`);
+  }
+
 
 }

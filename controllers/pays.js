@@ -57,10 +57,26 @@ module.exports.create = async function(req, res) {
 module.exports.getPaysByBookingId = async function(req, res) {
     try {
         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
-        const bookings = await Pay.find({ bookingId: req.params.id }).sort({ date: -1 });
+        const pays = await Pay.find({ bookingId: req.params.id }).sort({ date: -1 });
 
         // Возвращаем пользователю позиции 
-        res.status(200).json( bookings );
+        res.status(200).json(pays );
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+module.exports.getPaysBySmenaId = async function (req, res) {
+    try {
+        // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
+        const pays = await Pay.find({ smenaId: req.params.id }).sort({ date: -1 });
+
+        // Возвращаем пользователю позиции 
+        res.status(200).json(pays);
     } catch (e) {
         errorHandler(res, e);
     }

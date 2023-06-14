@@ -257,6 +257,54 @@
                         </tbody>
                     </table>
                 </div>
+
+
+                <div style="margin-top: 70px;">
+                    <h5>Информация по финансам</h5>
+                
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th>Сумма терминал</th>
+                                <th>Сумма наличные</th>
+                                <th>Сумма на карту</th>
+                                <th>Сумма на р/с</th>
+                                <th>Сумма залогов</th>
+                                <th>Общий приход</th>
+                            </tr>
+                
+                        </thead>
+                
+                        <tbody *ngIf="xscars.length !== 0">
+                            <tr style="background-color: green; color: #fff; font-weight: 600;">
+                                <td>
+                                    {{this.xsSumma.terminal}} руб
+                                </td>
+
+                                <td>
+                                    {{this.xsSumma.nal}} руб
+                                </td>
+
+                                <td>
+                                    {{this.xsSumma.card}} руб
+                                </td>
+
+                                <td>
+                                    {{this.xsSumma.rs}} руб
+                                </td>
+
+                                <td>
+                                    {{this.xsSumma.zalogSumma}} руб
+                                </td>
+
+                                <td style="font-size: 23px;">
+                                    {{this.xsSumma.full}} руб
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>

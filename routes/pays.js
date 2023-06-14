@@ -15,6 +15,9 @@ router.post('/vozvrat_zaloga', passport.authenticate('jwt', { session: false }),
 // // Роут на получение всех платежей для брони
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getPaysByBookingId);
 
+// // Роут на получение всех платежей по id смены
+router.get('/get-all-by-smenaId/:id', passport.authenticate('jwt', { session: false }), controller.getPaysBySmenaId);
+
 // Роут на update
 // router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update);
 
@@ -33,3 +36,4 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 // router.post('/toggleStatus', passport.authenticate('jwt', { session: false }), controller.toggleStatus);
 
 module.exports = router;
+

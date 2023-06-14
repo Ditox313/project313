@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Booking, Car, Settings, Smena, User } from 'src/app/shared/types/interfaces';
+import { Booking, Car, Pay, Settings, Smena, User } from 'src/app/shared/types/interfaces';
 import { SmenaService } from '../../services/smena.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -10,6 +10,7 @@ import { AccountService } from '../../../account/services/account.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DocumentsService } from 'src/app/documents/services/documents.service';
 import { BookingsService } from 'src/app/booking/services/bookings.service';
+import { PaysService } from 'src/app/pays/services/pays.service';
 
 @Component({
   selector: 'app-view-smena',
@@ -53,9 +54,17 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
   xscars$: Subscription
   xscars: Car[] = [];
 
+  // Храним платежи
+  pays$: Subscription
+  xspays: Pay[] = [];
+
 
   todayDate: any = new Date().toDateString();
   todayDateFormat = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
+
+
+  // Храним суммы расчетов
+  xsSumma: any = {} 
 
   constructor(
     private smenaService: SmenaService,
@@ -66,7 +75,8 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private AccountService: AccountService,
     private datePipe: DatePipe,
-    private cars: CarsService
+    private cars: CarsService,
+    private pays: PaysService,
   ) { }
 
   ngOnInit(): void {
@@ -85,6 +95,9 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
     }
     if (this.xscars$) {
       this.xscars$.unsubscribe();
+    }
+    if (this.pays$) {
+      this.pays$.unsubscribe();
     }
   }
 
@@ -109,6 +122,13 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
     this.rote.params.subscribe((params: any) => {
       this.smenaId = params['id'];
     });
+
+    this.pays$ = this.pays.getPaysBySmenaId(this.smenaId).subscribe(res => {
+      this.xspays = res;
+      this.xsSumma = this.calculationMoney(this.xspays)
+      console.log(this.xsSumma)
+    })
+
   }
 
 
@@ -123,7 +143,6 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
     this.xscars$ = this.cars.fetchNoParams().subscribe(res =>{
       this.xscars = res
-      console.log(res)
     })
   }
 
@@ -133,6 +152,50 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
     return xs_a > xs_b;
   }
+
+
+
+
+  calculationMoney(data: any[]) {
+    const xspaysTerminal = data.filter(pay => pay.typePay === 'Терминал');
+    let totalPriceTerminal = xspaysTerminal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xspaysnal = data.filter(pay => pay.typePay === 'Наличные');
+    let totalPriceNal = xspaysnal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xspaysCard = data.filter(pay => pay.typePay === 'На карту');
+    let totalPriceCard = xspaysCard.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xspaysRS = data.filter(pay => pay.typePay === 'Р/с');
+    let totalPriceRS = xspaysRS.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xspaysZalog = data.filter(pay => pay.vidPay === 'Залог');
+    let totalPriceZalog = xspaysZalog.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+
+  
+    const xsdata  = {
+      terminal: totalPriceTerminal,
+      nal: totalPriceNal,
+      card: totalPriceCard,
+      rs: totalPriceRS,
+      zalogSumma: totalPriceZalog,
+      full: totalPriceTerminal + totalPriceNal + totalPriceCard + totalPriceRS 
+    }
+
+    return xsdata
+  }
+
 
 
 
