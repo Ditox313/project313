@@ -22,7 +22,7 @@
                             <th>Ответственный</th>
                             <th>Статус</th>
                             <th *ngIf="actualSmena.status !== 'open'">Дата закрытия</th>
-                            <th *ngIf="actualSmena.status == 'open'">Действия</th>
+                            <th>Действия</th>
                         </tr>
 
                     </thead>
@@ -55,9 +55,10 @@
                             </td>
 
 
-                            <td class="xs_smena_view_actions ">
-                                <span (click)="closeSmena($event)" *ngIf="actualSmena.status == 'open'">Закрыть
-                                    смену</span>
+                            <td class="xs_smena_view_actions">
+                                <span (click)="closeSmena($event)" *ngIf="actualSmena.status == 'open'">Закрыть смену</span>
+                                <button  *ngIf="actualSmena.status !== 'open'" style="margin-right: 10px; background-color: green;" [routerLink]="['/report-smena',smenaId]">Смотреть отчет</button>
+                                <button  *ngIf="actualSmena.status !== 'open'">Скачать отчет</button>
                             </td>
                         </tr>
                     </tbody>

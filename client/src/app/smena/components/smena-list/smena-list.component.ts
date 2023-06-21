@@ -55,7 +55,6 @@ export class SmenaListComponent implements OnInit, OnDestroy {
 
     this.Sub = this.smenaService.fetch(params).subscribe((smenas) => {
 
-      console.log(smenas)
 
       if (smenas.length < STEP) {
         this.noMoreSmenas = true;
@@ -77,7 +76,6 @@ export class SmenaListComponent implements OnInit, OnDestroy {
   onDeleteSmena(event: Event, smena: Smena): void {
     event.stopPropagation();
 
-    console.log(smena)
 
     const dicision = window.confirm(`Удалить автомобиль?`);
 

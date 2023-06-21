@@ -21,13 +21,14 @@ import { switchMap } from 'rxjs/operators';
 })
 export class BookingActComponent implements OnInit, OnDestroy {
 
+
+  @ViewChild('content') content!: ElementRef;
   bookingId!: string;
   actualBooking!: Booking;
   actualUser!: User;
   actualClient!: Client;
   yearDate: any;
   xs_actual_date: any;
-  @ViewChild('content') content!: ElementRef;
   xsNumberSummAuto: string = '';
 
   subParams$: Subscription;
@@ -134,11 +135,6 @@ export class BookingActComponent implements OnInit, OnDestroy {
       this.router.navigate(['/view-booking', this.actualBooking._id]);
     });
 
-
-    // this.createAct$ = this.documentService.create_booking_act(act).subscribe((act) => {
-    //   MaterialService.toast('Акт сохранен');
-    //   this.router.navigate(['/view-booking', this.actualBooking._id]);
-    // });
   }
 
 }

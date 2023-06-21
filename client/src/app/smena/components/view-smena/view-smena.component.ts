@@ -125,9 +125,7 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
     this.pays$ = this.pays.getPaysBySmenaId(this.smenaId).subscribe(res => {
       this.xspays = res;
-      this.xsSumma = this.calculationMoney(this.xspays)
-      console.log(this.xsSumma)
-    })
+      this.xsSumma = this.calculationMoney(this.xspays)})
 
   }
 

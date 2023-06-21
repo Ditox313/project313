@@ -251,9 +251,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
           this.actualBooking = res
 
 
-          this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {
-            console.log('111')
-          });
+          this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
         })
 
       }
@@ -274,9 +272,7 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
         this.actualBooking = res
         
 
-        this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {
-          console.log('111')
-        });
+        this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
       })
 
       

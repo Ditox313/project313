@@ -2011,9 +2011,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
 
             // Вносим изменения в инфу броней а автомобиле
-            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
-              console.log('Бронь добавлена в авто')
-            })
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {})
 
 
             MaterialService.toast('Бронь добавлена');

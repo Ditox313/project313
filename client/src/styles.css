@@ -1811,6 +1811,18 @@ input[type="checkbox"]
     border-radius: 5px;
 }
 
+.xs_smena_view_actions button
+{
+    display: flex;
+    align-items: center;
+    padding: 7px 7px;
+    border-radius: 7px;
+    background-color: #194A9E;
+    color: #fff;
+    outline: none;
+    border: none;
+}
+
 .xs_smena__content___info
 {
     display: flex;
@@ -1827,12 +1839,25 @@ input[type="checkbox"]
 .xs_smena__content___info>div:last-child {
     width: 100%;
 }
-/* .xs_cars_td th {
-    width: auto !important;
+
+
+.xs_generate_docs__top
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.xs_generate_docs__top h1 {
+    font-size: 33px;
+    line-height: 40px;
+    margin: 0;
+    color: #333;
 }
 
 
-.xs_cars_td td
+.xs_generate_docs____actions
 {
-    width: 20% !important;
-} */
+    display: flex;
+    align-items: center;
+}

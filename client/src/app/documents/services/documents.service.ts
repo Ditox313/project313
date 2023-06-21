@@ -58,7 +58,7 @@ export class DocumentsService {
   }
 
 
-  // Удалить договор
+  // Удалить акт
   delete_act(id: any): Observable<any> {
     return this.http.delete<any>(`/api/documents/act-delete/${id}`);
   }

@@ -15,6 +15,8 @@ import { ShowClientDogovorComponent } from './components/show-client-dogovor/sho
 import { AddClientLawfaseDogovorComponent } from './components/add-client-lawfase-dogovor/add-client-lawfase-dogovor.component';
 import { ShowActBookingComponent } from './components/show-act-booking/show-act-booking.component';
 import { BookingActListComponent } from './components/booking-act-list/booking-act-list.component';
+import { ReportSmenaComponent } from './components/report-smena/report-smena.component';
+import { GoBackModule } from '../shared/modules/ga-back/go-back.module';
 
 
 const routes = [
@@ -29,6 +31,7 @@ const routes = [
       { path: 'show-client-dogovor/:id', component: ShowClientDogovorComponent },
       { path: 'show-act-booking/:id', component: ShowActBookingComponent },
       { path: 'dogovors-client/:id', component: DogovorListComponent },
+      { path: 'report-smena/:id', component: ReportSmenaComponent },
     ],
   },
 ];
@@ -44,6 +47,7 @@ const routes = [
     AddClientLawfaseDogovorComponent,
     ShowActBookingComponent,
     BookingActListComponent,
+    ReportSmenaComponent,
   ],
   imports: [
     CommonModule,
@@ -54,6 +58,7 @@ const routes = [
     RouterModule.forChild(routes),
     LoaderModule,
     LayoutsModule,
+    GoBackModule,
   ],
   exports: [
     DogovorListComponent,
