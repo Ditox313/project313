@@ -2,7 +2,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { BookingAct, Dogovor } from 'src/app/shared/types/interfaces';
+import { BookingAct, Dogovor, ReportSmena } from 'src/app/shared/types/interfaces';
 
 
 // Даем возможность инжектировать сервисы в класс
@@ -51,6 +51,11 @@ export class DocumentsService {
     return this.http.get<BookingAct>(`/api/documents/get_act_by_id/${id}`);
   }
 
+  //  Получаем отчет за смену  по id
+  getReportSmenaById(id: string): Observable<ReportSmena> {
+    return this.http.get<ReportSmena>(`/api/documents/get_report_by_id/${id}`);
+  }
+
 
   // Удалить договор
   delete_dogovor(id: any): Observable<any> {
@@ -81,6 +86,12 @@ export class DocumentsService {
         fromObject: params,
       }),
     });
+  }
+
+
+  // Создаем отчет за смену
+  create_report_smena(report: ReportSmena): Observable<ReportSmena> {
+    return this.http.post<ReportSmena>(`/api/documents/report-smena`, report);
   }
 
 

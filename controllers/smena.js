@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const Smena = require('../models/Smena');
 const errorHandler = require('../Utils/errorHendler');
+const ReportSmena = require('../models/ReportsSmena');
 
 
 
@@ -69,6 +70,12 @@ module.exports.remove = async function (req, res) {
         await Smena.remove({
             _id: req.params.id
         });
+
+        await ReportSmena.remove({
+            'smena._id': req.params.id
+        });
+        
+
 
 
         // Возвращаем результат

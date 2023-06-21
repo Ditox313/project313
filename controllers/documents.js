@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const Dogovor = require('../models/Dogovor');
 const BookingAct = require('../models/BookingAct');
+const ReportSmena = require('../models/ReportsSmena');
 const errorHandler = require('../Utils/errorHendler');
 
 
@@ -32,6 +33,27 @@ module.exports.create_dogovor = async function(req, res) {
 
 
         res.status(201).json(dogovor);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+// Контроллер для create report smena
+module.exports.create_report_smena = async function (req, res) {
+    try {
+
+        const report = await new ReportSmena({
+            smena: req.body.smena,
+            user: req.body.user,
+            content: req.body.content,
+            bookings: req.body.bookings,
+            cars: req.body.cars,
+            money: req.body.money,
+        }).save();
+
+
+        res.status(201).json(report);
     } catch (e) {
         errorHandler(res, e);
     }
@@ -93,6 +115,24 @@ module.exports.getActById = async function (req, res) {
 
 
         res.status(200).json(act);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+// Получаем Отчет за смену по id
+module.exports.getReportSmenaById = async function (req, res) {
+    try {
+
+        const report = await ReportSmena.findOne({
+            'smena._id': req.params.id
+        }).sort({ date: -1 });
+
+
+        res.status(200).json(report);
     } catch (e) {
         errorHandler(res, e);
     }

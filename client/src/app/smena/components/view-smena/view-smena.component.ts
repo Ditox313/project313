@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Booking, Car, Pay, Settings, Smena, User } from 'src/app/shared/types/interfaces';
+import { Booking, Car, Pay, ReportSmena, Settings, Smena, User } from 'src/app/shared/types/interfaces';
 import { SmenaService } from '../../services/smena.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -18,6 +18,9 @@ import { PaysService } from 'src/app/pays/services/pays.service';
   styleUrls: ['./view-smena.component.css']
 })
 export class ViewSmenaComponent implements OnInit, OnDestroy {
+
+  // Получаем контент
+  @ViewChild('content') content!: ElementRef;
 
   // Получаем текущего юзера
   currentUser$: Subscription = null;
@@ -61,6 +64,11 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
   todayDate: any = new Date().toDateString();
   todayDateFormat = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
+
+
+  // Храним отчет
+  report$: Subscription
+  report: ReportSmena = null
 
 
   // Храним суммы расчетов
@@ -204,9 +212,25 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
       close_date_time: this.datePipe.transform(new Date(), 'HH:mm:ss')
     }
 
+    const report = {
+      smena: this.actualSmena,
+      user: this.currentUser,
+      content: this.content.nativeElement.innerHTML,
+      bookings: this.xsbookings,
+      cars: this.xscars,
+      money: this.xsSumma
+    }
+
+    
+
+
 
     this.closeSmena$ = this.smenaService.close(this.smenaId, data).subscribe(res =>{
       this.actualSmena = res
+
+      this.report$ = this.ducumentsServise.create_report_smena(report).subscribe(res => {
+        this.report = res
+      })
     })
   }
 }

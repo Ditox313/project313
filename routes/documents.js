@@ -13,6 +13,12 @@ router.post('/create_dogovor', passport.authenticate('jwt', { session: false }),
 // Роут на create bookingAct
 router.post('/create_booking_act', passport.authenticate('jwt', { session: false }), controller.create_booking_act);
 
+// Роут на create report smena
+router.post('/report-smena', passport.authenticate('jwt', { session: false }), controller.create_report_smena);
+
+// Роут на getReportById
+router.get('/get_report_by_id/:id', passport.authenticate('jwt', { session: false }), controller.getReportSmenaById);
+
 // Роут на getDogovorsById
 router.get('/dogovors_list/:id', passport.authenticate('jwt', { session: false }), controller.getDogovorsById);
 

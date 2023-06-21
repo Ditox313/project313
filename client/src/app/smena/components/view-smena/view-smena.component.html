@@ -1,4 +1,4 @@
-<div class="xs_smena">
+<div class="xs_smena" id="content" >
     <div class="xs_smena__top">
         <h1>
             <span class="material-icons">chat</span>
@@ -11,7 +11,7 @@
     </div>
 
 
-    <div class="xs_smena__content">
+    <div class="xs_smena__content" >
         <div class="row">
             <div class="xs_smena__content__box" *ngIf="actualSmena">
                 <table class="striped">
@@ -57,7 +57,11 @@
 
                             <td class="xs_smena_view_actions">
                                 <span (click)="closeSmena($event)" *ngIf="actualSmena.status == 'open'">Закрыть смену</span>
-                                <button  *ngIf="actualSmena.status !== 'open'" style="margin-right: 10px; background-color: green;" [routerLink]="['/report-smena',smenaId]">Смотреть отчет</button>
+                                <!-- <span (click)="closeSmena($event)">Закрыть смену</span> -->
+
+                                <button  *ngIf="actualSmena.status !== 'open'" style="margin-right: 10px; background-color: green;" 
+                                [routerLink]="['/report-smena',smenaId]">Смотреть отчет</button>
+
                                 <button  *ngIf="actualSmena.status !== 'open'">Скачать отчет</button>
                             </td>
                         </tr>
@@ -66,9 +70,9 @@
                 </table>
             </div>
 
-            <div class="xs_smena__content___info">
+            <div class="xs_smena__content___info" #content>
                 <div *ngIf="xsbookings">
-                    <h5>Мониторинг смены</h5>
+                    <h5>Информация о бронях</h5>
                     <table class="striped">
                         <thead>
                             <tr>
@@ -91,9 +95,7 @@
                                 [class.finish_booking]="this.todayDateFormat === (xsbooking.booking_end | date : 'yyyy-MM-dd') && !xsbooking.dop_info_close"
                                 [class.you_need_to_give_out_a_car]="you_need_to_give_out_a_car(xsbooking) && !xsbooking.dop_info_close
                                 && xsbooking.status === 'В ожидании'">
-                                <!-- <td>
-                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.order}}</a>
-                                </td> -->
+
 
                                 <td *ngIf="xsbooking.status === 'В ожидании'"
                                     style="display: flex; align-items: center; margin-top: 4px;">

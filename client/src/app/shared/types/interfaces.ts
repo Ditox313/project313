@@ -348,6 +348,19 @@ export interface Pay {
 
 
 
+// Интерфейс для отчета за смегну
+export interface ReportSmena {
+  _id?: any;
+  userId?: any;
+  content?: any;
+  bookings?: any;
+  cars?: any;
+  money?: any;
+  smena?: any;
+}
+
+
+
 
 // Интерфейс для договора
 export interface Dogovor {

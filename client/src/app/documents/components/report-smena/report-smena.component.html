@@ -2,11 +2,13 @@
     <div class="xs_generate_docs__top">
         <h1>
             <span class="material-icons">chat</span>
-            <span > Отчет за смену №... от 21.06.2023</span>
+            <span *ngIf="this.actualReport"> Отчет за смену №{{this.actualReport.smena.order}} от {{this.actualReport.smena.open_date}}</span>
         </h1>
     
         <div class="xs_generate_docs____actions">
             <app-go-back></app-go-back>
+
+            <span (click)="generatePDF()">Скачать</span>
 
             <button type="submit" class="xs_create_dog" style="margin-top: 0;">
                 <span class="material-icons" style="margin-right: 10px;">cloud_download</span> <span>Скачать отчет</span>
@@ -16,7 +18,7 @@
 
 
     <div class="xs_generate_docs__content"  id="content" #content>
-        111
+        <div *ngIf="this.actualReport" [innerHTML]="actualReport.content" class="xs_generate_docs__content" id="content" #content></div>
     </div>
 
 
