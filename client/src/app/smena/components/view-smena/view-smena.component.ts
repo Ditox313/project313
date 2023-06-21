@@ -212,14 +212,7 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
       close_date_time: this.datePipe.transform(new Date(), 'HH:mm:ss')
     }
 
-    const report = {
-      smena: this.actualSmena,
-      user: this.currentUser,
-      content: this.content.nativeElement.innerHTML,
-      bookings: this.xsbookings,
-      cars: this.xscars,
-      money: this.xsSumma
-    }
+    
 
     
 
@@ -227,6 +220,16 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
     this.closeSmena$ = this.smenaService.close(this.smenaId, data).subscribe(res =>{
       this.actualSmena = res
+
+
+      const report = {
+        smena: res,
+        user: this.currentUser,
+        content: this.content.nativeElement.innerHTML,
+        bookings: this.xsbookings,
+        cars: this.xscars,
+        money: this.xsSumma
+      }
 
       this.report$ = this.ducumentsServise.create_report_smena(report).subscribe(res => {
         this.report = res

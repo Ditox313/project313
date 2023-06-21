@@ -61,8 +61,6 @@
 
                                 <button  *ngIf="actualSmena.status !== 'open'" style="margin-right: 10px; background-color: green;" 
                                 [routerLink]="['/report-smena',smenaId]">Смотреть отчет</button>
-
-                                <button  *ngIf="actualSmena.status !== 'open'">Скачать отчет</button>
                             </td>
                         </tr>
                     </tbody>
@@ -105,7 +103,7 @@
                                     <span title="Автомобиль должен быть выдан. Время ожидания истекло!"
                                         class="material-icons"
                                         *ngIf="you_need_to_give_out_a_car(xsbooking) && !xsbooking.dop_info_close && xsbooking.status === 'В ожидании'">
-                                        lightbulb_outline
+                                        
                                     </span>
 
                                 </td>
@@ -116,7 +114,7 @@
 
                                     <span title="Бронь подходит к концу" class="material-icons"
                                         *ngIf="this.todayDateFormat === (xsbooking.booking_end | date : 'yyyy-MM-dd') && !xsbooking.dop_info_close && xsbooking.status === 'В аренде'">
-                                        lightbulb_outline
+                                        
                                     </span>
                                 </td>
                                 <td *ngIf="xsbooking.status === 'Закрыта'" style="display: flex; margin-top: 4px;">
@@ -177,7 +175,7 @@
                     <table class="striped" >
                         <thead>
                             <tr>
-                                <th style="width: 10%;">Изображение</th>
+                                <!-- <th style="width: 10%;">Изображение</th> -->
                                 <th>Марка</th>
                                 <th>Статус</th>
                                 <th style="width: 23%;">Время аренды</th>
@@ -191,11 +189,11 @@
 
                         <tbody *ngIf="xscars.length !== 0">
                             <tr *ngFor="let car of xscars" class="xs_cars_td">
-                                <td style="width: 10%;">
+                                <!-- <td style="width: 10%;">
                                     <a [routerLink]="['/show-car','edit',car._id]">
                                         <img src="{{car.previewSrc}} " alt="Обложка авто " class="xs_car_list_img ">
                                     </a>
-                                </td>
+                                </td> -->
                                 <td >
                                     <a [routerLink]="['/show-car','edit',car._id]">
                                         {{car.marka}} {{car.model}} ({{car.number}})
@@ -204,7 +202,7 @@
                                
 
 
-                                <td [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                <td [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
                                         <span *ngIf="booking.status === 'В аренде'" style="color: red; font-weight: 600;">ЗАНЯТ</span>
                                         <span *ngIf="booking.status === 'В ожидании'" style="color: orange; font-weight: 600;">БРОНЬ</span>
@@ -214,7 +212,7 @@
                                 </td>
 
 
-                                <td  [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; width: 23%;">
+                                <td  [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; width: 23%;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
                                         <div style="font-size: 14px;">{{booking.booking_start | date : 'd MMMM y, H:mm'}}  -  {{booking.booking_end | date : 'd MMMM y, H:mm'}}</div>
                                     </div>
@@ -222,7 +220,7 @@
                                     <div *ngIf="filteredBookings(car.bookings).length === 0">...</div>
                                 </td>
 
-                                <td [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                <td [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
                                         <div style="font-size: 14px;">{{booking.tariff}}</div>
                                     </div>
@@ -231,7 +229,7 @@
                                 </td>
 
                                 <td [routerLink]="['/show-car','edit',car._id]"
-                                    style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                    style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
                                         <div style="font-size: 14px;">{{booking.dop_info_open.tarifPrice}} * {{booking.booking_days}}</div>
                                     </div>
@@ -240,7 +238,7 @@
                                 </td>
 
                                 <td [routerLink]="['/show-car','edit',car._id]"
-                                    style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                    style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
                                         <div style="font-size: 14px;" *ngIf="booking.booking_life_cycle[0].length > 0">{{booking.booking_zalog}} руб / {{booking.booking_life_cycle[0][1].typePay}}</div>
                                     </div>
@@ -249,7 +247,7 @@
                                 </td>
 
                                 <td [routerLink]="['/show-car','edit',car._id]"
-                                    style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center;">
+                                    style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;">
                                     <div *ngFor="let booking of filteredBookings(car.bookings)">
                                         <div style="font-size: 14px;" *ngIf="booking.booking_life_cycle[0].length > 0">{{(+booking.summaFull) - (+booking.booking_zalog)}} руб / {{booking.booking_life_cycle[0][0].typePay}}</div>
                                     </div>

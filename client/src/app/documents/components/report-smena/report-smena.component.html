@@ -8,17 +8,68 @@
         <div class="xs_generate_docs____actions">
             <app-go-back></app-go-back>
 
-            <span (click)="generatePDF()">Скачать</span>
-
-            <button type="submit" class="xs_create_dog" style="margin-top: 0;">
-                <span class="material-icons" style="margin-right: 10px;">cloud_download</span> <span>Скачать отчет</span>
+            <button type="submit" class="xs_create_dog" style="margin-top: 0;" (click)="generatePDF()">
+                <span class="material-icons" style="margin-right: 10px;" >cloud_download</span> 
+                Скачать отчет
             </button>
         </div>
     </div>
 
 
     <div class="xs_generate_docs__content"  id="content" #content>
+
+        <div class="xs_smena__content__box" *ngIf="actualReport">
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Дата открытия</th>
+                        <th>Ответственный</th>
+                        <th>Статус</th>
+                        <th>Дата закрытия</th>
+                    </tr>
+        
+                </thead>
+        
+                <tbody>
+                    <tr>
+                        <td>
+                            {{actualReport.smena.order}}
+                        </td>
+        
+                        <td>
+                            {{actualReport.smena.open_date}} {{actualReport.smena.open_date_time}}
+                        </td>
+        
+                        <td>
+                            {{actualReport.smena.responsible}}
+                        </td>
+        
+                        <td *ngIf="actualReport.smena.status === 'open'" style="color: green; font-weight: 600;">
+                            Открыта
+                        </td>
+        
+                        <td *ngIf="actualReport.smena.status !== 'open'" style="color: red; font-weight: 600;">
+                            Закрыта
+                        </td>
+        
+        
+                        <td *ngIf="actualReport.smena.status !== 'open'">
+                            {{actualReport.smena.close_date}} {{actualReport.smena.close_date_time}}
+                        </td>
+        
+        
+                    </tr>
+                </tbody>
+        
+            </table>
+
+            
+        </div>
+
         <div *ngIf="this.actualReport" [innerHTML]="actualReport.content" class="xs_generate_docs__content" id="content" #content></div>
+
+
     </div>
 
 
