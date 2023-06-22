@@ -111,9 +111,17 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
   filteredBookings(bookings: any[]): any[] {
     const xsbookings =  bookings.filter(booking => booking.status !== 'Закрыта');
+  
     return xsbookings
   }
 
+
+  filteredBookings2(bookings: any[]): any[] {
+    const xsbookings = bookings.filter(booking => booking.status !== 'Закрыта');
+    const xsbookingsReturn = bookings.filter(booking => booking.smenaId === this.smenaId);
+
+    return xsbookingsReturn
+  }
 
 
   get_user() {
