@@ -164,7 +164,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
     this.getParams();
-    this.getByIdBookong();
+    this.getByIdBooking();
     this.setMinDate();
     this.xscars$ = this.cars.fetch();
     this.xsclients$ = this.clients.fetch();
@@ -211,6 +211,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modal = MaterialService.initModalPos(this.modalRef)
     this.modal2 = MaterialService.initModalPos(this.modal2Ref)
     this.modal3 = MaterialService.initModalPos(this.modal3Ref)
+
   }
 
   initForm()
@@ -255,14 +256,15 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  getByIdBookong()
+  getByIdBooking()
   {
     this.bookings.getById(this.bookingId).subscribe((res) => {
 
       this.isActualBooking = res;
-      
+
+
       this.form.patchValue({
-        car: JSON.stringify(res.car, null, 2),
+        // car: JSON.stringify(res.car, null, 2),
         client: res.client.type,
         booking_start: res.booking_start,
         booking_end: res.booking_end,
@@ -287,6 +289,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         additional_services_antiradar: res.dop_info_open.additional_services_antiradar,
         additional_services_moyka: res.dop_info_open.additional_services_moyka,
       });
+
 
       this.isCustomePlaceStart = res.dop_info_open.isCustomePlaceStart
       this.isCustomePlaceInput = res.dop_info_open.isCustomePlaceInput
@@ -330,9 +333,6 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       {
         this.updates = res.updates
       }
-
-      console.log(this.updates);
-      
 
     });
   }
@@ -1513,6 +1513,48 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  // При клике на кнопку выбора клиента в модальном окне
+  changeClientModal() {
+    this.modal.open();
+  }
+
+
+
+  // Принимаем данные из модуля списка клиентов для поиска
+  inputDataClientsListModule(e) {
+    this.changeClient(e);
+    this.modal.close();
+    this.changeClientLawFase(e)
+  }
+
+
+  // Закрываем модальную форму создания договора в брони
+  onCloseModal(e) {
+    if (this.xs_actual_client_type === 'fiz') {
+      this.modal2.close()
+      this.changeClient(e)
+    }
+
+    if (this.xs_actual_client_type === 'law') {
+      this.modal3.close()
+      this.changeClientLawFase(e)
+    }
+
+  }
+
+
+  // Добавляем договор в модальной форме
+  modalAddDogovor() {
+    if (this.xs_actual_client_type === 'fiz') {
+      this.modal2.open();
+    }
+
+    if (this.xs_actual_client_type === 'law') {
+      this.modal3.open();
+    }
+  }
+
+
 
   onSubmit() {
     // Получаем знапчения начала и конца аренды
@@ -1521,23 +1563,22 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-    if (this.xs_actual_client_type === 'fiz')
-    {
+    if (this.xs_actual_client_type === 'fiz') {
       if (!this.isCustomeZalog) {
         if (this.form.value.tariff === 'Город') {
-            let moyka = '0';
-            if (this.summa.car.category === 'Бизнес') {
-              moyka = this.currentUserSetings.washing_avto.business
-            }
-            else if (this.summa.car.category === 'Комфорт') {
-              moyka = this.currentUserSetings.washing_avto.komfort
-            }
-            else if (this.summa.car.category === 'Премиум') {
-              moyka = this.currentUserSetings.washing_avto.premium
-            }
+          let moyka = '0';
+          if (this.summa.car.category === 'Бизнес') {
+            moyka = this.currentUserSetings.washing_avto.business
+          }
+          else if (this.summa.car.category === 'Комфорт') {
+            moyka = this.currentUserSetings.washing_avto.komfort
+          }
+          else if (this.summa.car.category === 'Премиум') {
+            moyka = this.currentUserSetings.washing_avto.premium
+          }
 
           const booking = {
-            car: JSON.parse(this.form.value.car),
+            car: this.form.value.car ? JSON.parse(this.form.value.car) : this.isActualBooking.car,
             client: JSON.parse(this.xs_actual_search__client),
             place_start: this.form.value.place_start,
             place_end: this.form.value.place_end,
@@ -1547,7 +1588,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking_end: this.form.value.booking_end,
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
             summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) + (+this.summa.place_end_price) +
-                (+this.summa.additional_services_price) + (+this.summa.car.zalog) + (this.summa.car.price_dop_hour * this.summa.dop_hours)),
+              (+this.summa.additional_services_price) + (+this.summa.car.zalog) + (this.summa.car.price_dop_hour * this.summa.dop_hours)),
             summa: Math.round(this.summa.summa),
             dop_hours: this.summa.dop_hours,
             dop_info_open: {
@@ -1565,7 +1606,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick
             },
-            updates : this.updates,
+            updates: this.updates,
             booking_zalog: this.summa.car.zalog,
             dogovor_number__actual: this.xs_dogovor_number__actual,
           };
@@ -1577,7 +1618,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             date: this.datePipe.transform(new Date(), 'yyyy-MM-dd hh:mm:ss')
           }
           booking.updates.push(update)
-          
+
 
           // Отправляем запрос
           this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
@@ -1597,7 +1638,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           const booking = {
-            car: JSON.parse(this.form.value.car),
+            car: this.form.value.car ? JSON.parse(this.form.value.car) : this.isActualBooking.car,
             client: JSON.parse(this.xs_actual_search__client),
             place_start: this.form.value.place_start,
             place_end: this.form.value.place_end,
@@ -1656,7 +1697,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           const booking = {
-            car: JSON.parse(this.form.value.car),
+            car: this.form.value.car ? JSON.parse(this.form.value.car) : this.isActualBooking.car,
             client: JSON.parse(this.xs_actual_search__client),
             place_start: this.form.value.place_start,
             place_end: this.form.value.place_end,
@@ -1718,7 +1759,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         const booking = {
-          car: JSON.parse(this.form.value.car),
+          car: this.form.value.car ? JSON.parse(this.form.value.car) : this.isActualBooking.car,
           client: JSON.parse(this.xs_actual_search__client),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
@@ -1768,8 +1809,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
-    else if (this.xs_actual_client_type === 'law')
-    { 
+    else if (this.xs_actual_client_type === 'law') {
       if (!this.isCustomeZalog) {
         if (this.form.value.tariff === 'Город') {
           let moyka = '0';
@@ -1784,7 +1824,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           const booking = {
-            car: JSON.parse(this.form.value.car),
+            car: this.form.value.car ? JSON.parse(this.form.value.car) : this.isActualBooking.car,
             client: JSON.parse(this.xs_actual_search__client___lawfase),
             place_start: this.form.value.place_start,
             place_end: this.form.value.place_end,
@@ -1844,7 +1884,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           const booking = {
-            car: JSON.parse(this.form.value.car),
+            car: this.form.value.car ? JSON.parse(this.form.value.car) : this.isActualBooking.car,
             client: JSON.parse(this.xs_actual_search__client___lawfase),
             place_start: this.form.value.place_start,
             place_end: this.form.value.place_end,
@@ -1903,7 +1943,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           const booking = {
-            car: JSON.parse(this.form.value.car),
+            car: this.form.value.car ? JSON.parse(this.form.value.car) : this.isActualBooking.car,
             client: JSON.parse(this.xs_actual_search__client___lawfase),
             place_start: this.form.value.place_start,
             place_end: this.form.value.place_end,
@@ -1964,7 +2004,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         const booking = {
-          car: JSON.parse(this.form.value.car),
+          car: this.form.value.car ? JSON.parse(this.form.value.car) : this.isActualBooking.car,
           client: JSON.parse(this.xs_actual_search__client___lawfase),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
@@ -2011,48 +2051,6 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
-   
-  }
 
-
-  // При клике на кнопку выбора клиента в модальном окне
-  changeClientModal() {
-    this.modal.open();
-  }
-
-
-
-  // Принимаем данные из модуля списка клиентов для поиска
-  inputDataClientsListModule(e) {
-    this.changeClient(e);
-    this.modal.close();
-    this.changeClientLawFase(e)
-  }
-
-
-  // Закрываем модальную форму создания договора в брони
-  onCloseModal(e) {
-    if (this.xs_actual_client_type === 'fiz') {
-      this.modal2.close()
-      this.changeClient(e)
-    }
-
-    if (this.xs_actual_client_type === 'law') {
-      this.modal3.close()
-      this.changeClientLawFase(e)
-    }
-
-  }
-
-
-  // Добавляем договор в модальной форме
-  modalAddDogovor() {
-    if (this.xs_actual_client_type === 'fiz') {
-      this.modal2.open();
-    }
-
-    if (this.xs_actual_client_type === 'law') {
-      this.modal3.open();
-    }
   }
 }

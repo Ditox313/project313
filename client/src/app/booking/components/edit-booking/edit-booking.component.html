@@ -42,18 +42,23 @@
     
     
     
-                        <div class="xs_form__item___mod">
+                        <div class="xs_form__item___mod" *ngIf="this.isActualBooking">
                             <label for="car">Автомобиль<span class="xszv">*</span></label>
                             <div class="input-field col s12">
-                                <select id="car" formControlName="car"
+                                <select  formControlName="car"
                                     [ngClass]="{'invalid': form.controls['car'].invalid && form.controls['car'].touched}"
                                     (ngModelChange)="onChangeCar($event)">
-                                    <option value="" disabled selected>Выберите автомобиль</option>
+                                    <option value="" disabled selected>{{this.isActualBooking.car.marka}}
+                                    {{this.isActualBooking.car.model}} ({{this.isActualBooking.car.number}})</option>
                                     <option *ngFor="let xscar of xscars$ | async" value="{{xscar | json}}">{{xscar.marka}}
                                         {{xscar.model}} ({{xscar.number}})</option>
                                 </select>
                             </div>
                         </div>
+
+                        <!-- <select formControlName="car" >
+                            <option value="Выберите автомобиль"  selected>Выберите автомобиль</option>
+                        </select> -->
     
     
     
