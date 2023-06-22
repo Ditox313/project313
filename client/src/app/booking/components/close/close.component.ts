@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 import { PaysService } from 'src/app/pays/services/pays.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -55,8 +55,12 @@ export class CloseComponent implements OnInit, OnDestroy {
   defaultValueArenda: string = 'Наличные'
   defaultValueZalog: string = 'Наличные'
 
+  zalogBackAfterBookingClose$: Subscription
+  zalogBackAfterBookingClose2$: Subscription
 
-  
+
+
+
 
   constructor(
     private bookings: BookingsService,
@@ -74,13 +78,11 @@ export class CloseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subGetByIdBooking$)
-    {
+    if (this.subGetByIdBooking$) {
       this.subGetByIdBooking$.unsubscribe();
     }
 
-    if (this.subBookingClose$)
-    {
+    if (this.subBookingClose$) {
       this.subBookingClose$.unsubscribe();
     }
 
@@ -91,10 +93,17 @@ export class CloseComponent implements OnInit, OnDestroy {
     if (this.car_add_close_booking$) {
       this.car_add_close_booking$.unsubscribe();
     }
+
+    if (this.zalogBackAfterBookingClose$) {
+      this.zalogBackAfterBookingClose$.unsubscribe();
+    }
+
+    if (this.zalogBackAfterBookingClose2$) {
+      this.zalogBackAfterBookingClose2$.unsubscribe();
+    }
   }
 
-  initForm()
-  {
+  initForm() {
     this.form = new FormGroup({
       booking_end: new FormControl('', [Validators.required]),
       probeg_new: new FormControl('', [Validators.required]),
@@ -108,18 +117,16 @@ export class CloseComponent implements OnInit, OnDestroy {
   }
 
 
-  getParams()
-  {
+  getParams() {
     this.rote.params.subscribe((params: any) => {
       this.bookingId = params['id'];
     });
   }
 
-  getByIdBooking()
-  {
+  getByIdBooking() {
     this.subGetByIdBooking$ = this.bookings.getById(this.bookingId).subscribe((res) => {
       this.actualBooking = res;
-      
+
       this.form.patchValue({
         booking_end: res.booking_end,
       });
@@ -134,20 +141,21 @@ export class CloseComponent implements OnInit, OnDestroy {
       this.summa.booking_days = res.booking_days;
       this.summa.dop_hours = res.dop_hours;
 
-      
+
 
       MaterialService.updateTextInputs();
     });
   }
 
-  onSubmit()
-  { 
 
-    
-    if (this.actualBooking.dop_info_open.additional_services_moyka)
-    {
-      if (!this.form.value.return_part)
-      {
+
+
+
+
+
+  onSubmit() {
+    if (this.actualBooking.dop_info_open.additional_services_moyka) {
+      if (!this.form.value.return_part) {
         const car: any = {
           probeg: this.form.value.probeg_new,
         }
@@ -166,7 +174,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           status: 'Закрыта'
         }
 
-        
+
 
 
         const booking: any = {
@@ -184,10 +192,7 @@ export class CloseComponent implements OnInit, OnDestroy {
         // Отправляем данные в логирование брони
         this.update_after_booking_close$ = this.bookings.update_after_booking_close(this.actualBooking._id, close_info_log).subscribe()
 
-        
-       
-        
-        
+
 
 
         this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
@@ -206,16 +211,19 @@ export class CloseComponent implements OnInit, OnDestroy {
           })
         ).subscribe((booking) => {
           MaterialService.toast('Бронь закрыта');
-           // Отправляем финальную бронь в авто
+          // Отправляем финальную бронь в авто
           this.car_add_close_booking$ = this.cars.updateBookingInCar(this.actualBooking.car._id, booking).subscribe(res => {
-              this.router.navigate(['/bookings-page']);
-            });
+            this.router.navigate(['/bookings-page']);
+          });
         });
 
-      } 
-      else if(this.form.value.return_part)
-      {
-        
+
+         // Добавляем информацию о проведении платеженй в логирование брони
+        this.zalogBackAfterBookingClose$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+
+      }
+      else if (this.form.value.return_part) {
+
 
         const car: any = {
           probeg: this.form.value.probeg_new,
@@ -243,6 +251,18 @@ export class CloseComponent implements OnInit, OnDestroy {
         }
 
 
+        const close_info_log = {
+          date: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss'),
+          status: 'Закрыта'
+        }
+
+
+        // Отправляем данные в логирование брони
+        this.update_after_booking_close$ = this.bookings.update_after_booking_close(this.actualBooking._id, close_info_log).subscribe()
+
+
+
+
         this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
           map(res => {
             this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
@@ -263,12 +283,14 @@ export class CloseComponent implements OnInit, OnDestroy {
             this.router.navigate(['/bookings-page']);
           });
         });
-      } 
+
+
+         // Добавляем информацию о проведении платеженй в логирование брони
+        this.zalogBackAfterBookingClose$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+      }
     }
-    else
-    {
-    if(!this.form.value.clear_auto && !this.form.value.return_part)
-      {
+    else {
+      if (!this.form.value.clear_auto && !this.form.value.return_part) {
         const car: any = {
           probeg: this.form.value.probeg_new,
         }
@@ -299,6 +321,15 @@ export class CloseComponent implements OnInit, OnDestroy {
           }
         }
 
+        const close_info_log = {
+          date: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss'),
+          status: 'Закрыта'
+        }
+
+
+        // Отправляем данные в логирование брони
+        this.update_after_booking_close$ = this.bookings.update_after_booking_close(this.actualBooking._id, close_info_log).subscribe()
+
 
         this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
           map(res => {
@@ -325,11 +356,13 @@ export class CloseComponent implements OnInit, OnDestroy {
           });
         });
 
-      } 
-    else if(this.form.value.clear_auto && this.form.value.return_part)
-      {
-        
 
+        // Добавляем информацию о проведении платеженй в логирование брони
+        this.zalogBackAfterBookingClose$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+        this.zalogBackAfterBookingClose2$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay2).subscribe(res => { })
+
+      }
+      else if (this.form.value.clear_auto && this.form.value.return_part) {
         const car: any = {
           probeg: this.form.value.probeg_new,
         }
@@ -356,9 +389,20 @@ export class CloseComponent implements OnInit, OnDestroy {
         }
 
 
+        const close_info_log = {
+          date: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss'),
+          status: 'Закрыта'
+        }
+
+
+        // Отправляем данные в логирование брони
+        this.update_after_booking_close$ = this.bookings.update_after_booking_close(this.actualBooking._id, close_info_log).subscribe()
+
+
         this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
           map(res => {
             this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
+              MaterialService.toast('Частичный возврат залога');
             });
             return res;
           })
@@ -375,8 +419,14 @@ export class CloseComponent implements OnInit, OnDestroy {
             this.router.navigate(['/bookings-page']);
           });
         });
-      } 
-    else if (!this.form.value.clear_auto && this.form.value.return_part) {
+
+
+        // Добавляем информацию о проведении платеженй в логирование брони
+        this.zalogBackAfterBookingClose$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+
+
+      }
+      else if (!this.form.value.clear_auto && this.form.value.return_part) {
         const car: any = {
           probeg: this.form.value.probeg_new,
         }
@@ -410,6 +460,16 @@ export class CloseComponent implements OnInit, OnDestroy {
         }
 
 
+        const close_info_log = {
+          date: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss'),
+          status: 'Закрыта'
+        }
+
+
+        // Отправляем данные в логирование брони
+        this.update_after_booking_close$ = this.bookings.update_after_booking_close(this.actualBooking._id, close_info_log).subscribe()
+
+
         this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
           map(res => {
             this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
@@ -434,8 +494,12 @@ export class CloseComponent implements OnInit, OnDestroy {
             this.router.navigate(['/bookings-page']);
           });
         });
-      } 
-    else if (this.form.value.clear_auto && !this.form.value.return_part) {
+
+        // Добавляем информацию о проведении платеженй в логирование брони
+        this.zalogBackAfterBookingClose$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+        this.zalogBackAfterBookingClose2$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay2).subscribe(res => { })
+      }
+      else if (this.form.value.clear_auto && !this.form.value.return_part) {
         const car: any = {
           probeg: this.form.value.probeg_new,
         }
@@ -459,6 +523,16 @@ export class CloseComponent implements OnInit, OnDestroy {
         }
 
 
+        const close_info_log = {
+          date: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss'),
+          status: 'Закрыта'
+        }
+
+
+        // Отправляем данные в логирование брони
+        this.update_after_booking_close$ = this.bookings.update_after_booking_close(this.actualBooking._id, close_info_log).subscribe()
+
+
         this.subBookingClose$ = this.bookings.close(this.bookingId, booking).pipe(
           map(res => {
             this.pays.vozvrat_zaloga(pay).subscribe((pay) => {
@@ -479,6 +553,10 @@ export class CloseComponent implements OnInit, OnDestroy {
             this.router.navigate(['/bookings-page']);
           });
         });
+
+
+        // Добавляем информацию о проведении платеженй в логирование брони
+        this.zalogBackAfterBookingClose$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
       }
     }
 
