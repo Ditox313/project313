@@ -2055,6 +2055,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               moyka: moyka || false,
               place_start_price: this.summa.place_start_price || 0,
               place_end_price: this.summa.place_end_price || 0,
+              additional_services_price: this.summa.additional_services_price,
               additional_services_chair: this.form.value.additional_services_chair || false,
               additional_services_buster: this.form.value.additional_services_buster || false,
               additional_services_videoregister: this.form.value.additional_services_videoregister || false,

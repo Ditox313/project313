@@ -57,7 +57,6 @@
 
                             <td class="xs_smena_view_actions">
                                 <span (click)="closeSmena($event)" *ngIf="actualSmena.status == 'open'">Закрыть смену</span>
-                                <!-- <span (click)="closeSmena($event)">Закрыть смену</span> -->
 
                                 <button  *ngIf="actualSmena.status !== 'open'" style="margin-right: 10px; background-color: green;" 
                                 [routerLink]="['/report-smena',smenaId]">Смотреть отчет</button>
@@ -68,7 +67,7 @@
                 </table>
             </div>
 
-            <div class="xs_smena__content___info" #content>
+            <div class="xs_smena__content___info" *ngIf="actualSmena && actualSmena.status === 'open'" #content>
                 <div *ngIf="xsbookings">
                     <h5>Информация о бронях</h5>
                     <table class="striped">
