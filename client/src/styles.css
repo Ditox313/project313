@@ -714,7 +714,7 @@ select {
 
 .btn_waiting
 {
-    background-color: orange;
+    background-color: orange !important;
     color: #fff !important;
     font-size: 14px;
     border-radius: 3px;
@@ -725,7 +725,7 @@ select {
 
 .btn_v_arende
 {
-    background-color: #194A9E;
+    background-color: #194A9E !important;
     color: #fff !important;
     font-size: 14px;
     border-radius: 3px;
@@ -735,7 +735,7 @@ select {
 }
 
 .btn_close {
-    background-color: #F76161;
+    background-color: #F76161 !important;
     color: #fff !important;
     font-size: 14px;
     border-radius: 3px;
@@ -1860,4 +1860,11 @@ input[type="checkbox"]
 {
     display: flex;
     align-items: center;
+}
+
+.xs_car__bookings a
+{
+    background-color: inherit;
+    padding-left: 0;
+    padding-right: 0;
 }

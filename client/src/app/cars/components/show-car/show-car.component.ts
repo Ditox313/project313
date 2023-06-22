@@ -4,10 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CarsService } from '../../services/cars.service';
 import { PartnersService } from 'src/app/partners/services/partners.service';
-import { Car, Settings } from 'src/app/shared/types/interfaces';
+import { Booking, Car, Client, Settings } from 'src/app/shared/types/interfaces';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { AccountService } from '../../../account/services/account.service';
+import { DatePipe } from '@angular/common';
+import { BookingsService } from 'src/app/booking/services/bookings.service';
 
+
+// Шаг пагинации
+const STEP = 20
 
 @Component({
   selector: 'app-show-car',
@@ -20,7 +25,7 @@ export class ShowCarComponent implements OnInit, OnDestroy {
   @ViewChild('tabs') tabs!: ElementRef;
   @ViewChild('start_arenda') start_arenda_avto!: ElementRef;
   @ViewChild('end_arenda') end_arenda_avto!: ElementRef;
-
+  @ViewChild('input') inputRef!: ElementRef;
   @ViewChild('sts_date_info') sts_date_info_avto!: ElementRef;
   @ViewChild('osago_date_finish_info') osago_date_finish_info_avto!: ElementRef;
   @ViewChild('to_date_info') to_date_info_avto!: ElementRef;
@@ -49,20 +54,29 @@ export class ShowCarComponent implements OnInit, OnDestroy {
 
   subUpdateCar$: Subscription;
 
-  // Забираем дом элемент input загрузки файла и ложим его в переменную inputgRef
-  @ViewChild('input') inputRef!: ElementRef;
+  
+
+  Sub_bookings$!: Subscription;
+  xsbookings: Booking[] = [];
+  xsclients: Client[] = [];
+  offset: any = 0;
+  limit: any = STEP;
+  loading = false;
+  noMoreCars: Boolean = false;
+  todayDate: any = new Date().toDateString();
+  todayDateFormat = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
+  now = this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd');
 
 
-
-
-
-  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private partners: PartnersService) { }
+  constructor(private cars: CarsService, private router: Router, private rote: ActivatedRoute, private partners: PartnersService, 
+    private datePipe: DatePipe, private bookings: BookingsService,) { }
 
   ngOnInit(): void {
     this.initForm();
     this.getparams();
     this.getCarById();
     this.getPartners();
+    this.fetch();
   }
 
   ngOnDestroy(): void {
@@ -85,6 +99,10 @@ export class ShowCarComponent implements OnInit, OnDestroy {
     if (this.subUpdateCar$)
     {
       this.subUpdateCar$.unsubscribe();
+    }
+    if (this.Sub_bookings$)
+    {
+      this.Sub_bookings$.unsubscribe();
     }
   }
 
@@ -133,6 +151,25 @@ export class ShowCarComponent implements OnInit, OnDestroy {
     });
   }
 
+  public fetch() {
+    // Отправляем параметры для пагинации
+    const params = {
+      offset: this.offset,
+      limit: this.limit,
+    };
+
+    this.loading = true;
+
+    this.Sub_bookings$ = this.bookings.getByIdCar(this.carId).subscribe((bookings) => {
+      if (bookings.length < STEP) {
+        this.noMoreCars = true;
+      }
+
+      this.loading = false;
+      this.xsbookings = this.xsbookings.concat(bookings);
+    });
+  }
+
   getparams()
   {
     this.subParams$ = this.rote.params.subscribe((params) => {
@@ -144,8 +181,6 @@ export class ShowCarComponent implements OnInit, OnDestroy {
   {
     this.subGetCarById$ = this.cars.getById(this.carId).subscribe((res) => {
       this.xsActualCar = res
-      console.log(this.xsActualCar);
-
 
       
       if (res.previewSrc) {
@@ -240,6 +275,22 @@ export class ShowCarComponent implements OnInit, OnDestroy {
     this.inputRef.nativeElement.click();
   }
 
+
+
+  you_need_to_give_out_a_car(data) {
+    let xs_a = new Date().toISOString();
+    let xs_b = new Date(data.booking_start).toISOString();
+
+    return xs_a > xs_b;
+  }
+
+
+  loadmore() {
+    this.loading = true;
+    this.offset += STEP;
+    this.fetch();
+    this.loading = false;
+  }
 
 
   onSubmit(){

@@ -32,6 +32,9 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 // Роут на getByIdSmena
 router.get('/actual-bookings/:id', passport.authenticate('jwt', { session: false }), controller.getByIdSmena);
 
+// Роут на getByIdCar
+router.get('/bookings-by-id-car/:id', passport.authenticate('jwt', { session: false }), controller.getByIdCar);
+
 // Роут на getStatusBooking
 router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getStatusBooking);
 

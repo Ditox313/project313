@@ -98,4 +98,8 @@ export class BookingsService {
   getByIdSmena(id: string): Observable<Booking> {
     return this.http.get<Booking>(`/api/bookings/actual-bookings/${id}`);
   }
+
+  getByIdCar(id: string): Observable<Booking[]> {
+    return this.http.get<Booking[]>(`/api/bookings/bookings-by-id-car/${id}`);
+  }
 }

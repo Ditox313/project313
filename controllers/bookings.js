@@ -252,6 +252,18 @@ module.exports.getByIdSmena = async function (req, res) {
 
 
 
+// Контроллер для getByIdCar
+module.exports.getByIdCar = async function (req, res) {
+    try {
+        const xsbookings = await Booking.find({ 'car._id': req.params.id }); //Ищем категорию по id из переданных параметров
+        res.status(200).json(xsbookings);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
 // Контроллер для getStatusBooking
 module.exports.getStatusBooking = async function (req, res) {
     try {
