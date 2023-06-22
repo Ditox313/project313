@@ -139,6 +139,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+
+
+
   // Цена тарифа
   tarifPrice!: String
 
@@ -151,7 +154,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     private documents: DocumentsService,
     private auth: AuthService,
     private AccountService: AccountService,
-    private smenaService: SmenaService,
   ) {}
 
   ngOnInit(): void {
@@ -162,6 +164,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     MaterialService.updateTextInputs();
     this.get_user();
     this.dasable_controls();
+    
   }
 
 
@@ -199,6 +202,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     
     this.modal.destroy();
   }
+
+  
 
 
   get_user()
@@ -2011,9 +2016,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
 
             // Вносим изменения в инфу броней а автомобиле
-            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
-              console.log('Бронь добавлена в авто')
-            })
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {})
 
 
             MaterialService.toast('Бронь добавлена');
@@ -2086,6 +2089,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             MaterialService.toast('Бронь добавлена');
             this.router.navigate(['/bookings-page']);
           });
+
+          
         }
         if (this.form.value.tariff === 'Россия') {
           let moyka = '0';

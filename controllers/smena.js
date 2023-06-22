@@ -42,6 +42,23 @@ module.exports.create = async function(req, res) {
 
 
 
+module.exports.isOpenSmena = async function (req, res) {
+    try {
+
+        const smena = await Smena.findOne({ status: 'open' });
+
+
+        res.status(201).json(smena);
+    } catch (e) {
+        errorHandler(res, e);
+    }
+};
+
+
+
+
+
+
 // Контроллер для fetch
 module.exports.fetch = async function (req, res) {
     try {

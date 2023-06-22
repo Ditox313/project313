@@ -9,6 +9,9 @@ const upload = require('../middleware/upload');
 // Роут на create
 router.post('/create', passport.authenticate('jwt', { session: false }), controller.create);
 
+// Роут на isOpenSmena
+router.get('/is-open-smena', passport.authenticate('jwt', { session: false }), controller.isOpenSmena);
+
 // Роут на fetch
 router.get('/get-all', passport.authenticate('jwt', { session: false }), controller.fetch);
 

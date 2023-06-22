@@ -6,7 +6,7 @@
         </h1>
 
         <div class="xs_add__car">
-            <a [routerLink]="['/add-booking']">
+            <a [routerLink]="['/add-booking']" *ngIf="xsOpenSmena">
                 <span class="material-icons">library_add</span> Добавить бронь
             </a>
 

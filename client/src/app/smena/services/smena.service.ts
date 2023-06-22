@@ -45,4 +45,11 @@ export class SmenaService {
     return this.http.patch<Smena>(`/api/smena/close/${id}`, data);
   }
 
+
+
+  isOpenSmena(): Observable<any> {
+    return this.http.get<any>(`/api/smena/is-open-smena`);
+  }
+
+
 }

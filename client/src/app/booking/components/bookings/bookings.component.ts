@@ -7,6 +7,7 @@ import { ClientsService } from 'src/app/clients/services/clients.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
 import { Booking, Client } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
+import { SmenaService } from 'src/app/smena/services/smena.service';
 
 
 
@@ -34,17 +35,23 @@ export class BookingsComponent implements OnInit, OnDestroy {
   todayDateFormat = this.datePipe.transform(this.todayDate, 'yyyy-MM-dd');
   now = this.datePipe.transform(new Date().toDateString(), 'yyyy-MM-dd');
 
+  // Проверяем смену на открытие
+  smena$: Subscription
+  xsOpenSmena: any
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
     private rote: ActivatedRoute,
     private cars: CarsService,
     private clients: ClientsService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private smenaService: SmenaService,
   ) {}
 
   ngOnInit(): void {
     this.fetch();
+    this.isOpenSmena()
   }
 
   ngOnDestroy(): void {
@@ -57,6 +64,16 @@ export class BookingsComponent implements OnInit, OnDestroy {
     {
       this.subDeleteBooking$.unsubscribe();
     }
+
+    if (this.smena$) {
+      this.smena$.unsubscribe();
+    }
+  }
+
+  isOpenSmena() {
+    this.smena$ = this.smenaService.isOpenSmena().subscribe(res => { 
+      this.xsOpenSmena = res
+    })
   }
 
   public fetch() {
