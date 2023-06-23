@@ -319,13 +319,7 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
 
 
-
-
-
-
-
-
-
+    // Если у нас нет возвратных платежей то бронь еще не закрывалась
     if (zalogBackSummaAllTypes == 0 && zalogBackPartSummaAllTypes == 0 && washSummaAllTypes == 0)
     {
       const xsdata = {
@@ -354,12 +348,6 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
       return xsdata
     }
-
-  
-    
-
-    
-
 
     
   }

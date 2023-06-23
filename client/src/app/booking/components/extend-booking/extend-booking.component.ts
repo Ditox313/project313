@@ -98,6 +98,10 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   subBookingExtend$: Subscription;
 
 
+  // Добавляем платеж в логировнаие брони
+  extendPay$: Subscription
+
+
 
   constructor(
     private bookings: BookingsService,
@@ -125,6 +129,10 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     if (this.subBookingExtend$)
     {
       this.subBookingExtend$.unsubscribe();
+    }
+    if (this.extendPay$)
+    {
+      this.extendPay$.unsubscribe();
     }
   }
 
@@ -710,8 +718,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   // Проверяем нажат ли чекбокс для скидки
   xs_isSaleCheck() {
     this.isSaleCheck = !this.isSaleCheck;
-
-    
   }
 
 
@@ -903,6 +909,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         pricePay: this.form.value.arenda,
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
+        smenaId: this.actualBooking.smenaId,
       };
 
 
@@ -928,6 +935,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         }
       };
 
+      this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+
       this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
         map(res => {
           this.pays.create(pay).subscribe((pay) => {
@@ -940,7 +949,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         MaterialService.toast('Бронь продлена');
       });
 
-
+     
     }
     else if(xs_sale > 0)
     {
@@ -950,6 +959,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         pricePay: (+this.form.value.arenda),
         typePay: this.form.value.typePayArenda,
         bookingId: this.bookingId,
+        smenaId: this.actualBooking.smenaId,
       };
 
 
@@ -974,6 +984,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           sale: xs_sale
         }
       };
+
+      this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
 
       this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
         map(res => {
