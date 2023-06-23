@@ -154,6 +154,7 @@ export class CloseComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
+
     if (this.actualBooking.dop_info_open.additional_services_moyka) {
       if (!this.form.value.return_part) {
         const car: any = {
@@ -165,6 +166,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.booking_zalog,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
         };
 
 
@@ -234,6 +236,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.form.value.return_part_price,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
         };
 
 
@@ -300,6 +303,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.booking_zalog,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
         };
 
         const pay2 = {
@@ -307,6 +311,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.dop_info_open.moyka,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
         };
 
 
@@ -372,6 +377,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.form.value.return_part_price,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
         };
 
 
@@ -436,6 +442,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.form.value.return_part_price,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
         };
 
         const pay2 = {
@@ -443,6 +450,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.dop_info_open.moyka,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
         };
 
 
@@ -509,6 +517,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.booking_zalog,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
         };
 
         const booking: any = {
@@ -559,6 +568,5 @@ export class CloseComponent implements OnInit, OnDestroy {
         this.zalogBackAfterBookingClose$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
       }
     }
-
   }
 }

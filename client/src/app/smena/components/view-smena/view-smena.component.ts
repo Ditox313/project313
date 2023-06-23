@@ -141,7 +141,9 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
     this.pays$ = this.pays.getPaysBySmenaId(this.smenaId).subscribe(res => {
       this.xspays = res;
-      this.xsSumma = this.calculationMoney(this.xspays)})
+      console.log(res)
+      this.xsSumma = this.calculationMoney(this.xspays)
+    })
 
   }
 
@@ -171,43 +173,195 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
 
   calculationMoney(data: any[]) {
-    const xspaysTerminal = data.filter(pay => pay.typePay === 'Терминал');
+
+    // Рассчитываем сколько всего у нас платежей по типам для данной смены
+    const xspaysTerminal = data.filter(pay => pay.typePay === 'Терминал' && pay.vidPay !== 'Возврат залога' && pay.vidPay !== 'Частичный возврат залога'
+    && pay.vidPay !== 'Мойка');
     let totalPriceTerminal = xspaysTerminal.reduce(function (sum, current) {
       return sum + current.pricePay;
     }, 0);
 
-    const xspaysnal = data.filter(pay => pay.typePay === 'Наличные');
+    const xspaysnal = data.filter(pay => pay.typePay === 'Наличные' && pay.vidPay !== 'Возврат залога' && pay.vidPay !== 'Частичный возврат залога'
+      && pay.vidPay !== 'Мойка');
     let totalPriceNal = xspaysnal.reduce(function (sum, current) {
       return sum + current.pricePay;
     }, 0);
 
-    const xspaysCard = data.filter(pay => pay.typePay === 'На карту');
+    const xspaysCard = data.filter(pay => pay.typePay === 'На карту' && pay.vidPay !== 'Возврат залога' && pay.vidPay !== 'Частичный возврат залога'
+      && pay.vidPay !== 'Мойка');
     let totalPriceCard = xspaysCard.reduce(function (sum, current) {
       return sum + current.pricePay;
     }, 0);
 
-    const xspaysRS = data.filter(pay => pay.typePay === 'Р/с');
+    const xspaysRS = data.filter(pay => pay.typePay === 'Р/с' && pay.vidPay !== 'Возврат залога' && pay.vidPay !== 'Частичный возврат залога'
+      && pay.vidPay !== 'Мойка');
     let totalPriceRS = xspaysRS.reduce(function (sum, current) {
       return sum + current.pricePay;
     }, 0);
 
-    const xspaysZalog = data.filter(pay => pay.vidPay === 'Залог');
-    let totalPriceZalog = xspaysZalog.reduce(function (sum, current) {
-      return sum + current.pricePay;
-    }, 0);
+    const summaAllPays = totalPriceTerminal + totalPriceNal + totalPriceCard + totalPriceRS
+
+    
+
 
 
   
-    const xsdata  = {
-      terminal: totalPriceTerminal,
-      nal: totalPriceNal,
-      card: totalPriceCard,
-      rs: totalPriceRS,
-      zalogSumma: totalPriceZalog,
-      full: totalPriceTerminal + totalPriceNal + totalPriceCard + totalPriceRS 
+    // Считаем залог по всем типам платежей
+    const xspaysZalogTerminal = data.filter(pay => pay.vidPay === 'Залог' && pay.typePay === 'Терминал');
+    let totalPriceZalogTerminal = xspaysZalogTerminal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xspaysZalogNal = data.filter(pay => pay.vidPay === 'Залог' && pay.typePay === 'Наличные');
+    let totalPriceZalogNal = xspaysZalogNal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xspaysZalogCard = data.filter(pay => pay.vidPay === 'Залог' && pay.typePay === 'На карту');
+    let totalPriceZalogCard = xspaysZalogCard.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xspaysZalogRS = data.filter(pay => pay.vidPay === 'Залог' && pay.typePay === 'Р/с');
+    let totalPriceZalogRS = xspaysZalogRS.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const zalogSummaAllTypes = totalPriceZalogTerminal + totalPriceZalogNal + totalPriceZalogCard + totalPriceZalogRS
+
+
+  
+
+
+
+
+
+
+
+
+    // Считаем возврат залога по всем типам платежей
+    const xsBackZalogTerminal = data.filter(pay => pay.vidPay === 'Возврат залога' && pay.typePay === 'Терминал');
+    let totalxsBackZalogTerminal = xsBackZalogTerminal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsBackZalogNal = data.filter(pay => pay.vidPay === 'Возврат залога' && pay.typePay === 'Наличные');
+    let totalxsBackZalogNal = xsBackZalogNal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsBackZalogCard = data.filter(pay => pay.vidPay === 'Возврат залога' && pay.typePay === 'На карту');
+    let totalxsBackZalogCard = xsBackZalogCard.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsBackZalogRS = data.filter(pay => pay.vidPay === 'Возврат залога' && pay.typePay === 'Р/с');
+    let totalxsBackZalogRS = xsBackZalogRS.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const zalogBackSummaAllTypes = totalxsBackZalogTerminal + totalxsBackZalogNal + totalxsBackZalogCard + totalxsBackZalogRS
+
+    
+
+
+
+
+    // Считаем частичный возврат залога по всем типам платежей
+    const xsBackZalogPartTerminal = data.filter(pay => pay.vidPay === 'Частичный возврат залога' && pay.typePay === 'Терминал');
+    let totalxsBackZalogPartTerminal = xsBackZalogPartTerminal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsBackZalogPartNal = data.filter(pay => pay.vidPay === 'Частичный возврат залога' && pay.typePay === 'Наличные');
+    let totalxsBackZalogPartNal = xsBackZalogPartNal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsBackZalogPartCard = data.filter(pay => pay.vidPay === 'Частичный возврат залога' && pay.typePay === 'На карту');
+    let totalxsBackZalogPartCard = xsBackZalogPartCard.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsBackZalogPartRS = data.filter(pay => pay.vidPay === 'Частичный возврат залога' && pay.typePay === 'Р/с');
+    let totalxsBackZalogPartRS = xsBackZalogPartRS.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const zalogBackPartSummaAllTypes = totalxsBackZalogPartTerminal + totalxsBackZalogPartNal + totalxsBackZalogPartCard + totalxsBackZalogPartRS
+
+
+
+
+    // Считаем оплату мойки если авто грязный при закрытии по всем типам платежей
+    const xsWashTerminal = data.filter(pay => pay.vidPay === 'Мойка' && pay.typePay === 'Терминал');
+    let totalxsWashTerminal = xsWashTerminal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsWashNal = data.filter(pay => pay.vidPay === 'Мойка' && pay.typePay === 'Наличные');
+    let totalxsWashNal = xsWashNal.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsWashCard = data.filter(pay => pay.vidPay === 'Мойка' && pay.typePay === 'На карту');
+    let totalxsWasCard = xsWashCard.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const xsWashRS = data.filter(pay => pay.vidPay === 'Мойка' && pay.typePay === 'Р/с');
+    let totalxsWasRS = xsWashRS.reduce(function (sum, current) {
+      return sum + current.pricePay;
+    }, 0);
+
+    const washSummaAllTypes = totalxsWashTerminal + totalxsWashNal + totalxsWasCard + totalxsWasRS
+
+
+
+
+
+
+
+
+
+
+
+    if (zalogBackSummaAllTypes == 0 && zalogBackPartSummaAllTypes == 0 && washSummaAllTypes == 0)
+    {
+      const xsdata = {
+        terminal: totalPriceTerminal,
+        nal: totalPriceNal,
+        card: totalPriceCard,
+        rs: totalPriceRS,
+        zalogSumma: zalogSummaAllTypes,
+        full: (totalPriceTerminal + totalPriceNal + totalPriceCard + totalPriceRS) - (+zalogSummaAllTypes) 
+      }
+
+      return xsdata
+    }
+    else 
+    {
+      const xsdata = {
+        terminal: totalPriceTerminal - totalxsBackZalogTerminal - totalxsBackZalogPartTerminal + totalxsWashTerminal,
+        nal: totalPriceNal - totalxsBackZalogNal - totalxsBackZalogPartNal + totalxsWashNal,
+        card: totalPriceCard - totalxsBackZalogCard - totalxsBackZalogPartCard + totalxsWasCard,
+        rs: totalPriceRS - totalxsBackZalogRS - totalxsBackZalogPartRS + totalxsWasRS,
+        zalogSumma: zalogSummaAllTypes - zalogBackSummaAllTypes - zalogBackPartSummaAllTypes,
+        full: (totalPriceTerminal + totalPriceNal + totalPriceCard + totalPriceRS) - zalogBackSummaAllTypes - zalogBackPartSummaAllTypes + washSummaAllTypes
+      }
+
+      console.log(totalxsBackZalogPartNal)
+
+      return xsdata
     }
 
-    return xsdata
+  
+    
+
+    
+
+
+    
   }
 
 

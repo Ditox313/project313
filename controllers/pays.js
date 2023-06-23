@@ -105,6 +105,7 @@ module.exports.vozvrat_zaloga = async function (req, res) {
             typePay: req.body.typePay,
             bookingId: req.body.bookingId,
             pricePay: req.body.pricePay,
+            smenaId: req.body.smenaId,
             order: maxOrder + 1,
         }).save();
 
