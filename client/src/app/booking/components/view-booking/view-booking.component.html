@@ -243,7 +243,7 @@
                             </div>
 
                             <div class="to_pay" *ngIf="+actualBooking.paidCount >= (+summa.summaFull)">
-                                <a [routerLink]="['/add-pay', bookingId]" class="to_pay_ok">Оплачено</a>
+                                <a class="to_pay_ok">Оплачено</a>
                                 <a class="to_pay_act" (click)="clickAct($event)" *ngIf="actualActs.length <= 0">Сформировать акт</a>
                                 
                                 <a [routerLink]="['/show-act-booking', actualActs[0]._id]" class="to_pay_act" *ngIf="actualActs.length > 0">Просмотр акта</a>
