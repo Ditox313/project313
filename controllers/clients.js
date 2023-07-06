@@ -124,7 +124,7 @@ module.exports.fetch = async function(req, res) {
     try {
         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
         const clients = await Client.find({
-                user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+                // user: req.user.id 
             }).sort({ date: -1 })
             .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
             .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
@@ -145,7 +145,7 @@ module.exports.fetch_lawfase = async function (req, res) {
     try {
         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
         const clients = await Client_Law_Face.find({
-            user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+            // user: req.user.id 
         }).sort({ date: -1 })
             .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
             .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
@@ -166,7 +166,7 @@ module.exports.get_all = async function(req, res) {
     try {
             // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
             const clients = await Client.find({
-                user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+                // user: req.user.id 
             })
 
         // Возвращаем пользователю позиции 
@@ -183,7 +183,7 @@ module.exports.get_all_law_face = async function (req, res) {
     try {
         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
         const clients = await Client_Law_Face.find({
-            user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+            // user: req.user.id 
         })
 
         // Возвращаем пользователю позиции 

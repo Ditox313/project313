@@ -45,7 +45,7 @@ module.exports.fetch = async function(req, res) {
     try {
         // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
         const partners = await Partner.find({
-                user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+                // user: req.user.id 
             }).sort({ date: -1 })
             .skip(+req.query.offset) //Отступ для бесконечного скрола на фронтенде. Приводим к числу
             .limit(+req.query.limit); //Сколько выводить на фронтенде. Приводим к числу
@@ -133,7 +133,7 @@ module.exports.get_all = async function(req, res) {
     try {
             // Ищем в таблице позиции по 2 параметрам( по дефолту 1 параметр)
             const partners = await Partner.find({
-                user: req.user.id //Эти данные берем из объекта user который добавил пасспорт в запрос !!!
+                // user: req.user.id 
             })
 
         // Возвращаем пользователю позиции 
