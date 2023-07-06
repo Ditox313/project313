@@ -24,6 +24,10 @@ export class SmenaListComponent implements OnInit, OnDestroy {
   loading = false;
   noMoreSmenas: Boolean = false;
 
+  // Проверяем смену на открытие
+  smena$: Subscription
+  xsOpenSmena: any
+
   constructor(
     private smenaService: SmenaService,
     private rote: ActivatedRoute,
@@ -32,6 +36,7 @@ export class SmenaListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetch();
+    this.isOpenSmena()
   }
 
 
@@ -41,6 +46,9 @@ export class SmenaListComponent implements OnInit, OnDestroy {
     }
     if (this.subDeleteSmena$) {
       this.subDeleteSmena$.unsubscribe();
+    }
+    if (this.smena$) {
+      this.smena$.unsubscribe();
     }
   }
 
@@ -71,6 +79,13 @@ export class SmenaListComponent implements OnInit, OnDestroy {
     this.fetch();
     this.loading = false;
   }
+
+  isOpenSmena() {
+    this.smena$ = this.smenaService.isOpenSmena().subscribe(res => {
+      this.xsOpenSmena = res
+    })
+  }
+
 
 
   onDeleteSmena(event: Event, smena: Smena): void {

@@ -5,7 +5,7 @@
             <span> Смены</span>
         </h1>
 
-        <div class="xs_smena__add">
+        <div class="xs_smena__add" *ngIf="!xsOpenSmena">
             <a [routerLink]="['/add-smena']">
                 <span class="material-icons">library_add</span> Открыть смену
             </a>
