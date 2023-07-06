@@ -482,7 +482,7 @@
                                 </td>
                                 <td *ngIf="xsbooking.status === 'Закрыта'" style="display: flex; margin-top: 4px;">
                                     <a [routerLink]="['/view-booking',xsbooking._id]"
-                                        class="xs_booking_btn btn_close">{{xsbooking.status}}</a>
+                                        class="xs_booking_btn btn_close" style="justify-content: center;">{{xsbooking.status}}</a>
                                 </td>
                                 <td>
                                     <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.date | date : 'd MMMM y, H:mm'}}</a>

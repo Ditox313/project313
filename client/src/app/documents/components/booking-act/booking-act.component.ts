@@ -49,7 +49,7 @@ export class BookingActComponent implements OnInit, OnDestroy {
     this.getParams();
     this.getUser();
     this.getById();
-    this.xs_actual_date = this.datePipe.transform(Date.now(), 'dd.MM.yyyy HH:mm:ss');
+    this.xs_actual_date = this.datePipe.transform(Date.now(), 'dd.MM.yyyy');
   }
 
   ngOnDestroy(): void {
