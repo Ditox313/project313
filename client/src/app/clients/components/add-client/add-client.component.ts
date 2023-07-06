@@ -171,31 +171,29 @@ export class AddClientComponent implements OnInit, AfterViewInit, OnDestroy {
       prava_seria: this.form.value.prava_seria_and_number.substring(0, 4),
       prava_number: this.form.value.prava_seria_and_number.slice(4),
       prava_date: this.form.value.prava_date,
-      phone_main: this.form.value.phone_main,
+      phone_main: '+7' + this.form.value.phone_main,
       phone_1_dop_name: this.form.value.phone_1_dop_name,
-      phone_1_dop_number: this.form.value.phone_1_dop_number,
+      phone_1_dop_number: '+7' + this.form.value.phone_1_dop_number,
       phone_2_dop_name: this.form.value.phone_2_dop_name,
-      phone_2_dop_number: this.form.value.phone_2_dop_number,
+      phone_2_dop_number: '+7' + this.form.value.phone_2_dop_number,
       phone_3_dop_name: this.form.value.phone_3_dop_name,
-      phone_3_dop_number: this.form.value.phone_3_dop_number,
+      phone_3_dop_number: '+7' + this.form.value.phone_3_dop_number,
       phone_4_dop_name: this.form.value.phone_4_dop_name,
-      phone_4_dop_number: this.form.value.phone_4_dop_number,
+      phone_4_dop_number: '+7' + this.form.value.phone_4_dop_number,
       isNoResident: this.isNoResident
     };
 
 
-    
-    
 
     this.subClientCreate$ = this.clients
-      .create(
+    .create(
         client,
         this.passport__1,
         this.passport__2,
         this.prava__1,
         this.prava__2
       )
-      .subscribe((client) => {
+    .subscribe((client) => {
         MaterialService.toast('Клиент физ/лицо добавлен');
         this.form.reset()
         this.passport_1_preview = '';
