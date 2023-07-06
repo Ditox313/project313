@@ -506,98 +506,7 @@
 
 
 
-        <!-- <div *ngIf="isCustomeZalog && isCustomePlaceStart && isCustomePlaceInput">
-            <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
-            +
-            <span>
-                <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽</span>
-            </span>
-            +
-
-            <span *ngIf="this.isCustomePlaceStart">
-                <span> Подача авто {{this.form.value.isCustomePlaceControlPrice}} ₽</span>
-            </span>
-            +
-            <span *ngIf="this.isCustomePlaceInput">
-                <span> Прием авто {{this.form.value.isCustomePlaceInputControlPrice}} ₽</span>
-            </span>
-            +
-            <span>
-                <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
-            </span>
-            +
-            <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
-                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
-            </span> =
-
-            <span>Итого {{(+summa.summa ) +
-                (+this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl) +
-                (+this.form.value.isCustomePlaceStartControlPrice) + (+this.form.value.isCustomePlaceInputControlPrice) +
-                (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
-        </div>
-
-        <div *ngIf="isCustomeZalog && !isCustomePlaceStart">
-            <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
-            +
-            <span *ngIf="isCustomeZalog ">
-                <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽</span>
-            </span>
-            +
-            <span *ngIf="!this.isCustomePlaceStart">
-                <span> Подача авто {{this.summa.place_start_price}} ₽</span>
-            </span>
-            <span *ngIf="this.isCustomePlaceStart">
-                <span> Подача авто {{this.form.value.isCustomePlaceStartControlPrice}} ₽</span>
-            </span>
-            +
-            <span>
-                <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
-            </span>
-            +
-            <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
-                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
-            </span> =
-    
-            <span>Итого {{(+summa.summa + (+this.summa.place_start_price)) +
-                (+this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl) +
-                (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
-        </div>
-    
-        <div *ngIf="!isCustomeZalog && isCustomePlaceStart">
-            <span>Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
-            +
-            <span>
-                <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽</span>
-            </span>
-            +
-            <span *ngIf="!this.isCustomePlaceStart">
-                <span> Подача авто {{this.summa.place_start_price}} ₽</span>
-            </span>
-            <span *ngIf="this.isCustomePlaceStart">
-                <span> Подача авто {{this.form.value.isCustomePlaceStartControlPrice}} ₽</span>
-            </span>
-            +
-            <span>
-                <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
-            </span>
-            +
-            <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
-                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
-            </span> =
-    
-            <span *ngIf="this.summa.tariff === 'Город'">Итого {{(+summa.summa + (+this.summa.place_start_price)) +
-                (+this.summa.additional_services_price) + (+this.summa.car.zalog) +
-                (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
-    
-            <span *ngIf="this.summa.tariff === 'Межгород'">Итого {{(+summa.summa + (+this.summa.place_start_price)) +
-                (+this.summa.additional_services_price) + (+this.summa.car.zalog_mej) +
-                (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
-    
-            <span *ngIf="this.summa.tariff === 'Россия'">Итого {{(+summa.summa + (+this.summa.place_start_price)) +
-                (+this.summa.additional_services_price) + (+this.summa.car.zalog_rus) +
-                (this.summa.car.price_dop_hour * this.summa.dop_hours) | number: '1.0-0'}} ₽</span>
-        </div> -->
-    
+      
         
     </div>
 
@@ -616,8 +525,9 @@
 <!-- Modal Structure -->
 <div class="modal modal-search" id="#create-modal" #modal>
     <div class="modal-content">
-        <h4>Выберите клиента</h4>
-        <app-clients-list *ngIf="this.xs_actual_client_type"  [clientType]="this.xs_actual_client_type" (onAddClientForSearch)="inputDataClientsListModule($event)"></app-clients-list>
+        <h4 style="display: flex; align-items: center;">Выберите клиента <span (click)="onCloseModalCreate($event)" class="closeCreateForm">Закрыть</span></h4>
+        
+        <app-clients-list *ngIf="this.xs_actual_client_type"  [clientType]="this.xs_actual_client_type" (onAddClientForSearch)="inputDataClientsListModule($event)" ></app-clients-list>
     </div>
 </div>
 

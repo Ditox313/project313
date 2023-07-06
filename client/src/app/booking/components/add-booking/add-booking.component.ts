@@ -1873,6 +1873,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     
   }
 
+  
+  onCloseModalCreate(e)
+  {
+    this.modal.close()
+  }
+
 
   modalAddDogovor()
   {
