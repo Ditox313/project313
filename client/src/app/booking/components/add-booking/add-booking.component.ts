@@ -290,217 +290,287 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     
 
-    if (!this.isCustomeZalog)
+    if(e !== 'Смешанный')
     {
-      if (this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
-        if (this.summa.tariff === 'Город') {
-          if (this.summa.booking_days < 3) {
-            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-            }
-            if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
-            }
-            if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
-              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
-            }
+      // Обнуляем массив с тарифами
+      this.isMixedTarif = false;
+      this.summa.tariff.splice(0, this.summa.tariff.length);
 
+
+      // Получаем тариф
+      this.summa.tariff.push({
+        name: e,
+        days: this.summa.booking_days,
+        summa: 0
+      })
+
+
+      if (!this.isCustomeZalog) {
+        if (this.summa.tariff[0].name !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+          if (this.summa.tariff[0].name === 'Город') {
+            if (this.summa.booking_days < 3) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_1_2;
+                this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+              }
+
+            }
+            else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_3_7;
+                this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+              }
+            }
+            else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_8_14;
+                this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+              }
+            }
+            else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_15_30;
+                this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+              }
+            }
+            else if (this.summa.booking_days > 31) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+                this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_31_more;
+                this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+              }
+            }
           }
-          else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
+          else if (this.summa.tariff[0].name === 'Межгород') {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
             }
             if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
-              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+              this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.mezgorod;
+              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
             }
           }
-          else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
+          else if (this.summa.tariff[0].name === 'Россия') {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
             }
             if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
-              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
+              this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.russia;
+              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
             }
           }
-          else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
-            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-            }
-            if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
-            }
-            if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
-              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
-            }
-          }
-          else if (this.summa.booking_days > 31) {
-            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-            }
-            if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
-              this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
-            }
-            if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
-              this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
-            }
-          }
+
         }
-        else if (this.summa.tariff === 'Межгород') {
-          if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+
+      }
+      else {
+        if (this.summa.tariff[0].name !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+          if (this.summa.tariff[0].name === 'Город') {
+            if (this.summa.booking_days < 3) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_1_2;
+                this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
+              }
+
+            }
+            else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_3_7;
+                this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
+              }
+            }
+            else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_8_14;
+                this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
+              }
+            }
+            else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_15_30;
+                this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
+              }
+            }
+            else if (this.summa.booking_days > 31) {
+              if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              }
+              if (this.summa.dop_hours >= 12) {
+                this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+                this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+                this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
+              }
+              if (this.summa.dop_hours === 0) {
+                this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
+                this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_31_more;
+                this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
+              }
+            }
           }
-          if (this.summa.dop_hours >= 12) {
-            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
+          else if (this.summa.tariff[0].name === 'Межгород') {
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
+            }
+            if (this.summa.dop_hours === 0) {
+              this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.mezgorod;
+              this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
+            }
           }
-          if (this.summa.dop_hours === 0) {
-            this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
+          else if (this.summa.tariff[0].name === 'Россия') {
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
+            }
+            if (this.summa.dop_hours === 0) {
+              this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.russia;
+              this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
+            }
           }
-        }
-        else if (this.summa.tariff === 'Россия') {
-          if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-          }
-          if (this.summa.dop_hours >= 12) {
-            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
-            this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
-          }
-          if (this.summa.dop_hours === 0) {
-            this.summa.summa = this.summa.booking_days * this.summa.car.russia;
-            this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
-          }
+
         }
       }
     }
-      else
+    else
     {
-      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
-        if (this.summa.tariff === 'Город') {
-          if (this.summa.booking_days < 3) {
-            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-            }
-            if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
-            }
-            if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl);
-            }
+      // Обнуляем массив с тарифами
+      this.isMixedTarif = true;
+      this.summa.tariff.splice(0, this.summa.tariff.length);
 
-          }
-          else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
-            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-            }
-            if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
-            }
-            if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
-              this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
-            }
-          }
-          else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
-            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-            }
-            if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
-            }
-            if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
-              this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
-            }
-          }
-          else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
-            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-            }
-            if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
-            }
-            if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
-              this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
-            }
-          }
-          else if (this.summa.booking_days > 31) {
-            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-            }
-            if (this.summa.dop_hours >= 12) {
-              this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
-              this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
-            }
-            if (this.summa.dop_hours === 0) {
-              this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
-              this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
-            }
-          }
-        }
-        else if (this.summa.tariff === 'Межгород') {
-          if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
-            this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-          }
-          if (this.summa.dop_hours >= 12) {
-            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
-            this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
-          }
-          if (this.summa.dop_hours === 0) {
-            this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
-            this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
-          }
-        }
-        else if (this.summa.tariff === 'Россия') {
-          if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
-            this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
-          }
-          if (this.summa.dop_hours >= 12) {
-            this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
-            this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
-          }
-          if (this.summa.dop_hours === 0) {
-            this.summa.summa = this.summa.booking_days * this.summa.car.russia;
-            this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
-          }
-        }
-      }
+
+      this.form.controls['tarif_mixed_gorod_days'].disable();
+      this.form.controls['tarif_mixed_mezjgorod_days'].disable();
+      this.form.controls['tarif_mixed_russia_days'].disable();
     }
   }
 
@@ -562,21 +632,23 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.summa.booking_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
     
 
-    if (!this.isCustomeZalog)
-    {
-      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
-        if (this.summa.tariff === 'Город') {
+    if (!this.isCustomeZalog) {
+      if (this.summa.tariff[0] && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+        if (this.summa.tariff[0].name === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_1_2;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
 
@@ -584,106 +656,125 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_3_7;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_8_14;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_15_30;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_31_more;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
         }
-        else if (this.summa.tariff === 'Межгород') {
+        else if (this.summa.tariff[0].name === 'Межгород') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.mezgorod;
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
           }
         }
-        else if (this.summa.tariff === 'Россия') {
+        else if (this.summa.tariff[0].name === 'Россия') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.russia;
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
           }
         }
-
       }
     }
-    else
-    {
-      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
-        if (this.summa.tariff === 'Город') {
+    else {
+      if (this.summa.tariff[0].name !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+        if (this.summa.tariff[0].name === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_1_2;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
 
@@ -691,85 +782,103 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_3_7;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
           }
           else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_8_14;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
           }
           else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_15_30;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
           }
           else if (this.summa.booking_days > 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_31_more;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
           }
         }
-        else if (this.summa.tariff === 'Межгород') {
+        else if (this.summa.tariff[0].name === 'Межгород') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.mezgorod;
             this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
           }
         }
-        else if (this.summa.tariff === 'Россия') {
+        else if (this.summa.tariff[0].name === 'Россия') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.russia;
             this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
           }
         }
@@ -817,21 +926,23 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     // Назначаем переменную для колличества дней аренды
     this.summa.booking_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
 
-    if (!this.isCustomeZalog)
-    {
-      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
-        if (this.summa.tariff === 'Город') {
+    if (!this.isCustomeZalog) {
+      if (this.summa.tariff[0] && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+        if (this.summa.tariff[0].name === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_1_2;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
 
@@ -839,106 +950,125 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_3_7;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_8_14;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_15_30;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_31_more;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
         }
-        else if (this.summa.tariff === 'Межгород') {
+        else if (this.summa.tariff[0].name === 'Межгород') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.mezgorod;
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
           }
         }
-        else if (this.summa.tariff === 'Россия') {
+        else if (this.summa.tariff[0].name === 'Россия') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.russia;
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
           }
         }
-
       }
     }
-    else
-    {
-      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
-        if (this.summa.tariff === 'Город') {
+    else {
+      if (this.summa.tariff[0].name !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+        if (this.summa.tariff[0].name === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_1_2;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
 
@@ -946,85 +1076,103 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_3_7;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
           }
           else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_8_14;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
           }
           else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_15_30;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
           }
           else if (this.summa.booking_days > 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_31_more;
               this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
             }
           }
         }
-        else if (this.summa.tariff === 'Межгород') {
+        else if (this.summa.tariff[0].name === 'Межгород') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.mezgorod;
             this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
           }
         }
-        else if (this.summa.tariff === 'Россия') {
+        else if (this.summa.tariff[0].name === 'Россия') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.form.value.isCustomeZalogControl)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.russia;
             this.summa.summaFull = +this.summa.summa + +this.form.value.isCustomeZalogControl;
           }
         }
@@ -1331,6 +1479,11 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.form.controls['tarif_mixed_gorod_days'].disable();
       this.form.controls['tarif_mixed_mezjgorod_days'].disable();
       this.form.controls['tarif_mixed_russia_days'].disable();
+      this.xs_isCustomeZalogCheck();
+      
+      this.form.patchValue({
+        isCustomeZalogControlclick: true,
+      })
     }
   }
 
@@ -1353,7 +1506,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.form.controls['tarif_mixed_gorod_days'].disable();
       this.summa.tariff =  this.summa.tariff.filter((t) =>t.name !== 'Город' )
-      
+      this.SummaMixedTarif.tarifGorod.summa = 0
     }
   }
   // При вводе колличества дней смешанного тарифа город
@@ -1460,6 +1613,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       this.form.controls['tarif_mixed_mezjgorod_days'].disable();
       this.summa.tariff = this.summa.tariff.filter((t) => t.name !== 'Межгород')
+      this.SummaMixedTarif.tarifMezjGorod.summa = 0
     }
   }
 
@@ -1513,6 +1667,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       this.form.controls['tarif_mixed_russia_days'].disable();
       this.summa.tariff = this.summa.tariff.filter((t) => t.name !== 'Россия')
+      this.SummaMixedTarif.tarifRussia.summa = 0
     }
   }
 
@@ -1865,19 +2020,22 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isCustomeZalog = !this.isCustomeZalog;
 
     if (!this.isCustomeZalog) {
-      if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
-        if (this.summa.tariff === 'Город') {
+      if (this.summa.tariff[0].name !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+        if (this.summa.tariff[0].name === 'Город') {
           if (this.summa.booking_days < 3) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_1_2;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_1_2;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
 
@@ -1885,92 +2043,110 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           else if (this.summa.booking_days >= 3 && this.summa.booking_days <= 7) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_3_7
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_3_7;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_3_7;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 7 && this.summa.booking_days <= 14) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_8_14
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_8_14;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_8_14;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 14 && this.summa.booking_days <= 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_15_30
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_15_30;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_15_30;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
           else if (this.summa.booking_days > 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
+              this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.days_31_more
               this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog)
             }
             if (this.summa.dop_hours === 0) {
               this.summa.summa = this.summa.booking_days * this.summa.car.days_31_more;
+              this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.days_31_more;
               this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog;
             }
           }
         }
-        else if (this.summa.tariff === 'Межгород') {
+        else if (this.summa.tariff[0].name === 'Межгород') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_mej)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.mezgorod;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.mezgorod;
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_mej;
           }
         }
-        else if (this.summa.tariff === 'Россия') {
+        else if (this.summa.tariff[0].name === 'Россия') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
+            this.summa.tariff[0].summa = Math.round(this.summa.booking_days) * this.summa.car.russia
             this.summa.summaFull = +this.summa.summa + (+this.summa.car.zalog_rus)
           }
           if (this.summa.dop_hours === 0) {
             this.summa.summa = this.summa.booking_days * this.summa.car.russia;
+            this.summa.tariff[0].summa = this.summa.booking_days * this.summa.car.russia;
             this.summa.summaFull = +this.summa.summa + +this.summa.car.zalog_rus;
           }
         }
 
       }
     }
-
+    
     this.form.patchValue({
       isCustomeZalogControl: '',
     })
@@ -1985,14 +2161,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.onChangeMixedTarifGorodDays(e)
       this.onChangeMixedTarifMezjGorodDays(e)
       this.onChangeMixedTarifRussiaDays(e)
-      console.log(this.SummaMixedTarif);
     }
 
 
     let xs_custome__zalog = e.target.value
 
-    if ( this.summa.tariff !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
-      if (this.summa.tariff === 'Город') {
+    if (this.summa.tariff[0].name !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
+      if (this.summa.tariff[0].name === 'Город') {
         if (this.summa.booking_days < 3) {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.days_1_2
@@ -2065,7 +2240,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
       }
-      else if (this.summa.tariff === 'Межгород') {
+      else if (this.summa.tariff[0].name === 'Межгород') {
         if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
           this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.mezgorod
           this.summa.summaFull = +this.summa.summa + (+xs_custome__zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
@@ -2079,7 +2254,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           this.summa.summaFull = +this.summa.summa + +xs_custome__zalog;
         }
       }
-      else if (this.summa.tariff === 'Россия') {
+      else if (this.summa.tariff[0].name === 'Россия') {
         if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
           this.summa.summa = Math.round(this.summa.booking_days) * this.summa.car.russia
           this.summa.summaFull = +this.summa.summa + (+xs_custome__zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)

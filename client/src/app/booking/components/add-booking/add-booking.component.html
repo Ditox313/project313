@@ -449,7 +449,7 @@
     </div>
 
 
-    <div class="xs_summa" *ngIf="isMixedTarif">
+    <div class="xs_summa" *ngIf="isMixedTarif && this.form.value.isCustomeZalogControl">
         <div>
             <span style="font-weight: bold;">Аренда(город) {{this.SummaMixedTarif.tarifGorod.summa | number: '1.0-0'}} ₽</span>
             +
