@@ -333,6 +333,14 @@ export interface Summa {
 }
 
 
+// Интерфейс для суммы брони смешанного тарифа
+export interface SummaMixedTarif {
+  tarifGorod: any;
+  tarifMezjGorod: any;
+  tarifRussia: any;
+}
+
+
 // Интерфейс для платежа
 export interface Pay {
   _id?: any;

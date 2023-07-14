@@ -999,6 +999,7 @@ select {
 .to_pay_ok
 {
     background-color: green !important;
+    opacity: 0.5;
 }
 
 .to_pay_act {
@@ -1867,4 +1868,29 @@ input[type="checkbox"]
     background-color: inherit;
     padding-left: 0;
     padding-right: 0;
+}
+
+.checkboxs_row
+{
+    display: flex;
+}
+
+.checkboxs_row > div
+{
+    margin-right: 30px;
+}
+
+.checkboxs_row label 
+{
+    font-size: 13px;
+}
+
+.checkboxs_row label:last-child input
+{
+    width: auto !important;
+}
+
+.tariff-field.col
+{
+    float: none !important;
 }
