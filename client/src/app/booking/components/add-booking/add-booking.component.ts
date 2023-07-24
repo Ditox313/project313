@@ -26,20 +26,20 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   form: any;
 
   // Храним все автомобили
-  xscars$!: any ;
+  xscars$!: any;
 
   // Храним всех клиентов
-  xsclients$!: any ;
+  xsclients$!: any;
 
 
   // Храним стрим для активного договора
-  getDogovorActive$ : Subscription;
+  getDogovorActive$: Subscription;
 
 
   // Храним результат поиска клиента
   searchResultClient$: Subscription;
 
-  
+
   // Подписка для создания брони
   subCreateBooking$: Subscription;
 
@@ -68,7 +68,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // Нажат ли произвольный залог
-  isCustomeZalog: boolean = false; 
+  isCustomeZalog: boolean = false;
 
   // Закончился ли ввод в поле нового залога
   isCustomeZalogCheck: boolean = false;
@@ -78,7 +78,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Выбрано произвольное место приема
   isCustomePlaceInput: boolean = false;
-  
+
 
   // Результат поиска
   searchResult: any[] = [];
@@ -99,7 +99,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   xs_actual_search__client_no_json: any = null;
   xs_actual_search__client___lawfase: any = null;
   xs_actual_search__client___lawfase_no_json: any = null;
-  
+
 
   // Храним выбранный тип клиента
   xs_actual_client_type: string = '';
@@ -163,7 +163,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     private documents: DocumentsService,
     private auth: AuthService,
     private AccountService: AccountService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -173,7 +173,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     MaterialService.updateTextInputs();
     this.get_user();
     this.dasable_controls();
-    
+
   }
 
 
@@ -186,53 +186,46 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.getDogovorActive$)
-    {
+    if (this.getDogovorActive$) {
       this.getDogovorActive$.unsubscribe();
     }
 
-    if (this.searchResultClient$)
-    {
+    if (this.searchResultClient$) {
       this.searchResultClient$.unsubscribe();
     }
-    if (this.subCreateBooking$)
-    {
+    if (this.subCreateBooking$) {
       this.subCreateBooking$.unsubscribe();
     }
-    if (this.currentUserSetings$)
-    {
+    if (this.currentUserSetings$) {
       this.currentUserSetings$.unsubscribe();
     }
-    if (this.currentUser$)
-    {
+    if (this.currentUser$) {
       this.currentUser$.unsubscribe();
     }
 
-    
+
     this.modal.destroy();
   }
 
 
-  get_user()
-  {
+  get_user() {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
       this.currentUser = res;
 
-       this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
-         this.currentUserSetings = res;
-       })
+      this.currentUserSetings$ = this.AccountService.get_settings_user(this.currentUser._id).subscribe(res => {
+        this.currentUserSetings = res;
+      })
 
     })
   }
 
 
-  initForm()
-  {
+  initForm() {
     this.form = new FormGroup({
       car: new FormControl('', [Validators.required]),
       client: new FormControl('', [Validators.required]),
       booking_start: new FormControl('', [Validators.required]),
-      booking_end: new FormControl('',  [Validators.required]),
+      booking_end: new FormControl('', [Validators.required]),
       place_start: new FormControl('Офис', [Validators.required]),
       place_end: new FormControl('Офис', [Validators.required]),
       tariff: new FormControl('', [Validators.required]),
@@ -261,13 +254,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       tarif_mixed_russia_days: new FormControl(''),
     });
 
-    
+
   }
 
   // Задаем минимальный параметр даты
-  setMinDate()
-  {
-    
+  setMinDate() {
+
     let booking_start: any = document.getElementById('booking_start');
     booking_start.min = new Date().toISOString().slice(0, new Date().toISOString().lastIndexOf(":"));
 
@@ -277,8 +269,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // При выборе атомобиля
-  onChangeCar(e: any)
-  {
+  onChangeCar(e: any) {
 
     if (this.form.value.booking_start) {
       this.form.controls['client'].enable();
@@ -288,10 +279,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.summa.car = JSON.parse(e)
 
 
-    
 
-    if(e !== 'Смешанный')
-    {
+
+    if (e !== 'Смешанный') {
       // Обнуляем массив с тарифами
       this.isMixedTarif = false;
       this.summa.tariff.splice(0, this.summa.tariff.length);
@@ -561,8 +551,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
-    else
-    {
+    else {
       // Обнуляем массив с тарифами
       this.isMixedTarif = true;
       this.summa.tariff.splice(0, this.summa.tariff.length);
@@ -576,8 +565,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // Отключаем все инпуты кроме даты старта
-  dasable_controls()
-  {
+  dasable_controls() {
     this.form.controls['booking_end'].disable();
     this.form.controls['car'].disable();
     this.form.controls['client'].disable();
@@ -595,8 +583,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // При выборе начала аренды
-  bookingStartDate(e: any)
-  {
+  bookingStartDate(e: any) {
 
     if (this.form.value.booking_start) {
       this.form.controls['booking_end'].enable();
@@ -616,21 +603,19 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Считаем дополнительные часы
     const dop_hour_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
-    
-    if(!Number.isInteger(dop_hour_days))
-    {
-      this.summa.dop_hours = Math.floor(((booking_end__x - booking_start__x)/ (1000 * 60 * 60)) % 24);
+
+    if (!Number.isInteger(dop_hour_days)) {
+      this.summa.dop_hours = Math.floor(((booking_end__x - booking_start__x) / (1000 * 60 * 60)) % 24);
     }
-    else
-    {
-     this.summa.dop_hours = 0 
+    else {
+      this.summa.dop_hours = 0
     }
-    
-    
+
+
 
     // Назначаем переменную для колличества дней аренды
     this.summa.booking_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
-    
+
 
     if (!this.isCustomeZalog) {
       if (this.summa.tariff[0] && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
@@ -885,13 +870,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
       }
     }
-    
+
   }
 
 
   // При выборе конца аренды
-  bookingEndDate(e: any)
-  {
+  bookingEndDate(e: any) {
 
     if (this.form.value.booking_start) {
       this.form.controls['car'].enable();
@@ -901,8 +885,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     // Получаем конец аренды
     this.summa.booking_end = e.target.value
 
-    
-    
+
+
 
     // Получаем знапчения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
@@ -911,17 +895,15 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Считаем дополнительные часы
     const dop_hour_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
-    
-    if(!Number.isInteger(dop_hour_days))
-    {
-      this.summa.dop_hours = Math.floor(((booking_end__x - booking_start__x)/ (1000 * 60 * 60)) % 24);
+
+    if (!Number.isInteger(dop_hour_days)) {
+      this.summa.dop_hours = Math.floor(((booking_end__x - booking_start__x) / (1000 * 60 * 60)) % 24);
     }
-    else
-    {
-     this.summa.dop_hours = 0 
+    else {
+      this.summa.dop_hours = 0
     }
-    
-    
+
+
 
     // Назначаем переменную для колличества дней аренды
     this.summa.booking_days = (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24);
@@ -1183,8 +1165,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // При ваыборе тарифа
-  onChangeTariff(e: any)
-  {
+  onChangeTariff(e: any) {
     if (this.form.value.booking_start) {
       this.form.controls['place_start'].enable();
     }
@@ -1196,10 +1177,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form.controls['additional_services_moyka'].enable();
     this.form.controls['isCustomePlaceStartControlclick'].enable();
     this.form.controls['isCustomeZalogControlclick'].enable();
-    
 
-    if(e !== 'Смешанный')
-    {
+
+    if (e !== 'Смешанный') {
       // Обнуляем массив с тарифами
       this.isMixedTarif = false;
       this.summa.tariff.splice(0, this.summa.tariff.length);
@@ -1339,7 +1319,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
         }
-        
+
       }
       else {
         if (this.summa.tariff[0].name !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
@@ -1469,8 +1449,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
-    else
-    {
+    else {
       // Обнуляем массив с тарифами
       this.isMixedTarif = true;
       this.summa.tariff.splice(0, this.summa.tariff.length);
@@ -1480,7 +1459,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.form.controls['tarif_mixed_mezjgorod_days'].disable();
       this.form.controls['tarif_mixed_russia_days'].disable();
       this.xs_isCustomeZalogCheck();
-      
+
       this.form.patchValue({
         isCustomeZalogControlclick: true,
       })
@@ -1488,37 +1467,31 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // При выборе смешанного тарифа - Город
-  onChangeMixedTarifGorod(e)
-  {
+  onChangeMixedTarifGorod(e) {
     this.form.controls['tarif_mixed_gorod_days'].enable();
-    if (this.form.value.tarif_mixed_gorod)
-    {
+    if (this.form.value.tarif_mixed_gorod) {
       this.summa.tariff.push({
         name: 'Город',
         days: 0,
+        summa: 0
       })
     }
-    else
-    {
+    else {
       this.form.patchValue({
         tarif_mixed_gorod_days: null,
       });
 
       this.form.controls['tarif_mixed_gorod_days'].disable();
-      this.summa.tariff =  this.summa.tariff.filter((t) =>t.name !== 'Город' )
+      this.summa.tariff = this.summa.tariff.filter((t) => t.name !== 'Город')
       this.SummaMixedTarif.tarifGorod.summa = 0
     }
   }
   // При вводе колличества дней смешанного тарифа город
-  onChangeMixedTarifGorodDays(e)
-  {
-    if (this.form.value.isCustomeZalogControl)
-    {
-      if (this.form.value.tarif_mixed_gorod_days)
-      {
+  onChangeMixedTarifGorodDays(e) {
+    if (this.form.value.isCustomeZalogControl) {
+      if (this.form.value.tarif_mixed_gorod_days) {
         this.summa.tariff.forEach(tarif => {
-          if (tarif.name === 'Город')
-          {
+          if (tarif.name === 'Город') {
             tarif.days = this.form.value.tarif_mixed_gorod_days
             this.SummaMixedTarif.tarifGorod.days = this.form.value.tarif_mixed_gorod_days
           }
@@ -1528,65 +1501,96 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               if (this.form.value.tarif_mixed_gorod_days < 3) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_1_2
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_1_2
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_1_2;
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
 
               }
               else if (this.form.value.tarif_mixed_gorod_days >= 3 && this.form.value.tarif_mixed_gorod_days <= 7) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_3_7
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_3_7
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_3_7;
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
               }
               else if (this.form.value.tarif_mixed_gorod_days > 7 && this.form.value.tarif_mixed_gorod_days <= 14) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_8_14
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_8_14
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_8_14;
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
               }
               else if (this.form.value.tarif_mixed_gorod_days > 14 && this.form.value.tarif_mixed_gorod_days <= 31) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_15_30
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_15_30
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_15_30;
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
               }
               else if (this.form.value.tarif_mixed_gorod_days > 31) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_31_more
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_31_more
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_31_more;
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
               }
             }
           }
+
+
         });
       }
-      else
-      {
+      else {
         this.summa.tariff.forEach(element => {
           if (element.name === 'Город') {
             element.days = 0
@@ -1594,7 +1598,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     }
-    
+
   }
 
   // При выборе смешанного тарифа - Межгород
@@ -1604,10 +1608,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.summa.tariff.push({
         name: 'Межгород',
         days: 0,
+        summa: 0
       })
     }
-    else
-    {
+    else {
       this.form.patchValue({
         tarif_mixed_mezjgorod_days: null,
       });
@@ -1618,25 +1622,29 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // При вводе колличества дней смешанного тарифа Межгород
-  onChangeMixedTarifMezjGorodDays(e)
-  {
-    if (this.form.value.isCustomeZalogControl)
-    {
+  onChangeMixedTarifMezjGorodDays(e) {
+    if (this.form.value.isCustomeZalogControl) {
       if (this.form.value.tarif_mixed_mezjgorod_days) {
         this.summa.tariff.forEach(tarif => {
           if (tarif.name === 'Межгород') {
             tarif.days = this.form.value.tarif_mixed_mezjgorod_days
             this.SummaMixedTarif.tarifMezjGorod.days = this.form.value.tarif_mixed_mezjgorod_days
-          }
 
-          if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-            this.SummaMixedTarif.tarifMezjGorod.summa = Math.round(this.form.value.tarif_mixed_mezjgorod_days) * this.summa.car.mezgorod
-          }
-          if (this.summa.dop_hours >= 12) {
-            this.SummaMixedTarif.tarifMezjGorod.summa = Math.round(this.form.value.tarif_mixed_mezjgorod_days) * this.summa.car.mezgorod
-          }
-          if (this.summa.dop_hours === 0) {
-            this.SummaMixedTarif.tarifMezjGorod.summa = this.form.value.tarif_mixed_mezjgorod_days * this.summa.car.mezgorod;
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.SummaMixedTarif.tarifMezjGorod.summa = Math.round(this.form.value.tarif_mixed_mezjgorod_days) * this.summa.car.mezgorod
+              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              tarif.summa = this.SummaMixedTarif.tarifMezjGorod.summa
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.SummaMixedTarif.tarifMezjGorod.summa = Math.round(this.form.value.tarif_mixed_mezjgorod_days) * this.summa.car.mezgorod
+              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              tarif.summa = this.SummaMixedTarif.tarifMezjGorod.summa
+            }
+            if (this.summa.dop_hours === 0) {
+              this.SummaMixedTarif.tarifMezjGorod.summa = this.form.value.tarif_mixed_mezjgorod_days * this.summa.car.mezgorod;
+              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              tarif.summa = this.SummaMixedTarif.tarifMezjGorod.summa
+            }
           }
         });
       }
@@ -1658,10 +1666,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.summa.tariff.push({
         name: 'Россия',
         days: 0,
+        summa: 0
       })
     }
-    else
-    {
+    else {
       this.form.patchValue({
         tarif_mixed_russia_days: null,
       });
@@ -1672,25 +1680,30 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // При вводе колличества дней смешанного тарифа Россия
-  onChangeMixedTarifRussiaDays(e)
-  {
-    if (this.form.value.isCustomeZalogControl)
-    {
+  onChangeMixedTarifRussiaDays(e) {
+    if (this.form.value.isCustomeZalogControl) {
       if (this.form.value.tarif_mixed_russia_days) {
         this.summa.tariff.forEach(tarif => {
           if (tarif.name === 'Россия') {
             tarif.days = this.form.value.tarif_mixed_russia_days
             this.SummaMixedTarif.tarifRussia.days = this.form.value.tarif_mixed_russia_days
-          }
 
-          if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-            this.SummaMixedTarif.tarifRussia.summa = Math.round(this.form.value.tarif_mixed_russia_days) * this.summa.car.russia
-          }
-          if (this.summa.dop_hours >= 12) {
-            this.SummaMixedTarif.tarifRussia.summa = Math.round(this.form.value.tarif_mixed_russia_days) * this.summa.car.russia
-          }
-          if (this.summa.dop_hours === 0) {
-            this.SummaMixedTarif.tarifRussia.summa = this.form.value.tarif_mixed_russia_days * this.summa.car.russia;
+
+            if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
+              this.SummaMixedTarif.tarifRussia.summa = Math.round(this.form.value.tarif_mixed_russia_days) * this.summa.car.russia
+              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              tarif.summa = this.SummaMixedTarif.tarifRussia.summa
+            }
+            if (this.summa.dop_hours >= 12) {
+              this.SummaMixedTarif.tarifRussia.summa = Math.round(this.form.value.tarif_mixed_russia_days) * this.summa.car.russia
+              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              tarif.summa = this.SummaMixedTarif.tarifRussia.summa
+            }
+            if (this.summa.dop_hours === 0) {
+              this.SummaMixedTarif.tarifRussia.summa = this.form.value.tarif_mixed_russia_days * this.summa.car.russia;
+              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              tarif.summa = this.SummaMixedTarif.tarifRussia.summa
+            }
           }
         });
       }
@@ -1710,98 +1723,84 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // При выборе типа клиента
-  changeTypeClient(e)
-  {
+  changeTypeClient(e) {
     if (this.form.value.booking_start) {
       this.form.controls['tariff'].enable();
     }
 
-    if(e.target.value === 'fiz')
-    {
+    if (e.target.value === 'fiz') {
       this.lawSearchIsVisible = false;
       this.fizSearchIsVisible = true;
       this.xs_actual_client_type = 'fiz';
     }
-    else if (e.target.value === 'law')
-    {
+    else if (e.target.value === 'law') {
       this.lawSearchIsVisible = true;
       this.fizSearchIsVisible = false;
       this.xs_actual_client_type = 'law';
     }
-    
+
   }
 
 
   // При выборе клиента физ/лица
-  changeClient(client)
-  {
+  changeClient(client) {
     this.form.patchValue({
       search_fiz: client.surname + ' ' + client.name + ' ' + client.lastname
     });
     this.hasQuery = false;
     this.xs_actual_search__client = JSON.stringify(client);
     this.xs_actual_search__client_no_json = client;
-    
 
-    this.getDogovorActive$ = this.documents.getDogovorActive(client._id).subscribe(dogovor=> {
-      if (Object.keys(dogovor).length > 0)
-      {
+
+    this.getDogovorActive$ = this.documents.getDogovorActive(client._id).subscribe(dogovor => {
+      if (Object.keys(dogovor).length > 0) {
         this.xs_dogovor_number__actual = dogovor._id;
         this.isActiveDogovor = 'isActive';
 
-        if (this.form.value.booking_end > dogovor[0].date_end )
-        {
+        if (this.form.value.booking_end > dogovor[0].date_end) {
           this.is_dogovor_finish_compare_booking = 'isDogovorFinish';
           console.log('Бронь закончится раньше договора');
         }
 
       }
-      else
-      {
+      else {
         this.isActiveDogovor = 'no_isActive';
-        if (this.xs_actual_client_type === 'fiz')
-        {
+        if (this.xs_actual_client_type === 'fiz') {
           this.modal2.open();
         }
-        
+
       }
-      
+
     })
   }
 
 
 
   // При выборе места подачи авто
-  onChangePlaceStart(e)
-  {
-   
+  onChangePlaceStart(e) {
+
     if (this.form.value.booking_start) {
       this.form.controls['place_end'].enable();
     }
-    
-    if(e === 'Аэропорт')
-    {
+
+    if (e === 'Аэропорт') {
       this.summa.place_start_price = +this.currentUserSetings.share_avto.airport_price
     }
-    else if (e === 'Ж/д вокзал')
-    {
+    else if (e === 'Ж/д вокзал') {
       this.summa.place_start_price = +this.currentUserSetings.share_avto.railway_price
-      
+
     }
-    else if (e === 'ТЦ Кристалл')
-    {
+    else if (e === 'ТЦ Кристалл') {
       this.summa.place_start_price = +this.currentUserSetings.share_avto.kristal_tc_price
-      
+
     }
-    else if (e === 'Тц Сити Молл')
-    {
+    else if (e === 'Тц Сити Молл') {
       this.summa.place_start_price = +this.currentUserSetings.share_avto.sitymol_tc_price
-      
+
     }
-    else if (e === 'Офис')
-    {
+    else if (e === 'Офис') {
       this.summa.place_start_price = 0
-     
+
     }
   }
 
@@ -1810,34 +1809,28 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-   // При выборе места приема авто
-  onChangePlaceEnd(e)
-  {
-   
-    
-    if(e === 'Аэропорт')
-    {
+  // При выборе места приема авто
+  onChangePlaceEnd(e) {
+
+
+    if (e === 'Аэропорт') {
       this.summa.place_end_price = +this.currentUserSetings.input_avto.airport_price_input
     }
-    else if (e === 'Ж/д вокзал')
-    {
+    else if (e === 'Ж/д вокзал') {
       this.summa.place_end_price = +this.currentUserSetings.input_avto.railway_price_input
-      
+
     }
-    else if (e === 'ТЦ Кристалл')
-    {
+    else if (e === 'ТЦ Кристалл') {
       this.summa.place_end_price = +this.currentUserSetings.input_avto.kristal_tc_price_input
-      
+
     }
-    else if (e === 'Тц Сити Молл')
-    {
+    else if (e === 'Тц Сити Молл') {
       this.summa.place_end_price = +this.currentUserSetings.input_avto.sitymol_tc_price_input
-      
+
     }
-    else if (e === 'Офис')
-    {
+    else if (e === 'Офис') {
       this.summa.place_end_price = 0
-     
+
     }
   }
 
@@ -1845,12 +1838,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // При выборе доп услуги
-  onChangeAdditionalServicesInput(e)
-  {
-    if (this.form.value.additional_services_moyka)
-    {
-      if(this.summa.car.category === 'Комфорт')
-      {
+  onChangeAdditionalServicesInput(e) {
+    if (this.form.value.additional_services_moyka) {
+      if (this.summa.car.category === 'Комфорт') {
         let additional_services_summ = {
           additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
           additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
@@ -1863,10 +1853,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         let summ = Object.keys(additional_services_summ).reduce((sum, key) => sum + parseFloat(additional_services_summ[key] || 0), 0)
 
         this.summa.additional_services_price = summ;
-        
+
       }
-      else if (this.summa.car.category === 'Бизнес')
-      {
+      else if (this.summa.car.category === 'Бизнес') {
         let additional_services_summ = {
           additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
           additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
@@ -1880,8 +1869,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.summa.additional_services_price = summ;
       }
-      else if (this.summa.car.category === 'Премиум')
-      {
+      else if (this.summa.car.category === 'Премиум') {
         let additional_services_summ = {
           additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
           additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
@@ -1895,8 +1883,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.summa.additional_services_price = summ;
       }
-      
-    }else{
+
+    } else {
       let additional_services_summ = {
         additional_services_chair: this.form.value.additional_services_chair ? +this.currentUserSetings.additionally_avto.det_kreslo : 0,
         additional_services_buster: this.form.value.additional_services_buster ? +this.currentUserSetings.additionally_avto.buster : 0,
@@ -1924,7 +1912,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.xs_actual_search__client___lawfase_no_json = client
 
 
-  
+
     this.getDogovorActive$ = this.documents.getDogovorActive(client._id).subscribe(dogovor => {
       if (Object.keys(dogovor).length > 0) {
         this.xs_dogovor_number__actual = dogovor._id;
@@ -1999,15 +1987,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // При клике на кнопку выбора клиента в модальном окне
-  changeClientModal()
-  {
+  changeClientModal() {
     this.modal.open();
   }
 
 
   // Принимаем данные из модуля списка клиентов для поиска
-  inputDataClientsListModule(e)
-  {
+  inputDataClientsListModule(e) {
     this.changeClient(e);
     this.modal.close();
     this.changeClientLawFase(e)
@@ -2146,7 +2132,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
       }
     }
-    
+
     this.form.patchValue({
       isCustomeZalogControl: '',
     })
@@ -2154,10 +2140,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // При выборе произвольного залога
-  onCustomeZalogValue(e)
-  {
-    if (this.isMixedTarif && this.form.value.tarif_mixed_gorod)
-    {
+  onCustomeZalogValue(e) {
+    if (this.isMixedTarif && this.form.value.tarif_mixed_gorod) {
       this.onChangeMixedTarifGorodDays(e)
       this.onChangeMixedTarifMezjGorodDays(e)
       this.onChangeMixedTarifRussiaDays(e)
@@ -2270,7 +2254,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
     }
-    
+
   }
 
 
@@ -2298,49 +2282,42 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-  onBlurMethod(e)
-  {
+  onBlurMethod(e) {
     this.isCustomeZalogCheck = !this.isCustomeZalogCheck;
   }
 
 
 
   // Привыборе произольной суммы подачи авто
-  onChangeisCustomePlaceStartControlPrice(e)
-  {
-    if (this.isCustomePlaceStart)
-    {
+  onChangeisCustomePlaceStartControlPrice(e) {
+    if (this.isCustomePlaceStart) {
       this.summa.place_start_price = +this.form.value.isCustomePlaceStartControlPrice || 0
-      
+
       this.form.patchValue({
         place_start: this.form.value.isCustomePlaceStartControl,
       });
     }
-    
+
   }
 
 
 
   // Привыборе произольной суммы приема авто
-  onChangeisCustomePlaceInputControlPrice(e)
-  {
-    if (this.isCustomePlaceInput)
-    {
+  onChangeisCustomePlaceInputControlPrice(e) {
+    if (this.isCustomePlaceInput) {
       this.summa.place_end_price = +this.form.value.isCustomePlaceInputControlPrice || 0
-      
+
       this.form.patchValue({
         place_end: this.form.value.isCustomePlaceInputControl,
       });
     }
-    
+
   }
 
 
 
-  onCloseModal(e)
-  {
-    if (this.xs_actual_client_type === 'fiz')
-    {
+  onCloseModal(e) {
+    if (this.xs_actual_client_type === 'fiz') {
       this.modal2.close()
       this.changeClient(e)
     }
@@ -2349,18 +2326,16 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.modal3.close()
       this.changeClientLawFase(e)
     }
-    
+
   }
 
-  
-  onCloseModalCreate(e)
-  {
+
+  onCloseModalCreate(e) {
     this.modal.close()
   }
 
 
-  modalAddDogovor()
-  {
+  modalAddDogovor() {
     if (this.xs_actual_client_type === 'fiz') {
       this.modal2.open();
     }
@@ -2370,11 +2345,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  checkedTarif()
-  {
-  
-    if (this.form.value.tariff === 'Город')
-    {
+  checkedTarif() {
+
+    if (this.form.value.tariff === 'Город') {
       if (this.summa.booking_days < 3) {
         this.tarifPrice = this.summa.car.days_1_2
       }
@@ -2391,23 +2364,22 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         this.tarifPrice = this.summa.car.days_31_more
       }
     }
-    else if (this.form.value.tariff === 'Межгород')
-      {
-        if (this.summa.booking_days < 3) {
-          this.tarifPrice = this.summa.car.mezgorod
-        }
-        if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
-          this.tarifPrice = this.summa.car.mezgorod
-        }
-        if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
-          this.tarifPrice = this.summa.car.mezgorod
-        }
-        if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
-          this.tarifPrice = this.summa.car.mezgorod
-        }
-        if (this.summa.booking_days >= 31) {
-          this.tarifPrice = this.summa.car.mezgorod
-        }
+    else if (this.form.value.tariff === 'Межгород') {
+      if (this.summa.booking_days < 3) {
+        this.tarifPrice = this.summa.car.mezgorod
+      }
+      if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
+        this.tarifPrice = this.summa.car.mezgorod
+      }
+      if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
+        this.tarifPrice = this.summa.car.mezgorod
+      }
+      if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
+        this.tarifPrice = this.summa.car.mezgorod
+      }
+      if (this.summa.booking_days >= 31) {
+        this.tarifPrice = this.summa.car.mezgorod
+      }
     }
     else if (this.form.value.tariff === 'Россия') {
       if (this.summa.booking_days < 3) {
@@ -2435,216 +2407,15 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
     this.checkedTarif()
-    
-
-    if (this.xs_actual_client_type === 'fiz')
-    {
-      if (!this.isCustomeZalog) {
-        if (this.form.value.tariff === 'Город') {
-            let moyka = '0';
-            if (this.summa.car.category === 'Бизнес') {
-              moyka = this.currentUserSetings.washing_avto.business
-            }
-            else if (this.summa.car.category === 'Комфорт') {
-              moyka = this.currentUserSetings.washing_avto.komfort
-            }
-            else if (this.summa.car.category === 'Премиум') {
-              moyka = this.currentUserSetings.washing_avto.premium
-            }
-
-          const booking = {
-            car: JSON.parse(this.form.value.car),
-            client: JSON.parse(this.xs_actual_search__client),
-            place_start: this.form.value.place_start,
-            place_end: this.form.value.place_end,
-            tariff: this.form.value.tariff,
-            comment: this.form.value.comment,
-            booking_start: this.form.value.booking_start,
-            booking_end: this.form.value.booking_end,
-            booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
-            summa: Math.round(this.summa.summa),
-            dop_hours: this.summa.dop_hours,
-            dop_info_open: {
-              moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || 0,
-              place_end_price: this.summa.place_end_price || 0,
-              additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair || false,
-              additional_services_buster: this.form.value.additional_services_buster || false,
-              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
-              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
-              additional_services_moyka: this.form.value.additional_services_moyka || false,
-              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
-              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-              tarifPrice: this.tarifPrice
-            },
-            booking_zalog: this.summa.car.zalog,
-            dogovor_number__actual: this.xs_dogovor_number__actual,
-            booking_life_cycle: [
-              [],
-              [],
-              [],
-              [],
-            ],
-          };
-
-
-          
-          
 
 
 
-          // Отправляем запрос
-          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
-
-            // Вносим изменения в инфу броней а автомобиле
-            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {})
+    if (this.summa.tariff.length > 1) {
+      console.log(this.summa.tariff);
+      console.log(this.SummaMixedTarif);
 
 
-            MaterialService.toast('Бронь добавлена');
-            this.router.navigate(['/bookings-page']);
-          });
-
-
-
-        }
-        if (this.form.value.tariff === 'Межгород') {
-          let moyka = '0';
-          if (this.summa.car.category === 'Бизнес') {
-            moyka = this.currentUserSetings.washing_avto.business
-          }
-          else if (this.summa.car.category === 'Комфорт') {
-            moyka = this.currentUserSetings.washing_avto.komfort
-          }
-          else if (this.summa.car.category === 'Премиум') {
-            moyka = this.currentUserSetings.washing_avto.premium
-          }
-
-          const booking = {
-            car: JSON.parse(this.form.value.car),
-            client: JSON.parse(this.xs_actual_search__client),
-            place_start: this.form.value.place_start,
-            place_end: this.form.value.place_end,
-            tariff: this.form.value.tariff,
-            comment: this.form.value.comment,
-            booking_start: this.form.value.booking_start,
-            booking_end: this.form.value.booking_end,
-            booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
-            summa: Math.round(this.summa.summa),
-            dop_hours: this.summa.dop_hours,
-            dop_info_open: {
-              moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || 0,
-              place_end_price: this.summa.place_end_price || 0,
-              additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair || false,
-              additional_services_buster: this.form.value.additional_services_buster || false,
-              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
-              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
-              additional_services_moyka: this.form.value.additional_services_moyka || false,
-              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
-              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-              tarifPrice: this.tarifPrice
-            },
-            booking_zalog: this.summa.car.zalog_mej,
-            dogovor_number__actual: this.xs_dogovor_number__actual,
-            booking_life_cycle: [
-              [],
-              [],
-              [],
-              [],
-            ],
-          };
-
-
-          // Отправляем запрос
-          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
-
-            // Вносим изменения в инфу броней а автомобиле
-            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
-              console.log('Бронь добавлена в авто')
-            })
-
-
-            MaterialService.toast('Бронь добавлена');
-            this.router.navigate(['/bookings-page']);
-          });
-
-          
-        }
-        if (this.form.value.tariff === 'Россия') {
-          let moyka = '0';
-          if (this.summa.car.category === 'Бизнес') {
-            moyka = this.currentUserSetings.washing_avto.business
-          }
-          else if (this.summa.car.category === 'Комфорт') {
-            moyka = this.currentUserSetings.washing_avto.komfort
-          }
-          else if (this.summa.car.category === 'Премиум') {
-            moyka = this.currentUserSetings.washing_avto.premium
-          }
-
-          const booking = {
-            car: JSON.parse(this.form.value.car),
-            client: JSON.parse(this.xs_actual_search__client),
-            place_start: this.form.value.place_start,
-            place_end: this.form.value.place_end,
-            tariff: this.form.value.tariff,
-            comment: this.form.value.comment,
-            booking_start: this.form.value.booking_start,
-            booking_end: this.form.value.booking_end,
-            booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
-            summa: Math.round(this.summa.summa),
-            dop_hours: this.summa.dop_hours,
-            dop_info_open: {
-              moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || 0,
-              place_end_price: this.summa.place_end_price || 0,
-              additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair || false,
-              additional_services_buster: this.form.value.additional_services_buster || false,
-              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
-              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
-              additional_services_moyka: this.form.value.additional_services_moyka || false,
-              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
-              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-              tarifPrice: this.tarifPrice
-            },
-            booking_zalog: this.summa.car.zalog_rus,
-            dogovor_number__actual: this.xs_dogovor_number__actual,
-            booking_life_cycle: [
-              [],
-              [],
-              [],
-              [],
-            ],
-          };
-
-          // Отправляем запрос
-          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
-
-            // Вносим изменения в инфу броней а автомобиле
-            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
-              console.log('Бронь добавлена в авто')
-            })
-
-
-            MaterialService.toast('Бронь добавлена');
-            this.router.navigate(['/bookings-page']);
-          });
-
-        }
-      }
-      else {
+      if (this.xs_actual_client_type === 'fiz') {
         let moyka = '0';
         if (this.summa.car.category === 'Бизнес') {
           moyka = this.currentUserSetings.washing_avto.business
@@ -2661,13 +2432,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           client: JSON.parse(this.xs_actual_search__client),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
-          tariff: this.form.value.tariff,
+          tariff: this.summa.tariff,
           comment: this.form.value.comment,
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
           booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-          summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
-          summa: Math.round(this.summa.summa),
+          summaFull: Math.round(((this.SummaMixedTarif.tarifGorod.summaFull||0) + (this.SummaMixedTarif.tarifMezjGorod.summaFull||0) + (this.SummaMixedTarif.tarifRussia.summaFull||0)) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+          summa: (this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (this.SummaMixedTarif.tarifRussia.summa || 0),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
             moyka: moyka || false,
@@ -2683,7 +2454,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-            tarifPrice: this.tarifPrice
+            tarifPrice: this.tarifPrice || 0
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -2695,6 +2466,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           ],
         };
 
+        
 
 
         // Отправляем запрос
@@ -2710,205 +2482,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           this.router.navigate(['/bookings-page']);
         });
       }
-    }
-    else if (this.xs_actual_client_type === 'law')
-    { 
-      if (!this.isCustomeZalog) {
-        if (this.form.value.tariff === 'Город') {
-          let moyka = '0';
-          if (this.summa.car.category === 'Бизнес') {
-            moyka = this.currentUserSetings.washing_avto.business
-          }
-          else if (this.summa.car.category === 'Комфорт') {
-            moyka = this.currentUserSetings.washing_avto.komfort
-          }
-          else if (this.summa.car.category === 'Премиум') {
-            moyka = this.currentUserSetings.washing_avto.premium
-          }
-
-          const booking = {
-            car: JSON.parse(this.form.value.car),
-            client: JSON.parse(this.xs_actual_search__client___lawfase),
-            place_start: this.form.value.place_start,
-            place_end: this.form.value.place_end,
-            tariff: this.form.value.tariff,
-            comment: this.form.value.comment,
-            booking_start: this.form.value.booking_start,
-            booking_end: this.form.value.booking_end,
-            booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
-            summa: Math.round(this.summa.summa),
-            dop_hours: this.summa.dop_hours,
-            dop_info_open: {
-              moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || 0,
-              place_end_price: this.summa.place_end_price || 0,
-              additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair || false,
-              additional_services_buster: this.form.value.additional_services_buster || false,
-              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
-              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
-              additional_services_moyka: this.form.value.additional_services_moyka || false,
-              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
-              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-              tarifPrice: this.tarifPrice
-            },
-            booking_zalog: this.summa.car.zalog,
-            booking_life_cycle: [
-              [],
-              [],
-              [],
-              [],
-            ],
-          };
-
-
-
-          // Отправляем запрос
-          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
-
-            // Вносим изменения в инфу броней а автомобиле
-            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
-              console.log('Бронь добавлена в авто')
-            })
-
-
-            MaterialService.toast('Бронь добавлена');
-            this.router.navigate(['/bookings-page']);
-          });
-        }
-        if (this.form.value.tariff === 'Межгород') {
-          let moyka = '0';
-          if (this.summa.car.category === 'Бизнес') {
-            moyka = this.currentUserSetings.washing_avto.business
-          }
-          else if (this.summa.car.category === 'Комфорт') {
-            moyka = this.currentUserSetings.washing_avto.komfort
-          }
-          else if (this.summa.car.category === 'Премиум') {
-            moyka = this.currentUserSetings.washing_avto.premium
-          }
-
-          const booking = {
-            car: JSON.parse(this.form.value.car),
-            client: JSON.parse(this.xs_actual_search__client___lawfase),
-            place_start: this.form.value.place_start,
-            place_end: this.form.value.place_end,
-            tariff: this.form.value.tariff,
-            comment: this.form.value.comment,
-            booking_start: this.form.value.booking_start,
-            booking_end: this.form.value.booking_end,
-            booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
-            summa: Math.round(this.summa.summa),
-            dop_hours: this.summa.dop_hours,
-            dop_info_open: {
-              moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || 0,
-              place_end_price: this.summa.place_end_price || 0,
-              additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair || false,
-              additional_services_buster: this.form.value.additional_services_buster || false,
-              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
-              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
-              additional_services_moyka: this.form.value.additional_services_moyka || false,
-              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
-              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-              tarifPrice: this.tarifPrice
-            },
-            booking_zalog: this.summa.car.zalog_mej,
-            booking_life_cycle: [
-              [],
-              [],
-              [],
-              [],
-            ],
-          };
-
-
-          // Отправляем запрос
-          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
-
-            // Вносим изменения в инфу броней а автомобиле
-            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
-              console.log('Бронь добавлена в авто')
-            })
-
-
-            MaterialService.toast('Бронь добавлена');
-            this.router.navigate(['/bookings-page']);
-          });
-        }
-        if (this.form.value.tariff === 'Россия') {
-          let moyka = '0';
-          if (this.summa.car.category === 'Бизнес') {
-            moyka = this.currentUserSetings.washing_avto.business
-          }
-          else if (this.summa.car.category === 'Комфорт') {
-            moyka = this.currentUserSetings.washing_avto.komfort
-          }
-          else if (this.summa.car.category === 'Премиум') {
-            moyka = this.currentUserSetings.washing_avto.premium
-          }
-
-          const booking = {
-            car: JSON.parse(this.form.value.car),
-            client: JSON.parse(this.xs_actual_search__client___lawfase),
-            place_start: this.form.value.place_start,
-            place_end: this.form.value.place_end,
-            tariff: this.form.value.tariff,
-            comment: this.form.value.comment,
-            booking_start: this.form.value.booking_start,
-            booking_end: this.form.value.booking_end,
-            booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
-            summa: Math.round(this.summa.summa),
-            dop_hours: this.summa.dop_hours,
-            dop_info_open: {
-              moyka: moyka || false,
-              place_start_price: this.summa.place_start_price || 0,
-              place_end_price: this.summa.place_end_price || 0,
-              additional_services_price: this.summa.additional_services_price,
-              additional_services_chair: this.form.value.additional_services_chair || false,
-              additional_services_buster: this.form.value.additional_services_buster || false,
-              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
-              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
-              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
-              additional_services_moyka: this.form.value.additional_services_moyka || false,
-              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
-              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
-              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-              tarifPrice: this.tarifPrice
-            },
-            booking_zalog: this.summa.car.zalog_rus,
-            booking_life_cycle: [
-              [],
-              [],
-              [],
-              [],
-            ],
-          };
-
-          // Отправляем запрос
-          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
-
-            // Вносим изменения в инфу броней а автомобиле
-            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
-              console.log('Бронь добавлена в авто')
-            })
-
-
-            MaterialService.toast('Бронь добавлена');
-            this.router.navigate(['/bookings-page']);
-          });
-
-        }
-      }
-      else {
+      else if (this.xs_actual_client_type === 'law') {
         let moyka = '0';
         if (this.summa.car.category === 'Бизнес') {
           moyka = this.currentUserSetings.washing_avto.business
@@ -2925,13 +2499,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           client: JSON.parse(this.xs_actual_search__client___lawfase),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
-          tariff: this.form.value.tariff,
+          tariff: this.summa.tariff,
           comment: this.form.value.comment,
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
           booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-          summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
-          summa: Math.round(this.summa.summa),
+          summaFull: Math.round((this.SummaMixedTarif.tarifGorod.summaFull + this.SummaMixedTarif.tarifMezjGorod.summaFull + this.SummaMixedTarif.tarifRussia.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+          summa: this.SummaMixedTarif.tarifGorod.summa + this.SummaMixedTarif.tarifMezjGorod.summa + this.SummaMixedTarif.tarifRussia.summa,
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
             moyka: moyka || false,
@@ -2947,7 +2521,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-            tarifPrice: this.tarifPrice
+            tarifPrice: this.tarifPrice || 0
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           booking_life_cycle: [
@@ -2968,11 +2542,547 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             console.log('Бронь добавлена в авто')
           })
 
-          
+
           MaterialService.toast('Бронь добавлена');
           this.router.navigate(['/bookings-page']);
         });
       }
+
+    }
+    else {
+      if (this.xs_actual_client_type === 'fiz') {
+        if (!this.isCustomeZalog) {
+          if (this.form.value.tariff === 'Город') {
+            let moyka = '0';
+            if (this.summa.car.category === 'Бизнес') {
+              moyka = this.currentUserSetings.washing_avto.business
+            }
+            else if (this.summa.car.category === 'Комфорт') {
+              moyka = this.currentUserSetings.washing_avto.komfort
+            }
+            else if (this.summa.car.category === 'Премиум') {
+              moyka = this.currentUserSetings.washing_avto.premium
+            }
+
+            const booking = {
+              car: JSON.parse(this.form.value.car),
+              client: JSON.parse(this.xs_actual_search__client),
+              place_start: this.form.value.place_start,
+              place_end: this.form.value.place_end,
+              tariff: this.summa.tariff,
+              comment: this.form.value.comment,
+              booking_start: this.form.value.booking_start,
+              booking_end: this.form.value.booking_end,
+              booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
+              summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+              summa: Math.round(this.summa.summa),
+              dop_hours: this.summa.dop_hours,
+              dop_info_open: {
+                moyka: moyka || false,
+                place_start_price: this.summa.place_start_price || 0,
+                place_end_price: this.summa.place_end_price || 0,
+                additional_services_price: this.summa.additional_services_price,
+                additional_services_chair: this.form.value.additional_services_chair || false,
+                additional_services_buster: this.form.value.additional_services_buster || false,
+                additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+                additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+                additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+                additional_services_moyka: this.form.value.additional_services_moyka || false,
+                isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+                isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
+                isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+                tarifPrice: this.tarifPrice
+              },
+              booking_zalog: this.summa.car.zalog,
+              dogovor_number__actual: this.xs_dogovor_number__actual,
+              booking_life_cycle: [
+                [],
+                [],
+                [],
+                [],
+              ],
+            };
+
+
+
+
+            // Отправляем запрос
+            this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+              // Вносим изменения в инфу броней а автомобиле
+              this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => { })
+
+
+              MaterialService.toast('Бронь добавлена');
+              this.router.navigate(['/bookings-page']);
+            });
+
+          }
+          if (this.form.value.tariff === 'Межгород') {
+            let moyka = '0';
+            if (this.summa.car.category === 'Бизнес') {
+              moyka = this.currentUserSetings.washing_avto.business
+            }
+            else if (this.summa.car.category === 'Комфорт') {
+              moyka = this.currentUserSetings.washing_avto.komfort
+            }
+            else if (this.summa.car.category === 'Премиум') {
+              moyka = this.currentUserSetings.washing_avto.premium
+            }
+
+            const booking = {
+              car: JSON.parse(this.form.value.car),
+              client: JSON.parse(this.xs_actual_search__client),
+              place_start: this.form.value.place_start,
+              place_end: this.form.value.place_end,
+              tariff: this.summa.tariff,
+              comment: this.form.value.comment,
+              booking_start: this.form.value.booking_start,
+              booking_end: this.form.value.booking_end,
+              booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
+              summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+              summa: Math.round(this.summa.summa),
+              dop_hours: this.summa.dop_hours,
+              dop_info_open: {
+                moyka: moyka || false,
+                place_start_price: this.summa.place_start_price || 0,
+                place_end_price: this.summa.place_end_price || 0,
+                additional_services_price: this.summa.additional_services_price,
+                additional_services_chair: this.form.value.additional_services_chair || false,
+                additional_services_buster: this.form.value.additional_services_buster || false,
+                additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+                additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+                additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+                additional_services_moyka: this.form.value.additional_services_moyka || false,
+                isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+                isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
+                isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+                tarifPrice: this.tarifPrice
+              },
+              booking_zalog: this.summa.car.zalog_mej,
+              dogovor_number__actual: this.xs_dogovor_number__actual,
+              booking_life_cycle: [
+                [],
+                [],
+                [],
+                [],
+              ],
+            };
+
+
+            // Отправляем запрос
+            this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+              // Вносим изменения в инфу броней а автомобиле
+              this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+                console.log('Бронь добавлена в авто')
+              })
+
+
+              MaterialService.toast('Бронь добавлена');
+              this.router.navigate(['/bookings-page']);
+            });
+
+
+          }
+          if (this.form.value.tariff === 'Россия') {
+            let moyka = '0';
+            if (this.summa.car.category === 'Бизнес') {
+              moyka = this.currentUserSetings.washing_avto.business
+            }
+            else if (this.summa.car.category === 'Комфорт') {
+              moyka = this.currentUserSetings.washing_avto.komfort
+            }
+            else if (this.summa.car.category === 'Премиум') {
+              moyka = this.currentUserSetings.washing_avto.premium
+            }
+
+            const booking = {
+              car: JSON.parse(this.form.value.car),
+              client: JSON.parse(this.xs_actual_search__client),
+              place_start: this.form.value.place_start,
+              place_end: this.form.value.place_end,
+              tariff: this.summa.tariff,
+              comment: this.form.value.comment,
+              booking_start: this.form.value.booking_start,
+              booking_end: this.form.value.booking_end,
+              booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
+              summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+              summa: Math.round(this.summa.summa),
+              dop_hours: this.summa.dop_hours,
+              dop_info_open: {
+                moyka: moyka || false,
+                place_start_price: this.summa.place_start_price || 0,
+                place_end_price: this.summa.place_end_price || 0,
+                additional_services_price: this.summa.additional_services_price,
+                additional_services_chair: this.form.value.additional_services_chair || false,
+                additional_services_buster: this.form.value.additional_services_buster || false,
+                additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+                additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+                additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+                additional_services_moyka: this.form.value.additional_services_moyka || false,
+                isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+                isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
+                isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+                tarifPrice: this.tarifPrice
+              },
+              booking_zalog: this.summa.car.zalog_rus,
+              dogovor_number__actual: this.xs_dogovor_number__actual,
+              booking_life_cycle: [
+                [],
+                [],
+                [],
+                [],
+              ],
+            };
+
+            // Отправляем запрос
+            this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+              // Вносим изменения в инфу броней а автомобиле
+              this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+                console.log('Бронь добавлена в авто')
+              })
+
+
+              MaterialService.toast('Бронь добавлена');
+              this.router.navigate(['/bookings-page']);
+            });
+
+          }
+        }
+        else {
+          let moyka = '0';
+          if (this.summa.car.category === 'Бизнес') {
+            moyka = this.currentUserSetings.washing_avto.business
+          }
+          else if (this.summa.car.category === 'Комфорт') {
+            moyka = this.currentUserSetings.washing_avto.komfort
+          }
+          else if (this.summa.car.category === 'Премиум') {
+            moyka = this.currentUserSetings.washing_avto.premium
+          }
+
+          const booking = {
+            car: JSON.parse(this.form.value.car),
+            client: JSON.parse(this.xs_actual_search__client),
+            place_start: this.form.value.place_start,
+            place_end: this.form.value.place_end,
+            tariff: this.summa.tariff,
+            comment: this.form.value.comment,
+            booking_start: this.form.value.booking_start,
+            booking_end: this.form.value.booking_end,
+            booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
+            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+            summa: Math.round(this.summa.summa),
+            dop_hours: this.summa.dop_hours,
+            dop_info_open: {
+              moyka: moyka || false,
+              place_start_price: this.summa.place_start_price || 0,
+              place_end_price: this.summa.place_end_price || 0,
+              additional_services_price: this.summa.additional_services_price,
+              additional_services_chair: this.form.value.additional_services_chair || false,
+              additional_services_buster: this.form.value.additional_services_buster || false,
+              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+              additional_services_moyka: this.form.value.additional_services_moyka || false,
+              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+              tarifPrice: this.tarifPrice
+            },
+            booking_zalog: this.form.value.isCustomeZalogControl,
+            dogovor_number__actual: this.xs_dogovor_number__actual,
+            booking_life_cycle: [
+              [],
+              [],
+              [],
+              [],
+            ],
+          };
+
+
+
+          // Отправляем запрос
+          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+            // Вносим изменения в инфу броней а автомобиле
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+              console.log('Бронь добавлена в авто')
+            })
+
+
+            MaterialService.toast('Бронь добавлена');
+            this.router.navigate(['/bookings-page']);
+          });
+        }
+      }
+      else if (this.xs_actual_client_type === 'law') {
+        if (!this.isCustomeZalog) {
+          if (this.form.value.tariff === 'Город') {
+            let moyka = '0';
+            if (this.summa.car.category === 'Бизнес') {
+              moyka = this.currentUserSetings.washing_avto.business
+            }
+            else if (this.summa.car.category === 'Комфорт') {
+              moyka = this.currentUserSetings.washing_avto.komfort
+            }
+            else if (this.summa.car.category === 'Премиум') {
+              moyka = this.currentUserSetings.washing_avto.premium
+            }
+
+            const booking = {
+              car: JSON.parse(this.form.value.car),
+              client: JSON.parse(this.xs_actual_search__client___lawfase),
+              place_start: this.form.value.place_start,
+              place_end: this.form.value.place_end,
+              tariff: this.summa.tariff,
+              comment: this.form.value.comment,
+              booking_start: this.form.value.booking_start,
+              booking_end: this.form.value.booking_end,
+              booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
+              summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+              summa: Math.round(this.summa.summa),
+              dop_hours: this.summa.dop_hours,
+              dop_info_open: {
+                moyka: moyka || false,
+                place_start_price: this.summa.place_start_price || 0,
+                place_end_price: this.summa.place_end_price || 0,
+                additional_services_price: this.summa.additional_services_price,
+                additional_services_chair: this.form.value.additional_services_chair || false,
+                additional_services_buster: this.form.value.additional_services_buster || false,
+                additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+                additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+                additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+                additional_services_moyka: this.form.value.additional_services_moyka || false,
+                isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+                isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
+                isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+                tarifPrice: this.tarifPrice
+              },
+              booking_zalog: this.summa.car.zalog,
+              booking_life_cycle: [
+                [],
+                [],
+                [],
+                [],
+              ],
+            };
+
+
+
+            // Отправляем запрос
+            this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+              // Вносим изменения в инфу броней а автомобиле
+              this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+                console.log('Бронь добавлена в авто')
+              })
+
+
+              MaterialService.toast('Бронь добавлена');
+              this.router.navigate(['/bookings-page']);
+            });
+          }
+          if (this.form.value.tariff === 'Межгород') {
+            let moyka = '0';
+            if (this.summa.car.category === 'Бизнес') {
+              moyka = this.currentUserSetings.washing_avto.business
+            }
+            else if (this.summa.car.category === 'Комфорт') {
+              moyka = this.currentUserSetings.washing_avto.komfort
+            }
+            else if (this.summa.car.category === 'Премиум') {
+              moyka = this.currentUserSetings.washing_avto.premium
+            }
+
+            const booking = {
+              car: JSON.parse(this.form.value.car),
+              client: JSON.parse(this.xs_actual_search__client___lawfase),
+              place_start: this.form.value.place_start,
+              place_end: this.form.value.place_end,
+              tariff: this.summa.tariff,
+              comment: this.form.value.comment,
+              booking_start: this.form.value.booking_start,
+              booking_end: this.form.value.booking_end,
+              booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
+              summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+              summa: Math.round(this.summa.summa),
+              dop_hours: this.summa.dop_hours,
+              dop_info_open: {
+                moyka: moyka || false,
+                place_start_price: this.summa.place_start_price || 0,
+                place_end_price: this.summa.place_end_price || 0,
+                additional_services_price: this.summa.additional_services_price,
+                additional_services_chair: this.form.value.additional_services_chair || false,
+                additional_services_buster: this.form.value.additional_services_buster || false,
+                additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+                additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+                additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+                additional_services_moyka: this.form.value.additional_services_moyka || false,
+                isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+                isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
+                isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+                tarifPrice: this.tarifPrice
+              },
+              booking_zalog: this.summa.car.zalog_mej,
+              booking_life_cycle: [
+                [],
+                [],
+                [],
+                [],
+              ],
+            };
+
+
+            // Отправляем запрос
+            this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+              // Вносим изменения в инфу броней а автомобиле
+              this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+                console.log('Бронь добавлена в авто')
+              })
+
+
+              MaterialService.toast('Бронь добавлена');
+              this.router.navigate(['/bookings-page']);
+            });
+          }
+          if (this.form.value.tariff === 'Россия') {
+            let moyka = '0';
+            if (this.summa.car.category === 'Бизнес') {
+              moyka = this.currentUserSetings.washing_avto.business
+            }
+            else if (this.summa.car.category === 'Комфорт') {
+              moyka = this.currentUserSetings.washing_avto.komfort
+            }
+            else if (this.summa.car.category === 'Премиум') {
+              moyka = this.currentUserSetings.washing_avto.premium
+            }
+
+            const booking = {
+              car: JSON.parse(this.form.value.car),
+              client: JSON.parse(this.xs_actual_search__client___lawfase),
+              place_start: this.form.value.place_start,
+              place_end: this.form.value.place_end,
+              tariff: this.summa.tariff,
+              comment: this.form.value.comment,
+              booking_start: this.form.value.booking_start,
+              booking_end: this.form.value.booking_end,
+              booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
+              summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+              summa: Math.round(this.summa.summa),
+              dop_hours: this.summa.dop_hours,
+              dop_info_open: {
+                moyka: moyka || false,
+                place_start_price: this.summa.place_start_price || 0,
+                place_end_price: this.summa.place_end_price || 0,
+                additional_services_price: this.summa.additional_services_price,
+                additional_services_chair: this.form.value.additional_services_chair || false,
+                additional_services_buster: this.form.value.additional_services_buster || false,
+                additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+                additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+                additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+                additional_services_moyka: this.form.value.additional_services_moyka || false,
+                isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+                isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
+                isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+                tarifPrice: this.tarifPrice
+              },
+              booking_zalog: this.summa.car.zalog_rus,
+              booking_life_cycle: [
+                [],
+                [],
+                [],
+                [],
+              ],
+            };
+
+            // Отправляем запрос
+            this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+              // Вносим изменения в инфу броней а автомобиле
+              this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+                console.log('Бронь добавлена в авто')
+              })
+
+
+              MaterialService.toast('Бронь добавлена');
+              this.router.navigate(['/bookings-page']);
+            });
+
+          }
+        }
+        else {
+          let moyka = '0';
+          if (this.summa.car.category === 'Бизнес') {
+            moyka = this.currentUserSetings.washing_avto.business
+          }
+          else if (this.summa.car.category === 'Комфорт') {
+            moyka = this.currentUserSetings.washing_avto.komfort
+          }
+          else if (this.summa.car.category === 'Премиум') {
+            moyka = this.currentUserSetings.washing_avto.premium
+          }
+
+          const booking = {
+            car: JSON.parse(this.form.value.car),
+            client: JSON.parse(this.xs_actual_search__client___lawfase),
+            place_start: this.form.value.place_start,
+            place_end: this.form.value.place_end,
+            tariff: this.summa.tariff,
+            comment: this.form.value.comment,
+            booking_start: this.form.value.booking_start,
+            booking_end: this.form.value.booking_end,
+            booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
+            summaFull: Math.round((+this.summa.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+            summa: Math.round(this.summa.summa),
+            dop_hours: this.summa.dop_hours,
+            dop_info_open: {
+              moyka: moyka || false,
+              place_start_price: this.summa.place_start_price || 0,
+              place_end_price: this.summa.place_end_price || 0,
+              additional_services_price: this.summa.additional_services_price,
+              additional_services_chair: this.form.value.additional_services_chair || false,
+              additional_services_buster: this.form.value.additional_services_buster || false,
+              additional_services_videoregister: this.form.value.additional_services_videoregister || false,
+              additional_services_battery_charger: this.form.value.additional_services_battery_charger || false,
+              additional_services_antiradar: this.form.value.additional_services_antiradar || false,
+              additional_services_moyka: this.form.value.additional_services_moyka || false,
+              isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
+              isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
+              isCustomeZalog: this.form.value.isCustomeZalogControlclick,
+              tarifPrice: this.tarifPrice
+            },
+            booking_zalog: this.form.value.isCustomeZalogControl,
+            booking_life_cycle: [
+              [],
+              [],
+              [],
+              [],
+            ],
+          };
+
+
+
+          // Отправляем запрос
+          this.subCreateBooking$ = this.bookings.create(booking).subscribe((booking) => {
+
+            // Вносим изменения в инфу броней а автомобиле
+            this.cars.update_after_booking_create(this.summa.car._id, booking).subscribe((car) => {
+              console.log('Бронь добавлена в авто')
+            })
+
+
+            MaterialService.toast('Бронь добавлена');
+            this.router.navigate(['/bookings-page']);
+          });
+        }
+      }
+
+      console.log(this.summa.tariff);
+      console.log(this.SummaMixedTarif);
     }
 
   }

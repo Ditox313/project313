@@ -77,7 +77,7 @@ const bookingSchema = new Schema({
 
     // Тариф
     tariff: {
-        type: String,
+        type: Array,
         default: '',
         required: true,
     },
@@ -85,7 +85,7 @@ const bookingSchema = new Schema({
 
     // Сумма брони аренды
     summa: {
-        type: String,
+        type: Number,
         default: '',
         required: true,
     },

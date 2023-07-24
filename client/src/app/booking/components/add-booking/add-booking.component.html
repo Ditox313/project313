@@ -449,34 +449,34 @@
     </div>
 
 
-    <div class="xs_summa" *ngIf="isMixedTarif && this.form.value.isCustomeZalogControl">
+    <div class="xs_summa" *ngIf="isMixedTarif && this.form.value.isCustomeZalogControl ">
         <div>
-            <span style="font-weight: bold;">Аренда(город) {{this.SummaMixedTarif.tarifGorod.summa | number: '1.0-0'}} ₽</span>
-            +
-            <span style="font-weight: bold;">Аренда(межгород) {{this.SummaMixedTarif.tarifMezjGorod.summa | number: '1.0-0'}} ₽</span>
-            +
-            <span style="font-weight: bold;">Аренда(Россия) {{this.SummaMixedTarif.tarifRussia.summa | number: '1.0-0'}} ₽</span>
-            +
+            <span style="font-weight: bold;" *ngIf="+this.SummaMixedTarif.tarifGorod.summa > 0">Аренда(город) {{this.SummaMixedTarif.tarifGorod.summa | number: '1.0-0'}} ₽ +</span>
+
+            <span style="font-weight: bold;" *ngIf="+this.SummaMixedTarif.tarifMezjGorod.summa > 0">Аренда(межгород) {{this.SummaMixedTarif.tarifMezjGorod.summa | number: '1.0-0'}} ₽ +</span>
+            
+            <span style="font-weight: bold;" *ngIf="+this.SummaMixedTarif.tarifRussia.summa > 0">Аренда(Россия) {{this.SummaMixedTarif.tarifRussia.summa | number: '1.0-0'}} ₽ +</span>
+            
             <span *ngIf="isCustomeZalog ">
-                <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽</span>
+                <span>Залог {{+this.form.value.isCustomeZalogControl}} ₽ +</span>
             </span>
-            +
+            
             <span>
-                <span> Подача авто {{this.summa.place_start_price}} ₽</span>
+                <span> Подача авто {{this.summa.place_start_price}} ₽ +</span>
             </span>
-            +
+            
             <span>
-                <span> Прием авто {{this.summa.place_end_price}} ₽</span>
+                <span> Прием авто {{this.summa.place_end_price}} ₽ +</span>
             </span>
-            +
+            
             <span>
-                <span> Доп.услуги {{this.summa.additional_services_price}} ₽</span>
+                <span> Доп.услуги {{this.summa.additional_services_price}} ₽ </span>
             </span>
-            +
+            
             <span *ngIf="this.summa.dop_hours > 0 && this.summa.dop_hours < 12 ">
-                Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
+            + Доп.час({{this.summa.dop_hours}} ч) {{this.summa.car.price_dop_hour * this.summa.dop_hours}} ₽
             </span> =
-            <span>Итого {{+this.SummaMixedTarif.tarifGorod.summa + (+this.SummaMixedTarif.tarifMezjGorod.summa) + (+this.SummaMixedTarif.tarifRussia.summa) +
+            <span>Итого {{(+this.SummaMixedTarif.tarifGorod.summa || 0) + (+this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (+this.SummaMixedTarif.tarifRussia.summa || 0) +
                 (+this.summa.place_start_price) +
                 this.summa.place_end_price +
                 (+this.summa.additional_services_price) +
