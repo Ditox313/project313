@@ -1501,17 +1501,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               if (this.form.value.tarif_mixed_gorod_days < 3) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_1_2
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_1_2
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_1_2;
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
 
@@ -1519,68 +1519,68 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               else if (this.form.value.tarif_mixed_gorod_days >= 3 && this.form.value.tarif_mixed_gorod_days <= 7) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_3_7
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_3_7
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_3_7;
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
               }
               else if (this.form.value.tarif_mixed_gorod_days > 7 && this.form.value.tarif_mixed_gorod_days <= 14) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_8_14
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_8_14
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_8_14;
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
               }
               else if (this.form.value.tarif_mixed_gorod_days > 14 && this.form.value.tarif_mixed_gorod_days <= 31) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_15_30
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_15_30
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_15_30;
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
               }
               else if (this.form.value.tarif_mixed_gorod_days > 31) {
                 if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_31_more
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours >= 12) {
                   this.SummaMixedTarif.tarifGorod.summa = Math.round(this.form.value.tarif_mixed_gorod_days) * this.summa.car.days_31_more
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
                 if (this.summa.dop_hours === 0) {
                   this.SummaMixedTarif.tarifGorod.summa = this.form.value.tarif_mixed_gorod_days * this.summa.car.days_31_more;
-                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+                  this.SummaMixedTarif.tarifGorod.summaFull = +this.SummaMixedTarif.tarifGorod.summa + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
                   tarif.summa = this.SummaMixedTarif.tarifGorod.summa
                 }
               }
@@ -1632,17 +1632,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.SummaMixedTarif.tarifMezjGorod.summa = Math.round(this.form.value.tarif_mixed_mezjgorod_days) * this.summa.car.mezgorod
-              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
               tarif.summa = this.SummaMixedTarif.tarifMezjGorod.summa
             }
             if (this.summa.dop_hours >= 12) {
               this.SummaMixedTarif.tarifMezjGorod.summa = Math.round(this.form.value.tarif_mixed_mezjgorod_days) * this.summa.car.mezgorod
-              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
               tarif.summa = this.SummaMixedTarif.tarifMezjGorod.summa
             }
             if (this.summa.dop_hours === 0) {
               this.SummaMixedTarif.tarifMezjGorod.summa = this.form.value.tarif_mixed_mezjgorod_days * this.summa.car.mezgorod;
-              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              this.SummaMixedTarif.tarifMezjGorod.summaFull = +this.SummaMixedTarif.tarifMezjGorod.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
               tarif.summa = this.SummaMixedTarif.tarifMezjGorod.summa
             }
           }
@@ -1691,17 +1691,17 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.SummaMixedTarif.tarifRussia.summa = Math.round(this.form.value.tarif_mixed_russia_days) * this.summa.car.russia
-              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
               tarif.summa = this.SummaMixedTarif.tarifRussia.summa
             }
             if (this.summa.dop_hours >= 12) {
               this.SummaMixedTarif.tarifRussia.summa = Math.round(this.form.value.tarif_mixed_russia_days) * this.summa.car.russia
-              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
               tarif.summa = this.SummaMixedTarif.tarifRussia.summa
             }
             if (this.summa.dop_hours === 0) {
               this.SummaMixedTarif.tarifRussia.summa = this.form.value.tarif_mixed_russia_days * this.summa.car.russia;
-              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa + (+this.summa.car.zalog) + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
+              this.SummaMixedTarif.tarifRussia.summaFull = +this.SummaMixedTarif.tarifRussia.summa  + (+this.summa.car.price_dop_hour * this.summa.dop_hours)
               tarif.summa = this.SummaMixedTarif.tarifRussia.summa
             }
           }
@@ -2437,7 +2437,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
           booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-          summaFull: Math.round(((this.SummaMixedTarif.tarifGorod.summaFull||0) + (this.SummaMixedTarif.tarifMezjGorod.summaFull||0) + (this.SummaMixedTarif.tarifRussia.summaFull||0)) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+          summaFull: Math.round((this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summaFull || 0) + (this.SummaMixedTarif.tarifRussia.summaFull || 0) + (+this.summa.place_end_price) + (+this.summa.place_start_price) + this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl),
           summa: (this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (this.SummaMixedTarif.tarifRussia.summa || 0),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
@@ -2504,7 +2504,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
           booking_days: Math.ceil((booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24)),
-          summaFull: Math.round((this.SummaMixedTarif.tarifGorod.summaFull + this.SummaMixedTarif.tarifMezjGorod.summaFull + this.SummaMixedTarif.tarifRussia.summaFull) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price),
+          summaFull: Math.round(((this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (this.SummaMixedTarif.tarifRussia.summa || 0)) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl),
           summa: this.SummaMixedTarif.tarifGorod.summa + this.SummaMixedTarif.tarifMezjGorod.summa + this.SummaMixedTarif.tarifRussia.summa,
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
