@@ -147,7 +147,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   // Цена тарифа
-  tarifPrice!: String
+  tarifPrice: any = []
 
 
 
@@ -2349,54 +2349,205 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.form.value.tariff === 'Город') {
       if (this.summa.booking_days < 3) {
-        this.tarifPrice = this.summa.car.days_1_2
+        this.tarifPrice.push({
+          name: 'Город',
+          price:  this.summa.car.days_1_2
+        })
       }
       if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
-        this.tarifPrice = this.summa.car.days_3_7
+        this.tarifPrice.push({
+          name: 'Город',
+          price: this.summa.car.days_3_7
+        })
       }
       if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
-        this.tarifPrice = this.summa.car.days_8_14
+        this.tarifPrice.push({
+          name: 'Город',
+          price: this.summa.car.days_8_14
+        })
       }
       if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
-        this.tarifPrice = this.summa.car.days_15_30
+        this.tarifPrice.push({
+          name: 'Город',
+          price: this.summa.car.days_15_30
+        })
       }
       if (this.summa.booking_days >= 31) {
-        this.tarifPrice = this.summa.car.days_31_more
+        this.tarifPrice.push({
+          name: 'Город',
+          price: this.summa.car.days_31_more
+        })
       }
     }
     else if (this.form.value.tariff === 'Межгород') {
       if (this.summa.booking_days < 3) {
         this.tarifPrice = this.summa.car.mezgorod
+        this.tarifPrice.push({
+          name: 'Межгород',
+          price: this.summa.car.mezgorod
+        })
       }
       if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
-        this.tarifPrice = this.summa.car.mezgorod
+        this.tarifPrice.push({
+          name: 'Межгород',
+          price: this.summa.car.mezgorod
+        })
       }
       if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
-        this.tarifPrice = this.summa.car.mezgorod
+        this.tarifPrice.push({
+          name: 'Межгород',
+          price: this.summa.car.mezgorod
+        })
       }
       if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
-        this.tarifPrice = this.summa.car.mezgorod
+        this.tarifPrice.push({
+          name: 'Межгород',
+          price: this.summa.car.mezgorod
+        })
       }
       if (this.summa.booking_days >= 31) {
-        this.tarifPrice = this.summa.car.mezgorod
+        this.tarifPrice.push({
+          name: 'Межгород',
+          price: this.summa.car.mezgorod
+        })
       }
     }
     else if (this.form.value.tariff === 'Россия') {
       if (this.summa.booking_days < 3) {
-        this.tarifPrice = this.summa.car.russia
+        this.tarifPrice.push({
+          name: 'Россия',
+          price: this.summa.car.russia
+        })
       }
       if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
-        this.tarifPrice = this.summa.car.russia
+        this.tarifPrice.push({
+          name: 'Россия',
+          price: this.summa.car.russia
+        })
       }
       if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
-        this.tarifPrice = this.summa.car.russia
+        this.tarifPrice.push({
+          name: 'Россия',
+          price: this.summa.car.russia
+        })
       }
       if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
-        this.tarifPrice = this.summa.car.russia
+        this.tarifPrice.push({
+          name: 'Россия',
+          price: this.summa.car.russia
+        })
       }
       if (this.summa.booking_days >= 31) {
-        this.tarifPrice = this.summa.car.russia
+        this.tarifPrice.push({
+          name: 'Россия',
+          price: this.summa.car.russia
+        })
       }
+    }
+    else if (this.form.value.tariff === 'Смешанный') {
+      this.summa.tariff.forEach(tarif => {
+        if (tarif.name === 'Город') {
+          
+          if (tarif.days < 3) {
+            this.tarifPrice.push({
+              name: 'Город',
+              price: this.summa.car.days_1_2
+            })
+            
+          }
+          if (tarif.days >= 3 && tarif.days < 7) {
+            this.tarifPrice.push({
+              name: 'Город',
+              price:  this.summa.car.days_3_7
+            })
+            
+          }
+          if (tarif.days >= 7 && tarif.days < 14) {
+            this.tarifPrice.push({
+              name: 'Город',
+              price:  this.summa.car.days_8_14
+            })
+            
+          }
+          if (tarif.days >= 14 && tarif.days < 31) {
+            
+            this.tarifPrice.push({
+              name: 'Город',
+              price: this.summa.car.days_15_30
+            })
+          }
+          if (tarif.days >= 31) {
+            this.tarifPrice.push({
+              name: 'Город',
+              price: this.summa.car.days_31_more
+            })
+          }
+        }
+        else if (tarif.name === 'Межгород') {
+          if (tarif.days < 3) {
+            this.tarifPrice.push({
+              name: 'Межгород',
+              price: this.summa.car.mezgorod
+            })
+          }
+          if (tarif.days >= 3 && tarif.days < 7) {
+            this.tarifPrice.push({
+              name: 'Межгород',
+              price: this.summa.car.mezgorod
+            })
+          }
+          if (tarif.days >= 7 && tarif.days < 14) {
+            this.tarifPrice.push({
+              name: 'Межгород',
+              price: this.summa.car.mezgorod
+            })
+          }
+          if (tarif.days >= 14 && tarif.days < 31) {
+            this.tarifPrice.push({
+              name: 'Межгород',
+              price: this.summa.car.mezgorod
+            })
+          }
+          if (tarif.days >= 31) {
+            this.tarifPrice.push({
+              name: 'Межгород',
+              price: this.summa.car.mezgorod
+            })
+          }
+        }
+        else if (tarif.name === 'Россия') {
+          if (tarif.days < 3) {
+            this.tarifPrice.push({
+              name: 'Россия',
+              price: this.summa.car.russia
+            })
+          }
+          if (tarif.days >= 3 && tarif.days < 7) {
+            this.tarifPrice.push({
+              name: 'Россия',
+              price: this.summa.car.russia
+            })
+          }
+          if (tarif.days >= 7 && tarif.days < 14) {
+            this.tarifPrice.push({
+              name: 'Россия',
+              price: this.summa.car.russia
+            })
+          }
+          if (tarif.days >= 14 && tarif.days < 31) {
+            this.tarifPrice.push({
+              name: 'Россия',
+              price: this.summa.car.russia
+            })
+          }
+          if (tarif.days >= 31) {
+            this.tarifPrice.push({
+              name: 'Россия',
+              price: this.summa.car.russia
+            })
+          }
+        }
+      });
     }
   }
 
@@ -2407,14 +2558,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
     this.checkedTarif()
-
+    
 
 
     if (this.summa.tariff.length > 1) {
-      console.log(this.summa.tariff);
-      console.log(this.SummaMixedTarif);
-
-
       if (this.xs_actual_client_type === 'fiz') {
         let moyka = '0';
         if (this.summa.car.category === 'Бизнес') {
@@ -3080,9 +3227,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         }
       }
-
-      console.log(this.summa.tariff);
-      console.log(this.SummaMixedTarif);
     }
 
   }

@@ -98,9 +98,9 @@
                                 <span>{{actualBooking.tariff}} </span>
                             </div>
 
-                            <div>
+                            <div *ngIf="this.actualBooking.dop_info_open.tarifPrice !== 'Смешанная'">
                                 <span>Цена тарифа:</span>
-                                <span>{{ this.summa.checkedTarif}} ₽</span>
+                                <span>{{ this.actualBooking.dop_info_open.tarifPrice}} ₽</span>
                             </div>
 
                             <div *ngIf="summa.dop_hours > 0">
