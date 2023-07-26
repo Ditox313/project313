@@ -631,7 +631,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       if (this.summa_extend.summa > 0) {
         this.form.patchValue({
           arenda: this.summa_extend.summa,
-        });
+      });
 
         this.xsExtendSummBeforeSale = this.summa_extend.summa;
       }
@@ -769,10 +769,12 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     }
     else
     {
-      this.summa.summa = 0
-      this.summa_extend.summa = 0
-      this.summa.summaFull = 0
-      this.summa_extend.summaFull = 0
+      this.summa.summa -= this.summa_extend.summa
+      this.summa.summaFull -= this.summa_extend.summa
+      this.summa_extend.summa -= this.summa_extend.summa
+
+      console.log(this.summa);
+      console.log(this.summa_extend);
 
 
       // Обнуляем массив с тарифами
@@ -781,6 +783,11 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.form.controls['tarif_mixed_gorod_days'].disable();
       this.form.controls['tarif_mixed_mezjgorod_days'].disable();
       this.form.controls['tarif_mixed_russia_days'].disable();
+
+      // Автоматически подставляем ссумму продления в поле оплата
+      this.form.patchValue({
+        arenda: 0,
+      });
     }
   }
 
@@ -795,7 +802,9 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         summa: 0
       })
 
-      this.extendSumm();
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
     }
     else {
       this.form.patchValue({
@@ -807,6 +816,12 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.SummaMixedTarif.tarifGorod.summa = 0
 
       this.extendSumm();
+      this.SummaMixedTarif.tarifGorod.days = 0
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
+      
     }
   }
   // При вводе колличества дней смешанного тарифа город
@@ -910,6 +925,14 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         }
 
         this.extendSumm();
+        
+        this.form.patchValue({
+          arenda: this.summa_extend.summa,
+        });
+
+
+        console.log(this.summa);
+        console.log(this.summa_extend);
       });
     }
     else {
@@ -920,6 +943,11 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       });
 
       this.extendSumm();
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
+
     }
 
   }
@@ -934,7 +962,9 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         summa: 0
       })
       
-      this.extendSumm();
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
     }
     else {
       this.form.patchValue({
@@ -944,7 +974,14 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.summa.tariff = this.summa.tariff.filter((t) => t.name !== 'Межгород')
       this.SummaMixedTarif.tarifMezjGorod.summa = 0
 
+
+      this.SummaMixedTarif.tarifMezjGorod.days = 0
+
       this.extendSumm();
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
     }
   }
 
@@ -973,8 +1010,15 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           }
         }
       });
-
       this.extendSumm();
+
+
+      console.log(this.summa);
+      console.log(this.summa_extend);
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
     }
     else {
       this.summa.tariff.forEach(element => {
@@ -982,8 +1026,12 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           element.days = 0
         }
       });
-
       this.extendSumm();
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
+
     }
   }
 
@@ -997,9 +1045,11 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         days: 0,
         summa: 0
       })
-
       this.extendSumm();
-      
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
     }
     else {
       this.form.patchValue({
@@ -1008,8 +1058,12 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.form.controls['tarif_mixed_russia_days'].disable();
       this.summa.tariff = this.summa.tariff.filter((t) => t.name !== 'Россия')
       this.SummaMixedTarif.tarifRussia.summa = 0
-
+      this.SummaMixedTarif.tarifRussia.days = 0
       this.extendSumm();
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
     }
   }
 
@@ -1041,6 +1095,13 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       });
 
       this.extendSumm();
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
+
+      console.log(this.summa);
+      console.log(this.summa_extend);
     }
     else {
       this.summa.tariff.forEach(element => {
@@ -1050,6 +1111,10 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       });
 
       this.extendSumm();
+
+      this.form.patchValue({
+        arenda: this.summa_extend.summa,
+      });
     }
   }
 
@@ -1075,11 +1140,10 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   // Считаем сумму продлени брони
   extendSumm()
   {
-    this.summa.summa = 0
     this.summa_extend.summa = 0
-    this.summa.summaFull = 0
     this.summa_extend.summaFull = 0
 
+    
     if (this.form.value.tariff !== "Смешанный")
     {
       let alldays = this.summa.booking_days;
@@ -1216,136 +1280,97 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.summa.tariff.forEach(tarif => {
         if (tarif.name === 'Город') 
         {
-         
-
-          if (tarif.days < 3) {
+          let tarif_days_and_booking_days = Number(tarif.days) + Number(this.actualBooking.booking_days)
+          
+          if (tarif_days_and_booking_days < 3) {
 
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
-              this.summa_extend.summa += Number(Math.round(tarif.days ) * this.summa.car.days_1_2)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+              this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
 
             }
             if (this.summa.dop_hours >= 12) {
-              this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+              this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+              // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_1_2);
             }
 
           }
-          else if (tarif.days >= 3 && tarif.days <= 7) {
+          else if (tarif_days_and_booking_days >= 3 && tarif_days_and_booking_days <= 7) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_3_7)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_3_7)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_3_7)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+              // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_3_7);
             }
           }
-          else if (tarif.days > 7 && tarif.days <= 14) {
+          else if (tarif_days_and_booking_days > 7 && tarif_days_and_booking_days <= 14) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_8_14)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_8_14)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_8_14)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+              // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_8_14);
             }
           }
-          else if (tarif.days > 14 && tarif.days <= 31) {
+          else if (tarif_days_and_booking_days > 14 && tarif_days_and_booking_days <= 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_15_30)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_15_30)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_15_30)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+              // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_15_30);
             }
           }
-          else if (tarif.days > 31) {
+          else if (tarif_days_and_booking_days > 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_31_more)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_31_more)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_31_more)
-              this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-              this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+              // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_31_more);
             }
           }
         }
         else if (tarif.name === 'Межгород') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.mezgorod)
-            this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-            this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.mezgorod)
-            this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-            this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
           }
           if (this.summa.dop_hours === 0) {
-            this.summa_extend.summa += Number(tarif.days * this.summa.car.mezgorod)
-            this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-            this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+            this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.mezgorod)
+            // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.mezgorod);
           }
         }
         else if (tarif.name === 'Россия') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.russia)
-            this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-            this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.russia)
-            this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-            this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
           }
           if (this.summa.dop_hours === 0) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.russia)
-            this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-            this.summa.summa += (+this.actualBooking.summa) + (+this.summa_extend.summa)
+            // this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
           }
         }
       });
-
-      // console.log(this.SummaMixedTarif);
-      // console.log(this.summa.tariff);
-      // console.log(this.summa_extend);
     }
   }
 
@@ -1380,104 +1405,207 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     const xs_sale = this.form.value.isSaleCheckbox;
 
 
-
-    if (xs_sale <= 0)
+    if (this.form.value.tariff !== "Смешанный")
     {
+      if (xs_sale <= 0) {
 
-      const pay = {
-        vid: 'Продление',
-        pricePay: this.form.value.arenda,
-        typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId,
-        smenaId: this.actualBooking.smenaId,
-      };
+        const pay = {
+          vid: 'Продление',
+          pricePay: this.form.value.arenda,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
+        };
 
 
-      const booking = {
-        car: JSON.parse(this.form.value.car),
-        sale: (+this.actualBooking.sale),
-        client: JSON.parse(this.form.value.client),
-        place_start: this.form.value.place_start,
-        place_end: this.form.value.place_end,
-        tariff: this.form.value.tariff,
-        comment: this.form.value.comment,
-        booking_start: this.form.value.booking_start,
-        booking_end: this.form.value.booking_end,
-        booking_days: (+this.actualBooking.booking_days) + (+this.extendDays) ,
-        summaFull: this.summa.summaFull,
-        summa:this.summa.summa,
-        dop_hours: this.summa.dop_hours,
-        extend: {
-          date: new Date(),
-          days: this.extendDays,
-          summ: this.form.value.arenda,
-          sale: xs_sale || 0
-        }
-      };
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          sale: (+this.actualBooking.sale),
+          client: JSON.parse(this.form.value.client),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.summa.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
+          summaFull: this.summa.summaFull,
+          summa: this.summa.summa,
+          dop_hours: this.summa.dop_hours,
+          extend: {
+            date: new Date(),
+            days: this.extendDays,
+            summ: this.form.value.arenda,
+            sale: xs_sale || 0
+          }
+        };
 
-      this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+        this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
 
-      this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
-        map(res => {
-          this.pays.create(pay).subscribe((pay) => {
-            MaterialService.toast('Платеж создан');
-            this.router.navigate(['/view-booking', this.bookingId]);
-          });
-          return res;
-        })
-      ).subscribe((booking) => {
-        MaterialService.toast('Бронь продлена');
-      });
+        this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.create(pay).subscribe((pay) => {
+              MaterialService.toast('Платеж создан');
+              this.router.navigate(['/view-booking', this.bookingId]);
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь продлена');
+        });
 
-     
+
+      }
+      else if (xs_sale > 0) {
+
+        const pay = {
+          vid: 'Продление',
+          pricePay: (+this.form.value.arenda),
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
+        };
+
+
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          sale: (+this.actualBooking.sale) + (+xs_sale),
+          client: JSON.parse(this.form.value.client),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.summa.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
+          summaFull: (+this.summa.summaFull) - (+xs_sale),
+          summa: (+this.summa.summa) - (+xs_sale),
+          dop_hours: this.summa.dop_hours,
+          extend: {
+            date: new Date(),
+            days: this.extendDays,
+            summ: (+this.form.value.arenda),
+            sale: xs_sale
+          }
+        };
+
+        this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+
+        this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.create(pay).subscribe((pay) => {
+              MaterialService.toast('Платеж создан');
+              this.router.navigate(['/view-booking', this.bookingId]);
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь продлена');
+        });
+      }
     }
-    else if(xs_sale > 0)
+    else
     {
+      if (xs_sale <= 0) {
 
-      const pay = {
-        vid: 'Продление',
-        pricePay: (+this.form.value.arenda),
-        typePay: this.form.value.typePayArenda,
-        bookingId: this.bookingId,
-        smenaId: this.actualBooking.smenaId,
-      };
+        const pay = {
+          vid: 'Продление',
+          pricePay: this.summa_extend.summa,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
+        };
 
 
-      const booking = {
-        car: JSON.parse(this.form.value.car),
-        sale: (+this.actualBooking.sale) + (+xs_sale),
-        client: JSON.parse(this.form.value.client),
-        place_start: this.form.value.place_start,
-        place_end: this.form.value.place_end,
-        tariff: this.form.value.tariff,
-        comment: this.form.value.comment,
-        booking_start: this.form.value.booking_start,
-        booking_end: this.form.value.booking_end,
-        booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
-        summaFull: (+this.summa.summaFull) - (+xs_sale),
-        summa: (+this.summa.summa) - (+xs_sale),
-        dop_hours: this.summa.dop_hours,
-        extend: {
-          date: new Date(),
-          days: this.extendDays,
-          summ: (+this.form.value.arenda),
-          sale: xs_sale
-        }
-      };
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          sale: (+this.actualBooking.sale),
+          client: JSON.parse(this.form.value.client),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.summa.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
+          summaFull: this.summa.summaFull + this.summa_extend.summa,
+          summa: this.summa.summa + this.summa_extend.summa,
+          dop_hours: this.summa.dop_hours,
+          extend: {
+            date: new Date(),
+            days: this.extendDays,
+            summ: this.form.value.arenda,
+            sale: xs_sale || 0
+          }
+        };
 
-      this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+        console.log(booking);
 
-      this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
-        map(res => {
-          this.pays.create(pay).subscribe((pay) => {
-            MaterialService.toast('Платеж создан');
-            this.router.navigate(['/view-booking', this.bookingId]);
-          });
-          return res;
-        })
-      ).subscribe((booking) => {
-        MaterialService.toast('Бронь продлена');
-      });
+        
+
+        this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+
+        this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.create(pay).subscribe((pay) => {
+              MaterialService.toast('Платеж создан');
+              this.router.navigate(['/view-booking', this.bookingId]);
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь продлена');
+        });
+
+
+      }
+      else if (xs_sale > 0) {
+
+        const pay = {
+          vid: 'Продление',
+          pricePay: this.summa_extend.summa - (+xs_sale),
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+          smenaId: this.actualBooking.smenaId,
+        };
+
+
+        const booking = {
+          car: JSON.parse(this.form.value.car),
+          sale: (+this.actualBooking.sale) + (+xs_sale),
+          client: JSON.parse(this.form.value.client),
+          place_start: this.form.value.place_start,
+          place_end: this.form.value.place_end,
+          tariff: this.summa.tariff,
+          comment: this.form.value.comment,
+          booking_start: this.form.value.booking_start,
+          booking_end: this.form.value.booking_end,
+          booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
+          summaFull: (+this.summa.summaFull + this.summa_extend.summa) - (+xs_sale),
+          summa: (+this.summa.summa + this.summa_extend.summa) - (+xs_sale),
+          dop_hours: this.summa.dop_hours,
+          extend: {
+            date: new Date(),
+            days: this.extendDays,
+            summ: (+this.form.value.arenda),
+            sale: xs_sale
+          }
+        };
+
+        this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
+
+        this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
+          map(res => {
+            this.pays.create(pay).subscribe((pay) => {
+              MaterialService.toast('Платеж создан');
+              this.router.navigate(['/view-booking', this.bookingId]);
+            });
+            return res;
+          })
+        ).subscribe((booking) => {
+          MaterialService.toast('Бронь продлена');
+        });
+      }
     }
 
   }
