@@ -1451,7 +1451,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
             date: new Date(),
             days: this.extendDays,
             summ: this.form.value.arenda,
-            sale: xs_sale || 0
+            sale: xs_sale || 0,
+            tariff: this.summa.tariff
           }
         };
 
@@ -1500,7 +1501,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
             date: new Date(),
             days: this.extendDays,
             summ: (+this.form.value.arenda),
-            sale: xs_sale
+            sale: xs_sale,
+            tariff: this.summa.tariff
           }
         };
 
@@ -1542,15 +1544,16 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           comment: this.form.value.comment,
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
-          booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
+          booking_days: (+this.actualBooking.booking_days) + (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0),
           summaFull: +this.summa.summaFull + (+this.summa_extend.summa),
           summa: this.summa.summa + this.summa_extend.summa,
           dop_hours: this.summa.dop_hours,
           extend: {
             date: new Date(),
-            days: this.extendDays,
+            days: (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0),
             summ: this.form.value.arenda,
-            sale: xs_sale || 0
+            sale: xs_sale || 0,
+            tariff: this.summa.tariff
           }
         };
 
@@ -1601,7 +1604,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           comment: this.form.value.comment,
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
-          booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
+          booking_days: (+this.actualBooking.booking_days) + (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0),
           summaFull: (+this.summa.summaFull + this.summa_extend.summa) - (+xs_sale),
           summa: (+this.summa.summa + this.summa_extend.summa) - (+xs_sale),
           dop_hours: this.summa.dop_hours,
@@ -1609,7 +1612,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
             date: new Date(),
             days: this.extendDays,
             summ: (+this.form.value.arenda),
-            sale: xs_sale
+            sale: xs_sale,
+            tariff: this.summa.tariff
           }
         };
 
