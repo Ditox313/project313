@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="mixed_tarif" *ngIf="isMixedTarif">
+                    <div class="mixed_tarif" *ngIf=" this.form.value.tariff === 'Смешанный'">
                         <div class="checkboxs_row">
                             <div>
                                 <label>
@@ -173,8 +173,9 @@
 
 
     <div *ngIf="this.form.value.tariff === 'Смешанный'">
-        <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull)"
-            [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull)">
+        <div class="xs_paid" [class.xs_paid_none]="+actualBooking.paidCount < (+summa.summaFull + this.summa_extend.summa)"
+            [class.xs_paid_ok]="+actualBooking.paidCount >= (+summa.summaFull + this.summa_extend.summa)"
+            >
         
             <div *ngIf="extendDays">
                 <span class="xs_paid_span_1">Время продления: </span>

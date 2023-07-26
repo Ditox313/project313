@@ -122,6 +122,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
 
 
 
+
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
@@ -138,6 +140,9 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     this.xscars$ = this.cars.fetch();
     this.xsclients$ = this.clients.fetch();
     MaterialService.updateTextInputs();
+
+    console.log(this.summa);
+    console.log(this.summa_extend);
   }
 
   ngOnDestroy(): void {
@@ -647,10 +652,13 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   onChangeTariff(e: any) {
     if (e !== "Смешанный")
     {
-      // Получаем тариф
+      this.summa.tariff = this.actualBooking.tariff
+  
+      //Получаем тариф
       this.summa.tariff[0].name = e
+      this.isMixedTarif = false
 
-
+      
       // Если все необходимое заполнено то считаем суммы для тарифов
       if (this.summa.booking_start !== '' && this.summa.booking_end !== '') {
         if (this.summa.tariff[0].name === 'Город') {
@@ -773,13 +781,10 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.summa.summaFull -= this.summa_extend.summa
       this.summa_extend.summa -= this.summa_extend.summa
 
-      console.log(this.summa);
-      console.log(this.summa_extend);
-
 
       // Обнуляем массив с тарифами
       this.isMixedTarif = true;
-      this.summa.tariff.splice(0, this.summa.tariff.length);
+      this.summa.tariff = [];
       this.form.controls['tarif_mixed_gorod_days'].disable();
       this.form.controls['tarif_mixed_mezjgorod_days'].disable();
       this.form.controls['tarif_mixed_russia_days'].disable();
@@ -788,6 +793,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.form.patchValue({
         arenda: 0,
       });
+
     }
   }
 
@@ -796,11 +802,24 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   onChangeMixedTarifGorod(e) {
     this.form.controls['tarif_mixed_gorod_days'].enable();
     if (this.form.value.tarif_mixed_gorod) {
-      this.summa.tariff.push({
-        name: 'Город',
-        days: 0,
-        summa: 0
-      })
+
+      // let obj = {
+      //   name: 'Город',
+      //   days: 0,
+      //   summa: 0
+      // }
+
+      // if (this.summa.tariff.indexOf(obj) === -1) {
+      //   this.summa.tariff.push(obj);
+      //   console.log(this.summa);
+      //   console.log(this.summa_extend);
+      // }
+      // else{
+      //   console.log(this.summa);
+      //   console.log(this.summa_extend);
+      //   console.log('существует');
+        
+      // }
 
       this.form.patchValue({
         arenda: this.summa_extend.summa,
@@ -931,8 +950,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         });
 
 
-        console.log(this.summa);
-        console.log(this.summa_extend);
+
       });
     }
     else {
@@ -1013,8 +1031,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.extendSumm();
 
 
-      console.log(this.summa);
-      console.log(this.summa_extend);
+
 
       this.form.patchValue({
         arenda: this.summa_extend.summa,
@@ -1100,8 +1117,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         arenda: this.summa_extend.summa,
       });
 
-      console.log(this.summa);
-      console.log(this.summa_extend);
     }
     else {
       this.summa.tariff.forEach(element => {
@@ -1128,11 +1143,24 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   // При вводе значения в поле скидки
   xs_isSaleValue(e)
   {
-    if (e.target.value > 0) {
-      this.form.patchValue({
-        arenda: this.xsExtendSummBeforeSale - e.target.value,
-      });
+    if (this.form.value.tariff !== "Смешанный")
+    {
+      if (e.target.value > 0) {
+        this.form.patchValue({
+          arenda: this.xsExtendSummBeforeSale - e.target.value,
+        });
+      }
     }
+    else
+    {
+      if (e.target.value > 0) {
+        this.form.patchValue({
+          arenda: this.summa_extend.summa - e.target.value,
+        });
+      }
+    }
+    
+    
     
   }
 
@@ -1142,6 +1170,10 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   {
     this.summa_extend.summa = 0
     this.summa_extend.summaFull = 0
+
+
+    
+    
 
     
     if (this.form.value.tariff !== "Смешанный")
@@ -1281,12 +1313,15 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         if (tarif.name === 'Город') 
         {
           let tarif_days_and_booking_days = Number(tarif.days) + Number(this.actualBooking.booking_days)
+
+          // console.log('дни', Number(tarif.days));
+          // console.log('дни брони', Number(this.actualBooking.booking_days));
+          
           
           if (tarif_days_and_booking_days < 3) {
 
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
-
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
@@ -1539,7 +1574,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           }
         };
 
-        console.log(booking);
+
 
         
 
