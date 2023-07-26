@@ -141,6 +141,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     this.xsclients$ = this.clients.fetch();
     MaterialService.updateTextInputs();
 
+    
     console.log(this.summa);
     console.log(this.summa_extend);
   }
@@ -198,8 +199,15 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         comment: res.comment,
       });
 
+      if (res.tariff.length === 1)
+      {
+        this.summa.tariff = res.tariff;
+      }
+      else
+      {
+        this.summa.tariff = []
+      }
       this.summa.car = res.car;
-      this.summa.tariff = res.tariff;
       this.summa.booking_start = res.booking_start;
       this.summa.booking_end = res.booking_end;
       this.summa.summa = res.summa;
@@ -342,10 +350,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
 
       }
     }
-    else
-    {
 
-    }
   }
 
 
@@ -481,10 +486,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         }
       }
     }
-    else
-    {
 
-    }
   }
 
 
@@ -641,10 +643,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         this.xsExtendSummBeforeSale = this.summa_extend.summa;
       }
     }
-    else
-    {
-      
-    }
+
   }
 
 
@@ -803,29 +802,20 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     this.form.controls['tarif_mixed_gorod_days'].enable();
     if (this.form.value.tarif_mixed_gorod) {
 
-      // let obj = {
-      //   name: 'Город',
-      //   days: 0,
-      //   summa: 0
-      // }
+      this.summa.tariff.push({
+        name: 'Город',
+        days: 0,
+        summa: 0
+      })
 
-      // if (this.summa.tariff.indexOf(obj) === -1) {
-      //   this.summa.tariff.push(obj);
-      //   console.log(this.summa);
-      //   console.log(this.summa_extend);
-      // }
-      // else{
-      //   console.log(this.summa);
-      //   console.log(this.summa_extend);
-      //   console.log('существует');
-        
-      // }
-
+          
       this.form.patchValue({
         arenda: this.summa_extend.summa,
       });
+
     }
     else {
+      
       this.form.patchValue({
         tarif_mixed_gorod_days: null,
       });
@@ -840,6 +830,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.form.patchValue({
         arenda: this.summa_extend.summa,
       });
+
       
     }
   }
@@ -948,9 +939,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         this.form.patchValue({
           arenda: this.summa_extend.summa,
         });
-
-
-
       });
     }
     else {
@@ -965,7 +953,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       this.form.patchValue({
         arenda: this.summa_extend.summa,
       });
-
     }
 
   }
@@ -1171,10 +1158,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     this.summa_extend.summa = 0
     this.summa_extend.summaFull = 0
 
-
-    
-    
-
     
     if (this.form.value.tariff !== "Смешанный")
     {
@@ -1313,9 +1296,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         if (tarif.name === 'Город') 
         {
           let tarif_days_and_booking_days = Number(tarif.days) + Number(this.actualBooking.booking_days)
-
-          // console.log('дни', Number(tarif.days));
-          // console.log('дни брони', Number(this.actualBooking.booking_days));
           
           
           if (tarif_days_and_booking_days < 3) {
@@ -1563,7 +1543,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
           booking_days: (+this.actualBooking.booking_days) + (+this.extendDays),
-          summaFull: this.summa.summaFull + this.summa_extend.summa,
+          summaFull: +this.summa.summaFull + (+this.summa_extend.summa),
           summa: this.summa.summa + this.summa_extend.summa,
           dop_hours: this.summa.dop_hours,
           extend: {
@@ -1575,6 +1555,12 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         };
 
 
+        console.log(this.summa);
+        console.log(this.summa_extend);
+        console.log(booking);
+        
+        
+        
 
         
 
