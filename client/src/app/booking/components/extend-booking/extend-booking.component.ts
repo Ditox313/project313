@@ -1322,108 +1322,108 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
 
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
               // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_1_2);
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_1_2) 
             }
 
           }
           else if (tarif_days_and_booking_days >= 3 && tarif_days_and_booking_days <= 7) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_3_7)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_3_7)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_3_7)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_3_7)
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_3_7)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_3_7)
               // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_3_7);
             }
           }
           else if (tarif_days_and_booking_days > 7 && tarif_days_and_booking_days <= 14) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_8_14)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_8_14)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_8_14)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_8_14)
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_8_14)
               // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_8_14);
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_8_14)
             }
           }
           else if (tarif_days_and_booking_days > 14 && tarif_days_and_booking_days <= 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_15_30)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_15_30)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_15_30)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_15_30)
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_15_30)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_15_30)
               // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_15_30);
             }
           }
           else if (tarif_days_and_booking_days > 31) {
             if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_31_more)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_31_more)
             }
             if (this.summa.dop_hours >= 12) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_31_more)
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_31_more)
             }
             if (this.summa.dop_hours === 0) {
               this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.days_31_more)
               // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.days_31_more);
-              tarif.summa = this.summa_extend.summa
+              tarif.summa = Number(Math.round(tarif.days) * this.summa.car.days_31_more)
             }
           }
         }
         else if (tarif.name === 'Межгород') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.mezgorod)
-            tarif.summa = this.summa_extend.summa
+            tarif.summa = Number(Math.round(tarif.days) * this.summa.car.mezgorod)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.mezgorod)
-            tarif.summa = this.summa_extend.summa
+            tarif.summa = Number(Math.round(tarif.days) * this.summa.car.mezgorod)
           }
           if (this.summa.dop_hours === 0) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.mezgorod)
             // this.summa_extend.summaFull += (+this.actualBooking.summaFull) + Number(Math.round(tarif.days) * this.summa.car.mezgorod);
-            tarif.summa = this.summa_extend.summa
+            tarif.summa = Number(Math.round(tarif.days) * this.summa.car.mezgorod)
           }
         }
         else if (tarif.name === 'Россия') {
           if (this.summa.dop_hours > 0 && this.summa.dop_hours < 12) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.russia)
-            tarif.summa = this.summa_extend.summa
+            tarif.summa = Number(Math.round(tarif.days) * this.summa.car.russia)
           }
           if (this.summa.dop_hours >= 12) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.russia)
-            tarif.summa = this.summa_extend.summa
+            tarif.summa = Number(Math.round(tarif.days) * this.summa.car.russia)
           }
           if (this.summa.dop_hours === 0) {
             this.summa_extend.summa += Number(Math.round(tarif.days) * this.summa.car.russia)
             // this.summa.summaFull += (+this.actualBooking.summaFull) + (+this.summa_extend.summa);
-            tarif.summa = this.summa_extend.summa
+            tarif.summa = Number(Math.round(tarif.days) * this.summa.car.russia)
           }
         }
       });
@@ -1434,9 +1434,6 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
 
   checkedTarif() {
 
-    // let tarif_days_and_booking_days = Number(this.summa.booking_days) + Number(this.actualBooking.booking_days)
-
-    console.log(this.actualBooking.booking_days);
     
     
     if (this.form.value.tariff === 'Город') {
