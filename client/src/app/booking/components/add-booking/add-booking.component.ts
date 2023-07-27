@@ -173,7 +173,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     MaterialService.updateTextInputs();
     this.get_user();
     this.dasable_controls();
-
   }
 
 
@@ -1184,6 +1183,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isMixedTarif = false;
       this.summa.tariff.splice(0, this.summa.tariff.length);
 
+
+     
 
       // Получаем тариф
       this.summa.tariff.push({
@@ -2347,8 +2348,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   checkedTarif() {
 
-    console.log(this.summa.tariff);
-    console.log(this.tarifPrice);
     
 
     if (this.form.value.tariff === 'Город') {
@@ -2635,7 +2634,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-            tarifPrice: this.tarifPrice || 0
+            tarifPrice: this.tarifPrice || 0,
+            tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+            tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+            tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+            tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+            tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+            tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -2684,9 +2689,9 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           comment: this.form.value.comment,
           booking_start: this.form.value.booking_start,
           booking_end: this.form.value.booking_end,
-          booking_days:  (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0),
-          summaFull: Math.round(((this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (this.SummaMixedTarif.tarifRussia.summa || 0)) + (+this.summa.place_start_price) + (+this.summa.place_end_price) + this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl),
-          summa: this.SummaMixedTarif.tarifGorod.summa + this.SummaMixedTarif.tarifMezjGorod.summa + this.SummaMixedTarif.tarifRussia.summa,
+          booking_days: (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0),
+          summaFull: Math.round((this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summaFull || 0) + (this.SummaMixedTarif.tarifRussia.summaFull || 0) + (+this.summa.place_end_price) + (+this.summa.place_start_price) + this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl),
+          summa: (this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (this.SummaMixedTarif.tarifRussia.summa || 0),
           dop_hours: this.summa.dop_hours,
           dop_info_open: {
             moyka: moyka || false,
@@ -2702,7 +2707,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
             isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
             isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-            tarifPrice: this.tarifPrice || 0
+            tarifPrice: this.tarifPrice || 0,
+            tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+            tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+            tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+            tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+            tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+            tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
           },
           booking_zalog: this.form.value.isCustomeZalogControl,
           booking_life_cycle: [
@@ -2772,7 +2783,14 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
                 isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
                 isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
                 isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-                tarifPrice: this.tarifPrice
+                tarifPrice: this.tarifPrice,
+                tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+                tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+                tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+                tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+                tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+                tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
+                
               },
               booking_zalog: this.summa.car.zalog,
               dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -2838,7 +2856,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
                 isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
                 isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
                 isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-                tarifPrice: this.tarifPrice
+                tarifPrice: this.tarifPrice,
+                tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+                tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+                tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+                tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+                tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+                tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
               },
               booking_zalog: this.summa.car.zalog_mej,
               dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -2905,7 +2929,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
                 isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
                 isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
                 isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-                tarifPrice: this.tarifPrice
+                tarifPrice: this.tarifPrice,
+                tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+                tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+                tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+                tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+                tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+                tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
               },
               booking_zalog: this.summa.car.zalog_rus,
               dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -2971,7 +3001,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-              tarifPrice: this.tarifPrice
+              tarifPrice: this.tarifPrice,
+              tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+              tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+              tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+              tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+              tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+              tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
             },
             booking_zalog: this.form.value.isCustomeZalogControl,
             dogovor_number__actual: this.xs_dogovor_number__actual,
@@ -3040,7 +3076,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
                 isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
                 isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
                 isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-                tarifPrice: this.tarifPrice
+                tarifPrice: this.tarifPrice,
+                tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+                tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+                tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+                tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+                tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+                tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
               },
               booking_zalog: this.summa.car.zalog,
               booking_life_cycle: [
@@ -3105,7 +3147,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
                 isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
                 isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
                 isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-                tarifPrice: this.tarifPrice
+                tarifPrice: this.tarifPrice,
+                tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+                tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+                tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+                tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+                tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+                tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
               },
               booking_zalog: this.summa.car.zalog_mej,
               booking_life_cycle: [
@@ -3169,7 +3217,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
                 isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
                 isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
                 isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-                tarifPrice: this.tarifPrice
+                tarifPrice: this.tarifPrice,
+                tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+                tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+                tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+                tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+                tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+                tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
               },
               booking_zalog: this.summa.car.zalog_rus,
               booking_life_cycle: [
@@ -3234,7 +3288,13 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               isCustomePlaceStart: this.form.value.isCustomePlaceStartControlclick,
               isCustomePlaceInput: this.form.value.isCustomePlaceInputControlclick,
               isCustomeZalog: this.form.value.isCustomeZalogControlclick,
-              tarifPrice: this.tarifPrice
+              tarifPrice: this.tarifPrice,
+              tarif_mixed_gorod: this.form.value.tarif_mixed_gorod || false,
+              tarif_mixed_gorod_days: this.form.value.tarif_mixed_gorod_days || 0,
+              tarif_mixed_mezjgorod: this.form.value.tarif_mixed_mezjgorod || false,
+              tarif_mixed_mezjgorod_days: this.form.value.tarif_mixed_mezjgorod_days || 0,
+              tarif_mixed_russia: this.form.value.tarif_mixed_russia || false,
+              tarif_mixed_russia_days: this.form.value.tarif_mixed_russia_days || 0,
             },
             booking_zalog: this.form.value.isCustomeZalogControl,
             booking_life_cycle: [
