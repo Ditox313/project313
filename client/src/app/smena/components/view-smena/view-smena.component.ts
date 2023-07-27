@@ -141,7 +141,6 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
 
     this.pays$ = this.pays.getPaysBySmenaId(this.smenaId).subscribe(res => {
       this.xspays = res;
-      console.log(res)
       this.xsSumma = this.calculationMoney(this.xspays)
     })
 
@@ -344,8 +343,6 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
         full: (totalPriceTerminal + totalPriceNal + totalPriceCard + totalPriceRS) - zalogBackSummaAllTypes - zalogBackPartSummaAllTypes + washSummaAllTypes
       }
 
-      console.log(totalxsBackZalogPartNal)
-
       return xsdata
     }
 
@@ -362,12 +359,7 @@ export class ViewSmenaComponent implements OnInit, OnDestroy {
       close_date_time: this.datePipe.transform(new Date(), 'HH:mm:ss')
     }
 
-    
-
-    
-
-
-
+  
     this.closeSmena$ = this.smenaService.close(this.smenaId, data).subscribe(res =>{
       this.actualSmena = res
 

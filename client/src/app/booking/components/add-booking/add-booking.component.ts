@@ -2347,6 +2347,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   checkedTarif() {
 
+    console.log(this.summa.tariff);
+    console.log(this.tarifPrice);
+    
+
     if (this.form.value.tariff === 'Город') {
       if (this.summa.booking_days < 3) {
         this.tarifPrice.push({
@@ -2381,7 +2385,6 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else if (this.form.value.tariff === 'Межгород') {
       if (this.summa.booking_days < 3) {
-        this.tarifPrice = this.summa.car.mezgorod
         this.tarifPrice.push({
           name: 'Межгород',
           price: this.summa.car.mezgorod
@@ -2559,6 +2562,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     const booking_end__x: any = new Date(this.form.value.booking_end);
     this.checkedTarif()
     
+
 
 
     if (this.summa.tariff.length > 1) {
