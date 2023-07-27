@@ -18,6 +18,7 @@ import { BookingsService } from '../../services/bookings.service';
 import * as moment from 'moment';
 import { PaysService } from 'src/app/pays/services/pays.service';
 import { Subscription } from 'rxjs';
+import { SmenaService } from 'src/app/smena/services/smena.service';
 
 @Component({
   selector: 'app-extend-booking',
@@ -121,6 +122,9 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
   isMixedTarif: Boolean = false;
 
 
+  actual_smena: any
+  actual_smena$: Subscription
+
 
 
 
@@ -130,7 +134,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     private cars: CarsService,
     private clients: ClientsService,
     private rote: ActivatedRoute,
-    private pays: PaysService
+    private pays: PaysService,
+    private smena: SmenaService
   ) { }
 
   ngOnInit(): void {
@@ -140,6 +145,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     this.xscars$ = this.cars.fetch();
     this.xsclients$ = this.clients.fetch();
     MaterialService.updateTextInputs();
+
+    
   }
 
   ngOnDestroy(): void {
@@ -154,6 +161,9 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     if (this.extendPay$)
     {
       this.extendPay$.unsubscribe();
+    }
+    if (this.actual_smena$) {
+      this.actual_smena$.unsubscribe();
     }
   }
 
@@ -178,6 +188,10 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       tarif_mixed_russia: new FormControl(''),
       tarif_mixed_russia_days: new FormControl(''),
     });
+
+    this.actual_smena$ = this.smena.isOpenSmena().subscribe(res => {
+      this.actual_smena = res
+    })
   }
 
   getBookingById()
@@ -1715,7 +1729,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           pricePay: this.form.value.arenda,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
 
@@ -1770,7 +1784,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           pricePay: (+this.form.value.arenda),
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
 
@@ -1824,7 +1838,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           pricePay: this.summa_extend.summa,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
 
@@ -1885,7 +1899,7 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           pricePay: this.summa_extend.summa - (+xs_sale),
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
 

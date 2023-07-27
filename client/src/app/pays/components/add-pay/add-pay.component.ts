@@ -12,6 +12,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { Booking, Summa } from 'src/app/shared/types/interfaces';
 import { PaysService } from '../../services/pays.service';
 import { CarsService } from 'src/app/cars/services/cars.service';
+import { SmenaService } from 'src/app/smena/services/smena.service';
 
 @Component({
   selector: 'app-add-pay',
@@ -58,13 +59,17 @@ export class AddPayComponent implements OnInit, OnDestroy {
   subGetByIdBooking$: Subscription;
   subGetPaysByBookingId$: Subscription;
   subCreatePay$: Subscription;
+
+  actual_smena: any
+  actual_smena$: Subscription
   
 
   constructor(private router: Router, 
     private rote: ActivatedRoute, 
     private bookings: BookingsService, 
     private pays: PaysService, 
-    private cars: CarsService,) {}
+    private cars: CarsService,
+    private smena: SmenaService) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -90,6 +95,9 @@ export class AddPayComponent implements OnInit, OnDestroy {
     {
       this.subCreatePay$.unsubscribe();
     }
+    if (this.actual_smena$) {
+      this.actual_smena$.unsubscribe();
+    }
   }
 
   initForm()
@@ -103,6 +111,10 @@ export class AddPayComponent implements OnInit, OnDestroy {
       place_end_price: new FormControl('',),
       additional_services_price: new FormControl('',),
     });
+
+    this.actual_smena$ = this.smena.isOpenSmena().subscribe(res => {
+      this.actual_smena = res
+    })
   }
 
 
@@ -185,7 +197,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       pricePay: this.form.value.arenda || 0,
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
-      smenaId: this.actualBooking.smenaId,
+      smenaId: this.actual_smena._id,
     };
 
     const pay_2 = {
@@ -193,7 +205,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       pricePay: this.form.value.zalog || 0,
       typePay: this.form.value.typePayZalog,
       bookingId: this.bookingId,
-      smenaId: this.actualBooking.smenaId,
+      smenaId: this.actual_smena._id,
     };
 
     const pay_3 = {
@@ -201,7 +213,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       pricePay: this.form.value.place_start_price || 0,
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
-      smenaId: this.actualBooking.smenaId,
+      smenaId: this.actual_smena._id,
     };
     
 
@@ -210,7 +222,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       pricePay: this.form.value.additional_services_price || 0,
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
-      smenaId: this.actualBooking.smenaId,
+      smenaId: this.actual_smena._id,
     };
 
 
@@ -219,7 +231,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       pricePay: this.form.value.place_end_price || 0,
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
-      smenaId: this.actualBooking.smenaId,
+      smenaId: this.actual_smena._id,
     };
 
 

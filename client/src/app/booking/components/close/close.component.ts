@@ -9,6 +9,7 @@ import { MaterialService } from 'src/app/shared/services/material.service';
 import { Booking, Settings, Summa } from 'src/app/shared/types/interfaces';
 import { BookingsService } from '../../services/bookings.service';
 import { DatePipe } from '@angular/common';
+import { SmenaService } from 'src/app/smena/services/smena.service';
 
 
 @Component({
@@ -60,6 +61,9 @@ export class CloseComponent implements OnInit, OnDestroy {
 
 
 
+  actual_smena: any
+  actual_smena$: Subscription
+
 
 
   constructor(
@@ -68,7 +72,8 @@ export class CloseComponent implements OnInit, OnDestroy {
     private rote: ActivatedRoute,
     private pays: PaysService,
     private cars: CarsService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private smena: SmenaService
   ) { }
 
   ngOnInit(): void {
@@ -101,6 +106,9 @@ export class CloseComponent implements OnInit, OnDestroy {
     if (this.zalogBackAfterBookingClose2$) {
       this.zalogBackAfterBookingClose2$.unsubscribe();
     }
+    if (this.actual_smena$) {
+      this.actual_smena$.unsubscribe();
+    }
   }
 
   initForm() {
@@ -114,6 +122,10 @@ export class CloseComponent implements OnInit, OnDestroy {
       return_part_price: new FormControl(''),
       typePayArenda: new FormControl('',),
     });
+
+    this.actual_smena$ = this.smena.isOpenSmena().subscribe(res => {
+      this.actual_smena = res
+    })
   }
 
 
@@ -145,6 +157,9 @@ export class CloseComponent implements OnInit, OnDestroy {
 
       MaterialService.updateTextInputs();
     });
+
+
+    
   }
 
 
@@ -166,7 +181,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.booking_zalog,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
 
@@ -236,7 +251,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.form.value.return_part_price,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
 
@@ -303,7 +318,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.booking_zalog,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
         const pay2 = {
@@ -377,7 +392,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.form.value.return_part_price,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
 
@@ -442,7 +457,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.form.value.return_part_price,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
         const pay2 = {
@@ -450,7 +465,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.dop_info_open.moyka,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
 
@@ -517,7 +532,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.booking_zalog,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
         };
 
         const booking: any = {
