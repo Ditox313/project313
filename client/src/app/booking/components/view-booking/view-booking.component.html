@@ -73,15 +73,11 @@
                                 <span>{{actualBooking.booking_end | date : 'd MMMM y, H:mm'}} </span>
                             </div>
                             
-                            <div *ngIf="actualBooking.tariff.length < 2">
+                            <div >
                                 <span>Суток:</span>
                                 <span >{{actualBooking.booking_days | number: '1.0-0'}} д</span>
                             </div>
 
-                            <div *ngIf="actualBooking.tariff.length > 1">
-                                <span>Суток:</span>
-                                <span  *ngFor="let tariff of actualBooking.tariff; let i = index"> {{tariff.name}}-{{tariff.days | number: '1.0-0'}} д /</span>
-                            </div>
 
                             <div *ngIf="summa.dop_hours > 0">
                                 <span>Доп часы:</span>
@@ -98,25 +94,21 @@
                                 <span>{{actualBooking.place_end}} </span>
                             </div>
 
-                            <div  *ngIf="actualBooking.tariff.length < 2">
-                                <span>Тариф:</span>
-                                <span *ngFor="let tariff of actualBooking.tariff; let i = index"> {{tariff.name }} </span>
-                            </div>
+                            <div>
+                                <span>Тариф:</span>[
+                                <span *ngFor="let tariff of actualBooking.tariff; let i = index" style="display: block; padding-left: 17px; font-size: 12px;"> 
+                                    <div>{{tariff.name }} - {{tariff.days }} д - {{tariff.summa }} руб</div>
+                                </span>
 
-                            <div *ngIf="actualBooking.tariff.length > 1">
-                                <span>Тариф:</span>
-                                <span *ngFor="let tariff of actualBooking.tariff; let i = index"> {{tariff.name }} /</span>
+                                
+                                <div style="font-size: 12px; padding-left: 17px;">
+                                    <span>Цена тарифа:</span>
+                                    <span *ngFor="let tarifPrice of actualBooking.dop_info_open.tarifPrice; let i = index"> {{ tarifPrice.name }}-{{
+                                        tarifPrice.price }} ₽ /</span>
+                                </div>
+                                ]
                             </div>
-
-                            <div *ngIf="actualBooking.tariff.length < 2">
-                                <span>Цена тарифа:</span>
-                                <span *ngFor="let tarifPrice of actualBooking.dop_info_open.tarifPrice; let i = index">{{ tarifPrice.price }} ₽ </span>
-                            </div>
-
-                            <div *ngIf="actualBooking.tariff.length > 1">
-                                <span>Цена тарифа:</span>
-                                <span *ngFor="let tarifPrice of actualBooking.dop_info_open.tarifPrice; let i = index"> {{ tarifPrice.name }}-{{ tarifPrice.price }} ₽ /</span>
-                            </div>
+                                                        
 
                             <div *ngIf="summa.dop_hours > 0">
                                 <span>Цена за доп.час:</span>
@@ -422,9 +414,9 @@
                                                 </td>
 
                                                 <td>
-                                                    <span *ngFor="let tarif of pay.tariff; let i = index">
-                                                        {{tarif.name }} 
-                                                    </span>
+                                                    <div *ngFor="let tarif of pay.tariff; let i = index" style="font-size: 12px;">
+                                                        {{tarif.name }} {{tarif.days }}д-{{tarif.summa }} руб
+                                                    </div>
                                                 </td>
 
                                             </tr>

@@ -166,9 +166,10 @@ module.exports.extend = async function (req, res) {
                 booking_end: updated.booking_end,
                 summaFull: updated.summaFull,
                 summa: updated.summa,
-                sale: updated.sale || 0
+                sale: updated.sale || 0,
+                'dop_info_open.tarifPrice': updated.dop_info_open.tarifPrice
             },
-            $push: { extend: updated.extend, }
+            $push: { extend: updated.extend}
         }
 
 
