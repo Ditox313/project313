@@ -1440,31 +1440,36 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       if (this.summa.booking_days < 3) {
         this.tarifPrice.push({
           name: 'Город',
-          price: this.summa.car.days_1_2
+          price: this.summa.car.days_1_2,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
         this.tarifPrice.push({
           name: 'Город',
-          price: this.summa.car.days_3_7
+          price: this.summa.car.days_3_7,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
         this.tarifPrice.push({
           name: 'Город',
-          price: this.summa.car.days_8_14
+          price: this.summa.car.days_8_14,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
         this.tarifPrice.push({
           name: 'Город',
-          price: this.summa.car.days_15_30
+          price: this.summa.car.days_15_30,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 31) {
         this.tarifPrice.push({
           name: 'Город',
-          price: this.summa.car.days_31_more
+          price: this.summa.car.days_31_more,
+          days: this.summa.booking_days
         })
       }
     }
@@ -1473,31 +1478,36 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         this.tarifPrice = this.summa.car.mezgorod
         this.tarifPrice.push({
           name: 'Межгород',
-          price: this.summa.car.mezgorod
+          price: this.summa.car.mezgorod,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
         this.tarifPrice.push({
           name: 'Межгород',
-          price: this.summa.car.mezgorod
+          price: this.summa.car.mezgorod,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
         this.tarifPrice.push({
           name: 'Межгород',
-          price: this.summa.car.mezgorod
+          price: this.summa.car.mezgorod,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
         this.tarifPrice.push({
           name: 'Межгород',
-          price: this.summa.car.mezgorod
+          price: this.summa.car.mezgorod,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 31) {
         this.tarifPrice.push({
           name: 'Межгород',
-          price: this.summa.car.mezgorod
+          price: this.summa.car.mezgorod,
+          days: this.summa.booking_days
         })
       }
     }
@@ -1505,31 +1515,36 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       if (this.summa.booking_days < 3) {
         this.tarifPrice.push({
           name: 'Россия',
-          price: this.summa.car.russia
+          price: this.summa.car.russia,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 3 && this.summa.booking_days < 7) {
         this.tarifPrice.push({
           name: 'Россия',
-          price: this.summa.car.russia
+          price: this.summa.car.russia,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 7 && this.summa.booking_days < 14) {
         this.tarifPrice.push({
           name: 'Россия',
-          price: this.summa.car.russia
+          price: this.summa.car.russia,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 14 && this.summa.booking_days < 31) {
         this.tarifPrice.push({
           name: 'Россия',
-          price: this.summa.car.russia
+          price: this.summa.car.russia,
+          days: this.summa.booking_days
         })
       }
       if (this.summa.booking_days >= 31) {
         this.tarifPrice.push({
           name: 'Россия',
-          price: this.summa.car.russia
+          price: this.summa.car.russia,
+          days: this.summa.booking_days
         })
       }
     }
@@ -1541,21 +1556,24 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           if (all_days < 3) {
             this.tarifPrice.push({
               name: 'Город',
-              price: this.summa.car.days_1_2
+              price: this.summa.car.days_1_2,
+              days: +tarif.days
             })
 
           }
           if (all_days >= 3 && all_days < 7) {
             this.tarifPrice.push({
               name: 'Город',
-              price: this.summa.car.days_3_7
+              price: this.summa.car.days_3_7,
+              days: +tarif.days
             })
 
           }
           if (all_days >= 7 && all_days < 14) {
             this.tarifPrice.push({
               name: 'Город',
-              price: this.summa.car.days_8_14
+              price: this.summa.car.days_8_14,
+              days: +tarif.days
             })
 
           }
@@ -1563,13 +1581,15 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
 
             this.tarifPrice.push({
               name: 'Город',
-              price: this.summa.car.days_15_30
+              price: this.summa.car.days_15_30,
+              days: +tarif.days
             })
           }
           if (all_days >= 31) {
             this.tarifPrice.push({
               name: 'Город',
-              price: this.summa.car.days_31_more
+              price: this.summa.car.days_31_more,
+              days: +tarif.days
             })
           }
         }
@@ -1577,31 +1597,36 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           if (tarif.days < 3) {
             this.tarifPrice.push({
               name: 'Межгород',
-              price: this.summa.car.mezgorod
+              price: this.summa.car.mezgorod,
+              days: +tarif.days
             })
           }
           if (tarif.days >= 3 && tarif.days < 7) {
             this.tarifPrice.push({
               name: 'Межгород',
-              price: this.summa.car.mezgorod
+              price: this.summa.car.mezgorod,
+              days: +tarif.days
             })
           }
           if (tarif.days >= 7 && tarif.days < 14) {
             this.tarifPrice.push({
               name: 'Межгород',
-              price: this.summa.car.mezgorod
+              price: this.summa.car.mezgorod,
+              days: +tarif.days
             })
           }
           if (tarif.days >= 14 && tarif.days < 31) {
             this.tarifPrice.push({
               name: 'Межгород',
-              price: this.summa.car.mezgorod
+              price: this.summa.car.mezgorod,
+              days: +tarif.days
             })
           }
           if (tarif.days >= 31) {
             this.tarifPrice.push({
               name: 'Межгород',
-              price: this.summa.car.mezgorod
+              price: this.summa.car.mezgorod,
+              days: +tarif.days
             })
           }
         }
@@ -1609,31 +1634,36 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           if (tarif.days < 3) {
             this.tarifPrice.push({
               name: 'Россия',
-              price: this.summa.car.russia
+              price: this.summa.car.russia,
+              days: +tarif.days
             })
           }
           if (tarif.days >= 3 && tarif.days < 7) {
             this.tarifPrice.push({
               name: 'Россия',
-              price: this.summa.car.russia
+              price: this.summa.car.russia,
+              days: +tarif.days
             })
           }
           if (tarif.days >= 7 && tarif.days < 14) {
             this.tarifPrice.push({
               name: 'Россия',
-              price: this.summa.car.russia
+              price: this.summa.car.russia,
+              days: +tarif.days
             })
           }
           if (tarif.days >= 14 && tarif.days < 31) {
             this.tarifPrice.push({
               name: 'Россия',
-              price: this.summa.car.russia
+              price: this.summa.car.russia,
+              days: +tarif.days
             })
           }
           if (tarif.days >= 31) {
             this.tarifPrice.push({
               name: 'Россия',
-              price: this.summa.car.russia
+              price: this.summa.car.russia,
+              days: +tarif.days
             })
           }
         }

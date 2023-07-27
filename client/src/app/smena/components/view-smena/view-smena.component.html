@@ -215,7 +215,7 @@
 
                                 <td [routerLink]="['/show-car','edit',car._id]" style="display: flex; flex-direction: column; align-items: flex-start; ">
                                     <div *ngFor="let booking of filteredBookings2(car.bookings)">
-                                        <div style="font-size: 14px;">{{booking.tariff}}</div>
+                                        <div style="font-size: 14px;" *ngFor="let tarif of booking.tariff">{{tarif.name}}</div>
                                     </div>
                                 
                                     <div *ngIf="filteredBookings2(car.bookings).length === 0">...</div>
@@ -224,7 +224,7 @@
                                 <td [routerLink]="['/show-car','edit',car._id]"
                                     style="display: flex; flex-direction: column; align-items: flex-start; ">
                                     <div *ngFor="let booking of filteredBookings2(car.bookings)">
-                                        <div style="font-size: 14px;">{{booking.dop_info_open.tarifPrice}} * {{booking.booking_days}}</div>
+                                        <div style="font-size: 14px;" *ngFor="let price of booking.dop_info_open.tarifPrice">{{price.price}} руб * {{price.days}} д</div>
                                     </div>
                                 
                                     <div *ngIf="filteredBookings2(car.bookings).length === 0">...</div>

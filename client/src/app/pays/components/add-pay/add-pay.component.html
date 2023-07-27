@@ -48,27 +48,23 @@
                             </div>
                         
                         
-                        <div *ngIf="actualBooking.tariff.length < 2">
-                            <span>Тариф:</span>
-                            <span *ngFor="let tariff of actualBooking.tariff; let i = index"> {{tariff.name }} </span>
-                        </div>
-                        
-                        <div *ngIf="actualBooking.tariff.length > 1">
-                            <span>Тариф:</span>
-                            <span *ngFor="let tariff of actualBooking.tariff; let i = index"> {{tariff.name }} /</span>
-                        </div>
-                        
-                        <div *ngIf="actualBooking.tariff.length < 2">
-                            <span>Цена тарифа:</span>
-                            <span *ngFor="let tarifPrice of actualBooking.dop_info_open.tarifPrice; let i = index">{{ tarifPrice.price }} ₽
+                        <div>
+                            <span>Тариф:</span>[
+                            <span *ngFor="let tariff of actualBooking.tariff; let i = index"
+                                style="display: block; padding-left: 17px; font-size: 12px;">
+                                <div>{{tariff.name }} - {{tariff.days }} д - {{tariff.summa }} руб</div>
                             </span>
+                        
+                        
+                            <div style="font-size: 12px; padding-left: 17px;">
+                                <span>Цена тарифа:</span>
+                                <span *ngFor="let tarifPrice of actualBooking.dop_info_open.tarifPrice; let i = index"> {{ tarifPrice.name }}-{{
+                                    tarifPrice.price }} ₽ /</span>
+                            </div>
+                            ]
                         </div>
                         
-                        <div *ngIf="actualBooking.tariff.length > 1">
-                            <span>Цена тарифа:</span>
-                            <span *ngFor="let tarifPrice of actualBooking.dop_info_open.tarifPrice; let i = index"> {{ tarifPrice.name }}-{{
-                                tarifPrice.price }} ₽ /</span>
-                        </div>
+   
 
                         <div class="pay_rashet">
                             <div>
