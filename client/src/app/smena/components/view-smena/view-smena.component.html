@@ -73,7 +73,7 @@
                     <table class="striped">
                         <thead>
                             <tr>
-                                <!-- <th>ID</th> -->
+                                <th>Номер брони</th>
                                 <th>Статус</th>
                                 <th>Создана</th>
                                 <th>Авто</th>
@@ -93,6 +93,10 @@
                                 [class.you_need_to_give_out_a_car]="you_need_to_give_out_a_car(xsbooking) && !xsbooking.dop_info_close
                                 && xsbooking.status === 'В ожидании'">
 
+
+                                <td>
+                                    <a [routerLink]="['/view-booking',xsbooking._id]">{{xsbooking.order}}</a>
+                                </td>
 
                                 <td *ngIf="xsbooking.status === 'В ожидании'"
                                     style="display: flex; align-items: center; margin-top: 4px;">
@@ -257,6 +261,54 @@
 
                 <div style="margin-top: 70px;">
                     <h5>Информация по финансам</h5>
+
+                    <div class="xs_view_smena_pays">
+                        <div class="pay_view_info extend_list">
+                            <h5>Платежи за смену</h5>
+                            <div class="pay_view_info__content">
+                                <table class="striped" *ngIf="xspays">
+                                    <thead>
+                                        <tr>
+                                            <th>Дата</th>
+                                            <th>Сумма</th>
+                                            <th>Тип</th>
+                                            <th>Вид платежа</th>
+                                            <th>Номер брони</th>
+                                            <th>Дата начала брони</th>
+                                            <th>Сылка на бронь</th>
+                                        </tr>
+                    
+                                    </thead>
+                    
+                                    <tbody>
+                                        <tr *ngFor="let pay of xspays; let i = index" class="xs_partners_tr xsbooking">
+                                            <td>
+                                                <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.pricePay}} ₽</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.typePay}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.vidPay}}</span>
+                                            </td>
+                                            <td>
+                                                <span>№ {{pay.booking.order}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{pay.booking.booking_start | date : 'd MMMM y, H:mm'}}</span>
+                                            </td>
+                                            <td>
+                                                <span [routerLink]="['/view-booking',pay.bookingId]" class="btn_smena_link_booking">Подробнее</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 
                     <table class="striped">
                         <thead>

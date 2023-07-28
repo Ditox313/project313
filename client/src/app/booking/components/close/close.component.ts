@@ -182,6 +182,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
           smenaId: this.actual_smena._id,
+          booking: this.actualBooking
         };
 
 
@@ -208,7 +209,6 @@ export class CloseComponent implements OnInit, OnDestroy {
 
         // Отправляем данные в логирование брони
         this.update_after_booking_close$ = this.bookings.update_after_booking_close(this.actualBooking._id, close_info_log).subscribe()
-
 
 
 
@@ -252,6 +252,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
           smenaId: this.actual_smena._id,
+          booking: this.actualBooking
         };
 
 
@@ -319,6 +320,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
           smenaId: this.actual_smena._id,
+          booking: this.actualBooking
         };
 
         const pay2 = {
@@ -326,7 +328,8 @@ export class CloseComponent implements OnInit, OnDestroy {
           pricePay: this.actualBooking.dop_info_open.moyka,
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
-          smenaId: this.actualBooking.smenaId,
+          smenaId: this.actual_smena._id,
+          booking: this.actualBooking
         };
 
 
@@ -393,6 +396,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
           smenaId: this.actual_smena._id,
+          booking: this.actualBooking
         };
 
 
@@ -458,6 +462,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
           smenaId: this.actual_smena._id,
+          booking: this.actualBooking
         };
 
         const pay2 = {
@@ -466,6 +471,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
           smenaId: this.actual_smena._id,
+          booking: this.actualBooking
         };
 
 
@@ -533,6 +539,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           typePay: this.form.value.typePayArenda,
           bookingId: this.bookingId,
           smenaId: this.actual_smena._id,
+          booking: this.actualBooking
         };
 
         const booking: any = {

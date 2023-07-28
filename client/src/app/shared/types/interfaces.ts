@@ -352,6 +352,7 @@ export interface Pay {
   bookingId?: any;
   order?: any;
   smenaId?: any;
+  booking?: any;
 }
 
 

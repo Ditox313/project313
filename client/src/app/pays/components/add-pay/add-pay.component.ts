@@ -198,6 +198,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
       smenaId: this.actual_smena._id,
+      booking: this.actualBooking
     };
 
     const pay_2 = {
@@ -206,6 +207,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       typePay: this.form.value.typePayZalog,
       bookingId: this.bookingId,
       smenaId: this.actual_smena._id,
+      booking: this.actualBooking
     };
 
     const pay_3 = {
@@ -214,6 +216,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
       smenaId: this.actual_smena._id,
+      booking: this.actualBooking
     };
     
 
@@ -223,6 +226,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
       smenaId: this.actual_smena._id,
+      booking: this.actualBooking
     };
 
 
@@ -232,6 +236,7 @@ export class AddPayComponent implements OnInit, OnDestroy {
       typePay: this.form.value.typePayArenda,
       bookingId: this.bookingId,
       smenaId: this.actual_smena._id,
+      booking: this.actualBooking
     };
 
 

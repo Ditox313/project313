@@ -1724,16 +1724,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     {
       if (xs_sale <= 0) {
 
-        const pay = {
-          vid: 'Продление',
-          pricePay: this.form.value.arenda,
-          typePay: this.form.value.typePayArenda,
-          bookingId: this.bookingId,
-          smenaId: this.actual_smena._id,
-        };
-
-
         const booking = {
+          order: this.actualBooking.order,
           car: JSON.parse(this.form.value.car),
           sale: (+this.actualBooking.sale),
           client: JSON.parse(this.form.value.client),
@@ -1758,6 +1750,16 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
             tariff: this.summa.tariff
           }
         };
+
+
+        const pay = {
+          vid: 'Продление',
+          pricePay: this.form.value.arenda,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+          smenaId: this.actual_smena._id,
+          booking: booking
+        };
         
         
 
@@ -1778,17 +1780,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
 
       }
       else if (xs_sale > 0) {
-
-        const pay = {
-          vid: 'Продление',
-          pricePay: (+this.form.value.arenda),
-          typePay: this.form.value.typePayArenda,
-          bookingId: this.bookingId,
-          smenaId: this.actual_smena._id,
-        };
-
-
         const booking = {
+          order: this.actualBooking.order,
           car: JSON.parse(this.form.value.car),
           sale: (+this.actualBooking.sale) + (+xs_sale),
           client: JSON.parse(this.form.value.client),
@@ -1814,6 +1807,16 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
           }
         };
 
+
+        const pay = {
+          vid: 'Продление',
+          pricePay: (+this.form.value.arenda),
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+          smenaId: this.actual_smena._id,
+          booking: booking
+        };
+
         this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
 
         this.subBookingExtend$ = this.bookings.extend(this.bookingId, booking).pipe(
@@ -1832,17 +1835,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
     else
     {
       if (xs_sale <= 0) {
-
-        const pay = {
-          vid: 'Продление',
-          pricePay: this.summa_extend.summa,
-          typePay: this.form.value.typePayArenda,
-          bookingId: this.bookingId,
-          smenaId: this.actual_smena._id,
-        };
-
-
         const booking = {
+          order: this.actualBooking.order,
           car: JSON.parse(this.form.value.car),
           sale: (+this.actualBooking.sale),
           client: JSON.parse(this.form.value.client),
@@ -1869,12 +1863,18 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
         };
 
 
-      
- 
-        
-        
 
-        
+
+        const pay = {
+          vid: 'Продление',
+          pricePay: this.summa_extend.summa,
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+          smenaId: this.actual_smena._id,
+          booking: booking
+        };
+
+
 
         this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })
 
@@ -1894,16 +1894,8 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
       }
       else if (xs_sale > 0) {
 
-        const pay = {
-          vid: 'Продление',
-          pricePay: this.summa_extend.summa - (+xs_sale),
-          typePay: this.form.value.typePayArenda,
-          bookingId: this.bookingId,
-          smenaId: this.actual_smena._id,
-        };
-
-
         const booking = {
+          order: this.actualBooking.order,
           car: JSON.parse(this.form.value.car),
           sale: (+this.actualBooking.sale) + (+xs_sale),
           client: JSON.parse(this.form.value.client),
@@ -1927,6 +1919,16 @@ export class ExtendBookingComponent implements OnInit, AfterViewInit, OnDestroy 
             sale: xs_sale,
             tariff: this.summa.tariff
           }
+        };
+
+
+        const pay = {
+          vid: 'Продление',
+          pricePay: this.summa_extend.summa - (+xs_sale),
+          typePay: this.form.value.typePayArenda,
+          bookingId: this.bookingId,
+          smenaId: this.actual_smena._id,
+          booking: booking
         };
 
         this.extendPay$ = this.bookings.update_after_booking_pay(this.actualBooking._id, pay).subscribe(res => { })

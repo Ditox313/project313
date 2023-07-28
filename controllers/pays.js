@@ -28,6 +28,7 @@ module.exports.create = async function(req, res) {
                 pricePay: req.body.pricePay,
                 smenaId: req.body.smenaId,
                 order: maxOrder + 1,
+                booking: req.body.booking
             }).save();
         }
         
@@ -107,6 +108,7 @@ module.exports.vozvrat_zaloga = async function (req, res) {
             pricePay: req.body.pricePay,
             smenaId: req.body.smenaId,
             order: maxOrder + 1,
+            booking: req.booking
         }).save();
 
 

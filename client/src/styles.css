@@ -1895,3 +1895,18 @@ input[type="checkbox"]
 {
     float: none !important;
 }
+
+.xs_view_smena_pays
+{
+    margin-bottom: 70px;
+    margin-top: 40px;
+}
+
+.btn_smena_link_booking
+{
+    display: inline-block;
+    padding: 4px 7px;
+    background-color: #194A9E;
+    border-radius: 4px;
+    color: #fff !important;
+}

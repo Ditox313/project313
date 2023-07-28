@@ -18,22 +18,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), controller.
 // // Роут на получение всех платежей по id смены
 router.get('/get-all-by-smenaId/:id', passport.authenticate('jwt', { session: false }), controller.getPaysBySmenaId);
 
-// Роут на update
-// router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update);
 
-
-// Роут на getById
-// router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getById);
-
-// // Роут на getStatusBooking
-// router.get('/:id', passport.authenticate('jwt', { session: false }), controller.getStatusBooking);
-
-
-// // Роут на remove
-// router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.remove);
-
-// Роут на toggleStatus
-// router.post('/toggleStatus', passport.authenticate('jwt', { session: false }), controller.toggleStatus);
 
 module.exports = router;
 
