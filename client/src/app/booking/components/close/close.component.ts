@@ -464,6 +464,7 @@ export class CloseComponent implements OnInit, OnDestroy {
           smenaId: this.actual_smena._id,
           booking: this.actualBooking
         };
+        
 
         const pay2 = {
           vid: 'Мойка',

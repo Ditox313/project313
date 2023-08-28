@@ -155,6 +155,10 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   isMixedTarif: Boolean = false;
 
 
+  // Храним полученные автомобили(все)
+  xscars: any = []
+
+
   constructor(
     private bookings: BookingsService,
     private router: Router,
@@ -168,11 +172,15 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
     this.setMinDate();
-    this.xscars$ = this.cars.fetch();
-    this.xsclients$ = this.clients.fetch();
     MaterialService.updateTextInputs();
     this.get_user();
     this.dasable_controls();
+
+    this.xscars$ = this.cars.fetch().subscribe(res => {
+      this.xscars = res
+    });
+
+    this.xsclients$ = this.clients.fetch();
   }
 
 
@@ -274,10 +282,12 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
       this.form.controls['client'].enable();
     }
 
+    // Получаем авто по переданному id
+    const actulacar = this.xscars.filter(car => car._id === e);
+
+
     // Получаем выбранный автомобиль
-    this.summa.car = JSON.parse(e)
-
-
+    this.summa.car = actulacar[0]
 
 
     if (e !== 'Смешанный') {
@@ -2608,7 +2618,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         const booking = {
-          car: JSON.parse(this.form.value.car),
+          car: this.summa.car,
           client: JSON.parse(this.xs_actual_search__client),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
@@ -2681,7 +2691,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
         const booking = {
-          car: JSON.parse(this.form.value.car),
+          car: this.summa.car,
           client: JSON.parse(this.xs_actual_search__client___lawfase),
           place_start: this.form.value.place_start,
           place_end: this.form.value.place_end,
@@ -2757,7 +2767,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             const booking = {
-              car: JSON.parse(this.form.value.car),
+              car: this.summa.car,
               client: JSON.parse(this.xs_actual_search__client),
               place_start: this.form.value.place_start,
               place_end: this.form.value.place_end,
@@ -2830,7 +2840,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             const booking = {
-              car: JSON.parse(this.form.value.car),
+              car: this.summa.car,
               client: JSON.parse(this.xs_actual_search__client),
               place_start: this.form.value.place_start,
               place_end: this.form.value.place_end,
@@ -2903,7 +2913,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             const booking = {
-              car: JSON.parse(this.form.value.car),
+              car: this.summa.car,
               client: JSON.parse(this.xs_actual_search__client),
               place_start: this.form.value.place_start,
               place_end: this.form.value.place_end,
@@ -2975,7 +2985,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           const booking = {
-            car: JSON.parse(this.form.value.car),
+            car: this.summa.car,
             client: JSON.parse(this.xs_actual_search__client),
             place_start: this.form.value.place_start,
             place_end: this.form.value.place_end,
@@ -3050,7 +3060,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             const booking = {
-              car: JSON.parse(this.form.value.car),
+              car: this.summa.car,
               client: JSON.parse(this.xs_actual_search__client___lawfase),
               place_start: this.form.value.place_start,
               place_end: this.form.value.place_end,
@@ -3121,7 +3131,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             const booking = {
-              car: JSON.parse(this.form.value.car),
+              car: this.summa.car,
               client: JSON.parse(this.xs_actual_search__client___lawfase),
               place_start: this.form.value.place_start,
               place_end: this.form.value.place_end,
@@ -3191,7 +3201,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             const booking = {
-              car: JSON.parse(this.form.value.car),
+              car: this.summa.car,
               client: JSON.parse(this.xs_actual_search__client___lawfase),
               place_start: this.form.value.place_start,
               place_end: this.form.value.place_end,
@@ -3262,7 +3272,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           const booking = {
-            car: JSON.parse(this.form.value.car),
+            car: this.summa.car,
             client: JSON.parse(this.xs_actual_search__client___lawfase),
             place_start: this.form.value.place_start,
             place_end: this.form.value.place_end,

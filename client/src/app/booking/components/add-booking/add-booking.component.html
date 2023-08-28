@@ -43,7 +43,7 @@
                                 <select id="car" formControlName="car"
                                     [ngClass]="{'invalid': form.controls['car'].invalid && form.controls['car'].touched}"  (ngModelChange)="onChangeCar($event)">
                                     <option value="" disabled selected>Выберите автомобиль</option>
-                                    <option *ngFor="let xscar of xscars$ | async" value="{{xscar | json}}">{{xscar.marka}} {{xscar.model}} ({{xscar.number}})</option>
+                                    <option *ngFor="let xscar of xscars" value="{{xscar._id}}">{{xscar.marka}} {{xscar.model}} ({{xscar.number}})</option>
                                 </select>
                             </div>
                         </div>

@@ -398,8 +398,8 @@
                             
                                         <tbody>
                                             <tr *ngFor="let pay of actualBooking.extend.slice().reverse(); let i = index" class="xs_partners_tr xsbooking">
-                                                <td>
-                                                    <span>{{pay.date | date : 'd MMMM , H:mm'}}</span>
+                                                <td style="width: 15%;">
+                                                    <span>{{pay.date | date : 'd MMMM  H:mm'}}</span>
                                                 </td>
                                                 <td>
                                                     <span>{{pay.days}} д</span>
@@ -421,7 +421,7 @@
 
                                                 <td *ngIf="pay.tariff.length > 1">
                                                     <div *ngFor="let tarif of pay.tariff; let i = index" style="font-size: 12px;">
-                                                        {{tarif.name }} {{tarif.days }}д-{{tarif.summa }} руб
+                                                        {{tarif.name }} {{tarif.days }}д-{{tarif.summa }} р
                                                     </div>
                                                 </td>
 

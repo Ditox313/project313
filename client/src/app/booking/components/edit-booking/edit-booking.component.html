@@ -429,7 +429,7 @@
 
 
     
-    <div class="xs_summa" *ngIf="this.summa.summa && this.form.value.tarif !== 'Смешанный' && !isMixedTarif">1
+    <div class="xs_summa" *ngIf="this.summa.summa && this.form.value.tarif !== 'Смешанный' && !isMixedTarif">
         <div >
             <span style="font-weight: bold;">Аренда {{this.summa.summa | number: '1.0-0'}} ₽</span>
             +
@@ -497,7 +497,7 @@
     </div>
 
 
-    <div class="xs_summa" *ngIf="isMixedTarif">2
+    <div class="xs_summa" *ngIf="isMixedTarif">
         <div>
             <span style="font-weight: bold;" *ngIf="+this.SummaMixedTarif.tarifGorod.summa > 0">Аренда(город)
                 {{this.SummaMixedTarif.tarifGorod.summa | number: '1.0-0'}} ₽ +</span>
