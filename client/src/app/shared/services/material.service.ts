@@ -24,6 +24,12 @@ export class MaterialService
 {
 
 
+      // Инициализация динамической кнопки. Принимаем референцию на элемент, типа ElementRef
+    static initializeFloatingButton(ref: ElementRef)
+    {
+       M.FloatingActionButton.init(ref.nativeElement)
+    }
+
     
     static toast(message: string)
     {

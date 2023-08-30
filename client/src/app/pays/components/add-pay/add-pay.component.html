@@ -1,5 +1,5 @@
 <app-loader *ngIf="!actualBooking"></app-loader>
-<form class="xs_add__car" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="xs_add__car" *ngIf="actualBooking" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="xs_add__car___top">
         <h1>
             <span class="material-icons">contact_mail</span> Оплата брони

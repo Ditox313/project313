@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { MaterialService } from 'src/app/shared/services/material.service';
@@ -19,7 +20,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router) { }
   ngOnInit(): void {
     this.initionalForm();
     this.patchValuesForm();
@@ -52,6 +53,19 @@ export class AccountComponent implements OnInit, OnDestroy {
         doverenostDate: user.doverenostDate,
       });
     })
+  }
+
+
+  // Описываем метод выхода из системы
+  logout(event: Event): void {
+    // Отменяем перезагрузку страницы
+    event.preventDefault();
+
+    // Запускаем метод logout в сервисе авторизации
+    this.auth.logout();
+
+    // Делаем редирект на страницу логина
+    this.router.navigate(['/login']);
   }
 
 

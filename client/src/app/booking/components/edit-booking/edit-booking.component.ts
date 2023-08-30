@@ -2698,6 +2698,9 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
 
+    // Получаем колличество дней если смешанный тариф
+    const mixedDays = (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0)
+
     this.checkedTarif()
 
     if (this.summa.tariff.length > 1)
@@ -2724,7 +2727,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               tariff: this.summa.tariff,
               comment: this.form.value.comment,
               booking_start: this.form.value.booking_start,
-              booking_end: this.form.value.booking_end,
+              booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
               booking_days: (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0),
               summaFull: Math.round((this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summaFull || 0) + (this.SummaMixedTarif.tarifRussia.summaFull || 0) + (+this.summa.place_end_price) + (+this.summa.place_start_price) + this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl),
               summa: (this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (this.SummaMixedTarif.tarifRussia.summa || 0),
@@ -2790,7 +2793,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               tariff: this.summa.tariff,
               comment: this.form.value.comment,
               booking_start: this.form.value.booking_start,
-              booking_end: this.form.value.booking_end,
+              booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
               booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
               summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) + (+this.summa.place_end_price) +
                 (+this.summa.additional_services_price) + (+this.summa.car.zalog_mej) + (this.summa.car.price_dop_hour *
@@ -2856,7 +2859,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               tariff: this.summa.tariff,
               comment: this.form.value.comment,
               booking_start: this.form.value.booking_start,
-              booking_end: this.form.value.booking_end,
+              booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
               booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
               summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) + (+this.summa.place_end_price) +
                 (+this.summa.additional_services_price) + (+this.summa.car.zalog_rus) + (this.summa.car.price_dop_hour *
@@ -2925,7 +2928,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             tariff: this.summa.tariff,
             comment: this.form.value.comment,
             booking_start: this.form.value.booking_start,
-            booking_end: this.form.value.booking_end,
+            booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
             summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) + (+this.summa.place_end_price) +
               (+this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl) + (this.summa.car.price_dop_hour * this.summa.dop_hours)),
@@ -2997,7 +3000,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               tariff: this.summa.tariff,
               comment: this.form.value.comment,
               booking_start: this.form.value.booking_start,
-              booking_end: this.form.value.booking_end,
+              booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
               booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
               summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) + (+this.summa.place_end_price) +
                 (+this.summa.additional_services_price) + (+this.summa.car.zalog) + (this.summa.car.price_dop_hour * this.summa.dop_hours)),
@@ -3064,7 +3067,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               tariff: this.summa.tariff,
               comment: this.form.value.comment,
               booking_start: this.form.value.booking_start,
-              booking_end: this.form.value.booking_end,
+              booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
               booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
               summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) + (+this.summa.place_end_price) +
                 (+this.summa.additional_services_price) + (+this.summa.car.zalog_mej) + (this.summa.car.price_dop_hour *
@@ -3130,7 +3133,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
               tariff: this.summa.tariff,
               comment: this.form.value.comment,
               booking_start: this.form.value.booking_start,
-              booking_end: this.form.value.booking_end,
+              booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
               booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
               summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) + (+this.summa.place_end_price) +
                 (+this.summa.additional_services_price) + (+this.summa.car.zalog_rus) + (this.summa.car.price_dop_hour *
@@ -3198,7 +3201,7 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             tariff: this.summa.tariff,
             comment: this.form.value.comment,
             booking_start: this.form.value.booking_start,
-            booking_end: this.form.value.booking_end,
+            booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
             booking_days: (booking_end__x - booking_start__x) / (1000 * 60 * 60 * 24),
             summaFull: Math.round((+this.summa.summa + (+this.summa.place_start_price)) + (+this.summa.place_end_price) +
               (+this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl) + (this.summa.car.price_dop_hour * this.summa.dop_hours)),

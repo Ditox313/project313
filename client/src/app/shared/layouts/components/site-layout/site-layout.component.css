@@ -1,0 +1,12 @@
+li.btn-floating
+{
+    left: -156px;
+    bottom: -71px;
+    width: 140px;
+    background-color: #194A9E;
+    border-radius: 3px;
+}
+
+.btn-floating:not(:hover) .btn-floating li{
+    display: none;
+}

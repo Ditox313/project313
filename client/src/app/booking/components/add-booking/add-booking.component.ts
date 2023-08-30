@@ -1506,6 +1506,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             tarif.days = this.form.value.tarif_mixed_gorod_days
             this.SummaMixedTarif.tarifGorod.days = this.form.value.tarif_mixed_gorod_days
           }
+          
 
           if (tarif.name !== '' && this.summa.booking_start !== '' && this.summa.booking_end !== '') {
             if (tarif.name === 'Город') {
@@ -1596,9 +1597,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
               }
             }
-          }
-
-
+          }   
         });
       }
       else {
@@ -2599,9 +2598,18 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
     // Получаем значения начала и конца аренды
     const booking_start__x: any = new Date(this.form.value.booking_start);
     const booking_end__x: any = new Date(this.form.value.booking_end);
+
+    // Получаем колличество дней если смешанный тариф
+    const mixedDays = (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0)
+
+
     this.checkedTarif()
     
 
+
+
+    
+      
 
 
     if (this.summa.tariff.length > 1) {
@@ -2625,7 +2633,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           tariff: this.summa.tariff,
           comment: this.form.value.comment,
           booking_start: this.form.value.booking_start,
-          booking_end: this.form.value.booking_end,
+          booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
           booking_days:  (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0),
           summaFull: Math.round((this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summaFull || 0) + (this.SummaMixedTarif.tarifRussia.summaFull || 0) + (+this.summa.place_end_price) + (+this.summa.place_start_price) + this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl),
           summa: (this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (this.SummaMixedTarif.tarifRussia.summa || 0),
@@ -2698,7 +2706,7 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
           tariff: this.summa.tariff,
           comment: this.form.value.comment,
           booking_start: this.form.value.booking_start,
-          booking_end: this.form.value.booking_end,
+          booking_end: new Date(booking_start__x.setDate(booking_start__x.getDate() + mixedDays)).toISOString().replace(".000Z", ""),
           booking_days: (+this.SummaMixedTarif.tarifGorod.days || 0) + (+this.SummaMixedTarif.tarifMezjGorod.days || 0) + (+this.SummaMixedTarif.tarifRussia.days || 0),
           summaFull: Math.round((this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summaFull || 0) + (this.SummaMixedTarif.tarifRussia.summaFull || 0) + (+this.summa.place_end_price) + (+this.summa.place_start_price) + this.summa.additional_services_price) + (+this.form.value.isCustomeZalogControl),
           summa: (this.SummaMixedTarif.tarifGorod.summa || 0) + (this.SummaMixedTarif.tarifMezjGorod.summa || 0) + (this.SummaMixedTarif.tarifRussia.summa || 0),
@@ -2765,6 +2773,8 @@ export class AddBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             else if (this.summa.car.category === 'Премиум') {
               moyka = this.currentUserSetings.washing_avto.premium
             }
+
+            
 
             const booking = {
               car: this.summa.car,

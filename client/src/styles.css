@@ -111,13 +111,22 @@ input[type="date"]::-webkit-clear-button {
 .a-sidenav h4 {
     padding: 0 30px;
     opacity: .8;
-    font-size: 2rem
+    font-size: 20px;
 }
 
 .a-sidenav .bold.last {
     position: absolute;
-    bottom: 62px;
-    width: 100%
+    bottom: 80px;
+    background-color: #fff;
+    width: 90%;
+    margin: 0 auto;
+    left: 13px;
+    text-align: center;
+}
+
+.a-sidenav .bold.last a
+{
+    color: #194A9E;
 }
 
 fieldset

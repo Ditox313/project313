@@ -1,7 +1,7 @@
 
-<div class="xs_main">
+<div class="xs_main" >
     <!--SIDEBAR-->
-    <ul class="sidenav sidenav-fixed a-sidenav xs_side_nav">
+    <div class="sidenav sidenav-fixed a-sidenav xs_side_nav">
         <div class="xs_logo">
             <svg width="229" height="46" viewBox="0 0 229 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -68,29 +68,44 @@
                     d="M218 30C218 30.5 218.9 31 220 31C221.8 31 222 31.7 222 37C222 41.7 222.3 43 223.5 43C224.7 43 225 41.7 225 37C225 31.7 225.2 31 227 31C228.1 31 229 30.5 229 30C229 29.4 226.5 29 223.5 29C220.5 29 218 29.4 218 30Z"
                     fill="white" />
             </svg>
-
         </div>
 
+    
 
         <!-- Выводим ссылки в цикле -->
-        <li class="bold" *ngFor="let link of links" routerLinkActive="active">
-            <a [routerLink]="link.url" class="waves-effect">
-                {{link.name}}
-            </a>
-        </li>
+        <ul >
+            <li class="bold" *ngFor="let link of links" routerLinkActive="active">
+                <a [routerLink]="link.url" class="waves-effect">
+                    {{link.name}}
+                </a>
+            </li>
+        </ul>
+    </div>
 
-
-
-        <!-- <li class="bold last"><a href="#" class="waves-effect waves-orange" (click)="logout($event)">Выйти</a></li> -->
-    </ul>
+   
 
 
     <!--CONTENT-->
     <main class="content">
-        <app-user-btn></app-user-btn>
+        <!-- <app-user-btn></app-user-btn> -->
         <router-outlet></router-outlet>
     </main>
 
+
+    <div class="fixed-action-btn"  [routerLink]="['/account', 'currentUser._id']" #floating>
+        <a class="btn-floating btn-large currentColor">
+            <i class="large material-icons">account_box</i>
+        </a>
+        <ul>
+            <li class="btn-floating">
+                <span *ngIf="currentUser">{{currentUser.secondName}} {{currentUser.name}}</span>
+            </li>
+        </ul>
+    </div>
+
     <a id="menu" class="waves-effect waves-light btn btn-floating"><i class="material-icons">info</i></a>
+    
+
 
 </div>
+

@@ -3,6 +3,7 @@ import { AfterViewInit, ViewChild, Component, ElementRef, OnInit, OnDestroy} fro
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/shared/types/interfaces';
 import { Subscription } from 'rxjs';
+import { MaterialService } from 'src/app/shared/services/material.service';
 
 
 @Component({
@@ -23,6 +24,10 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUser();
+  }
+
+  ngAfterViewInit() {
+    MaterialService.initializeFloatingButton(this.floatingRef)
   }
 
   ngOnDestroy(): void {
@@ -47,10 +52,6 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
       url: '/smena-list',
       name: 'Смены',
     },
-    // {
-    //   url: '/overview-page',
-    //   name: 'Обзор',
-    // },
     {
       url: '/cars-page',
       name: 'Автомобили',
@@ -75,15 +76,5 @@ export class SiteLayoutComponent implements OnInit, OnDestroy {
 
   ];
 
-  // Описываем метод выхода из системы
-  logout(event: Event): void {
-    // Отменяем перезагрузку страницы
-    event.preventDefault();
-
-    // Запускаем метод logout в сервисе авторизации
-    this.auth.logout();
-
-    // Делаем редирект на страницу логина
-    this.router.navigate(['/login']);
-  }
+  
 }
