@@ -1,4 +1,4 @@
-<div class="xs_smena" id="content" *ngIf="actualSmena && xscars.length > 0 && xsbookings.length > 0">
+<div class="xs_smena" id="content" *ngIf="actualSmena ">
     <div class="xs_smena__top">
         <h1>
             <span class="material-icons">chat</span>
@@ -359,5 +359,5 @@
     </div>
 </div>
 
-<app-loader *ngIf="!xsbookings"></app-loader>
+<app-loader *ngIf="!actualSmena"></app-loader>
 

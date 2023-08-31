@@ -11,6 +11,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import htmlToPdfmake from 'html-to-pdfmake';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-show-act-booking',
@@ -45,13 +46,21 @@ export class ShowActBookingComponent implements OnInit, OnDestroy {
 
   getParams()
   {
+    // this.subParams$ = this.rote.params.subscribe((params) => {
+    //   this.act_id = params['id'];
+
+    //   this.subGetActById$ = this.documentsServices.getActById(params['id']).subscribe(res => {
+    //     this.xs_actual_act = res;
+    //   })
+    // });
+
     this.subParams$ = this.rote.params.subscribe((params) => {
       this.act_id = params['id'];
-
-      this.subGetActById$ = this.documentsServices.getActById(params['id']).subscribe(res => {
-        this.xs_actual_act = res;
-      })
     });
+
+    this.subGetActById$ = this.documentsServices.getActById(this.act_id).subscribe(res => {
+      this.xs_actual_act = res;
+    })
   }
 
   isGoBack() {

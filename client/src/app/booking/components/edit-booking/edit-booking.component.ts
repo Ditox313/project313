@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { DocumentsService } from 'src/app/documents/services/documents.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { DatePipe } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-booking',
@@ -2769,9 +2770,23 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+
+
+            // Отправляем запрос
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
+
+
           }
           if (this.form.value.tariff === 'Межгород') {
             let moyka = '0';
@@ -2835,7 +2850,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking.updates.push(update)
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
           }
@@ -2902,7 +2927,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
 
@@ -2973,7 +3008,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
           // Отправляем запрос
-          this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          //   MaterialService.toast('Бронь обновлена');
+          // });
+
+
+          this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+            switchMap((booking) => {
+              return this.cars.update_after_booking_create(this.summa.car._id, booking);
+            })
+          ).subscribe((car) => {
+            console.log('Бронь добавлена в авто');
             MaterialService.toast('Бронь обновлена');
           });
         }
@@ -3043,7 +3088,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
           }
@@ -3109,7 +3163,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
           }
@@ -3175,7 +3239,17 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
 
@@ -3243,7 +3317,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
           // Отправляем запрос
-          this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          //   MaterialService.toast('Бронь обновлена');
+          // });
+
+          this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+            switchMap((booking) => {
+              return this.cars.update_after_booking_create(this.summa.car._id, booking);
+            })
+          ).subscribe((car) => {
+            console.log('Бронь добавлена в авто');
             MaterialService.toast('Бронь обновлена');
           });
         }
@@ -3316,7 +3399,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
           }
@@ -3382,7 +3474,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
             booking.updates.push(update)
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
           }
@@ -3449,7 +3550,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
 
@@ -3520,7 +3630,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
           // Отправляем запрос
-          this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          //   MaterialService.toast('Бронь обновлена');
+          // });
+
+          this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+            switchMap((booking) => {
+              return this.cars.update_after_booking_create(this.summa.car._id, booking);
+            })
+          ).subscribe((car) => {
+            console.log('Бронь добавлена в авто');
             MaterialService.toast('Бронь обновлена');
           });
         }
@@ -3590,7 +3709,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
           }
@@ -3656,7 +3784,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
           }
@@ -3722,7 +3859,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
             // Отправляем запрос
-            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+            //   MaterialService.toast('Бронь обновлена');
+            // });
+
+            this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+              switchMap((booking) => {
+                return this.cars.update_after_booking_create(this.summa.car._id, booking);
+              })
+            ).subscribe((car) => {
+              console.log('Бронь добавлена в авто');
               MaterialService.toast('Бронь обновлена');
             });
 
@@ -3790,7 +3936,16 @@ export class EditBookingComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
           // Отправляем запрос
-          this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          // this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).subscribe((booking) => {
+          //   MaterialService.toast('Бронь обновлена');
+          // });
+
+          this.subUpdateBooking$ = this.bookings.update(this.bookingId, booking).pipe(
+            switchMap((booking) => {
+              return this.cars.update_after_booking_create(this.summa.car._id, booking);
+            })
+          ).subscribe((car) => {
+            console.log('Бронь добавлена в авто');
             MaterialService.toast('Бронь обновлена');
           });
         }

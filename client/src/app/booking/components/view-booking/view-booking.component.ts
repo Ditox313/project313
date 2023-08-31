@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { AccountService } from '../../../account/services/account.service';
 import { DatePipe } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
+import { concatMap, switchMap, tap } from 'rxjs/operators';
 import { CarsService } from 'src/app/cars/services/cars.service';
 
 @Component({
@@ -157,9 +157,6 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
-
   get_user()
   {
     this.currentUser$ = this.auth.get_user().subscribe(res => {
@@ -180,41 +177,83 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
 
   getBookingById()
   {
-    this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
-      this.actualBooking = res;
+    // this.subGetBookingById$ = this.bookings.getById(this.bookingId).subscribe((res) => {
+    //   this.actualBooking = res;
       
-      // Отправляем финальную бронь в авто
-      this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
+    
+    //   this.summa.car = res.car;
+    //   this.summa.sale = res.sale;
+    //   this.summa.tariff = res.tariff;
+    //   this.summa.booking_start = res.booking_start;
+    //   this.summa.booking_end = res.booking_end;
+    //   this.summa.summa = res.summa;
+    //   this.summa.summaFull = res.summaFull;
+    //   this.summa.booking_days = res.booking_days;
+    //   this.summa.dop_hours = res.dop_hours;
+    //   this.xsActualClient = res.client;
+    //   this.bookingStatus = res.status;
 
-      this.responsibleUser$ = this.auth.get_user_by_id(this.actualBooking.user).subscribe(user => {
+
+    //   // Высчитываем какой тариф выбран
+    //   this.checkedTarif(this.summa.booking_days)
+    // });
+
+
+    // // Отправляем финальную бронь в авто
+    // this.updateBookingInCar$ = this.cars.updateBookingInCar(this.actualBooking.car._id, this.actualBooking).subscribe(res => { });
+
+
+    // this.responsibleUser$ = this.auth.get_user_by_id(this.actualBooking.user).subscribe(user => {
+    //   this.responsibleUser = user;
+    // })
+
+
+    // // Получаем список всех актов по данной брони
+    // this.subGetActsByIdBooking$ = this.ducumentsServise.getActsByIdBooking(this.bookingId).subscribe(acts => {
+    //   this.actualActs = acts;
+    // })
+
+
+    this.subGetBookingById$ = this.bookings.getById(this.bookingId).pipe(
+      tap((res) => {
+        this.actualBooking = res;
+        this.summa.car = res.car;
+        this.summa.sale = res.sale;
+        this.summa.tariff = res.tariff;
+        this.summa.booking_start = res.booking_start;
+        this.summa.booking_end = res.booking_end;
+        this.summa.summa = res.summa;
+        this.summa.summaFull = res.summaFull;
+        this.summa.booking_days = res.booking_days;
+        this.summa.dop_hours = res.dop_hours;
+        this.xsActualClient = res.client;
+        this.bookingStatus = res.status;
+
+        // Высчитываем какой тариф выбран
+        this.checkedTarif(this.summa.booking_days);
+      }),
+      switchMap(() => {
+        return this.cars.updateBookingInCar(this.actualBooking.car._id, this.actualBooking);
+      }),
+      switchMap(() => {
+        return this.auth.get_user_by_id(this.actualBooking.user);
+      }),
+      switchMap((user) => {
         this.responsibleUser = user;
+        return this.ducumentsServise.getActsByIdBooking(this.bookingId);
       })
-
-      
-
-      this.summa.car = res.car;
-      this.summa.sale = res.sale;
-      this.summa.tariff = res.tariff;
-      this.summa.booking_start = res.booking_start;
-      this.summa.booking_end = res.booking_end;
-      this.summa.summa = res.summa;
-      this.summa.summaFull = res.summaFull;
-      this.summa.booking_days = res.booking_days;
-      this.summa.dop_hours = res.dop_hours;
-      this.xsActualClient = res.client;
-
-
-      this.bookingStatus = res.status;
-
-      // Получаем список всех актов по данной брони
-      this.subGetActsByIdBooking$ = this.ducumentsServise.getActsByIdBooking(this.bookingId).subscribe(acts => {
-        this.actualActs = acts;
-      })
-
-      // Высчитываем какой тариф выбран
-      this.checkedTarif(this.summa.booking_days)
+    ).subscribe((acts) => {
+      this.actualActs = acts;
     });
+
+
   }
+
+
+
+ 
+
+
 
   getPaysByBookingId()
   {
@@ -231,9 +270,6 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
     {
       const dicision = window.confirm(`Бронь не оплачена! Вы уверены что хотите выдать автомобиль?`);
 
-      
-
-
       if (dicision)
       {
         const status_log = {
@@ -241,18 +277,31 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
           data: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss')
         }
 
-        this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
-          this.bookingStatus = res.status;
-          MaterialService.toast(`Новый статус брони -  ${status}`);
+        // this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
+        //   this.bookingStatus = res.status;
+        //   MaterialService.toast(`Новый статус брони -  ${status}`);
+        // });
+
+
+        // this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
+        //   this.actualBooking = res
+
+        //   this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
+        // })
+
+        this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).pipe(
+          concatMap((res) => {
+            this.bookingStatus = res.status;
+            MaterialService.toast(`Новый статус брони - ${status}`);
+            return this.bookings.update_after_booking_status(this.bookingId, status_log);
+          }),
+          concatMap((res) => {
+            this.actualBooking = res;
+            return this.cars.updateBookingInCar(res.car._id, res);
+          })
+        ).subscribe(res => {
+          // Выполнение стримов последовательно завершено
         });
-
-
-        this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
-          this.actualBooking = res
-
-
-          this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
-        })
 
       }
     }
@@ -262,18 +311,32 @@ export class ViewBookingComponent implements OnInit, OnDestroy {
         data: this.datePipe.transform(new Date(), 'dd.MM.yyyy HH:mm:ss')
       }
 
-      this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
-        this.bookingStatus = res.status;
-        MaterialService.toast(`Новый статус брони -  ${status}`);
-      });
+      // this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).subscribe((res) => {
+      //   this.bookingStatus = res.status;
+      //   MaterialService.toast(`Новый статус брони -  ${status}`);
+      // });
 
 
-      this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
-        this.actualBooking = res
+      // this.update_after_booking_status$ = this.bookings.update_after_booking_status(this.bookingId, status_log).subscribe(res => {
+      //   this.actualBooking = res
         
 
-        this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
-      })
+      //   this.updateBookingInCar$ = this.cars.updateBookingInCar(res.car._id, res).subscribe(res => {});
+      // })
+
+      this.subToggleStatus$ = this.bookings.toggleStatus(status, this.bookingId).pipe(
+        concatMap((res) => {
+          this.bookingStatus = res.status;
+          MaterialService.toast(`Новый статус брони - ${status}`);
+          return this.bookings.update_after_booking_status(this.bookingId, status_log);
+        }),
+        concatMap((res) => {
+          this.actualBooking = res;
+          return this.cars.updateBookingInCar(res.car._id, res);
+        })
+      ).subscribe(res => {
+        // Выполнение стримов последовательно завершено
+      });
 
       
     }

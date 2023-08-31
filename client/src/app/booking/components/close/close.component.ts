@@ -154,12 +154,9 @@ export class CloseComponent implements OnInit, OnDestroy {
       this.summa.dop_hours = res.dop_hours;
 
 
-
       MaterialService.updateTextInputs();
     });
 
-
-    
   }
 
 

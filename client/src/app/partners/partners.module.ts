@@ -18,6 +18,7 @@ import { reducers } from 'src/app/partners/store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { PartnersEffect } from './store/effects/partners.effect';
 import { NgxMaskModule } from 'ngx-mask';
+import { GoBackModule } from '../shared/modules/ga-back/go-back.module';
 
 
 const routes = [
@@ -47,7 +48,8 @@ const routes = [
     StoreModule.forFeature('partners', reducers),
     EffectsModule.forFeature([PartnersEffect]),
     PdfViewerModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    GoBackModule,
   ],
   providers: [PartnersService],
 })
